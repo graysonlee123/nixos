@@ -101,6 +101,15 @@ This repository contains my declarative NixOS system configuration, including:
 - **Shell**: Zsh with Oh My Zsh
 - **Plugins**: git, man
 
+### Zoxide - Smart Directory Navigation
+Zoxide tracks your most used directories and lets you jump to them quickly:
+
+- `z <pattern>` - Jump to the highest-ranked directory matching the pattern
+- `zi <pattern>` - Interactive selection when multiple directories match
+- `zoxide query <pattern>` - Show which directory would be selected without jumping
+
+Example: After visiting `/home/gray/repos/me/nixos` a few times, you can jump there with just `z nix`.
+
 ## System Information
 
 - **NixOS Version**: 25.11
