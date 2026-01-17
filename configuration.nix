@@ -167,14 +167,10 @@
       syntaxHighlighting.enable = true;
     };
 
-    # Oh My ZSH
-    programs.zsh.oh-my-zsh = {
+    # Starship prompt
+    programs.starship = {
       enable = true;
-      plugins = [
-        "git"
-        "man"
-      ];
-      theme = "half-life";
+      enableZshIntegration = true;
     };
 
     # Git
