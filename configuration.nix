@@ -170,6 +170,8 @@
       vicinae
       vscode
       wl-clipboard
+      yazi
+      zoxide
     ];
 
     # Git
