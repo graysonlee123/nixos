@@ -155,9 +155,9 @@
       pnpm
       vicinae
       vscode
+      waybar
       wl-clipboard
       yazi
-      zoxide
     ];
 
     # zsh
@@ -170,6 +170,12 @@
 
     # Starship prompt
     programs.starship = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    # Zoxide (smarter cd)
+    programs.zoxide = {
       enable = true;
       enableZshIntegration = true;
     };
@@ -285,16 +291,8 @@
           }; 
         };
 
-        # Window and bar settings
-        bars = [{
-          position = "top";
-          statusCommand = "${pkgs.i3status}/bin/i3status";
-          colors = {
-            background = "#000000";
-            statusline = "#ffffff";
-            separator = "#666666";
-          };
-        }];
+        # Disable default bar (using Waybar instead)
+        bars = [];
 
         # Colors for window borders
         colors = {
@@ -310,8 +308,15 @@
         # Startup
         startup = [
           {
+            command = "waybar";
+            always = true;
+          }
+          {
             command = "vicinae server";
             always = true;
+          }
+          {
+            command = "swaymsg workspace number 1";
           }
         ];
       };
@@ -325,7 +330,140 @@
         font-family = "JetBrainsMono Nerd Font";
         font-size = 14;
         theme = "Alien Blood";
-      };  
+      };
+    };
+
+    # Waybar
+    programs.waybar = {
+      enable = true;
+      settings = {
+        mainBar = {
+          layer = "top";
+          position = "top";
+          height = 30;
+
+          modules-left = [ "sway/workspaces" "sway/mode" ];
+          modules-center = [ "sway/window" ];
+          modules-right = [ "cpu" "memory" "network" "pulseaudio" "clock" ];
+
+          "sway/workspaces" = {
+            disable-scroll = true;
+            all-outputs = true;
+          };
+
+          "sway/window" = {
+            max-length = 50;
+          };
+
+          "cpu" = {
+            format = " {usage}%";
+            tooltip = false;
+          };
+
+          "memory" = {
+            format = " {}%";
+          };
+
+          "network" = {
+            format-wifi = " {essid}";
+            format-ethernet = " {ipaddr}";
+            format-disconnected = "⚠ Disconnected";
+            tooltip-format = "{ifname}: {ipaddr}/{cidr}";
+          };
+
+          "pulseaudio" = {
+            format = "{icon} {volume}%";
+            format-muted = " Muted";
+            format-icons = {
+              default = [ "" "" "" ];
+            };
+            on-click = "pavucontrol";
+          };
+
+          "clock" = {
+            format = " {:%H:%M}";
+            format-alt = " {:%Y-%m-%d}";
+            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          };
+        };
+      };
+
+      style = ''
+        * {
+          font-family: JetBrainsMono Nerd Font;
+          font-size: 13px;
+        }
+
+        window#waybar {
+          background-color: rgba(0, 0, 0, 0.9);
+          color: #ffffff;
+          border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+        }
+
+        #workspaces button {
+          padding: 0 5px;
+          background-color: transparent;
+          color: #ffffff;
+          border-bottom: 3px solid transparent;
+        }
+
+        #workspaces button:hover {
+          background: rgba(0, 0, 0, 0.2);
+        }
+
+        #workspaces button.focused {
+          background-color: #285577;
+          border-bottom: 3px solid #4c7899;
+        }
+
+        #workspaces button.urgent {
+          background-color: #eb4d4b;
+        }
+
+        #mode {
+          background-color: #64727D;
+          border-bottom: 3px solid #ffffff;
+        }
+
+        #clock,
+        #cpu,
+        #memory,
+        #network,
+        #pulseaudio,
+        #window,
+        #mode {
+          padding: 0 10px;
+          color: #ffffff;
+        }
+
+        #cpu {
+          color: #2ecc71;
+        }
+
+        #memory {
+          color: #9b59b6;
+        }
+
+        #network {
+          color: #3498db;
+        }
+
+        #network.disconnected {
+          color: #f53c3c;
+        }
+
+        #pulseaudio {
+          color: #f1c40f;
+        }
+
+        #pulseaudio.muted {
+          color: #90b1b1;
+        }
+
+        #clock {
+          color: #ffffff;
+        }
+      '';
     };
 
     # Required, should stay at the version originall installed
