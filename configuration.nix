@@ -146,12 +146,13 @@
       ghostty
       git
       go
-      nerd-fonts.jetbrains-mono
       google-chrome
       jetbrains.phpstorm
+      nerd-fonts.jetbrains-mono
       nodejs_24
       obsidian
       pgadmin4
+      pnpm
       vicinae
       vscode
       wl-clipboard
