@@ -51,10 +51,10 @@
 
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.gray = {
-    shell = pkgs.zsh;
     isNormalUser = true;
     description = "Grayson";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
   };
 
   # Allow unfree packages
@@ -86,23 +86,8 @@
   # Sway
   programs.sway.enable = true;
 
-  # zsh
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-  };
-
-  # Oh My ZSH
-  programs.zsh.ohMyZsh = {
-    enable = true;
-    plugins = [
-      "git"
-      "man"
-    ];
-    theme = "agnoster";
-  };
+  # Zsh (required for it to be a valid login shell)
+  programs.zsh.enable = true;
 
   # List services that you want to enable:
 
@@ -161,7 +146,7 @@
       ghostty
       git
       go
-      gohufont
+      nerd-fonts.jetbrains-mono
       google-chrome
       jetbrains.phpstorm
       nodejs_24
@@ -173,6 +158,24 @@
       yazi
       zoxide
     ];
+
+    # zsh
+    programs.zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+    };
+
+    # Oh My ZSH
+    programs.zsh.oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "man"
+      ];
+      theme = "half-life";
+    };
 
     # Git
     programs.git = {
@@ -320,9 +323,10 @@
     # Ghostty
     programs.ghostty = {
       enable = true;
+      enableZshIntegration = true;
       settings = {
-        font-family = "GohuFont";
-        font-size = 22;
+        font-family = "JetBrainsMono Nerd Font";
+        font-size = 14;
         theme = "Alien Blood";
       };  
     };
