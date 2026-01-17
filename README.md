@@ -7,7 +7,7 @@ Personal NixOS configuration using the home directory + symlinks approach for ve
 This repository contains my declarative NixOS system configuration, including:
 
 - **Window Manager**: Sway (Wayland compositor)
-- **Terminal**: Ghostty with GohuFont
+- **Terminal**: Ghostty with JetBrains Mono
 - **Shell**: Zsh with Oh My Zsh (agnoster theme)
 - **Display Manager**: greetd with tuigreet
 - **GPU**: NVIDIA with open-source drivers
@@ -73,7 +73,7 @@ This repository contains my declarative NixOS system configuration, including:
 
 ### System Packages
 - vim, curl, inxi
-- GohuFont (nerd fonts)
+- JetBrains Mono (nerd fonts)
 
 ### User Packages (via Home Manager)
 - **Productivity**: 1Password, Obsidian, Discord
@@ -96,7 +96,7 @@ This repository contains my declarative NixOS system configuration, including:
 - Custom keybindings for window management and workspaces
 
 ### Terminal Setup
-- **Font**: GohuFont 22pt
+- **Font**: JetBrains Mono 22pt
 - **Theme**: Alien Blood
 - **Shell**: Zsh with Oh My Zsh
 - **Plugins**: git, man

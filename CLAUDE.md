@@ -1,58 +1,67 @@
-# NixOS Configuration Setup - Conversation Log
+# NixOS Configuration - Repository Notes
 
-## Goal
-Set up version control for NixOS configuration using the home directory + symlinks approach (most popular method).
+## Overview
 
-## Current Status
-- ✅ Created `~/nixos-config/` directory
-- ✅ Copied `configuration.nix` and `hardware-configuration.nix` from `/etc/nixos/`
-- ✅ Created `.gitignore` file
-- ⏸️ **Blocked**: Git is not installed on the system
+This repository contains a version-controlled NixOS configuration using the home directory + symlinks approach. The configuration files are maintained in this git repository and symlinked to `/etc/nixos/` for system use.
 
-## Next Steps
-1. Install Git (either via nix-shell or add to configuration.nix)
-2. Initialize Git repository
-3. Create initial commit
-4. Replace files in `/etc/nixos/` with symlinks to `~/nixos-config/`
-5. Verify symlinks work correctly
-6. Test configuration with `sudo nixos-rebuild test`
+## Repository Structure
 
-## Approach Chosen: Home Directory + Symlinks
+```
+~/repos/me/nixos/
+├── .git/                       # Git repository
+├── .gitignore                  # Git ignore rules
+├── configuration.nix           # Main NixOS configuration
+├── hardware-configuration.nix  # Hardware-specific settings
+├── CLAUDE.md                   # This file - repository notes
+└── README.md                   # User-facing documentation
+```
 
-### Why this approach?
-- Easy to manage without sudo for Git operations
+## Active Symlinks
+
+The following symlinks are currently active in `/etc/nixos/`:
+- `/etc/nixos/configuration.nix` → `/home/gray/repos/me/nixos/configuration.nix`
+- `/etc/nixos/hardware-configuration.nix` → `/home/gray/repos/me/nixos/hardware-configuration.nix`
+
+## Configuration Approach
+
+This setup uses the **home directory + symlinks** method for managing NixOS configuration:
+
+### Benefits
+- Git operations don't require sudo
 - Easy to backup and share
 - Clean separation between system config and version control
+- Standard approach used by the NixOS community
 
-### Directory Structure
-```
-~/nixos-config/
-├── .gitignore
-├── configuration.nix
-├── hardware-configuration.nix
-└── CLAUDE.md (this file)
+### How It Works
+1. Configuration files are stored in this git repository
+2. `/etc/nixos/` contains symlinks pointing to the repository files
+3. Changes are made in the repository, then applied with `nixos-rebuild`
+4. Git tracks all configuration changes over time
 
-/etc/nixos/
-├── configuration.nix -> ~/nixos-config/configuration.nix (symlink - pending)
-└── hardware-configuration.nix -> ~/nixos-config/hardware-configuration.nix (symlink - pending)
-```
+## Recent Configuration Changes
 
-## Current Blocker
-Git is not installed. Need to either:
-- **Option A**: `nix-shell -p git` (temporary, quick start)
-- **Option B**: Add git to configuration.nix, rebuild, then continue
+Based on git history:
+- Reordered packages; added pnpm
+- Replaced Oh My Zsh with Starship prompt
+- Refactored shell config to home-manager and updated fonts
+- Added comprehensive README documenting NixOS configuration
+- Added Yazi (terminal file manager) and Zoxide (smarter cd command)
 
-**NOTE**: Claude Code does not have sudo access, so user must manually:
-1. Add `git` to `home.packages` in configuration.nix (line 155-172, inside home-manager.users.gray section)
-2. Run `sudo nixos-rebuild switch`
-3. Verify with `git --version`
+## Current System Configuration
 
-**Rationale**: Git added as user package (not system package) because:
-- More idiomatic with home-manager
-- Matches existing pattern (dev tools like go, nodejs, vscode are in user packages)
-- Keeps system packages minimal
+See `README.md` for comprehensive documentation. Key components include:
+- **Window Manager**: Sway (Wayland compositor)
+- **Terminal**: Ghostty with JetBrains Mono
+- **Shell**: Zsh with Starship prompt
+- **Package Management**: Home Manager for user-level packages
+- **Development Tools**: Git, Docker, Go, Node.js, Claude Code, VS Code, PhpStorm
+- **Utilities**: Yazi, Zoxide, pnpm, 1Password, and more
 
-## Files in /etc/nixos/
-- configuration.nix (9000 bytes)
-- hardware-configuration.nix (959 bytes)
-- .configuration.nix.swp (editor swap file - will be ignored)
+## Workflow
+
+When making configuration changes:
+1. Edit files in this repository
+2. Test: `sudo nixos-rebuild test`
+3. Commit: `git add . && git commit -m "description"`
+4. Apply: `sudo nixos-rebuild switch`
+5. Push to remote (if configured): `git push`
