@@ -83,6 +83,9 @@
   hardware.nvidia.open = true;
   hardware.nvidia.modesetting.enable = true;
 
+  # Tailscale
+  services.tailscale.enable = true;
+
   # Sway
   programs.sway.enable = true;
 

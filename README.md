@@ -69,6 +69,14 @@ This repository contains my declarative NixOS system configuration, including:
 3. Commit changes: `git add . && git commit -m "Description of changes"`
 4. Apply permanently: `sudo nixos-rebuild switch`
 
+### Tailscale
+
+If you want to connect to your Tailscale network, you'll have to [create a key](https://login.tailscale.com/admin/machines/new-linux) and authenticate:
+
+```shell
+sudo tailscale up --auth-key=KEY
+```
+
 ## System Configuration Highlights
 
 ### System Packages
