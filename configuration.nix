@@ -181,6 +181,10 @@
       enableZshIntegration = true;
     };
 
+    # fzf
+    programs.fzf.enable = true;
+    programs.fzf.enableZshIntegration = true;
+
     # Zoxide (smarter cd)
     programs.zoxide = {
       enable = true;
