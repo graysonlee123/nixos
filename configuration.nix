@@ -145,6 +145,7 @@
     # Packages
     home.packages = with pkgs; [
       _1password-gui
+      btop
       claude-code
       discord
       docker
