@@ -83,6 +83,9 @@
   hardware.nvidia.open = true;
   hardware.nvidia.modesetting.enable = true;
 
+  # GNOME keyring
+  services.gnome.gnome-keyring.enable = true;
+
   # Tailscale
   services.tailscale.enable = true;
 
