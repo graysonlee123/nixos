@@ -341,6 +341,7 @@
         font-family = "JetBrainsMono Nerd Font";
         font-size = 14;
         theme = "Alien Blood";
+        shell-integration-features = "ssh-env";
       };
     };
 
