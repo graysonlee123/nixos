@@ -174,9 +174,7 @@
       speedtest-cli
       tealdeer
       tuir
-      vicinae
       vscode
-      waybar
       wl-clipboard
       yazi
     ];
@@ -361,14 +359,6 @@
         # Startup
         startup = [
           {
-            command = "waybar";
-            always = true;
-          }
-          {
-            command = "vicinae server";
-            always = true;
-          }
-          {
             command = "swaymsg workspace number 1";
           }
         ];
@@ -390,6 +380,7 @@
     # Waybar
     programs.waybar = {
       enable = true;
+      systemd.enable = true; 
       settings = {
         mainBar = {
           layer = "top";
@@ -524,7 +515,13 @@
         }
       '';
     };
-
+    
+    # Vicinae
+    programs.vicinae = {
+      enable = true;
+      systemd.enable = true;
+    };
+        
     # Required, should stay at the version originall installed
     home.stateVersion = "25.11";
   };
