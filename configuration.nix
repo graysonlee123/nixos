@@ -145,21 +145,35 @@
     # Packages
     home.packages = with pkgs; [
       _1password-gui
+      _2048-in-terminal
+      asciiquarium
       btop
       claude-code
+      crawl
       discord
+      dive
       docker
+      dust
       filezilla
       ghostty
       git
       go
       google-chrome
       jetbrains.phpstorm
+      lazydocker
+      lazygit
+      mycli
       nerd-fonts.jetbrains-mono
+      nethack
       nodejs_24
       obsidian
       pgadmin4
+      pgcli
       pnpm
+      ripgrep
+      speedtest-cli
+      tealdeer
+      tuir
       vicinae
       vscode
       waybar
@@ -305,14 +319,35 @@
         # Disable default bar (using Waybar instead)
         bars = [];
 
-        # Colors for window borders
+        # Colors for window borders - ALIEN (1979) TERMINAL THEME
         colors = {
           focused = {
-            border = "#4c7899";
-            background = "#285577";
-            text = "#ffffff";
-            indicator = "#2e9ef4";
-            childBorder = "#285577";
+            border = "#00ff41";        # Bright phosphor green border
+            background = "#0a0e0a";    # Almost black background
+            text = "#00ff41";          # Phosphor green text
+            indicator = "#33ff33";     # Bright green indicator
+            childBorder = "#00ff41";   # Phosphor green child border
+          };
+          focusedInactive = {
+            border = "#003300";        # Dark green border
+            background = "#0a0e0a";    # Almost black background
+            text = "#009900";          # Dimmed green text
+            indicator = "#006600";     # Dim green indicator
+            childBorder = "#003300";   # Dark green child border
+          };
+          unfocused = {
+            border = "#001a00";        # Very dark green border
+            background = "#0a0e0a";    # Almost black background
+            text = "#004400";          # Very dim green text
+            indicator = "#003300";     # Very dim indicator
+            childBorder = "#001a00";   # Very dark green child border
+          };
+          urgent = {
+            border = "#ff6600";        # Warning amber border
+            background = "#331100";    # Dark amber background
+            text = "#ffaa00";          # Amber warning text
+            indicator = "#ff3300";     # Red alert indicator
+            childBorder = "#ff6600";   # Warning amber child border
           };
         };
 
@@ -407,34 +442,39 @@
         }
 
         window#waybar {
-          background-color: rgba(0, 0, 0, 0.9);
-          color: #ffffff;
-          border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+          background-color: #0a0e0a;
+          color: #00ff41;
+          border-bottom: 2px solid #00ff41;
         }
 
         #workspaces button {
           padding: 0 5px;
           background-color: transparent;
-          color: #ffffff;
-          border-bottom: 3px solid transparent;
+          color: #009900;
+          border-bottom: 2px solid transparent;
         }
 
         #workspaces button:hover {
-          background: rgba(0, 0, 0, 0.2);
+          background: rgba(0, 255, 65, 0.1);
+          color: #00ff41;
         }
 
         #workspaces button.focused {
-          background-color: #285577;
-          border-bottom: 3px solid #4c7899;
+          background-color: rgba(0, 255, 65, 0.15);
+          border-bottom: 2px solid #00ff41;
+          color: #00ff41;
         }
 
         #workspaces button.urgent {
-          background-color: #eb4d4b;
+          background-color: #331100;
+          border-bottom: 2px solid #ff6600;
+          color: #ffaa00;
         }
 
         #mode {
-          background-color: #64727D;
-          border-bottom: 3px solid #ffffff;
+          background-color: #001a00;
+          border-bottom: 2px solid #00ff41;
+          color: #00ff41;
         }
 
         #clock,
@@ -445,35 +485,35 @@
         #window,
         #mode {
           padding: 0 10px;
-          color: #ffffff;
+          color: #00ff41;
         }
 
         #cpu {
-          color: #2ecc71;
+          color: #00ff41;
         }
 
         #memory {
-          color: #9b59b6;
+          color: #33ff33;
         }
 
         #network {
-          color: #3498db;
+          color: #00cc33;
         }
 
         #network.disconnected {
-          color: #f53c3c;
+          color: #ff6600;
         }
 
         #pulseaudio {
-          color: #f1c40f;
+          color: #00dd33;
         }
 
         #pulseaudio.muted {
-          color: #90b1b1;
+          color: #004400;
         }
 
         #clock {
-          color: #ffffff;
+          color: #00ff41;
         }
       '';
     };
