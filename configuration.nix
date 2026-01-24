@@ -58,7 +58,6 @@
     vim
     curl
     inxi
-    nerd-fonts.gohufont
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -116,12 +115,6 @@
       };
     };
   };
-
-  # Fonts
-  fonts.fontconfig.enable = true;
-  fonts.packages = with pkgs; [
-    gohufont
-  ];
 
   # Home Manager
   home-manager.users.gray = { config, pkgs, ... }: {
