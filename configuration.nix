@@ -117,7 +117,7 @@
   };
 
   # Home Manager
-  home-manager.users.gray = { config, pkgs, ... }: {
+  home-manager.users.gray = { config, lib, pkgs, ... }: {
     # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
@@ -354,7 +354,7 @@
       enableZshIntegration = true;
       settings = {
         font-family = "JetBrainsMono Nerd Font";
-        font-size = 14;
+        font-size = lib.mkDefault 14;
         theme = "Alien Blood";
         shell-integration-features = "ssh-env";
       };

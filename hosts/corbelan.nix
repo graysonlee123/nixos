@@ -10,5 +10,13 @@
     shell = pkgs.zsh;
   };
 
+  home-manager.users.gray = { pkgs, ... }: {
+    programs.ghostty = {
+      settings = {
+        font-size = 10;
+      };
+    };
+  };
+
   hardware.graphics.enable = true;
 }
