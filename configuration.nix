@@ -296,7 +296,7 @@
         input = {
           "type:keyboard" = {
             repeat_rate = "75";
-            repeat_delay = "250";
+            repeat_delay = "200";
           }; 
         };
 
