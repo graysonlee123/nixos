@@ -30,6 +30,10 @@
       "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
       "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
     };
+
+    programs.waybar.settings.mainBar = {
+      modules-right = [ "battery" ];
+    };
   };
 
   hardware.graphics.enable = true;
