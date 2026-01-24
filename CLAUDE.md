@@ -4,6 +4,11 @@
 
 This repository contains a version-controlled NixOS configuration using the home directory + symlinks approach. The configuration files are maintained in this git repository and symlinked to `/etc/nixos/` for system use.
 
+## Machines
+
+- **Corbelan**: Laptop
+- **Nostromo**: Home desktop
+
 ## Repository Structure
 
 ```
