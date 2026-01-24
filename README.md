@@ -127,6 +127,13 @@ Zoxide tracks your most used directories and lets you jump to them quickly:
 
 Example: After visiting `/home/gray/repos/me/nixos` a few times, you can jump there with just `z nix`.
 
+## Host-specific Configurations
+
+### Corbelan (Laptop)
+
+- **Brightness Control**: brightnessctl package for managing screen brightness
+- **Font Size**: Smaller font size optimized for laptop display
+
 ## Useful Commands
 
 ```bash
