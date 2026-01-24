@@ -340,6 +340,10 @@
           {
             command = "swaymsg workspace number 1";
           }
+          {
+            command = "vicinae server";
+            always = true;
+          }
         ];
       };
     };
@@ -498,7 +502,6 @@
     # Vicinae
     programs.vicinae = {
       enable = true;
-      systemd.enable = true;
       extensions = [
         (config.lib.vicinae.mkExtension {
           name = "pulseaudio";
