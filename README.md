@@ -30,6 +30,23 @@ This repository contains my declarative NixOS system configuration, including:
 
 ## Setup Instructions
 
+### Prerequisites
+
+1. Setup internet if necessary.
+
+```bash
+# Connect to a WiFi network
+nmcli device wifi connect <ssid> password <password>
+```
+
+2. Add Home Manager channel
+
+```bash
+# 25.11 channel
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.11.tar.gz home-manager
+sudo nix-channel --update
+```
+
 ### Initial Setup
 
 1. Clone this repository:
@@ -47,9 +64,8 @@ This repository contains my declarative NixOS system configuration, including:
 3. Create symlinks to this repository:
    ```bash
    sudo rm /etc/nixos/configuration.nix
-   sudo rm /etc/nixos/hardware-configuration.nix
-   sudo ln -s ~/nixos-config/configuration.nix /etc/nixos/configuration.nix
-   sudo ln -s ~/nixos-config/hardware-configuration.nix /etc/nixos/hardware-configuration.nix
+   sudo ln -s /path/to/configuration.nix /etc/nixos/configuration.nix
+   sudo ln -s /path/to/hosts/host.nix /etc/nixos/host.nix
    ```
 
 4. Test the configuration:
@@ -61,13 +77,6 @@ This repository contains my declarative NixOS system configuration, including:
    ```bash
    sudo nixos-rebuild switch
    ```
-
-### Making Changes
-
-1. Edit configuration files in `~/nixos-config/`
-2. Test changes: `sudo nixos-rebuild test`
-3. Commit changes: `git add . && git commit -m "Description of changes"`
-4. Apply permanently: `sudo nixos-rebuild switch`
 
 ### Tailscale
 
@@ -104,7 +113,7 @@ sudo tailscale up --auth-key=KEY
 - Custom keybindings for window management and workspaces
 
 ### Terminal Setup
-- **Font**: JetBrains Mono 22pt
+- **Font**: JetBrains Mono
 - **Theme**: Alien Blood
 - **Shell**: Zsh with Oh My Zsh
 - **Plugins**: git, man
@@ -117,13 +126,6 @@ Zoxide tracks your most used directories and lets you jump to them quickly:
 - `zoxide query <pattern>` - Show which directory would be selected without jumping
 
 Example: After visiting `/home/gray/repos/me/nixos` a few times, you can jump there with just `z nix`.
-
-## System Information
-
-- **NixOS Version**: 25.11
-- **Time Zone**: America/New_York
-- **Locale**: en_US.UTF-8
-- **Hostname**: nixos
 
 ## Useful Commands
 
