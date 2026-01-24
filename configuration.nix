@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      /etc/nixos/host.nix
       <home-manager/nixos>
     ];
 
@@ -15,7 +16,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -49,15 +49,7 @@
     variant = "";
   };
 
-  # Define a user account. Don't forget to set a password with 'passwd'.
-  users.users.gray = {
-    isNormalUser = true;
-    description = "Grayson";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
-  };
-
-  # Allow unfree packages
+# Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
@@ -76,12 +68,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # NVIDIA
-  hardware.graphics.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.open = true;
-  hardware.nvidia.modesetting.enable = true;
 
   # GNOME keyring
   services.gnome.gnome-keyring.enable = true;
@@ -515,7 +501,7 @@
         }
       '';
     };
-    
+
     # Vicinae
     programs.vicinae = {
       enable = true;
