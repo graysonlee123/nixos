@@ -26,6 +26,9 @@
     wayland.windowManager.sway.config.keybindings = {
       "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
       "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
+      "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+      "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
     };
   };
 

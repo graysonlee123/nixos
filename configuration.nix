@@ -405,7 +405,7 @@
             format-icons = {
               default = [ "" "" "" ];
             };
-            on-click = "pavucontrol";
+            on-click = "vicinae deeplink vicinae://extensions/rastsislaux/pulseaudio/pulseaudio";
           };
 
           "clock" = {
