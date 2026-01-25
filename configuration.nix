@@ -153,9 +153,11 @@
       speedtest-cli
       tealdeer
       tuir
+      unzip
       vscode
       wl-clipboard
       yazi
+      zip
     ];
 
     # Environment variables
