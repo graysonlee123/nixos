@@ -49,7 +49,7 @@
     variant = "";
   };
 
-# Allow unfree packages
+  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
@@ -137,7 +137,6 @@
       ghostty
       git
       go
-      google-chrome
       jetbrains.phpstorm
       lazydocker
       lazygit
@@ -525,7 +524,7 @@
         })
       ];
     };
-        
+
     # Required, should stay at the version originall installed
     home.stateVersion = "25.11";
   };

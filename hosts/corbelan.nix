@@ -34,6 +34,15 @@
     programs.waybar.settings.mainBar = {
       modules-right = [ "battery" ];
     };
+
+    # Chrome
+    programs.chromium = {
+      enable = true;
+      extensions = [
+        { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
+        { id = "dnebklifojaaecmheejjopgjdljebpeo"; } # everhour
+      ];
+    };
   };
 
   hardware.graphics.enable = true;
