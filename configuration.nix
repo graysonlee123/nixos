@@ -143,6 +143,7 @@
       lazygit
       mycli
       nerd-fonts.jetbrains-mono
+      neofetch
       nethack
       nodejs_24
       obsidian
