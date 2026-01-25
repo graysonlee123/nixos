@@ -203,7 +203,7 @@
           identityFile = "~/.ssh/github";
           identitiesOnly = true;
         };
-        "inspy.github.com" = {
+        "inspry.github.com" = {
           hostname = "github.com";
           user = "git";
           identityFile = "~/.ssh/github-inspry";
