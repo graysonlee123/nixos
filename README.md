@@ -118,6 +118,12 @@ sudo tailscale up --auth-key=KEY
 - **Shell**: Zsh with Oh My Zsh
 - **Plugins**: git, man
 
+### Git Configuration
+Git is configured with conditional includes that automatically switch email addresses based on repository location:
+
+- **Default**: `github@graysn.com` for personal projects
+- **Work**: `grayson@inspry.com` for repositories in `~/repos/inspry/`
+
 ### Zoxide - Smart Directory Navigation
 Zoxide tracks your most used directories and lets you jump to them quickly:
 
