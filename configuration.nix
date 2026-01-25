@@ -197,7 +197,7 @@
     programs.git = {
       enable = true;
       settings = {
-        user.name = "Grayson";
+        user.name = "Grayson Gantek";
         user.email = "github@graysn.com";
       };
     };
