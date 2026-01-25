@@ -126,6 +126,7 @@
       _1password-gui
       _2048-in-terminal
       asciiquarium
+      bibata-cursors
       btop
       claude-code
       crawl
@@ -379,6 +380,16 @@
           }
         ];
       };
+    };
+
+    # Cursor
+    home.pointerCursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+    };
+    home.pointerCursor.sway = {
+      enable = true;
     };
 
     # Ghostty
