@@ -157,6 +157,11 @@
       yazi
     ];
 
+    # Environment variables
+    home.sessionVariables = {
+      EDITOR = "vim";
+    };
+
     # zsh
     programs.zsh = {
       enable = true;
