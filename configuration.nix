@@ -193,6 +193,25 @@
       enableZshIntegration = true;
     };
 
+    # SSH
+    programs.ssh = {
+      enable = true;
+      matchBlocks = {
+        "github.com" = {
+          hostname = "github.com";
+          user = "git";
+          identityFile = "~/.ssh/github";
+          identitiesOnly = true;
+        };
+        "inspy.github.com" = {
+          hostname = "github.com";
+          user = "git";
+          identityFile = "~/.ssh/github-inspry";
+          identitiesOnly = true;
+        };
+      };
+    };
+
     # Git
     programs.git = {
       enable = true;
