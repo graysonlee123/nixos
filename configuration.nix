@@ -141,6 +141,7 @@
       jetbrains.phpstorm
       lazydocker
       lazygit
+      mako
       mycli
       nerd-fonts.jetbrains-mono
       neofetch
@@ -383,6 +384,14 @@
             always = true;
           }
         ];
+
+        # Window rules
+        window.commands = [
+          {
+            criteria = { app_id = "^mako$"; };
+            command = "floating enable, border none";
+          }
+        ];
       };
     };
 
@@ -577,6 +586,17 @@
     # Screenshots
     services.flameshot = {
       enable = true;
+    };
+
+    # Notifications
+    services.mako = {
+      enable = true;
+      defaultTimeout = 5000;  # 5 seconds
+      backgroundColor = "#0a0e0a";
+      textColor = "#00ff41";
+      borderColor = "#00ff41";
+      borderSize = 2;
+      font = "JetBrainsMono Nerd Font 10";
     };
 
     # Chromium
