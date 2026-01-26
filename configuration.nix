@@ -573,6 +573,11 @@
       ];
     };
 
+    # Screenshots
+    services.flameshot = {
+      enable = true;
+    };
+
     # Required, should stay at the version originall installed
     home.stateVersion = "25.11";
   };
