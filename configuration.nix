@@ -154,6 +154,7 @@
       tuir
       vscode
       wl-clipboard
+      wp-cli
       yazi
     ];
 
