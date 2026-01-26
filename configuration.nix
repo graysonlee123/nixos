@@ -578,6 +578,15 @@
       enable = true;
     };
 
+    # Chromium
+    programs.chromium = {
+      enable = true;
+      extensions = [
+        { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
+        { id = "dnebklifojaaecmheejjopgjdljebpeo"; } # everhour
+      ];
+    };
+
     # Required, should stay at the version originall installed
     home.stateVersion = "25.11";
   };
