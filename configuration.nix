@@ -126,6 +126,7 @@
       _1password-gui
       _2048-in-terminal
       asciiquarium
+      bibata-cursors
       btop
       claude-code
       crawl
@@ -142,6 +143,7 @@
       lazygit
       mycli
       nerd-fonts.jetbrains-mono
+      neofetch
       nethack
       nodejs_24
       obsidian
@@ -152,10 +154,12 @@
       speedtest-cli
       tealdeer
       tuir
+      unzip
       vscode
       wl-clipboard
       wp-cli
       yazi
+      zip
     ];
 
     # Environment variables
@@ -382,6 +386,16 @@
       };
     };
 
+    # Cursor
+    home.pointerCursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+    };
+    home.pointerCursor.sway = {
+      enable = true;
+    };
+
     # Ghostty
     programs.ghostty = {
       enable = true;
@@ -558,6 +572,11 @@
             } + /extensions/nix;
         })
       ];
+    };
+
+    # Screenshots
+    services.flameshot = {
+      enable = true;
     };
 
     # Chromium
