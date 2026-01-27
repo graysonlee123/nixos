@@ -216,6 +216,10 @@
           identityFile = "~/.ssh/github-inspry";
           identitiesOnly = true;
         };
+        "154.12.120.83" = {
+          identityFile = "~/.ssh/bigscoots";
+          identitiesOnly = true;
+        };
       };
     };
 
