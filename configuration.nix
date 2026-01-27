@@ -600,12 +600,14 @@
     # Notifications
     services.mako = {
       enable = true;
-      defaultTimeout = 5000;  # 5 seconds
-      backgroundColor = "#0a0e0a";
-      textColor = "#00ff41";
-      borderColor = "#00ff41";
-      borderSize = 2;
-      font = "JetBrainsMono Nerd Font 10";
+      settings = {
+        default-timeout = 5000;  # 5 seconds
+        background-color = "#0a0e0a";
+        text-color = "#00ff41";
+        border-color = "#00ff41";
+        border-size = 2;
+        font = "JetBrainsMono Nerd Font 10";
+      };
     };
 
     # Chromium
