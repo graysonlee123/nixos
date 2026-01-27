@@ -392,6 +392,14 @@
             criteria = { app_id = "^mako$"; };
             command = "floating enable, border none";
           }
+          {
+            criteria = { title = "Picture in picture"; };
+            command = "floating enable, sticky enable";
+          }
+          {
+            criteria = { title = "^1Password$"; };
+            command = "floating enable; sticky enable";
+          }
         ];
       };
     };
