@@ -343,12 +343,16 @@
           };
         };
 
-        # Keyboard
+        # Inputs
         input = {
           "type:keyboard" = {
             repeat_rate = "75";
             repeat_delay = "200";
-          }; 
+          };
+          "1133:49291:Logitech_G502_HERO_Gaming_Mouse" = {
+            accel_profile = "flat";
+            pointer_accel = "0.3";
+          };
         };
 
         # Disable default bar (using Waybar instead)
