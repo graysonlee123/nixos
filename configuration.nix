@@ -322,6 +322,9 @@
         
           # Vicinae
           "${modifier}+d" = "exec vicinae toggle";
+        
+          # Flameshot
+          "Print" = "exec flameshot gui";
         };
 
         # Resize mode keybindings
