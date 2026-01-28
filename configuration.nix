@@ -256,6 +256,17 @@
         modifier = modifier;
         terminal = "ghostty";
 
+        # Output configuration
+        output = {
+          "eDP-1" = {
+            position = "0,540";  # 540 = 1440 - 900 (align to bottom)
+            scale = "2";
+          };
+          "HDMI-A-1" = {
+            position = "1440,0";
+          };
+        };
+
         # Keybindings
         keybindings = {
           # Launch terminal
