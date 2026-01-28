@@ -267,6 +267,16 @@
           };
         };
 
+        # Lid switch - disable laptop display when lid is closed
+        bindswitches = {
+          "lid:on" = {
+            action = "output eDP-1 disable";
+          };
+          "lid:off" = {
+            action = "output eDP-1 enable";
+          };
+        };
+
         # Keybindings
         keybindings = {
           # Launch terminal
