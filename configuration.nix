@@ -52,6 +52,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable flakes and nix-command
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -254,6 +257,27 @@
         modifier = modifier;
         terminal = "ghostty";
 
+        # Output configuration
+        output = {
+          "eDP-1" = {
+            position = "0,540";  # 540 = 1440 - 900 (align to bottom)
+            scale = "2";
+          };
+          "HDMI-A-1" = {
+            position = "1440,0";
+          };
+        };
+
+        # Lid switch - disable laptop display when lid is closed
+        bindswitches = {
+          "lid:on" = {
+            action = "output eDP-1 disable";
+          };
+          "lid:off" = {
+            action = "output eDP-1 enable";
+          };
+        };
+
         # Keybindings
         keybindings = {
           # Launch terminal
@@ -320,6 +344,9 @@
         
           # Vicinae
           "${modifier}+d" = "exec vicinae toggle";
+        
+          # Flameshot
+          "Print" = "exec flameshot gui";
         };
 
         # Resize mode keybindings
@@ -338,12 +365,16 @@
           };
         };
 
-        # Keyboard
+        # Inputs
         input = {
           "type:keyboard" = {
             repeat_rate = "75";
             repeat_delay = "200";
-          }; 
+          };
+          "1133:49291:Logitech_G502_HERO_Gaming_Mouse" = {
+            accel_profile = "flat";
+            pointer_accel = "0.3";
+          };
         };
 
         # Disable default bar (using Waybar instead)
@@ -427,8 +458,36 @@
       settings = {
         font-family = "JetBrainsMono Nerd Font";
         font-size = lib.mkDefault 14;
-        theme = "Alien Blood";
+        theme = "rose-pine-moon";
         shell-integration-features = "ssh-env";
+      };
+      themes = {
+        rose-pine-moon = {
+          background = "191724";
+          foreground = "e0def4";
+          cursor-color = "e0def4";
+          cursor-text = "191724";
+          palette = [
+            "0=#26233a"
+            "1=#eb6f92"
+            "2=#31748f"
+            "3=#f6c177"
+            "4=#9ccfd8"
+            "5=#c4a7e7"
+            "6=#ebbcba"
+            "7=#e0def4"
+            "8=#6e6a86"
+            "9=#eb6f92"
+            "10=#31748f"
+            "11=#f6c177"
+            "12=#9ccfd8"
+            "13=#c4a7e7"
+            "14=#ebbcba"
+            "15=#e0def4"
+          ];
+          selection-background = "403d52";
+          selection-foreground = "e0def4";
+        };
       };
     };
 
@@ -601,6 +660,12 @@
     # Screenshots
     services.flameshot = {
       enable = true;
+      settings = {
+        General = {
+          showStartupLaunchMessage = false;
+          savePath = "/home/gray/downloads";
+        };
+      };
     };
 
     # Notifications
@@ -623,6 +688,60 @@
         { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
         { id = "dnebklifojaaecmheejjopgjdljebpeo"; } # everhour
       ];
+    };
+
+    # btop
+    programs.btop = {
+      enable = true;
+      settings = {
+        color_theme = "rose-pine-moon";
+      };
+      themes = {
+        rose-pine-moon = ''
+          theme[main_bg]="#232136"
+          theme[main_fg]="#e0def4"
+          theme[title]="#908caa"
+          theme[hi_fg]="#e0def4"
+          theme[selected_bg]="#56526e"
+          theme[selected_fg]="#f6c177"
+          theme[inactive_fg]="#44415a"
+          theme[graph_text]="#9ccfd8"
+          theme[meter_bg]="#9ccfd8"
+          theme[proc_misc]="#c4a7e7"
+          theme[cpu_box]="#ea9a97"
+          theme[mem_box]="#3e8fb0"
+          theme[net_box]="#c4a7e7"
+          theme[proc_box]="#eb6f92"
+          theme[div_line]="#6e6a86"
+          theme[temp_start]="#ea9a97"
+          theme[temp_mid]="#f6c177"
+          theme[temp_end]="#eb6f92"
+          theme[cpu_start]="#f6c177"
+          theme[cpu_mid]="#ea9a97"
+          theme[cpu_end]="#eb6f92"
+          theme[free_start]="#eb6f92"
+          theme[free_mid]="#eb6f92"
+          theme[free_end]="#eb6f92"
+          theme[cached_start]="#c4a7e7"
+          theme[cached_mid]="#c4a7e7"
+          theme[cached_end]="#c4a7e7"
+          theme[available_start]="#3e8fb0"
+          theme[available_mid]="#3e8fb0"
+          theme[available_end]="#3e8fb0"
+          theme[used_start]="#ea9a97"
+          theme[used_mid]="#ea9a97"
+          theme[used_end]="#ea9a97"
+          theme[download_start]="#3e8fb0"
+          theme[download_mid]="#9ccfd8"
+          theme[download_end]="#9ccfd8"
+          theme[upload_start]="#ea9a97"
+          theme[upload_mid]="#eb6f92"
+          theme[upload_end]="#eb6f92"
+          theme[process_start]="#3e8fb0"
+          theme[process_mid]="#9ccfd8"
+          theme[process_end]="#9ccfd8"
+        '';
+      };
     };
 
     # Required, should stay at the version originall installed
