@@ -223,6 +223,18 @@
           identityFile = "~/.ssh/bigscoots";
           identitiesOnly = true;
         };
+        "sulaco" = {
+          hostname = "100.83.63.8";
+          user = "grayson";
+          identityFile = "~/.ssh/sulaco";
+          identitiesOnly = true;
+        };
+        "sulaco.local" = {
+          hostname = "192.168.86.2";
+          user = "grayson";
+          identityFile = "~/.ssh/sulaco";
+          identitiesOnly = true;
+        };
       };
     };
 
