@@ -6,7 +6,7 @@
   users.users.gray = {
     isNormalUser = true;
     description = "Grayson";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
   };
 
