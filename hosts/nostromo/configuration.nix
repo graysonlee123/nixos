@@ -2,15 +2,22 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running 'nixos-help').
 
-{ config, pkgs, ... }:
-
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-      /etc/nixos/host.nix
-      <home-manager/nixos>
-    ];
+{ config, pkgs, inputs, ... }: {
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/nixos/user.nix
+    ../../modules/nixos/system-packages.nix
+    inputs.home-manager.nixosModules.default
+  ];
+  networking.hostName = "nostromo";
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.open = true;
+  hardware.nvidia.modesetting.enable = true;
+  # Galaxy 70 keyboard - function keys fix
+  boot.extraModprobeConfig = ''
+    options hid_apple fnmode=2
+  '';
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -55,14 +62,6 @@
   # Enable flakes and nix-command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    curl
-    inxi
-  ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -82,8 +81,6 @@
 
   # Zsh (required for it to be a valid login shell)
   programs.zsh.enable = true;
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
