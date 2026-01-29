@@ -240,6 +240,7 @@
         user.name = "Grayson Gantek";
         user.email = "github@graysn.com";
         pull.rebase = false;
+        init.defaultBranch = "main";
       };
     };
 
