@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running 'nixos-help').
 
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }:
+
+let
+  bookmarks = import ../../bookmarks.nix;
+in
+{
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/user.nix
@@ -697,6 +702,17 @@
         { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
         { id = "dnebklifojaaecmheejjopgjdljebpeo"; } # everhour
       ];
+    };
+
+    # Declarative read-only bookmarks for both profiles
+    xdg.configFile."chromium/Default/Bookmarks" = {
+      text = bookmarks.mkChromiumBookmarks bookmarks.work;
+      force = true; # Make read-only to enforce declarative management
+    };
+
+    xdg.configFile."chromium/Profile 1/Bookmarks" = {
+      text = bookmarks.mkChromiumBookmarks bookmarks.personal;
+      force = true; # Make read-only to enforce declarative management
     };
 
     # btop
