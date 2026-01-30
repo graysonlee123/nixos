@@ -470,7 +470,7 @@ in
 
           modules-left = [ "sway/workspaces" "sway/mode" ];
           modules-center = [ "sway/window" ];
-          modules-right = [ "cpu" "memory" "network" "pulseaudio" "clock" ];
+          modules-right = [ "battery" "cpu" "memory" "network" "pulseaudio" "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
