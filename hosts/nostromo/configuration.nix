@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/nixos/boot.nix
     ../../modules/nixos/user.nix
     ../../modules/nixos/system-packages.nix
     inputs.home-manager.nixosModules.default
@@ -23,10 +24,6 @@ in
   boot.extraModprobeConfig = ''
     options hid_apple fnmode=2
   '';
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

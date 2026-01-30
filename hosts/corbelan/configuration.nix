@@ -10,16 +10,13 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/nixos/boot.nix
     ../../modules/nixos/user.nix
     ../../modules/nixos/system-packages.nix
     inputs.home-manager.nixosModules.default
   ];
 
   networking.hostName = "corbelan";
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
