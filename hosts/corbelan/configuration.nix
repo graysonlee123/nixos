@@ -424,7 +424,7 @@ in
       enableZshIntegration = true;
       settings = {
         font-family = "JetBrainsMono Nerd Font";
-        font-size = lib.mkDefault 14;
+        font-size = 10;
         theme = "rose-pine-moon";
         shell-integration-features = "ssh-env";
       };
