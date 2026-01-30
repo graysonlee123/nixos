@@ -20,14 +20,12 @@ in
   ];
 
   host.name = "nostromo";
+  nixpkgs.config.allowUnfree = true; # Needed for NVIDIA
 
   # Galaxy 70 keyboard - function keys fix
   boot.extraModprobeConfig = ''
     options hid_apple fnmode=2
   '';
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # Enable flakes and nix-command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

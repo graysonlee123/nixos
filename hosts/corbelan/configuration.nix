@@ -20,9 +20,6 @@ in
 
   host.name = "corbelan";
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # Enable flakes and nix-command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
