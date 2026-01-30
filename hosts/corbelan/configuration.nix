@@ -38,9 +38,6 @@ in
   # Tailscale
   services.tailscale.enable = true;
 
-  # Sway
-  programs.sway.enable = true;
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
