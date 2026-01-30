@@ -11,15 +11,12 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/boot.nix
+    ../../modules/nixos/nvidia.nix
     ../../modules/nixos/user.nix
     ../../modules/nixos/system-packages.nix
     inputs.home-manager.nixosModules.default
   ];
   networking.hostName = "nostromo";
-  hardware.graphics.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.open = true;
-  hardware.nvidia.modesetting.enable = true;
   # Galaxy 70 keyboard - function keys fix
   boot.extraModprobeConfig = ''
     options hid_apple fnmode=2
