@@ -40,9 +40,6 @@ in
   # Sway
   programs.sway.enable = true;
 
-  # Zsh (required for it to be a valid login shell)
-  programs.zsh.enable = true;
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
