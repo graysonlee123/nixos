@@ -21,6 +21,7 @@ in
 
   host.name = "corbelan";
   system.stateVersion = "25.11";
+  hardware.graphics.enable = true;
 
   # Enable flakes and nix-command
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

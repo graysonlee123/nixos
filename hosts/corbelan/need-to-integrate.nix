@@ -27,6 +27,4 @@
       modules-right = [ "battery" ];
     };
   };
-
-  hardware.graphics.enable = true;
 }
