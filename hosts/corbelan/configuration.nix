@@ -15,6 +15,7 @@ in
     ../../modules/nixos/localization.nix
     ../../modules/nixos/user.nix
     ../../modules/nixos/system-packages.nix
+    ../../modules/nixos/zsh.nix
     inputs.home-manager.nixosModules.default
   ];
 
