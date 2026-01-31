@@ -17,6 +17,7 @@ in
     ../../modules/nixos/user.nix
     ../../modules/nixos/system-packages.nix
     ../../modules/nixos/zsh.nix
+    ../../modules/nixos/keyring.nix
     ../../modules/nixos/greeter.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/tailscale.nix
@@ -44,9 +45,6 @@ in
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # GNOME keyring
-  services.gnome.gnome-keyring.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
