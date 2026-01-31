@@ -46,6 +46,9 @@ in {
       sway.isLaptop = cfg.isLaptop;
       waybar.isLaptop = cfg.isLaptop;
 
+      # Fonts
+      fonts.fontconfig.enable = true;
+
       # Packages
       home.packages = with pkgs; [
         _1password-gui
@@ -63,6 +66,7 @@ in {
         ghostty
         git
         go
+        grim
         jetbrains.phpstorm
         lazydocker
         lazygit
@@ -77,6 +81,7 @@ in {
         pgcli
         pnpm
         ripgrep
+        slurp
         speedtest-cli
         tealdeer
         tuir

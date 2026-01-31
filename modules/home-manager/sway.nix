@@ -109,8 +109,8 @@ in {
           # Vicinae
           "${modifier}+d" = "exec vicinae toggle";
 
-          # Flameshot
-          "Print" = "exec flameshot gui";
+          # Screenshots
+          "Print" = "exec grim -g \"$(slurp -b '#00000099' -c '#00ff41')\" - | satty --filename - --fullscreen";
         } // lib.optionalAttrs cfg.isLaptop {
           "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
           "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";

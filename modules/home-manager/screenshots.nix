@@ -1,13 +1,26 @@
 {
   config = {
-    services.flameshot = {
+    programs.satty = {
       enable = true;
       settings = {
-        General = {
-          showStartupLaunchMessage = false;
-          savePath = "/home/gray/downloads";
+        general = {
+          fullscreen = true;
+          early-exit = true;
+          initial-tool = "arrow";
+          copy-command = "wl-copy";
+          output-filename = "/tmp/screenshot-%Y-%m-%d_%H:%M:%S.png";
+          save-after-copy = true;
+          default-fill-shapes = true;
+          actions-on-enter = [ "save-to-file" "exit" ];
+          actions-on-right-click = [];
+          actions-on-escape = [ "exit" ];
+        };
+        font = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Regular";
         };
       };
     };
   };
 }
+
