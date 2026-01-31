@@ -24,6 +24,10 @@ in {
   config = {
     home-manager.useGlobalPkgs = true;
     home-manager.users.gray = { config, lib, pkgs, ... }: {
+      imports = [
+        ./environment-variables.nix
+      ];
+
       # Packages
       home.packages = with pkgs; [
         _1password-gui
@@ -65,11 +69,6 @@ in {
         yazi
         zip
       ] ++ cfg.additionalPackages;
-
-      # Environment variables
-      home.sessionVariables = {
-        EDITOR = "vim";
-      };
 
       # zsh
       programs.zsh = {
