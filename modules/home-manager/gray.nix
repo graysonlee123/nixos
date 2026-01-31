@@ -12,6 +12,13 @@ in {
       example = "[ brightnessctl ]";
       default = [];
     };
+
+    isLaptop = lib.mkOption {
+      type = types.bool;
+      description = "If the host machine needs laptop configurations.";
+      example = true;
+      default = false;
+    };
   };
 
   config = {
@@ -163,7 +170,7 @@ in {
           terminal = "ghostty";
 
           # Output configuration
-          output = {
+          output = lib.mkIf cfg.isLaptop {
             "eDP-1" = {
               position = "0,540";  # 540 = 1440 - 900 (align to bottom)
               scale = "2";
@@ -174,7 +181,7 @@ in {
           };
 
           # Lid switch - disable laptop display when lid is closed
-          bindswitches = {
+          bindswitches = lib.mkIf cfg.isLaptop {
             "lid:on" = {
               action = "output eDP-1 disable";
             };
@@ -252,6 +259,12 @@ in {
 
             # Flameshot
             "Print" = "exec flameshot gui";
+          } // lib.optionalAttrs cfg.isLaptop {
+            "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
+            "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
+            "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+            "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
           };
 
           # Resize mode keybindings
@@ -408,7 +421,7 @@ in {
 
             modules-left = [ "sway/workspaces" "sway/mode" ];
             modules-center = [ "sway/window" ];
-            modules-right = [ "cpu" "memory" "network" "pulseaudio" "clock" ];
+            modules-right = lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "pulseaudio" "clock" ];
 
             "sway/workspaces" = {
               disable-scroll = true;

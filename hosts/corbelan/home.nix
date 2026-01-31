@@ -11,6 +11,6 @@
     ];
   };
 
-  # TODO: restore laptop-specific Sway configuration
+  home.isLaptop = true;
 }
 
