@@ -86,6 +86,7 @@ in {
         tealdeer
         tuir
         unzip
+        vlc
         vscode
         wl-clipboard
         wp-cli
