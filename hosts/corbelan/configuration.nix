@@ -17,6 +17,7 @@ in
     ../../modules/nixos/system-packages.nix
     ../../modules/nixos/zsh.nix
     ../../modules/nixos/greeter.nix
+    ../../modules/nixos/tailscale.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -37,9 +38,6 @@ in
 
   # GNOME keyring
   services.gnome.gnome-keyring.enable = true;
-
-  # Tailscale
-  services.tailscale.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
