@@ -40,6 +40,7 @@ in {
         ./waybar.nix
         ./zoxide.nix
         ./zsh.nix
+        ./claude-code.nix
       ];
 
       # Set laptop-specific options
@@ -56,7 +57,6 @@ in {
         asciiquarium
         bibata-cursors
         btop
-        claude-code
         crawl
         discord
         dive
