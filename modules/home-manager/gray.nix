@@ -26,6 +26,7 @@ in {
     home-manager.users.gray = { config, lib, pkgs, ... }: {
       imports = [
         ./environment-variables.nix
+        ./zsh.nix
       ];
 
       # Packages
@@ -69,21 +70,6 @@ in {
         yazi
         zip
       ] ++ cfg.additionalPackages;
-
-      # zsh
-      programs.zsh = {
-        enable = true;
-        enableCompletion = true;
-        autosuggestion.enable = true;
-        syntaxHighlighting.enable = true;
-        shellAliases = {
-          "cl" = "claude";
-          "lzd" = "lazydocker";
-          "lzg" = "lazygit";
-          "pn" = "pnpm";
-          "y" = "yazi";
-        };
-      };
 
       # Starship prompt
       programs.starship = {
