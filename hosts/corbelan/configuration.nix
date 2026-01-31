@@ -16,6 +16,7 @@ in
     ../../modules/nixos/user.nix
     ../../modules/nixos/system-packages.nix
     ../../modules/nixos/zsh.nix
+    ../../modules/nixos/greeter.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -54,17 +55,6 @@ in
 
   # Required for Sway
   security.polkit.enable = true;
-
-  # Greeter
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd \"sway --unsupported-gpu\"";
-        user = "greeter";
-      };
-    };
-  };
 
   # Home Manager
   home-manager.users.gray = { config, lib, pkgs, ... }: {

@@ -17,12 +17,14 @@ in
     ../../modules/nixos/user.nix
     ../../modules/nixos/system-packages.nix
     ../../modules/nixos/zsh.nix
+    ../../modules/nixos/greeter.nix
     inputs.home-manager.nixosModules.default
   ];
 
   host.name = "nostromo";
   nixpkgs.config.allowUnfree = true; # Needed for NVIDIA
   system.stateVersion = "25.11";
+  greeter.unsupportedGpu = true;
 
   # Galaxy 70 keyboard - function keys fix
   boot.extraModprobeConfig = ''
@@ -60,17 +62,6 @@ in
 
   # Required for Sway
   security.polkit.enable = true;
-
-  # Greeter
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd \"sway --unsupported-gpu\"";
-        user = "greeter";
-      };
-    };
-  };
 
   # Home Manager
   home-manager.users.gray = { config, lib, pkgs, ... }: {
