@@ -19,6 +19,7 @@ in
     ../../modules/nixos/tailscale.nix
     ../../modules/nixos/docker.nix
     ../../modules/nixos/polkit.nix
+    ../../modules/devices/galaxy70.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -27,11 +28,6 @@ in
   system.stateVersion = "25.11";
   greeter.unsupportedGpu = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Galaxy 70 keyboard - function keys fix
-  boot.extraModprobeConfig = ''
-    options hid_apple fnmode=2
-  '';
 
   # Home Manager
   home-manager.users.gray = { config, lib, pkgs, ... }: {
