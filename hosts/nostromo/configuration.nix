@@ -22,6 +22,7 @@ in
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/tailscale.nix
     ../../modules/nixos/docker.nix
+    ../../modules/nixos/polkit.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -51,9 +52,6 @@ in
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-  # Required for Sway
-  security.polkit.enable = true;
 
   # Home Manager
   home-manager.users.gray = { config, lib, pkgs, ... }: {
