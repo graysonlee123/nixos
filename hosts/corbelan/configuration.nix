@@ -19,6 +19,7 @@ in
     ../../modules/nixos/greeter.nix
     ../../modules/nixos/openssh.nix
     ../../modules/nixos/tailscale.nix
+    ../../modules/nixos/docker.nix
     inputs.home-manager.nixosModules.default
   ];
 
@@ -39,9 +40,6 @@ in
 
   # GNOME keyring
   services.gnome.gnome-keyring.enable = true;
-
-  # Enable the Docker daemon.
-  virtualisation.docker.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
