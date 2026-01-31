@@ -1,1 +1,8 @@
-# Add home-specific configuration
+{ pkgs, ...}:
+
+{
+  imports = [
+    ../../modules/home-manager/gray.nix
+  ];
+}
+

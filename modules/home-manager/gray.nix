@@ -57,7 +57,7 @@ in {
         wp-cli
         yazi
         zip
-      ];
+      ] ++ cfg.additionalPackages;
 
       # Environment variables
       home.sessionVariables = {

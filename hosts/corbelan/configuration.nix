@@ -4,10 +4,8 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/common.nix
-    ../../modules/home-manager/gray.nix
+    ./home.nix
   ];
-
-  # TODO: restore laptop-specific Sway configuration
 
   host.name = "corbelan";
   system.stateVersion = "25.11";

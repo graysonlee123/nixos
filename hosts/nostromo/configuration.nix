@@ -6,7 +6,7 @@
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/common.nix
     ../../modules/devices/galaxy70.nix
-    ../../modules/home-manager/gray.nix
+    ./home.nix
   ];
 
   host.name = "nostromo";
