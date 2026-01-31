@@ -1,6 +1,6 @@
 {
   config = {
-    security.polkit.enable = true; # required for Sway
+    security.polkit.enable = true; # required for 1Pass, Sway
   };
 }
 

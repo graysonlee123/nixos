@@ -52,7 +52,6 @@ in {
 
       # Packages
       home.packages = with pkgs; [
-        _1password-gui
         _2048-in-terminal
         asciiquarium
         bibata-cursors
