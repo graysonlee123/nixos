@@ -2,7 +2,7 @@
 
 let
   cfg = config.home;
-  bookmarks = import ../../bookmarks.nix;
+  bookmarks = import ../utils/bookmarks.nix;
   types = lib.types;
 in {
   options.home = {
