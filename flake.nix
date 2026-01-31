@@ -10,7 +10,6 @@
   outputs = { self, nixpkgs, ... } @inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
     nixosConfigurations = {
@@ -19,6 +18,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nostromo/configuration.nix
+          inputs.home-manager.nixosModules.default
         ];
       };
       corbelan = nixpkgs.lib.nixosSystem {
@@ -26,6 +26,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/corbelan/configuration.nix
+          inputs.home-manager.nixosModules.default
         ];
       };
     };
