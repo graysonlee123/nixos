@@ -28,7 +28,7 @@ in {
         ./chromium.nix
         ./cursor.nix
         ./environment-variables.nix
-        ./flameshot.nix
+        ./screenshots.nix
         ./fzf.nix
         ./ghostty.nix
         ./git.nix
