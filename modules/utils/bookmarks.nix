@@ -35,52 +35,5 @@ rec {
     };
     version = 1;
   };
-
-  # Personal profile bookmarks (Profile 1)
-  personal = {
-    bookmarks_bar = [
-      {
-        name = "GitHub";
-        url = "https://github.com";
-      }
-      {
-        name = "Development";
-        type = "folder";
-        children = [
-          {
-            name = "NixOS Manual";
-            url = "https://nixos.org/manual/nixos/stable/";
-          }
-          {
-            name = "Home Manager Options";
-            url = "https://nix-community.github.io/home-manager/options.xhtml";
-          }
-          {
-            name = "NixOS Search";
-            url = "https://search.nixos.org/";
-          }
-        ];
-      }
-      # Add more personal bookmarks here
-    ];
-
-    other = [
-      # Other bookmarks (not on the bookmarks bar)
-    ];
-  };
-
-  # Work profile bookmarks (Default - Inspry)
-  work = {
-    bookmarks_bar = [
-      {
-        name = "Inspry";
-        url = "https://inspry.com";
-      }
-      # Add work-related bookmarks here
-    ];
-
-    other = [
-      # Other work bookmarks
-    ];
-  };
 }
+

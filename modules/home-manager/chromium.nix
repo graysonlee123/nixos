@@ -1,7 +1,8 @@
 { ... }:
 
 let
-  bookmarks = import ../utils/bookmarks.nix;
+  bookmark-utils = import ../utils/bookmarks.nix;
+  bookmarks = import ./bookmarks.nix;
 in {
   config = {
     programs.chromium = {
@@ -14,12 +15,12 @@ in {
 
     # Declarative read-only bookmarks for both profiles
     xdg.configFile."chromium/Default/Bookmarks" = {
-      text = bookmarks.mkChromiumBookmarks bookmarks.work;
+      text = bookmark-utils.mkChromiumBookmarks bookmarks.personal;
       force = true; # Make read-only to enforce declarative management
     };
 
     xdg.configFile."chromium/Profile 1/Bookmarks" = {
-      text = bookmarks.mkChromiumBookmarks bookmarks.personal;
+      text = bookmark-utils.mkChromiumBookmarks bookmarks.inspry;
       force = true; # Make read-only to enforce declarative management
     };
   };
