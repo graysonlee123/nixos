@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   config = {
     programs.zsh = {
@@ -16,6 +18,13 @@
         # Ctrl+arrows for word navigation
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
+
+        # Load bashcompinit
+        autoload bashcompinit
+        bashcompinit
+
+        # wp-cli completion
+        source ${pkgs.wp-cli}/share/bash-completion/completions/wp
       '';
     };
   };
