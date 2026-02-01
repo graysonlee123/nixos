@@ -64,6 +64,7 @@ in {
         filezilla
         ghostty
         git
+        git-crypt
         go
         grim
         jetbrains.phpstorm
