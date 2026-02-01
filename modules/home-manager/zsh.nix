@@ -14,7 +14,7 @@
         "pn" = "pnpm";
         "y" = "yazi";
       };
-      initExtra = ''
+      initContent = ''
         # Ctrl+arrows for word navigation
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
