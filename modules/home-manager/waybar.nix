@@ -35,34 +35,33 @@ in {
           };
 
           "cpu" = {
-            format = " {usage}%";
+            format = "󰻠 {usage}%";
             tooltip = false;
           };
 
           "memory" = {
-            format = " {}%";
+            format = " {}%";
           };
 
           "network" = {
-            format-wifi = " {essid}";
-            format-ethernet = " {ipaddr}";
+            format-wifi = "󰖩 {essid}";
+            format-ethernet = "󰈀 {ipaddr}";
             format-disconnected = "⚠ Disconnected";
             tooltip-format = "{ifname}: {ipaddr}/{cidr}";
           };
 
           "wireplumber" = {
             format = "{icon} {volume}%";
-            format-muted = " 󰝟";
+            format-muted = "󰣽";
             format-icons = {
-              default = [ "|" "||" "|||" "||||" ];
+              default = [ "󰣴" "󰣶" "󰣸" "󰣺" ];
             };
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
             on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix";
           };
 
           "clock" = {
-            format = " {:%H:%M}";
-            format-alt = " {:%Y-%m-%d}";
+            format = "󰃭 {0:%I:%M} {0:%m/%d}";
             tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           };
         };
@@ -114,7 +113,7 @@ in {
         #cpu,
         #memory,
         #network,
-        #pulseaudio,
+        #wireplumber,
         #window,
         #mode {
           padding: 0 10px;
