@@ -81,6 +81,7 @@ in {
         pnpm
         slurp
         speedtest-cli
+        tree
         tuir
         unzip
         vlc
