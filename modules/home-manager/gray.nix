@@ -27,19 +27,26 @@ in {
         ./btop.nix
         ./chromium.nix
         ./cursor.nix
+        ./discord.nix
         ./environment-variables.nix
         ./screenshots.nix
         ./fzf.nix
         ./ghostty.nix
         ./git.nix
+        ./go.nix
         ./mako.nix
+        ./pgcli.nix
+        ./ripgrep.nix
         ./ssh.nix
         ./starship.nix
         ./sway.nix
+        ./tealdeer.nix
         ./vicinae.nix
         ./waybar.nix
         ./yazi.nix
         ./zoxide.nix
+        ./lazydocker.nix
+        ./lazygit.nix
         ./zsh.nix
         ./claude-code.nix
       ];
@@ -57,37 +64,27 @@ in {
         asciiquarium
         bibata-cursors
         crawl
-        discord
         dive
         docker
         dust
         filezilla
-        ghostty
-        git
         git-crypt
-        go
         grim
         jetbrains.phpstorm
-        lazydocker
-        lazygit
-        mako
         mycli
         nerd-fonts.jetbrains-mono
         neofetch
         nethack
         nodejs_24
-        obsidian
+        obsidian # TODO: Manage through home-manager?
         pgadmin4
-        pgcli
         pnpm
-        ripgrep
         slurp
         speedtest-cli
-        tealdeer
         tuir
         unzip
         vlc
-        vscode
+        vscode # TODO: Manage through home-manager.
         wiremix
         wl-clipboard
         wp-cli

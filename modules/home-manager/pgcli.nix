@@ -1,0 +1,4 @@
+{
+  programs.pgcli.enable = true;
+}
+
