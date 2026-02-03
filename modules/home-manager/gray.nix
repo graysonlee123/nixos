@@ -88,6 +88,7 @@ in {
         unzip
         vlc
         vscode
+        wiremix
         wl-clipboard
         wp-cli
         yazi

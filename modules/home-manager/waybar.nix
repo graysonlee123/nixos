@@ -23,7 +23,7 @@ in {
 
           modules-left = [ "sway/workspaces" "sway/mode" ];
           modules-center = [ "sway/window" ];
-          modules-right = lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "pulseaudio" "clock" ];
+          modules-right = lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -50,13 +50,14 @@ in {
             tooltip-format = "{ifname}: {ipaddr}/{cidr}";
           };
 
-          "pulseaudio" = {
+          "wireplumber" = {
             format = "{icon} {volume}%";
-            format-muted = " Muted";
+            format-muted = " 󰝟";
             format-icons = {
-              default = [ "" "" "" ];
+              default = [ "|" "||" "|||" "||||" ];
             };
-            on-click = "vicinae deeplink vicinae://extensions/rastsislaux/pulseaudio/pulseaudio";
+            on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
+            on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix";
           };
 
           "clock" = {
@@ -132,16 +133,9 @@ in {
           color: #00cc33;
         }
 
+        #wireplumber.muted,
         #network.disconnected {
           color: #ff6600;
-        }
-
-        #pulseaudio {
-          color: #00dd33;
-        }
-
-        #pulseaudio.muted {
-          color: #004400;
         }
 
         #clock {

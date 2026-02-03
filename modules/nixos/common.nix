@@ -7,6 +7,7 @@
     ./system-packages.nix
     ./zsh.nix
     ./keyring.nix
+    ./audio.nix
     ./greeter.nix
     ./openssh.nix
     ./tailscale.nix
