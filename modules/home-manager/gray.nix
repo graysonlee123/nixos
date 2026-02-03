@@ -38,6 +38,7 @@ in {
         ./sway.nix
         ./vicinae.nix
         ./waybar.nix
+        ./yazi.nix
         ./zoxide.nix
         ./zsh.nix
         ./claude-code.nix
@@ -91,7 +92,6 @@ in {
         wiremix
         wl-clipboard
         wp-cli
-        yazi
         zip
       ] ++ cfg.additionalPackages;
 
