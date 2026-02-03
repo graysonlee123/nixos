@@ -56,7 +56,6 @@ in {
         _2048-in-terminal
         asciiquarium
         bibata-cursors
-        btop
         crawl
         discord
         dive
