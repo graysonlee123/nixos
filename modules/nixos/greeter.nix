@@ -13,6 +13,7 @@ in {
   config = {
     services.greetd = {
       enable = true;
+      useTextGreeter = true;
       settings = {
         default_session = {
           command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd \"${if cfg.unsupportedGpu then "sway --unsupported-gpu" else "sway"}\"";
