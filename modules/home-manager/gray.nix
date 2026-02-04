@@ -42,6 +42,7 @@ in {
         ./sway.nix
         ./tealdeer.nix
         ./vicinae.nix
+        ./vscode.nix
         ./waybar.nix
         ./yazi.nix
         ./zoxide.nix
@@ -85,7 +86,6 @@ in {
         tuir
         unzip
         vlc
-        vscode # TODO: Manage through home-manager.
         wiremix
         wl-clipboard
         wp-cli
