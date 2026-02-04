@@ -14,6 +14,9 @@ in {
   config = {
     networking.hostName = cfg.name;
     networking.networkmanager.enable = true;
+    networking.firewall.allowedTCPPorts = [
+      9003 # Xdebug
+    ];
   };
 }
 
