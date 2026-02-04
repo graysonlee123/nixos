@@ -2,7 +2,6 @@
 {
   config = {
     environment.systemPackages = with pkgs; [
-      vim
       curl
       inxi
     ];

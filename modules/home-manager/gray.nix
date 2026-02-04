@@ -42,6 +42,7 @@ in {
         ./sway.nix
         ./tealdeer.nix
         ./vicinae.nix
+        ./vim.nix
         ./vscode.nix
         ./waybar.nix
         ./yazi.nix
