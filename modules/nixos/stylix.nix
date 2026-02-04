@@ -8,6 +8,8 @@
         chromium.enable = false;
       };
 
+      image = ./../../wallpaper.jpg;
+
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/atelier-dune.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/jabuti.yaml";
