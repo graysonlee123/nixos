@@ -4,6 +4,11 @@
   config = {
     programs.vicinae = {
       enable = true;
+      settings = {
+        theme = {
+          name = "stylix";
+        };
+      };
       extensions = [
         (config.lib.vicinae.mkExtension {
           name = "nix";

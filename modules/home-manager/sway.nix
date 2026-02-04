@@ -150,38 +150,6 @@ in {
         # Disable default bar (using Waybar instead)
         bars = [];
 
-        # Colors for window borders - ALIEN (1979) TERMINAL THEME
-        colors = {
-          focused = {
-            border = "#00ff41";        # Bright phosphor green border
-            background = "#0a0e0a";    # Almost black background
-            text = "#00ff41";          # Phosphor green text
-            indicator = "#33ff33";     # Bright green indicator
-            childBorder = "#00ff41";   # Phosphor green child border
-          };
-          focusedInactive = {
-            border = "#003300";        # Dark green border
-            background = "#0a0e0a";    # Almost black background
-            text = "#009900";          # Dimmed green text
-            indicator = "#006600";     # Dim green indicator
-            childBorder = "#003300";   # Dark green child border
-          };
-          unfocused = {
-            border = "#001a00";        # Very dark green border
-            background = "#0a0e0a";    # Almost black background
-            text = "#004400";          # Very dim green text
-            indicator = "#003300";     # Very dim indicator
-            childBorder = "#001a00";   # Very dark green child border
-          };
-          urgent = {
-            border = "#ff6600";        # Warning amber border
-            background = "#331100";    # Dark amber background
-            text = "#ffaa00";          # Amber warning text
-            indicator = "#ff3300";     # Red alert indicator
-            childBorder = "#ff6600";   # Warning amber child border
-          };
-        };
-
         # Startup
         startup = [
           {

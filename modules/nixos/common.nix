@@ -14,6 +14,7 @@
     ./docker.nix
     ./polkit.nix
     ./1password.nix
+    ./stylix.nix
   ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
