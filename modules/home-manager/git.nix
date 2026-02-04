@@ -9,7 +9,7 @@
             user = {
               email = "grayson@inspry.com";
             };
-            url."git@inspry.github.com:inspry/".insteadOf = "git@github.com:inspry/";
+            url."git@inspry.github.com:".insteadOf = "git@github.com:";
           };
         }
       ];
