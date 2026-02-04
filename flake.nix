@@ -31,7 +31,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/corbelan/configuration.nix
-          stylix.noxosModules.stylix
+          stylix.nixosModules.stylix
           inputs.home-manager.nixosModules.default
         ];
       };
