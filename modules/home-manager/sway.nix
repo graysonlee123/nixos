@@ -54,7 +54,7 @@ in {
           "${modifier}+Shift+c" = "reload";
 
           # Exit sway
-          "${modifier}+Shift+e" = "exec swaymsg exit";
+          "${modifier}+Shift+l" = "exec swaymsg exit";
 
           # Movement focus
           "${modifier}+Left" = "focus left";
@@ -93,7 +93,7 @@ in {
           "${modifier}+Shift+0" = "move container to workspace number 10";
 
           # Layout
-          "${modifier}+b" = "splith";
+          "${modifier}+h" = "splith";
           "${modifier}+v" = "splitv";
           "${modifier}+s" = "layout stacking";
           "${modifier}+w" = "layout tabbed";
