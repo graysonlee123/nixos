@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 let
   bookmark-utils = import ../utils/bookmarks.nix;
@@ -7,6 +7,9 @@ in {
   config = {
     programs.chromium = {
       enable = true;
+      package = pkgs.chromium.override {
+        enableWideVine = true;
+      };
       extensions = [
         { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
         { id = "dnebklifojaaecmheejjopgjdljebpeo"; } # everhour
