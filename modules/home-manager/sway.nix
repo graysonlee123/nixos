@@ -103,8 +103,9 @@ in {
           "${modifier}+space" = "focus mode_toggle";
           "${modifier}+a" = "focus parent";
 
-          # Resize mode
+          # Modes
           "${modifier}+r" = "mode resize";
+          "${modifier}+slash" = "mode launch";
 
           # Vicinae
           "${modifier}+d" = "exec vicinae toggle";
@@ -130,6 +131,17 @@ in {
             "j" = "resize grow height 10px";
             "k" = "resize shrink height 10px";
             "semicolon" = "resize grow width 10px";
+            "Escape" = "mode default";
+            "Return" = "mode default";
+          };
+          launch = {
+            "1" = "exec sh -c '1password && swaymsg mode default'";
+            "c" = "exec sh -c 'chromium && swaymsg mode default'";
+            "o" = "exec sh -c 'obsidian && swaymsg mode default'";
+            "t" = "exec sh -c 'ghostty && swaymsg mode default'";
+            "d" = "exec discord; mode default";
+            "v" = "exec sh -c 'code && swaymsg mode default'";
+            "p" = "exec phpstorm; mode default";
             "Escape" = "mode default";
             "Return" = "mode default";
           };
