@@ -1,7 +1,10 @@
+{ pkgs-unstable, ... }:
+
 {
   config = {
     programs.claude-code = {
       enable = true;
+      package = pkgs-unstable.claude-code;
       memory.text = ''
         - In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
         - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise and sacrifice grammar for the sake of consision.
