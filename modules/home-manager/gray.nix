@@ -73,6 +73,7 @@ in {
         git-crypt
         grim
         jetbrains.phpstorm
+        jq
         libnotify
         mycli
         nerd-fonts.jetbrains-mono
