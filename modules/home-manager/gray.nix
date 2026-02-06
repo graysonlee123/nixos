@@ -88,6 +88,7 @@ in {
         tuir
         unzip
         vlc
+        wf-recorder
         wiremix
         wl-clipboard
         wp-cli

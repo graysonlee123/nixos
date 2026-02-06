@@ -112,6 +112,10 @@ in {
 
           # Screenshots
           "Print" = "exec grim -g \"$(slurp -b '#00000099' -c '#00ff41')\" - | satty --filename -";
+
+          # Recordings
+          "${modifier}+Print" = "exec wf-recorder -g \"$(slurp)\" --file /tmp/video-$(date +%Y-%m-%d_%H-%M-%S).mp4 && notify-send \"Recording saved to /tmp\"";
+          "${modifier}+Shift+Print" = "exec pkill -SIGINT wf-recorder";
         } // lib.optionalAttrs cfg.isLaptop {
           "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
           "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
