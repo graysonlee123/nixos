@@ -111,7 +111,7 @@ in {
           "${modifier}+d" = "exec vicinae toggle";
 
           # Screenshots
-          "Print" = "exec grim -g \"$(slurp -b '#00000099' -c '#00ff41')\" - | satty --filename - --fullscreen";
+          "Print" = "exec grim -g \"$(slurp -b '#00000099' -c '#00ff41')\" - | satty --filename -";
         } // lib.optionalAttrs cfg.isLaptop {
           "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
           "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";

@@ -10,7 +10,6 @@
           copy-command = "wl-copy";
           output-filename = "/tmp/screenshot-%Y-%m-%d_%H:%M:%S.png";
           save-after-copy = true;
-          default-fill-shapes = true;
           actions-on-enter = [ "save-to-file" "exit" ];
           actions-on-right-click = [];
           actions-on-escape = [ "exit" ];
