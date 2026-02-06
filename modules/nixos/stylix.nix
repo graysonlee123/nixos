@@ -17,6 +17,21 @@
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/oxocarbon-dark.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/tarot.yaml";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/caroline.yaml";
+
+      fonts = {
+        serif = {
+          package = pkgs.lora;
+          name = "Lora";
+        };
+        sansSerif = {
+          package = pkgs.work-sans;
+          name = "Work Sans";
+        };
+        monospace = {
+          package = pkgs.nerd-fonts.agave;
+          name = "Agave Nerd Font";
+        };
+      };
     };
   };
 }
