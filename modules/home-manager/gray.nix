@@ -73,6 +73,7 @@ in {
         git-crypt
         grim
         jetbrains.phpstorm
+        libnotify
         mycli
         nerd-fonts.jetbrains-mono
         neofetch
