@@ -81,6 +81,8 @@ in {
         nethack
         nodejs_24
         obsidian # TODO: Manage through home-manager?
+        php82
+        php82Packages.composer
         pgadmin4
         pnpm
         slurp
@@ -92,7 +94,10 @@ in {
         wf-recorder
         wiremix
         wl-clipboard
-        wp-cli
+        (wp-cli.override {
+          php = php82;
+          phpIniFile = pkgs.writeText "php.ini" (builtins.readFile "${php82}/etc/php.ini");
+        })
         zip
       ] ++ cfg.additionalPackages;
 
