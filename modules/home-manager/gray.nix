@@ -72,6 +72,7 @@ in {
         filezilla
         git-crypt
         grim
+        heynote
         jetbrains.phpstorm
         jq
         libnotify
