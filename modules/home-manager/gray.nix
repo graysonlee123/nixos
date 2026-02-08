@@ -78,6 +78,7 @@ in {
         jq
         libnotify
         mycli
+        nixfmt
         nerd-fonts.jetbrains-mono
         neofetch
         nethack
