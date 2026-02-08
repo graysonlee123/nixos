@@ -66,6 +66,7 @@ in {
         asciiquarium
         bibata-cursors
         crawl
+        dig
         dive
         docker
         dust
