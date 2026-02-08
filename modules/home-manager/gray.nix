@@ -87,6 +87,8 @@ in {
         php82Packages.composer
         pgadmin4
         pnpm
+        rclone
+        restic
         slurp
         speedtest-cli
         tree
