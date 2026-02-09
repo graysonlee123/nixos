@@ -12,6 +12,7 @@
           vscode-extensions.esbenp.prettier-vscode
           vscode-extensions.prisma.prisma
           vscode-extensions.astro-build.astro-vscode
+          vscode-extensions.unifiedjs.vscode-mdx
         ];
         userSettings = {
           "workbench.startupEditor" = "readme";
