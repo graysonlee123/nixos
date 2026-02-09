@@ -13,6 +13,8 @@
           vscode-extensions.prisma.prisma
           vscode-extensions.astro-build.astro-vscode
           vscode-extensions.unifiedjs.vscode-mdx
+          vscode-extensions.golang.go
+          vscode-extensions.jnoortheen.nix-ide
         ];
         userSettings = {
           "workbench.startupEditor" = "readme";
@@ -28,6 +30,8 @@
           "git.confirmSync" = false;
           "html.autoCreateQuotes" = false;
           "html.format.indentInnerHtml" = true;
+          "[go]" = { "editor.defaultFormatter" = "golang.go"; };
+          "[nix]" = { "editor.defaultFormatter" = "jnoortheen.nix-ide"; };
         };
         keybindings = [];
       };
