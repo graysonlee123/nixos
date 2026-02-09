@@ -17,6 +17,7 @@
           vscode-extensions.jnoortheen.nix-ide
         ];
         userSettings = {
+          "update.mode" = "none";
           "workbench.startupEditor" = "readme";
           "workbench.activityBar.location" = "top";
           "workbench.secondarySideBar.defaultVisibility" = "hidden";
