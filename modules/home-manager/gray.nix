@@ -84,9 +84,9 @@ in {
         nethack
         nodejs_24
         obsidian # TODO: Manage through home-manager?
+        pgadmin4-desktopmode
         php82
         php82Packages.composer
-        pgadmin4
         pnpm
         rclone
         restic
