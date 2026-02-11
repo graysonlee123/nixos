@@ -16,3 +16,6 @@ result-*
 secrets.nix
 *.age
 *.key
+
+# Go vendor directories
+**/vendor

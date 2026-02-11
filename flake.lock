@@ -140,6 +140,22 @@
         "type": "gitlab"
       }
     },
+    "gray-vicinae-shortcuts": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./scripts/gray-vicinae-shortcuts",
+        "type": "path"
+      },
+      "original": {
+        "path": "./scripts/gray-vicinae-shortcuts",
+        "type": "path"
+      },
+      "parent": []
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -220,6 +236,7 @@
     },
     "root": {
       "inputs": {
+        "gray-vicinae-shortcuts": "gray-vicinae-shortcuts",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",

@@ -22,7 +22,7 @@ in {
 
   config = {
     home-manager.useGlobalPkgs = true;
-    home-manager.users.gray = { config, lib, pkgs, ... }: {
+    home-manager.users.gray = { config, lib, pkgs, inputs, system, ... }: {
       imports = [
         ./btop.nix
         ./chromium.nix
@@ -74,6 +74,7 @@ in {
         git-crypt
         grim
         heynote
+        inputs.gray-vicinae-shortcuts.packages.${system}.default
         jetbrains.phpstorm
         jq
         libnotify
