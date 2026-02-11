@@ -34,6 +34,7 @@ in {
         ./ghostty.nix
         ./git.nix
         ./go.nix
+        ./iamb.nix
         ./mako.nix
         ./pgcli.nix
         ./ripgrep.nix
