@@ -34,6 +34,14 @@ in {
             max-length = 50;
           };
 
+          "battery" = {
+            format = "{icon} {capacity}%";
+            format-icons = {
+              default = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+              charging = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
+            };
+          };
+
           "cpu" = {
             format = "󰻠 {usage}%";
             tooltip = false;
