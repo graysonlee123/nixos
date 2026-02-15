@@ -27,7 +27,6 @@ in {
         ./btop.nix
         ./chromium.nix
         ./cursor.nix
-        ./discord.nix
         ./environment-variables.nix
         ./screenshots.nix
         ./fzf.nix
@@ -52,6 +51,7 @@ in {
         ./lazygit.nix
         ./zsh.nix
         ./claude-code.nix
+        ./vesktop.nix
       ];
 
       # Set laptop-specific options
