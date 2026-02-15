@@ -54,6 +54,9 @@ sudo nixos-rebuild <option> --flake .#<host>
 ```bash
 # Connect to a WiFi network
 nmcli device wifi connect <ssid> password <password>
+
+# Or use the TUI
+nmtui
 ```
 
 2. Ensure flakes are enabled:
