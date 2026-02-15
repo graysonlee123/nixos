@@ -93,6 +93,7 @@ in {
         restic
         slurp
         speedtest-cli
+        traceroute
         tree
         tuir
         unzip
