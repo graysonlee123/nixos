@@ -247,6 +247,10 @@ nix flake update
 - Hardware configuration should not be manually edited (auto-generated)
 - Each host has its own configuration directory under `hosts/`
 
+## Known issues
+
+- **MT7925 driver still maturing** - Known Linux compatibility issues
+
 ## License
 
 Personal configuration - use at your own risk.
