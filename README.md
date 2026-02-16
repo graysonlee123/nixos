@@ -226,6 +226,12 @@ sudo nix-collect-garbage -d
 nix flake update
 ```
 
+## Useful Keybindings
+
+- `Print`: Screenshot with grim, satty and slurp
+- `Super + Print`: Screen record with wf-recorder and slurp
+- `Super + Shift + Print`: Gracefully kill wf-recorder
+
 ## Notes
 
 - This configuration uses flakes and Home Manager for user-specific settings
