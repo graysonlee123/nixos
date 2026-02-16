@@ -89,6 +89,7 @@ in {
         php82
         php82Packages.composer
         pnpm
+        r2modman
         rclone
         restic
         slurp

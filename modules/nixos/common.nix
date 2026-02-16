@@ -10,6 +10,7 @@
     ./audio.nix
     ./greeter.nix
     ./openssh.nix
+    ./steam.nix
     ./tailscale.nix
     ./docker.nix
     ./polkit.nix
