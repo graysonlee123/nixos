@@ -5,6 +5,10 @@
       settings = {
         mgr = {
           show_hidden = true;
+          linemode = "size";
+        };
+        input = {
+          cursor_blink = true;
         };
       };
       keymap = {
