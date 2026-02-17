@@ -230,6 +230,7 @@ nix flake update
 
 - `Print`: Screenshot with grim, satty and slurp
 - `Super + Print`: Screen record with wf-recorder and slurp
+- `Super + Alt + Print`: Screen record with default audio source using wf-recorder and slurp
 - `Super + Shift + Print`: Gracefully kill wf-recorder
 
 ## Notes
