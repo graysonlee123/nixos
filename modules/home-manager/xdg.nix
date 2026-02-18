@@ -1,6 +1,17 @@
 {
+  xdg.desktopEntries.yazi-open = {
+    name = "Yazi";
+    comment = "Terminal file manager";
+    exec = "ghostty -e yazi %u";
+    terminal = false;
+    mimeType = [ "inode/directory" ];
+    categories = [ "Utility" "FileManager" ];
+  };
+
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
+    # Directories
+    "inode/directory" = "yazi-open.desktop";
     # Video
     "video/mp4" = "vlc.desktop";
     "video/x-matroska" = "vlc.desktop";
