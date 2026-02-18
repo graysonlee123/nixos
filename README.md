@@ -244,6 +244,43 @@ However, many associations happen automatically without explicit configuration. 
 
 So explicit entries in xdg.nix are only needed when you want to *override* what installed apps already claim. For example, VLC already advertises support for most media types, so it wins by default without any xdg.nix entry.
 
+## Gamescope (Steam Game Scaling)
+
+Gamescope is a micro-compositor for scaling games. Key flags:
+
+- `-w` / `-h` — game (inner) resolution
+- `-W` / `-H` — output (display) resolution
+- `-S` / `--scaler` — scaling mode: `auto`, `integer`, `fit`, `fill`, `stretch`
+- `-F` / `--filter` — upscale filter: `linear`, `nearest`, `fsr`, `nis`, `pixel`
+
+### Corbelan (2880x1800)
+
+For integer scaling, the game resolution must divide evenly into the output resolution. Common clean ratios for 1800p:
+
+| Game height | Scale factor | Notes |
+|-------------|-------------|-------|
+| 900 | 2x | Good default for most games |
+| 600 | 3x | Ideal for old 800x600 games |
+| 450 | 4x | Very low res |
+
+General template:
+```
+gamescope -w <game_w> -h <game_h> -W 2880 -H 1800 -S integer -F nearest --fullscreen -- %command%
+```
+
+If integer scaling doesn't work (game res doesn't divide evenly), use `fit` + `fsr`:
+```
+gamescope -w <game_w> -h <game_h> -W 2880 -H 1800 -S fit -F fsr --fullscreen -- %command%
+```
+
+### Peggle Deluxe (800x600)
+
+Native 800x600 → 3x integer to 1800p. Uses `PROTON_USE_WINED3D=1` to fix game speed issues caused by Proton's DXVK timing with old DirectX games.
+
+```
+PROTON_USE_WINED3D=1 gamescope -w 800 -h 600 -W 2880 -H 1800 --scaler integer --filter nearest --fullscreen -- %command%
+```
+
 ## Notes
 
 - This configuration uses flakes and Home Manager for user-specific settings
