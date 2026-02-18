@@ -233,6 +233,17 @@ nix flake update
 - `Super + Alt + Print`: Screen record with default audio source using wf-recorder and slurp
 - `Super + Shift + Print`: Gracefully kill wf-recorder
 
+## XDG MIME Defaults
+
+Default applications are configured in `modules/home-manager/xdg.nix` via `xdg.mimeApps.defaultApplications`. Note that XDG MIME wildcards (e.g. `video/*`) don't work in `mimeapps.list` — each MIME type must be listed explicitly.
+
+However, many associations happen automatically without explicit configuration. Apps like VLC declare supported MIME types in their `.desktop` files, which get indexed into `mimeinfo.cache`. The XDG lookup chain is:
+
+1. **`mimeapps.list`** (explicit defaults from xdg.nix)
+2. **`mimeinfo.cache`** (built from installed apps' `.desktop` files)
+
+So explicit entries in xdg.nix are only needed when you want to *override* what installed apps already claim. For example, VLC already advertises support for most media types, so it wins by default without any xdg.nix entry.
+
 ## Notes
 
 - This configuration uses flakes and Home Manager for user-specific settings

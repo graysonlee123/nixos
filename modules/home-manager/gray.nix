@@ -52,6 +52,8 @@ in {
         ./zsh.nix
         ./claude-code.nix
         ./vesktop.nix
+        ./xdg.nix
+        ./imv.nix
       ];
 
       # Set laptop-specific options
