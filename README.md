@@ -244,6 +244,14 @@ However, many associations happen automatically without explicit configuration. 
 
 So explicit entries in xdg.nix are only needed when you want to *override* what installed apps already claim. For example, VLC already advertises support for most media types, so it wins by default without any xdg.nix entry.
 
+### XDG Desktop Portals
+
+XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled access to system resources on Wayland. Configured in `modules/nixos/xdg.nix` using `xdg-desktop-portal-wlr` for Sway. Enables:
+
+- File picker dialogs in browsers and apps
+- Screen sharing/recording in web apps
+- Screenshot capabilities across sandbox boundaries
+
 ## Gamescope (Steam Game Scaling)
 
 Gamescope is a micro-compositor for scaling games. Key flags:
