@@ -96,6 +96,7 @@ in {
         restic
         slurp
         speedtest-cli
+        teamspeak6-client
         tree
         tuir
         unzip
