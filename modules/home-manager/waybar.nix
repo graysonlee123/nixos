@@ -23,7 +23,7 @@ in {
 
           modules-left = [ "sway/workspaces" "sway/mode" ];
           modules-center = [ "sway/window" ];
-          modules-right = lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "clock" ];
+          modules-right = lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -48,7 +48,7 @@ in {
           };
 
           "memory" = {
-            format = " {}%";
+            format = "  {}%";
           };
 
           "network" = {
@@ -64,8 +64,18 @@ in {
             format-icons = {
               default = [ "󰣴" "󰣶" "󰣸" "󰣺" ];
             };
+            scroll-step = 5;
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
             on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix";
+          };
+
+          "wireplumber#source" = {
+            node-type = "Audio/Source";
+            format = "󰍬 {volume}%";
+            format-muted = "󰍭";
+            scroll-step = 5;
+            on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle";
+            on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix --tab input";
           };
 
           "clock" = {
