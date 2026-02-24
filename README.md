@@ -200,6 +200,7 @@ Chromium bookmarks are managed declaratively through `modules/home-manager/bookm
 - **GPU Configuration**:
   - `hardware.nvidia.open = true`
   - `hardware.nvidia.modesetting.enable = true`
+- **Chromium green screen on videos**: Disable `chrome://flags/#disable-accelerated-video-decode` (set to Disabled). NVIDIA + Wayland hardware video decode causes green frames on some video content.
 
 ## Useful Commands
 
