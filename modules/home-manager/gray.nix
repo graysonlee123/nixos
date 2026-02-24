@@ -91,6 +91,7 @@ in {
         php82
         php82Packages.composer
         pnpm
+        qalculate-gtk
         r2modman
         rclone
         restic
