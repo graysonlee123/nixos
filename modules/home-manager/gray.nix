@@ -54,6 +54,7 @@ in {
         ./vesktop.nix
         ./xdg.nix
         ./imv.nix
+        ./radioboat.nix
       ];
 
       # Set laptop-specific options
@@ -92,6 +93,7 @@ in {
         php82Packages.composer
         pnpm
         qalculate-gtk
+        radioboat
         r2modman
         rclone
         restic
