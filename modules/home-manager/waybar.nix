@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.waybar;
@@ -100,6 +100,13 @@ in {
           padding: 0 10px;
         }
       '';
+    };
+
+    # Kill any existing waybar before starting to prevent duplicate bars on
+    # resume from suspend. The leading "-" tells systemd to ignore non-zero
+    # exit codes (i.e. when no waybar process exists to kill).
+    systemd.user.services.waybar = {
+      Service.ExecStartPre = "-${pkgs.procps}/bin/pkill -x waybar";
     };
   };
 }
