@@ -12,10 +12,12 @@
           vscode-extensions.esbenp.prettier-vscode
           vscode-extensions.prisma.prisma
           vscode-extensions.astro-build.astro-vscode
+          vscode-extensions.unifiedjs.vscode-mdx
           vscode-extensions.golang.go
           vscode-extensions.jnoortheen.nix-ide
         ];
         userSettings = {
+          "update.mode" = "none";
           "workbench.startupEditor" = "readme";
           "workbench.activityBar.location" = "top";
           "workbench.secondarySideBar.defaultVisibility" = "hidden";

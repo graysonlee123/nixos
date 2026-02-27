@@ -27,13 +27,13 @@ in {
         ./btop.nix
         ./chromium.nix
         ./cursor.nix
-        ./discord.nix
         ./environment-variables.nix
         ./screenshots.nix
         ./fzf.nix
         ./ghostty.nix
         ./git.nix
         ./go.nix
+        ./iamb.nix
         ./mako.nix
         ./pgcli.nix
         ./ripgrep.nix
@@ -51,6 +51,10 @@ in {
         ./lazygit.nix
         ./zsh.nix
         ./claude-code.nix
+        ./vesktop.nix
+        ./xdg.nix
+        ./imv.nix
+        ./radioboat.nix
       ];
 
       # Set laptop-specific options
@@ -85,16 +89,21 @@ in {
         nethack
         nodejs_24
         obsidian # TODO: Manage through home-manager?
+        pgadmin4-desktopmode
         php82
         php82Packages.composer
-        pgadmin4
         pnpm
+        qalculate-gtk
+        radioboat
+        r2modman
         rclone
         restic
         slurp
         speedtest-cli
         traceroute
+        teamspeak6-client
         tree
+        typescript-language-server
         tuir
         unzip
         vlc

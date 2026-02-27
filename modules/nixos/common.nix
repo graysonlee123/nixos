@@ -10,12 +10,14 @@
     ./audio.nix
     ./greeter.nix
     ./openssh.nix
+    ./steam.nix
     ./tailscale.nix
     ./docker.nix
     ./polkit.nix
     ./1password.nix
     ./stylix.nix
     ./clamav.nix
+    ./xdg.nix
   ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

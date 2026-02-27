@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.waybar;
@@ -23,7 +23,7 @@ in {
 
           modules-left = [ "sway/workspaces" "sway/mode" ];
           modules-center = [ "sway/window" ];
-          modules-right = lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "clock" ];
+          modules-right = lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -34,13 +34,21 @@ in {
             max-length = 50;
           };
 
+          "battery" = {
+            format = "{icon} {capacity}%";
+            format-icons = {
+              default = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+              charging = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
+            };
+          };
+
           "cpu" = {
             format = "󰻠 {usage}%";
             tooltip = false;
           };
 
           "memory" = {
-            format = " {}%";
+            format = "  {}%";
           };
 
           "network" = {
@@ -56,8 +64,18 @@ in {
             format-icons = {
               default = [ "󰣴" "󰣶" "󰣸" "󰣺" ];
             };
+            scroll-step = 5;
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
             on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix";
+          };
+
+          "wireplumber#source" = {
+            node-type = "Audio/Source";
+            format = "󰍬 {volume}%";
+            format-muted = "󰍭";
+            scroll-step = 5;
+            on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle";
+            on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix --tab input";
           };
 
           "clock" = {
@@ -82,6 +100,13 @@ in {
           padding: 0 10px;
         }
       '';
+    };
+
+    # Kill any existing waybar before starting to prevent duplicate bars on
+    # resume from suspend. The leading "-" tells systemd to ignore non-zero
+    # exit codes (i.e. when no waybar process exists to kill).
+    systemd.user.services.waybar = {
+      Service.ExecStartPre = "-${pkgs.procps}/bin/pkill -x waybar";
     };
   };
 }

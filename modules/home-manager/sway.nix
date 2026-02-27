@@ -115,6 +115,7 @@ in {
 
           # Recordings
           "${modifier}+Print" = "exec wf-recorder -g \"$(slurp)\" --file /tmp/video-$(date +%Y-%m-%d_%H-%M-%S).mp4 && notify-send \"Recording saved to /tmp\"";
+          "${modifier}+Alt+Print" = "exec wf-recorder -g \"$(slurp)\" --audio --file /tmp/video-$(date +%Y-%m-%d_%H-%M-%S).mp4 && notify-send \"Recording saved to /tmp\"";
           "${modifier}+Shift+Print" = "exec pkill -SIGINT wf-recorder";
         } // lib.optionalAttrs cfg.isLaptop {
           "XF86MonBrightnessUp" = "exec brightnessctl set +5%";

@@ -2,71 +2,77 @@
 
 ## Overview
 
-This repository contains a version-controlled NixOS configuration using the home directory + symlinks approach. The configuration files are maintained in this git repository and symlinked to `/etc/nixos/` for system use.
+This repository contains a version-controlled NixOS configuration using **Nix flakes**. Configuration is modular with separate host configs and reusable modules.
 
 ## Machines
 
-- **Corbelan**: Laptop
-- **Nostromo**: Home desktop
+- **Corbelan**: Laptop (AMD CPU/GPU, Hi-DPI display)
+- **Nostromo**: Home desktop (Intel CPU, NVIDIA GPU)
 
 ## Repository Structure
 
 ```
 ~/repos/me/nixos/
-├── .git/                       # Git repository
-├── .gitignore                  # Git ignore rules
-├── configuration.nix           # Main NixOS configuration
-├── hardware-configuration.nix  # Hardware-specific settings
-├── CLAUDE.md                   # This file - repository notes
-└── README.md                   # User-facing documentation
+├── flake.nix                   # Flake configuration
+├── flake.lock                  # Flake lock file
+├── hosts/
+│   ├── corbelan/              # Laptop configuration
+│   │   ├── configuration.nix
+│   │   ├── hardware-configuration.nix
+│   │   └── home.nix
+│   └── nostromo/              # Desktop configuration
+│       ├── configuration.nix
+│       ├── hardware-configuration.nix
+│       └── home.nix
+├── modules/
+│   ├── nixos/                 # System-level modules
+│   ├── home-manager/          # User-level modules
+│   ├── devices/               # Device-specific configs
+│   └── utils/                 # Utility modules (bookmarks)
+├── scripts/                   # Helper scripts
+├── wallpaper.jpg
+├── CLAUDE.md                  # This file
+└── README.md                  # User-facing documentation
 ```
-
-## Active Symlinks
-
-The following symlinks are currently active in `/etc/nixos/`:
-- `/etc/nixos/configuration.nix` → `/home/gray/repos/me/nixos/configuration.nix`
-- `/etc/nixos/hardware-configuration.nix` → `/home/gray/repos/me/nixos/hardware-configuration.nix`
 
 ## Configuration Approach
 
-This setup uses the **home directory + symlinks** method for managing NixOS configuration:
+Uses **Nix flakes** with modular architecture:
 
 ### Benefits
-- Git operations don't require sudo
-- Easy to backup and share
-- Clean separation between system config and version control
-- Standard approach used by the NixOS community
+- Reproducible builds with flake.lock
+- No symlinks needed - rebuild directly from repo
+- Clean module separation by purpose
+- Version-controlled dependencies
 
 ### How It Works
-1. Configuration files are stored in this git repository
-2. `/etc/nixos/` contains symlinks pointing to the repository files
-3. Changes are made in the repository, then applied with `nixos-rebuild`
-4. Git tracks all configuration changes over time
-
-## Recent Configuration Changes
-
-Based on git history:
-- Reordered packages; added pnpm
-- Replaced Oh My Zsh with Starship prompt
-- Refactored shell config to home-manager and updated fonts
-- Added comprehensive README documenting NixOS configuration
-- Added Yazi (terminal file manager) and Zoxide (smarter cd command)
+1. Edit config files in this repository
+2. Rebuild: `sudo nixos-rebuild switch --flake .`
+3. Flake auto-detects hostname and applies correct config
+4. Git tracks all configuration changes
 
 ## Current System Configuration
 
-See `README.md` for comprehensive documentation. Key components include:
-- **Window Manager**: Sway (Wayland compositor)
-- **Terminal**: Ghostty with JetBrains Mono
-- **Shell**: Zsh with Starship prompt
-- **Package Management**: Home Manager for user-level packages
-- **Development Tools**: Git, Docker, Go, Node.js, Claude Code, VS Code, PhpStorm
-- **Utilities**: Yazi, Zoxide, pnpm, 1Password, and more
+See `README.md` for comprehensive documentation. Key components:
+- **Window Manager**: Sway (Wayland)
+- **Terminal**: Ghostty 
+- **Shell**: Zsh with Starship
+- **Package Management**: Home Manager for user packages
+- **Development**: Git, Docker, Go, Node.js, Claude Code, VS Code, PhpStorm
+- **Utilities**: Yazi, Zoxide, btop, lazygit, lazydocker, and more
 
 ## Workflow
 
-When making configuration changes:
+Making config changes:
 1. Edit files in this repository
-2. Test: `sudo nixos-rebuild test`
-3. Commit: `git add . && git commit -m "description"`
-4. Apply: `sudo nixos-rebuild switch`
-5. Push to remote (if configured): `git push`
+2. Test: `sudo nixos-rebuild test --flake .`
+3. Apply: `sudo nixos-rebuild switch --flake .`
+4. Commit: `git add . && git commit -m "description"`
+5. Push: `git push`
+
+## Module Organization
+
+- `modules/nixos/` - System services, packages, configs requiring root
+- `modules/home-manager/` - User programs, dotfiles, per-user settings
+- `modules/devices/` - Device-specific configs (e.g., Galaxy70 MTP)
+- `modules/utils/` - Shared utility functions (bookmark helpers)

@@ -13,6 +13,7 @@
         "lzg" = "lazygit";
         "pn" = "pnpm";
         "y" = "yazi";
+        "rb" = "radioboat --volume 50 --track-file ~/.config/radioboat/tracks.txt";
       };
       initContent = ''
         # Ctrl+arrows for word navigation

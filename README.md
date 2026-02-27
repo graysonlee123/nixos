@@ -18,21 +18,22 @@ This repository contains my declarative NixOS system configuration, including:
 <project-root>/
 ├── flake.nix                       # Flake configuration
 ├── flake.lock                      # Flake lock file
-├── bookmarks.nix                   # Declarative Chromium bookmarks
+├── wallpaper.jpg                   # Desktop wallpaper
 ├── hosts/
 │   ├── corbelan/                   # Laptop configuration
-│   │   ├── configuration.nix       # Main system config
+│   │   ├── configuration.nix
 │   │   ├── hardware-configuration.nix
-│   │   ├── need-to-integrate.nix   # Host-specific settings (to be integrated)
-│   │   └── home.nix                # Home Manager config
+│   │   └── home.nix
 │   └── nostromo/                   # Desktop configuration
-│       ├── configuration.nix       # Main system config
+│       ├── configuration.nix
 │       ├── hardware-configuration.nix
-│       └── home.nix                # Home Manager config
-└── modules/
-    └── nixos/
-        ├── user.nix                # User configuration
-        └── system-packages.nix     # System-wide packages
+│       └── home.nix
+├── modules/
+│   ├── nixos/                      # System-level modules (boot, services, drivers)
+│   ├── home-manager/               # User-level modules (programs, configs)
+│   ├── devices/                    # Device-specific configs
+│   └── utils/                      # Utility modules (bookmark helpers)
+└── scripts/                        # Helper scripts
 ```
 
 This configuration uses flakes, so you can rebuild directly from the repository without symlinks:
@@ -70,8 +71,8 @@ nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 1. Clone this repository:
    ```bash
-   git clone <repository-url> <project-root>
-   cd <project-root>
+   git clone https://github.com/graysonlee123/nixos
+   cd nixos
    ```
 
 2. Build and activate the configuration:
@@ -95,16 +96,26 @@ sudo tailscale up --auth-key=KEY
 ## System Configuration Highlights
 
 ### System Packages
-- vim, curl, inxi
-- JetBrains Mono (nerd fonts)
+- curl, inxi
+- ClamAV (antivirus)
+- Fonts: Agave Nerd Font, Lora, Work Sans (via Stylix)
 
 ### User Packages (via Home Manager)
-- **Productivity**: 1Password, Obsidian, Discord
+- **Productivity**: 1Password, Obsidian, Discord, Heynote
 - **Development**: Claude Code, VS Code, PhpStorm, Docker, Git
-- **Languages**: Go, Node.js 24
-- **Browsers**: Chromium
+- **Languages**: Go (with gopls), Node.js 24, PHP 8.2 (with Composer)
+- **Browsers**: Chromium (with WideVine)
 - **File Management**: FileZilla, Yazi
-- **Utilities**: wl-clipboard, Zoxide
+- **System Monitoring**: btop, dust, dive, neofetch
+- **Database Tools**: pgcli, mycli, pgadmin4 (desktop mode)
+- **Git Tools**: lazygit, git-crypt
+- **Docker Tools**: lazydocker
+- **Terminal Tools**: vim, fzf, ripgrep, tealdeer, zoxide
+- **Utilities**: wl-clipboard, wp-cli, rclone, restic, satty (screenshots)
+- **Communication**: iamb (Matrix client)
+- **Media**: vlc, wf-recorder
+- **Entertainment**: 2048-in-terminal, asciiquarium, crawl, nethack, tuir
+- **Other**: tree, zip/unzip, jq, nixfmt, dig, speedtest-cli, pnpm 
 
 ### Services
 - OpenSSH daemon
@@ -147,7 +158,7 @@ The configuration handles multiple GitHub accounts (personal + work) using SSH c
 
 **Benefits:**
 - No manual URL editing for work repos
-- Submodules work seamlessly
+- Submodules work seamlessly (before, this was a big issue)
 - Clone with standard URLs: `git clone git@github.com:inspry/repo`
 - Git handles URL rewriting transparently
 
@@ -162,34 +173,12 @@ Example: After visiting `/home/gray/repos/me/nixos` a few times, you can jump th
 
 ### Declarative Bookmark Management
 
-Chromium bookmarks are managed declaratively through `bookmarks.nix`, which provides:
+Chromium bookmarks are managed declaratively through `modules/home-manager/bookmarks.nix`, which provides:
 
 - **Separate profiles**: Personal and work bookmarks in different Chromium profiles
 - **Read-only enforcement**: Bookmarks can only be changed via Nix configuration
 - **Version controlled**: All bookmarks tracked in git
-
-**File structure in `bookmarks.nix`:**
-
-```nix
-rec {
-  # Helper functions that convert to Chromium format
-  mkBookmark = name: url: { ... };
-  mkFolder = name: children: { ... };
-  convertBookmark = item: ...;
-  mkChromiumBookmarks = bookmarkSet: ...;
-
-  # Bookmark data
-  personal = {
-    bookmarks_bar = [ ... ];
-    other = [ ... ];
-  };
-
-  work = {
-    bookmarks_bar = [ ... ];
-    other = [ ... ];
-  };
-}
-```
+- **Encrypted**: Bookmark contents encrypted using git-crypt
 
 **How it works:**
 
@@ -214,6 +203,7 @@ rec {
 - **GPU Configuration**:
   - `hardware.nvidia.open = true`
   - `hardware.nvidia.modesetting.enable = true`
+- **Chromium green screen on videos**: Disable `chrome://flags/#disable-accelerated-video-decode` (set to Disabled). NVIDIA + Wayland hardware video decode causes green frames on some video content.
 
 ## Useful Commands
 
@@ -238,6 +228,69 @@ sudo nix-collect-garbage -d
 
 # Update flake inputs
 nix flake update
+```
+
+## Useful Keybindings
+
+- `Print`: Screenshot with grim, satty and slurp
+- `Super + Print`: Screen record with wf-recorder and slurp
+- `Super + Alt + Print`: Screen record with default audio source using wf-recorder and slurp
+- `Super + Shift + Print`: Gracefully kill wf-recorder
+
+## XDG MIME Defaults
+
+Default applications are configured in `modules/home-manager/xdg.nix` via `xdg.mimeApps.defaultApplications`. Note that XDG MIME wildcards (e.g. `video/*`) don't work in `mimeapps.list` — each MIME type must be listed explicitly.
+
+However, many associations happen automatically without explicit configuration. Apps like VLC declare supported MIME types in their `.desktop` files, which get indexed into `mimeinfo.cache`. The XDG lookup chain is:
+
+1. **`mimeapps.list`** (explicit defaults from xdg.nix)
+2. **`mimeinfo.cache`** (built from installed apps' `.desktop` files)
+
+So explicit entries in xdg.nix are only needed when you want to *override* what installed apps already claim. For example, VLC already advertises support for most media types, so it wins by default without any xdg.nix entry.
+
+### XDG Desktop Portals
+
+XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled access to system resources on Wayland. Configured in `modules/nixos/xdg.nix` using `xdg-desktop-portal-wlr` for Sway. Enables:
+
+- File picker dialogs in browsers and apps
+- Screen sharing/recording in web apps
+- Screenshot capabilities across sandbox boundaries
+
+## Gamescope (Steam Game Scaling)
+
+Gamescope is a micro-compositor for scaling games. Key flags:
+
+- `-w` / `-h` — game (inner) resolution
+- `-W` / `-H` — output (display) resolution
+- `-S` / `--scaler` — scaling mode: `auto`, `integer`, `fit`, `fill`, `stretch`
+- `-F` / `--filter` — upscale filter: `linear`, `nearest`, `fsr`, `nis`, `pixel`
+
+### Corbelan (2880x1800)
+
+For integer scaling, the game resolution must divide evenly into the output resolution. Common clean ratios for 1800p:
+
+| Game height | Scale factor | Notes |
+|-------------|-------------|-------|
+| 900 | 2x | Good default for most games |
+| 600 | 3x | Ideal for old 800x600 games |
+| 450 | 4x | Very low res |
+
+General template:
+```
+gamescope -w <game_w> -h <game_h> -W 2880 -H 1800 -S integer -F nearest --fullscreen -- %command%
+```
+
+If integer scaling doesn't work (game res doesn't divide evenly), use `fit` + `fsr`:
+```
+gamescope -w <game_w> -h <game_h> -W 2880 -H 1800 -S fit -F fsr --fullscreen -- %command%
+```
+
+### Peggle Deluxe (800x600)
+
+Native 800x600 → 3x integer to 1800p. Uses `PROTON_USE_WINED3D=1` to fix game speed issues caused by Proton's DXVK timing with old DirectX games.
+
+```
+PROTON_USE_WINED3D=1 gamescope -w 800 -h 600 -W 2880 -H 1800 --scaler integer --filter nearest --fullscreen -- %command%
 ```
 
 ## Notes
