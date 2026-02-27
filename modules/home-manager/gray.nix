@@ -100,6 +100,7 @@ in {
         slurp
         speedtest-cli
         teamspeak6-client
+        tidal-hifi
         tree
         typescript-language-server
         tuir
