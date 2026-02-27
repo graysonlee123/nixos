@@ -101,6 +101,7 @@ in {
         speedtest-cli
         teamspeak6-client
         tree
+        typescript-language-server
         tuir
         unzip
         vlc
