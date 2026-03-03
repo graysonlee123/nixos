@@ -75,6 +75,7 @@ in {
         docker
         dust
         filezilla
+        gh
         git-crypt
         grim
         heynote
