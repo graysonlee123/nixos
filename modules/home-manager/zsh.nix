@@ -14,6 +14,10 @@
         "pn" = "pnpm";
         "y" = "yazi";
         "rb" = "radioboat --volume 50 --track-file ~/.config/radioboat/tracks.txt";
+        "dcd" = "docker compose down";
+        "dcu" = "docker compose up";
+        "dcud" = "docker compose up -d";
+        "dclf" = "docker compose logs --follow";
       };
       initContent = ''
         # Ctrl+arrows for word navigation
