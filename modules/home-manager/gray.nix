@@ -68,6 +68,7 @@ in {
       home.packages = with pkgs; [
         _2048-in-terminal
         asciiquarium
+        bat
         bibata-cursors
         crawl
         dig
@@ -93,6 +94,7 @@ in {
         php82
         php82Packages.composer
         pnpm
+        pwgen
         qalculate-gtk
         radioboat
         r2modman
@@ -118,6 +120,7 @@ in {
           php = php82;
           phpIniFile = pkgs.writeText "php.ini" (builtins.readFile "${php82}/etc/php.ini");
         })
+        yt-dlp
         zip
       ] ++ cfg.additionalPackages;
 
