@@ -101,7 +101,11 @@ in {
         slurp
         speedtest-cli
         teamspeak6-client
-        tidal-hifi
+        (pkgs.tidal-hifi.overrideAttrs (old: {
+          postFixup = (old.postFixup or "") + ''
+            wrapProgram $out/bin/tidal-hifi --add-flags "--no-sandbox"
+          '';
+        }))
         tree
         typescript-language-server
         tuir
