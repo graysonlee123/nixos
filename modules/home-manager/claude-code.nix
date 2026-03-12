@@ -34,6 +34,12 @@
         - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise and sacrifice grammar for the sake of consision.
         - Besides the expected ones, binaries I have installed that may be useful to you include tree, docker, ripgrep, zip, unzip, wl-copy, wl-paste, and wp-cli.
       '';
+      mcpServers = {
+        clickup = {
+          url = "https://mcp.clickup.com/mcp";
+          type = "http";
+        };
+      };
     };
   };
 }
