@@ -33,6 +33,7 @@
           "html.format.indentInnerHtml" = true;
           "[go]" = { "editor.defaultFormatter" = "golang.go"; };
           "[nix]" = { "editor.defaultFormatter" = "jnoortheen.nix-ide"; };
+          "extensions.ignoreRecommendations" = true;
         };
         keybindings = [];
       };
