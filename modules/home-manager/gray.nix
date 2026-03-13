@@ -54,6 +54,7 @@ in {
         ./vesktop.nix
         ./xdg.nix
         ./imv.nix
+        ./nerd-dictation.nix
         ./radioboat.nix
       ];
 

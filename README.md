@@ -234,6 +234,18 @@ nix flake update
 - `Super + Alt + Print`: Screen record with default audio source using wf-recorder and slurp
 - `Super + Shift + Print`: Gracefully kill wf-recorder
 
+## Voice Dictation
+
+Push-to-talk dictation using whisper-cpp. Press `Super+M` to start recording, press again to stop, transcribe, and type the result into the focused window. Uses PipeWire's default audio source.
+
+A waybar indicator shows `󰍬 REC` (red) while recording and `󰓆 ...` (yellow) while transcribing.
+
+**Setup:** download a whisper model and place it at `~/.local/share/whisper/model.bin`:
+```bash
+whisper-cpp-download-ggml-model base.en
+mv ggml-base.en.bin ~/.local/share/whisper/model.bin
+```
+
 ## XDG MIME Defaults
 
 Default applications are configured in `modules/home-manager/xdg.nix` via `xdg.mimeApps.defaultApplications`. Note that XDG MIME wildcards (e.g. `video/*`) don't work in `mimeapps.list` — each MIME type must be listed explicitly.
