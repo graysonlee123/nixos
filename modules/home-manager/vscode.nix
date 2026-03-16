@@ -15,6 +15,7 @@
           vscode-extensions.unifiedjs.vscode-mdx
           vscode-extensions.golang.go
           vscode-extensions.jnoortheen.nix-ide
+          vscode-extensions.biomejs.biome
         ];
         userSettings = {
           "update.mode" = "none";
@@ -34,6 +35,7 @@
           "[go]" = { "editor.defaultFormatter" = "golang.go"; };
           "[nix]" = { "editor.defaultFormatter" = "jnoortheen.nix-ide"; };
           "extensions.ignoreRecommendations" = true;
+          "biome.lsp.bin" = "${pkgs.biome}/bin/biome";
         };
         keybindings = [];
       };
