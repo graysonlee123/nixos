@@ -91,6 +91,7 @@ in {
         nethack
         nodejs_24
         obsidian # TODO: Manage through home-manager?
+        postman
         pgadmin4-desktopmode
         php82
         php82Packages.composer
