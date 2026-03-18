@@ -12,7 +12,6 @@
         "lzd" = "lazydocker";
         "lzg" = "lazygit";
         "pn" = "pnpm";
-        "y" = "yazi";
         "rb" = "radioboat --volume 50 --track-file ~/.config/radioboat/tracks.txt";
         "dcd" = "docker compose down";
         "dcu" = "docker compose up";
@@ -30,6 +29,15 @@
 
         # wp-cli completion
         source ${pkgs.wp-cli}/share/bash-completion/completions/wp
+
+        # yazi shell wrapper providing cwd changes on exit
+        function y() {
+          local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+          command yazi "$@" --cwd-file="$tmp"
+          IFS= read -r -d \'\' cwd < "$tmp"
+          [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+          rm -f -- "$tmp"
+        }
       '';
     };
   };
