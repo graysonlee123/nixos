@@ -21,9 +21,9 @@ in {
           position = "top";
           height = 30;
 
-          modules-left = [ "sway/workspaces" "sway/mode" ];
-          modules-center = [ "sway/window" ];
-          modules-right = [ "custom/dictation" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
+          modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
+          modules-center = [];
+          modules-right = [ "custom/dictation" "custom/weather" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -97,6 +97,7 @@ in {
         #wireplumber,
         #battery,
         #custom-dictation,
+        #custom-weather,
         #window,
         #mode {
           padding: 0 10px;
