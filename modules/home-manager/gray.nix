@@ -56,6 +56,7 @@ in {
         ./imv.nix
         ./nerd-dictation.nix
         ./radioboat.nix
+        ./weather.nix
       ];
 
       # Set laptop-specific options
