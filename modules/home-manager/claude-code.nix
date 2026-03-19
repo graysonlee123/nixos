@@ -11,6 +11,8 @@
       enable = true;
       package = pkgs-unstable.claude-code;
       settings = {
+        includeCoAuthoredBy = false;
+        model = "claude-sonnet-4-6";
         enabledPlugins = {
           "gopls-lsp@claude-plugins-official" = true;
           "typescript-lsp@claude-plugins-official" = true;
@@ -33,12 +35,17 @@
         - In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
         - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise and sacrifice grammar for the sake of consision.
         - Besides the expected ones, binaries I have installed that may be useful to you include tree, docker, ripgrep, zip, unzip, wl-copy, wl-paste, and wp-cli.
+        - Don't use em dashes in write-ups intended for clients.
       '';
       mcpServers = {
         clickup = {
           url = "https://mcp.clickup.com/mcp";
           type = "http";
         };
+      };
+      skills = {
+        wordpress-source-code = ../../claude/skills/wordpress-source-code;
+        woocommerce-source-code = ../../claude/skills/woocommerce-source-code;
       };
     };
   };
