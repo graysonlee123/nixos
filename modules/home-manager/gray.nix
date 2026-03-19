@@ -76,11 +76,13 @@ in {
         dive
         docker
         dust
+        ffmpeg
         filezilla
         gh
         git-crypt
         grim
         heynote
+        imagemagick
         jetbrains.phpstorm
         jq
         libnotify
@@ -97,6 +99,7 @@ in {
         php82Packages.composer
         pnpm
         pwgen
+        python3
         qalculate-gtk
         radioboat
         r2modman
