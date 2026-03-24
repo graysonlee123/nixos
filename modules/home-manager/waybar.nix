@@ -22,8 +22,7 @@ in {
           height = 30;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-center = [];
-          modules-right = [ "custom/dictation" "custom/weather" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
+          modules-right = [ "custom/dictation" "cava" "custom/music" "custom/weather" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -82,6 +81,28 @@ in {
             format = "󰃭 {0:%m/%d} {0:%I:%M}";
             tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           };
+
+          "custom/music" = {
+            hide-empty-text = true;
+            interval = 2; # TODO: Use signals to update?
+            max-length = 32;
+            exec = ''
+              ${pkgs.playerctl}/bin/playerctl metadata --format '  {{title}} - {{artist}}'
+            '';
+            on-click = ''
+              ${pkgs.playerctl}/bin/playerctl play-pause
+            '';
+            tooltip = true;
+            tooltip-format = ""; # TODO: Show more metadata
+          };
+
+          "cava" = {
+            method = "pipewire";
+            bars = 7;
+            format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+            bar_delimiter = 0;
+            hide_on_silence = true;
+          };
         };
       };
 
@@ -98,6 +119,7 @@ in {
         #battery,
         #custom-dictation,
         #custom-weather,
+        #custom-music,
         #window,
         #mode {
           padding: 0 10px;

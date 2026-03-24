@@ -98,6 +98,7 @@ in {
         pgadmin4-desktopmode
         php82
         php82Packages.composer
+        playerctl
         pnpm
         pwgen
         python3
