@@ -31,6 +31,8 @@ in {
 
           "sway/window" = {
             max-length = 50;
+            # Suppresses a waybar warning: "'swap-icon-label' must be a bool"
+            swap-icon-label = false;
           };
 
           "battery" = {
