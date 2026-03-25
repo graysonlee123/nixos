@@ -173,7 +173,7 @@ in {
             command = "swaymsg workspace number 1";
           }
           {
-            command = "vicinae server";
+            command = "vicinae server --replace";
             always = true;
           }
         ];
