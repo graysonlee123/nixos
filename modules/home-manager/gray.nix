@@ -120,6 +120,7 @@ in {
         tuir
         unzip
         vlc
+        waylyrics
         wf-recorder
         wiremix
         wl-clipboard

@@ -192,6 +192,10 @@ in {
             criteria = { title = "^1Password$"; };
             command = "floating enable; sticky enable";
           }
+          {
+            criteria = { app_id = "^io\\.github\\.waylyrics\\.Waylyrics$"; };
+            command = "floating enable";
+          }
         ];
       };
     };
