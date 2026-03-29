@@ -69,11 +69,17 @@ in {
       # Packages
       home.packages = with pkgs; [
         _2048-in-terminal
+        (atlauncher.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            wrapProgram $out/bin/atlauncher --set _JAVA_AWT_WM_NONREPARENTING 1
+          '';
+        }))
         asciiquarium
         bat
         bibata-cursors
         crawl
         dig
+        jdk25
         dive
         docker
         dust

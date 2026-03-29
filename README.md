@@ -309,6 +309,15 @@ XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled 
 - Screen sharing/recording in web apps
 - Screenshot capabilities across sandbox boundaries
 
+## Minecraft (via ATLauncher)
+
+ATLauncher is installed via nixpkgs and wrapped with `_JAVA_AWT_WM_NONREPARENTING=1` to fix blank GUI rendering on Sway.
+
+**Java:** Minecraft 26.1+ requires JDK 25 due to the `--sun-misc-unsafe-memory-access=allow` JVM flag introduced in Java 23+. `jdk25` is installed and must be configured in ATLauncher:
+
+- ATLauncher settings > Java/Minecraft > Java Path: set to the `jdk25` binary (find it with `which java` after rebuild, or browse `/nix/store`)
+- Or configure per-instance in the instance settings
+
 ## Gamescope (Steam Game Scaling)
 
 Gamescope is a micro-compositor for scaling games. Key flags:

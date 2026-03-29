@@ -196,6 +196,10 @@ in {
             criteria = { app_id = "^io\\.github\\.waylyrics\\.Waylyrics$"; };
             command = "floating enable";
           }
+          {
+            criteria = { title = "^ATLauncher Console$"; };
+            command = "floating enable";
+          }
         ];
       };
     };
