@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   xdg.portal = {
@@ -6,7 +6,7 @@
     extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
     config = {
       sway = {
-        default = [
+        default = lib.mkForce [
           "wlr"
         ];
       };

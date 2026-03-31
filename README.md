@@ -9,7 +9,7 @@ This repository contains my declarative NixOS system configuration, including:
 - **Window Manager**: Sway (Wayland compositor)
 - **Terminal**: Ghostty with JetBrains Mono
 - **Shell**: Zsh with Starship prompt
-- **Display Manager**: greetd with tuigreet
+- **Display Manager**: ly (Corbelan), greetd with tuigreet (Nostromo)
 - **Development**: Docker, Git, Go, Node.js, various IDEs
 
 ## Repository Structure
@@ -203,6 +203,17 @@ Chromium bookmarks are managed declaratively through `modules/home-manager/bookm
 - **Graphics**: Integrated AMD (Radeon)
 - **Brightness Control**: brightnessctl package for managing screen brightness
 - **Font Size**: Smaller font size for teeny Hi-DPI laptop display
+- **Fingerprint Reader**: Enabled via fprintd (`modules/nixos/fingerprint.nix`). Works for sudo, TTY login, and the ly greeter.
+
+**Fingerprint enrollment** (first-time setup or re-enrollment):
+```bash
+sudo fprintd-enroll $USER
+```
+
+**Verify enrollment:**
+```bash
+sudo fprintd-verify $USER
+```
 
 ### Nostromo (Desktop)
 

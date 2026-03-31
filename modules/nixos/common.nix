@@ -19,6 +19,7 @@
     ./clamav.nix
     ./xdg.nix
   ];
+  programs.sway.enable = true;
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
