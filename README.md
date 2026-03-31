@@ -215,35 +215,31 @@ Chromium bookmarks are managed declaratively through `modules/home-manager/bookm
 
 ## VPN (NordVPN via OpenVPN)
 
-VPN connections use OpenVPN with `.ovpn` config files downloaded from the NordVPN dashboard. Config files contain server address, CA cert, and TLS key — stored outside the repo at `~/keys/`.
+VPN connections use OpenVPN with `.ovpn` config files downloaded from the NordVPN dashboard. Config files contain server address, CA cert, and TLS key — stored outside the repo at `/etc/openvpn/`.
 
 **Components:**
 
 - **`openvpn`** (`modules/nixos/system-packages.nix`) — OpenVPN client
-- **`~/keys/nordvpn/tcp.ovpn`** — dedicated IP config (TCP, not in repo, contains secrets)
-- **`~/keys/nordvpn/udp.ovpn`** — dedicated IP config (UDP, not in repo, contains secrets)
+- **`/etc/openvpn/us11617.nordvpn.com.tcp.ovpn`** — dedicated IP config (TCP, not in repo, contains secrets)
+- **`/etc/openvpn/nordvpn-auth.txt`** — service credentials (not in repo); format: username on line 1, password on line 2
 
-NordVPN provides `.ovpn` configs for all servers (not just dedicated IPs) via the manual setup section of the dashboard.
+NordVPN provides `.ovpn` configs for all servers (not just dedicated IPs) via the manual setup section of the dashboard. Service credentials are separate from your account login.
 
 **Setup:**
 
 1. Download a `.ovpn` config from the NordVPN dashboard
-2. Place it at `~/keys/nordvpn/<name>.ovpn`
-3. Get your NordVPN service credentials from the dashboard (manual setup section) — these are different from your account login
+2. `sudo mkdir -p /etc/openvpn`
+3. Place config at `/etc/openvpn/<name>.ovpn` with `sudo chmod 600`
+4. Create `/etc/openvpn/nordvpn-auth.txt` (root:root, 600) with service credentials
+5. Update the `auth-user-pass` line in the `.ovpn` to point to the auth file:
+   ```bash
+   sudo sed -i 's|auth-user-pass|auth-user-pass /etc/openvpn/nordvpn-auth.txt|' /etc/openvpn/<name>.ovpn
+   ```
 
 **Usage:**
 
 ```bash
-# Connect (will prompt for service credentials)
-sudo openvpn --config ~/keys/nordvpn/<name>.ovpn
-
-# To skip the prompt, create a credentials file:
-sudo mkdir -p /var/lib/openvpn
-echo -e 'your-service-username\nyour-service-password' | sudo tee /var/lib/openvpn/nordvpn-creds
-sudo chmod 600 /var/lib/openvpn/nordvpn-creds
-
-# Then connect with:
-sudo openvpn --config ~/keys/nordvpn/<name>.ovpn --auth-user-pass /var/lib/openvpn/nordvpn-creds
+sudo openvpn --config /etc/openvpn/us11617.nordvpn.com.tcp.ovpn
 ```
 
 ## Useful Commands
