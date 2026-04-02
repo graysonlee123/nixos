@@ -22,7 +22,7 @@ in {
           height = 30;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "custom/music" "custom/weather" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
+          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "cpu" "memory" "network" "wireplumber" "wireplumber#source" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
