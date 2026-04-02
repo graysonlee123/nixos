@@ -22,7 +22,7 @@ in {
           height = 30;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "cava" "custom/music" "custom/weather" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
+          modules-right = [ "custom/dictation" "custom/music" "custom/weather" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "cpu" "memory" "network" "wireplumber" "wireplumber#source" "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -97,14 +97,6 @@ in {
             '';
             tooltip = true;
             tooltip-format = ""; # TODO: Show more metadata
-          };
-
-          "cava" = {
-            method = "pipewire";
-            bars = 7;
-            format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-            bar_delimiter = 0;
-            hide_on_silence = true;
           };
         };
       };
