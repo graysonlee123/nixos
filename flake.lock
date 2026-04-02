@@ -193,6 +193,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1775002709,
+        "narHash": "sha256-d3Yx83vSrN+2z/loBh4mJpyRqr9aAJqlke4TkpFmRJA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "bcd464ccd2a1a7cd09aa2f8d4ffba83b761b1d0e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -223,7 +239,8 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "wttrbar": "wttrbar"
       }
     },
     "stylix": {
@@ -354,6 +371,25 @@
       "original": {
         "owner": "tinted-theming",
         "repo": "base16-zed",
+        "type": "github"
+      }
+    },
+    "wttrbar": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1775101128,
+        "narHash": "sha256-RwjC39Dd5ydwi9O39CNiK+684mRoVTPcc3P7jdBTcn4=",
+        "owner": "graysonlee123",
+        "repo": "wttrbar",
+        "rev": "74332e3fc5f170c9b174f72d7948eda5797e7be9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "graysonlee123",
+        "repo": "wttrbar",
+        "rev": "74332e3fc5f170c9b174f72d7948eda5797e7be9",
         "type": "github"
       }
     }

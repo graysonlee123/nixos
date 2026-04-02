@@ -1,32 +1,33 @@
-{ pkgs, ... }:
+{ pkgs, wttrbar, ... }:
 
-let
-  toggleScript = pkgs.writeShellScript "weather" ''
-    for i in {1..5}
-    do
-      text=$(${pkgs.curl}/bin/curl -s "https://wttr.in/$1?format=1&u")
-      if [[ $? == 0 ]]
-      then
-        text=$(echo "$text" | ${pkgs.gnused}/bin/sed -E "s/\s+/ /g")
-        tooltip=$(${pkgs.curl}/bin/curl -s "https://wttr.in/$1?format=4&u")
-        if [[ $? == 0 ]]
-        then
-          tooltip=$(echo "$tooltip" | ${pkgs.gnused}/bin/sed -E "s/\s+/ /g")
-          echo "{\"text\":\"$text\", \"tooltip\": \"$tooltip\"}"
-          exit
-        fi
-      fi
-      ${pkgs.coreutils}/bin/sleep 2
-    done
-    echo "{\"text\": \"error\", \"tooltip\": \"error\"}"
-  '';
-in {
+{
   programs.waybar.settings.mainBar."custom/weather" = {
-    exec = "${toggleScript} 30339";
+    exec = "LOCATION=Atlanta ${wttrbar}/bin/wttrbar";
     return-type = "json";
-    format = "{}";
     tooltip = true;
-    interval = 3600;
+    interval = 60 * 5;
+    format = "{icon} {text}";
+    format-icons = {
+      sunny = "o";
+      partly-cloudy = "m";
+      cloudy = "mm";
+      very-cloudy = "mmm";
+      fog = "=";
+      light-showers = ".";
+      light-rain = "/";
+      heavy-showers = "//";
+      heavy-rain = "///";
+      light-sleet = "x";
+      light-sleet-showers = "x/";
+      light-snow = "*";
+      light-snow-showers = "*/";
+      heavy-snow = "**";
+      heavy-snow-showers = "*/*";
+      thundery-showers = "!/";
+      thundery-heavy-rain = "/!/";
+      thundery-snow-showers = "*!*";
+      unknown = "?";
+    };
   };
 }
 

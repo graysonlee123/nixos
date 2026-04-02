@@ -10,9 +10,10 @@
       url = "github:nix-community/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wttrbar.url = "github:graysonlee123/wttrbar?rev=74332e3fc5f170c9b174f72d7948eda5797e7be9";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, stylix, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, stylix, wttrbar, ... } @inputs:
     let
       system = "x86_64-linux";
       pkgs-unstable = import nixpkgs-unstable {
@@ -28,7 +29,7 @@
           ./hosts/nostromo/configuration.nix
           stylix.nixosModules.stylix
           inputs.home-manager.nixosModules.default {
-            home-manager.extraSpecialArgs = { inherit pkgs-unstable; };
+            home-manager.extraSpecialArgs = { inherit pkgs-unstable; wttrbar = wttrbar.packages.x86_64-linux.default; };
           }
         ];
       };
@@ -38,7 +39,7 @@
           ./hosts/corbelan/configuration.nix
           stylix.nixosModules.stylix
           inputs.home-manager.nixosModules.default {
-            home-manager.extraSpecialArgs = { inherit pkgs-unstable; };
+            home-manager.extraSpecialArgs = { inherit pkgs-unstable; wttrbar = wttrbar.packages.x86_64-linux.default; };
           }
         ];
       };
