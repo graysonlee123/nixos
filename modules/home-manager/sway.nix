@@ -1,7 +1,29 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.sway;
+  recordScreen = pkgs.writeShellScriptBin "record-screen" ''
+    if pgrep -x wf-recorder > /dev/null; then
+      pkill -SIGINT wf-recorder
+      exit 0
+    fi
+
+    choice=$(printf "Record region\nRecord region + audio\nRecord fullscreen\nRecord fullscreen + audio" \
+      | vicinae dmenu -n "Screen Recording" -p "Select action...")
+
+    FILE=/tmp/video-$(date +%Y-%m-%d_%H-%M-%S).mp4
+
+    case "$choice" in
+      "Record region")
+        wf-recorder -g "$(slurp)" --file "$FILE" && notify-send "Recording saved" "$FILE" ;;
+      "Record region + audio")
+        wf-recorder -g "$(slurp)" --audio --file "$FILE" && notify-send "Recording saved" "$FILE" ;;
+      "Record fullscreen")
+        wf-recorder --file "$FILE" && notify-send "Recording saved" "$FILE" ;;
+      "Record fullscreen + audio")
+        wf-recorder --audio --file "$FILE" && notify-send "Recording saved" "$FILE" ;;
+    esac
+  '';
 in {
   options.sway = {
     isLaptop = lib.mkOption {
@@ -114,9 +136,7 @@ in {
           "Print" = "exec grim -g \"$(slurp -b '#00000099' -c '#00ff41')\" - | satty --filename -";
 
           # Recordings
-          "${modifier}+Print" = "exec wf-recorder -g \"$(slurp)\" --file /tmp/video-$(date +%Y-%m-%d_%H-%M-%S).mp4 && notify-send \"Recording saved to /tmp\"";
-          "${modifier}+Alt+Print" = "exec wf-recorder -g \"$(slurp)\" --audio --file /tmp/video-$(date +%Y-%m-%d_%H-%M-%S).mp4 && notify-send \"Recording saved to /tmp\"";
-          "${modifier}+Shift+Print" = "exec pkill -SIGINT wf-recorder";
+          "${modifier}+Print" = "exec record-screen";
         } // lib.optionalAttrs cfg.isLaptop {
           "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
           "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
@@ -203,5 +223,7 @@ in {
         ];
       };
     };
+
+    home.packages = [ recordScreen ];
   };
 }

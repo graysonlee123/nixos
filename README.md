@@ -281,9 +281,7 @@ nix flake update
 ## Useful Keybindings
 
 - `Print`: Screenshot with grim, satty and slurp
-- `Super + Print`: Screen record with wf-recorder and slurp
-- `Super + Alt + Print`: Screen record with default audio source using wf-recorder and slurp
-- `Super + Shift + Print`: Gracefully kill wf-recorder
+- `Super + Print`: Open screen recording menu (region/fullscreen, with/without audio) via Vicinae. If a recording is already in progress, stops it immediately.
 
 ## Voice Dictation
 
