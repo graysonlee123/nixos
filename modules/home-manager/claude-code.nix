@@ -28,6 +28,13 @@
             "Bash(npm run build:*)"
             "Bash(pnpm run build)"
             "Bash(pnpm run build:*)"
+            "Bash(gh issue list:*)"
+            "Bash(gh issue status:*)"
+            "Bash(gh issue view:*)"
+            "Bash(gh pr list:*)"
+            "Bash(gh pr status:*)"
+            "Bash(gh pr diff:*)"
+            "Bash(gh pr view:*)"
           ];
         };
       };
