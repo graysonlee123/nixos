@@ -87,7 +87,8 @@ in {
           "custom/music" = {
             hide-empty-text = true;
             interval = 2; # TODO: Use signals to update?
-            max-length = 32;
+            max-length = if cfg.isLaptop then 32 else 64;
+            escape = true;
             exec = ''
               ${pkgs.playerctl}/bin/playerctl metadata --format '  {{title}} - {{artist}}'
             '';
