@@ -3,8 +3,11 @@
     services.mako = {
       enable = true;
       settings = {
-        default-timeout = 5000;  # 5 seconds
         border-size = 2;
+        width = 400;
+        height = 150;
+        ignore-timeout = false;
+        max-visible = 5;
       };
     };
   };
