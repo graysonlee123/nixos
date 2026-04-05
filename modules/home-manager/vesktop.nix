@@ -2,10 +2,11 @@
   programs.vesktop = {
     enable = true;
     settings = {
-      discordBranch = "stable";
-      tray = false;
-      minimizeToTray = false;
       autoStartMinimized = false;
+      checkUpdates = false;
+      discordBranch = "stable";
+      minimizeToTray = false;
+      tray = false;
     };
     vencord.settings = {
       autoUpdate = false;
