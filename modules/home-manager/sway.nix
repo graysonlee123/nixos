@@ -36,6 +36,7 @@ in {
   config = {
     wayland.windowManager.sway = {
       enable = true;
+      systemd.enable = true;
       wrapperFeatures.gtk = true;
       config = let
         modifier = "Mod4";

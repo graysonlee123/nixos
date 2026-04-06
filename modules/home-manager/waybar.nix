@@ -14,7 +14,10 @@ in {
   config = {
     programs.waybar = {
       enable = true;
-      systemd.enable = true;
+      systemd = {
+        enable = true;
+        target = "sway-session.target";
+      };
       settings = {
         mainBar = {
           layer = "top";
@@ -120,13 +123,6 @@ in {
           padding: 0 10px;
         }
       '';
-    };
-
-    # Kill any existing waybar before starting to prevent duplicate bars on
-    # resume from suspend. The leading "-" tells systemd to ignore non-zero
-    # exit codes (i.e. when no waybar process exists to kill).
-    systemd.user.services.waybar = {
-      Service.ExecStartPre = "-${pkgs.procps}/bin/pkill -x waybar";
     };
   };
 }
