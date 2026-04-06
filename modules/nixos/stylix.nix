@@ -8,7 +8,7 @@
         chromium.enable = false;
       };
 
-      image = ./../../wallpaper.png;
+      image = ./../../wallhaven-rr99r1.jpg;
 
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/atelier-dune.yaml";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
