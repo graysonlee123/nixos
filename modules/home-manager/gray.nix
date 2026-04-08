@@ -104,7 +104,7 @@ in {
         obsidian # TODO: Manage through home-manager?
         postman
         pgadmin4-desktopmode
-        php82
+        (php82.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug ]))
         php82Packages.composer
         playerctl
         pnpm
