@@ -18,6 +18,7 @@
     ./stylix.nix
     ./clamav.nix
     ./xdg.nix
+    ./mullvad.nix
   ];
   programs.sway.enable = true;
   nixpkgs.config.allowUnfree = true;

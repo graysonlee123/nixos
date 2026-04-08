@@ -253,6 +253,21 @@ NordVPN provides `.ovpn` configs for all servers (not just dedicated IPs) via th
 sudo openvpn --config /etc/openvpn/us11617.nordvpn.com.tcp.ovpn
 ```
 
+## Mullvad VPN
+
+Mullvad is managed via `services.mullvad-vpn` (system daemon) and includes a custom Waybar module (`modules/home-manager/mullvad-waybar.nix`).
+
+**Waybar module behavior:**
+
+- Shows `󰒃 <exit IP>` in green when connected; tooltip shows city, country, and server hostname
+- Shows `󰒃 ...` in yellow while connecting
+- Hidden when disconnected
+- Click to disconnect
+
+**Live refresh:**
+
+A systemd user service (`mullvad-waybar-listener`) runs `mullvad status listen` in the background and sends `SIGRTMIN+11` to waybar on each status change, triggering an immediate update rather than waiting for the 30s polling interval.
+
 ## Useful Commands
 
 ```bash

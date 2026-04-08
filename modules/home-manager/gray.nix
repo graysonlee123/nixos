@@ -54,6 +54,7 @@ in {
         ./vesktop.nix
         ./xdg.nix
         ./imv.nix
+        ./mullvad-waybar.nix
         ./nerd-dictation.nix
         ./radioboat.nix
         ./weather.nix
@@ -93,6 +94,7 @@ in {
         jetbrains.phpstorm
         jq
         libnotify
+        mullvad
         mycli
         nixfmt
         nerd-fonts.jetbrains-mono
