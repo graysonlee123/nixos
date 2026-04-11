@@ -50,7 +50,6 @@
   systemd.user.services.mullvad-waybar-listener = {
     Unit = {
       Description = "Signal waybar on mullvad status changes";
-      After = [ "waybar.service" ];
     };
     Service = {
       ExecStart = pkgs.writeShellScript "mullvad-waybar-listener" ''
