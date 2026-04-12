@@ -5,7 +5,7 @@
     exec = "LOCATION=Atlanta ${wttrbar}/bin/wttrbar";
     return-type = "json";
     tooltip = true;
-    interval = 60 * 5;
+    interval = 60 * 30;
     format = "{icon} {text}";
     format-icons = {
       sunny = "o";
