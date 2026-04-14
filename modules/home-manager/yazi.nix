@@ -65,6 +65,8 @@
           { on = [ "g" "d" ]; run = "cd ~/downloads"; desc = "Go ~/downloads"; }
           { on = [ "g" "i" ]; run = "cd ~/repos/inspry"; desc = "Go ~/repos/inspry"; }
           { on = [ "g" "m" ]; run = "cd ~/repos/me/"; desc = "Go ~/repos/me"; }
+          { on = [ "g" "t" ]; run = "cd /tmp"; desc = "Go /tmp"; }
+          { on = [ "Y" ]; run = "shell 'wl-copy < \"$1\"'"; desc = "Copy to clipboard"; }
         ];
       };
     };
