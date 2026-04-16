@@ -13,9 +13,18 @@
       settings = {
         includeCoAuthoredBy = false;
         model = "claude-sonnet-4-6";
+        extraKnownMarketplaces = {
+          caveman = {
+            source = {
+              source = "github";
+              repo = "JuliusBrussee/caveman";
+            };
+          };
+        };
         enabledPlugins = {
           "gopls-lsp@claude-plugins-official" = true;
           "typescript-lsp@claude-plugins-official" = true;
+          "caveman@caveman" = true;
         };
         cleanupPeriodDays = 30;
         statusLine = {
