@@ -33,6 +33,7 @@
         };
         permissions = {
           allow = [
+            # Bash
             "Bash(npm run build)"
             "Bash(npm run build:*)"
             "Bash(pnpm run build)"
@@ -44,6 +45,13 @@
             "Bash(gh pr status:*)"
             "Bash(gh pr diff:*)"
             "Bash(gh pr view:*)"
+
+            # ClickUp
+            "mcp__clickup__clickup_get_*"
+            "mcp__clickup__clickup_list_*"
+            "mcp__clickup__clickup_filter_tasks"
+            "mcp__clickup__clickup_find_member_by_name"
+            "mcp__clickup__clickup_search"
           ];
         };
       };
