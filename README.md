@@ -333,6 +333,22 @@ XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled 
 
 Prism Launcher is installed via nixpkgs and has much better overall compatibility than ATLauncher.
 
+### Streaming audio via Vesktop
+
+Minecraft runs on the JVM, so its PipeWire audio stream is registered as `java` with no application name. Vesktop filters unnamed streams and won't show it as an audio source.
+
+Fix: in the Prism Launcher instance settings, add this environment variable:
+
+```
+PIPEWIRE_PROPS=application.name=Minecraft
+```
+
+After relaunching, Minecraft will appear as "Minecraft" in Vesktop's audio source picker.
+
+### Mic cuts out when streaming
+
+Vesktop auto-switches input/output devices when a new audio source appears (e.g. the Minecraft stream). Fix: set input and output devices explicitly in Vesktop's Voice & Video settings instead of using "Default".
+
 ## Gamescope (Steam Game Scaling)
 
 Gamescope is a micro-compositor for scaling games. Key flags:
