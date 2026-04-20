@@ -19,6 +19,7 @@
     ./clamav.nix
     ./xdg.nix
     ./mullvad.nix
+    ./bluetooth.nix
   ];
   programs.sway.enable = true;
   nixpkgs.config.allowUnfree = true;

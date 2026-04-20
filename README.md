@@ -204,7 +204,6 @@ Chromium bookmarks are managed declaratively through `modules/home-manager/bookm
 - **Brightness Control**: brightnessctl package for managing screen brightness
 - **Font Size**: Smaller font size for teeny Hi-DPI laptop display
 - **Fingerprint Reader**: Enabled via fprintd (`modules/nixos/fingerprint.nix`). Works for sudo, TTY login, and the ly greeter.
-- **Bluetooth**: Enabled via `modules/nixos/bluetooth.nix`. Managed with `bluetui` (TUI). Run `bluetui` to scan and pair devices.
 
 **Fingerprint enrollment** (first-time setup or re-enrollment):
 ```bash
@@ -412,6 +411,10 @@ Add `phpcs.xml` to a project root to avoid repeating `--standard=WordPress` and 
     <exclude-pattern>node_modules/</exclude-pattern>
 </ruleset>
 ```
+
+## Bluetooth
+
+Managed with `bluetui` (TUI). Run `bluetui` to scan and pair devices.
 
 ## Notes
 
