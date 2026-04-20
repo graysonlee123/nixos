@@ -386,6 +386,32 @@ Native 800x600 → 3x integer to 1800p. Uses `PROTON_USE_WINED3D=1` to fix game 
 PROTON_USE_WINED3D=1 gamescope -w 800 -h 600 -W 2880 -H 1800 --scaler integer --filter nearest --fullscreen -- %command%
 ```
 
+## PHP Development (WordPress)
+
+PHP 8.2, Composer, and wp-cli are via Nix. `phpcs`/`phpcbf` and WPCS are via Composer global (`~/.config/composer/vendor/bin` is on `PATH`).
+
+**First-time setup:**
+```bash
+composer global require wp-coding-standards/wpcs dealerdirect/phpcodesniffer-composer-installer
+```
+
+**Usage:**
+```bash
+phpcs --standard=WordPress file.php   # check
+phpcbf --standard=WordPress file.php  # fix
+```
+
+Add `phpcs.xml` to a project root to avoid repeating `--standard=WordPress` and to exclude `vendor/` etc., then run `phpcs .`:
+
+```xml
+<?xml version="1.0"?>
+<ruleset>
+    <rule ref="WordPress"/>
+    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>node_modules/</exclude-pattern>
+</ruleset>
+```
+
 ## Notes
 
 - This configuration uses flakes and Home Manager for user-specific settings
