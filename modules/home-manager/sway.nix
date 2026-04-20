@@ -45,13 +45,21 @@ in {
         terminal = "ghostty";
 
         # Output configuration
-        output = lib.mkIf cfg.isLaptop {
+        output = if (cfg.isLaptop) then {
           "eDP-1" = {
-            position = "0,540";  # 540 = 1440 - 900 (align to bottom)
+            position = "0,540";
             scale = "2";
           };
           "HDMI-A-1" = {
             position = "1440,0";
+          };
+        } else {
+          "DP-1" = {
+            position = "1080,160";
+          };
+          "HDMI-A-1" = {
+            transform = "270";
+            position = "0,0";
           };
         };
 
@@ -189,14 +197,61 @@ in {
         bars = [];
 
         # Startup
-        startup = [
-          {
-            command = "swaymsg workspace number 1";
-          }
-          {
-            command = "vicinae server --replace";
-            always = true;
-          }
+        startup = lib.mkMerge [
+          [
+            {
+              command = "vicinae server --replace";
+              always = true;
+            }
+          ]
+
+          (lib.mkIf (!cfg.isLaptop) [
+            {
+              command = "swaymsg workspace 1 output DP-1";
+            }
+            {
+              command = "swaymsg workspace 2 output DP-1";
+            }
+            {
+              command = "swaymsg workspace 3 output DP-1";
+            }
+            {
+              command = "swaymsg workspace 4 output HDMI-A-1";
+            }
+            {
+              command = "swaymsg workspace 5 output HDMI-A-1";
+            }
+            {
+              command = "swaymsg workspace 4";
+            }
+            {
+              command = "swaymsg workspace 1";
+            }
+          ])
+
+          (lib.mkIf cfg.isLaptop [
+            {
+              command = "swaymsg workspace 1 output HDMI-A-1";
+            }
+            {
+              command = "swaymsg workspace 2 output HDMI-A-1";
+            }
+            {
+              command = "swaymsg workspace 3 output HDMI-A-1";
+            }
+            {
+              command = "swaymsg workspace 4 output eDP-1";
+            }
+            {
+              command = "swaymsg workspace 5 output eDP-1";
+            }
+            {
+              command = "swaymsg workspace 4";
+            }
+            {
+              command = "swaymsg workspace 1";
+            }
+          ])
         ];
 
         # Window rules
