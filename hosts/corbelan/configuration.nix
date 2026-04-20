@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/nixos/common.nix
+    ../../modules/nixos/bluetooth.nix
     ../../modules/nixos/fingerprint.nix
     ./home.nix
   ];
