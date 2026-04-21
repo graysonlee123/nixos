@@ -196,6 +196,21 @@ in {
         # Disable default bar (using Waybar instead)
         bars = [];
 
+        # Workspace output assignments
+        workspaceOutputAssign = if (!cfg.isLaptop) then [
+          { workspace = "1"; output = "DP-1"; }
+          { workspace = "2"; output = "DP-1"; }
+          { workspace = "3"; output = "DP-1"; }
+          { workspace = "4"; output = "HDMI-A-1"; }
+          { workspace = "5"; output = "HDMI-A-1"; }
+        ] else [
+          { workspace = "1"; output = "HDMI-A-1"; }
+          { workspace = "2"; output = "HDMI-A-1"; }
+          { workspace = "3"; output = "HDMI-A-1"; }
+          { workspace = "4"; output = "eDP-1"; }
+          { workspace = "5"; output = "eDP-1"; }
+        ];
+
         # Startup
         startup = lib.mkMerge [
           [
@@ -207,21 +222,6 @@ in {
 
           (lib.mkIf (!cfg.isLaptop) [
             {
-              command = "swaymsg workspace 1 output DP-1";
-            }
-            {
-              command = "swaymsg workspace 2 output DP-1";
-            }
-            {
-              command = "swaymsg workspace 3 output DP-1";
-            }
-            {
-              command = "swaymsg workspace 4 output HDMI-A-1";
-            }
-            {
-              command = "swaymsg workspace 5 output HDMI-A-1";
-            }
-            {
               command = "swaymsg workspace 4";
             }
             {
@@ -230,21 +230,6 @@ in {
           ])
 
           (lib.mkIf cfg.isLaptop [
-            {
-              command = "swaymsg workspace 1 output HDMI-A-1";
-            }
-            {
-              command = "swaymsg workspace 2 output HDMI-A-1";
-            }
-            {
-              command = "swaymsg workspace 3 output HDMI-A-1";
-            }
-            {
-              command = "swaymsg workspace 4 output eDP-1";
-            }
-            {
-              command = "swaymsg workspace 5 output eDP-1";
-            }
             {
               command = "swaymsg workspace 4";
             }
@@ -279,6 +264,14 @@ in {
           {
             criteria = { app_id = "^code$"; title = "- Chromium$"; };
             command = "floating enable";
+          }
+          {
+            criteria = { app_id = "^vesktop$"; };
+            command = "move window workspace 4";
+          }
+          {
+            criteria = { class = "^tidal-hifi$"; };
+            command = "move window workspace 5";
           }
         ];
       };
