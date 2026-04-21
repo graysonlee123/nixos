@@ -6,6 +6,14 @@
       enable = true;
       enableCompletion = true;
       defaultKeymap = "emacs";
+      history = {
+        size = 50000;
+        save = 50000;
+        ignoreDups = true;
+        ignoreSpace = true;
+        share = true;
+        extended = true;
+      };
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       shellAliases = {
