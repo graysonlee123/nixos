@@ -1,10 +1,11 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   config = {
     programs.zsh = {
       enable = true;
       enableCompletion = true;
+      defaultKeymap = "emacs";
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       shellAliases = {
@@ -19,16 +20,9 @@
         "dclf" = "docker compose logs --follow";
       };
       initContent = ''
-        # Ctrl+arrows for word navigation
+        bindkey "^[[3~" delete-char
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
-
-        # Load bashcompinit
-        autoload bashcompinit
-        bashcompinit
-
-        # wp-cli completion
-        source ${pkgs.wp-cli}/share/bash-completion/completions/wp
 
         # yazi shell wrapper providing cwd changes on exit
         function y() {
@@ -39,9 +33,6 @@
           rm -f -- "$tmp"
         }
 
-        bindkey -e
-
-        export PATH="$HOME/.config/composer/vendor/bin:$PATH"
       '';
     };
   };
