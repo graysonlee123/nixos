@@ -268,6 +268,17 @@ Mullvad is managed via `services.mullvad-vpn` (system daemon) and includes a cus
 
 A systemd user service (`mullvad-waybar-listener`) runs `mullvad status listen` in the background and sends `SIGRTMIN+11` to waybar on each status change, triggering an immediate update rather than waiting for the 30s polling interval.
 
+**Local network access:**
+
+Mullvad blocks LAN by default — leave it that way. If you need LAN access temporarily:
+
+```bash
+mullvad lan set allow   # enable
+mullvad lan set block   # re-block when done
+```
+
+Note: Docker port bindings should use `127.0.0.1:PORT:PORT` (not `PORT:PORT`) so dev services stay on loopback and LAN sharing is never needed.
+
 ## Useful Commands
 
 ```bash
