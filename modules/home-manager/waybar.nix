@@ -26,7 +26,7 @@ in {
           fixed-center = false;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "cpu" "memory" "custom/mullvad" "network" "wireplumber" "wireplumber#source" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
+          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "cpu" "memory" "custom/mullvad" "group/network-group" "wireplumber" "wireplumber#source" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -56,11 +56,47 @@ in {
             format = "  {}%";
           };
 
+          "group/network-group" = {
+            orientation = "horizontal";
+            modules = [ "network" "network#bandwidth" "custom/bandwhich-btn" "custom/nload-btn" "custom/nmtui-btn" ];
+            drawer = {
+              transition-duration = 300;
+              transition-left-to-right = false;
+              click-to-reveal = true;
+            };
+          };
+
           "network" = {
             format-wifi = "󰖩 {essid}";
             format-ethernet = "󰈀 {ipaddr}";
             format-disconnected = "⚠ Disconnected";
             tooltip-format = "{ifname}: {ipaddr}/{cidr}";
+          };
+
+          "network#bandwidth" = {
+            format-wifi = "↓{bandwidthDownBytes} ↑{bandwidthUpBytes}";
+            format-ethernet = "↓{bandwidthDownBytes} ↑{bandwidthUpBytes}";
+            format-disconnected = "";
+            tooltip = false;
+            interval = 2;
+          };
+
+          "custom/bandwhich-btn" = {
+            format = "[bandwhich]";
+            tooltip = false;
+            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.bash}/bin/bash -c '/run/wrappers/bin/sudo ${pkgs.bandwhich}/bin/bandwhich'";
+          };
+
+          "custom/nload-btn" = {
+            format = "[nload]";
+            tooltip = false;
+            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.nload}/bin/nload";
+          };
+
+          "custom/nmtui-btn" = {
+            format = "[nmtui]";
+            tooltip = false;
+            on-click = "${pkgs.ghostty}/bin/ghostty -e /run/current-system/sw/bin/nmtui";
           };
 
           "wireplumber" = {
@@ -122,6 +158,18 @@ in {
         #window,
         #mode {
           padding: 0 10px;
+        }
+
+        #custom-bandwhich-btn,
+        #custom-nload-btn,
+        #custom-nmtui-btn {
+          padding: 0 5px;
+        }
+
+        /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the
+           group box when the drawer is open — there is no .open class. */
+        #network-group:hover {
+          background-color: rgba(255, 255, 255, 0.05);
         }
       '';
     };

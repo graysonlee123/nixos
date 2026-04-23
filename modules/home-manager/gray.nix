@@ -76,6 +76,8 @@ in {
           '';
         }))
         asciiquarium
+        bandwhich
+        nload
         bat
         bibata-cursors
         crawl
