@@ -23,6 +23,7 @@ in {
           layer = "top";
           position = "top";
           height = 30;
+          fixed-center = false;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
           modules-right = [ "custom/dictation" "custom/music" "custom/weather" "cpu" "memory" "custom/mullvad" "network" "wireplumber" "wireplumber#source" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
