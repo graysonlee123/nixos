@@ -28,6 +28,9 @@ in {
         "desktop-entry=\"com.mitchellh.ghostty\"" = {
           default-timeout = timeout;
         };
+        "app-name=\"satty\"" = {
+          default-timeout = timeout;
+        };
       };
     };
   };
