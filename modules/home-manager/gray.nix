@@ -109,6 +109,7 @@ in {
         pgadmin4-desktopmode
         (php82.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug ]))
         php82Packages.composer
+        pavucontrol
         playerctl
         pnpm
         pwgen

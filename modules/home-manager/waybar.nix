@@ -26,7 +26,7 @@ in {
           fixed-center = false;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "cpu" "memory" "custom/mullvad" "group/network-group" "wireplumber" "wireplumber#source" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
+          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "cpu" "memory" "custom/mullvad" "group/network-group" "group/audio-group" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -99,24 +99,55 @@ in {
             on-click = "${pkgs.ghostty}/bin/ghostty -e /run/current-system/sw/bin/nmtui";
           };
 
+          "group/audio-group" = {
+            orientation = "horizontal";
+            modules = [ "group/audio-drawer" "wireplumber" "wireplumber#source" ];
+          };
+
+          "group/audio-drawer" = {
+            orientation = "horizontal";
+            modules = [ "custom/audio-btn" "custom/wiremix-btn" "custom/pavucontrol-btn" ];
+            drawer = {
+              transition-duration = 300;
+              transition-left-to-right = false;
+              click-to-reveal = true;
+            };
+          };
+
+          "custom/audio-btn" = {
+            format = "󰅁";
+            tooltip = false;
+          };
+
           "wireplumber" = {
             format = "{icon} {volume}%";
-            format-muted = "󰣽";
+            format-muted = "󰣽 [m]";
             format-icons = {
               default = [ "󰣴" "󰣶" "󰣸" "󰣺" ];
             };
             scroll-step = 5;
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
-            on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix";
           };
 
           "wireplumber#source" = {
             node-type = "Audio/Source";
             format = "󰍬 {volume}%";
-            format-muted = "󰍭";
+            format-muted = "󰍭 [m]";
             scroll-step = 5;
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle";
-            on-click-right = "/home/gray/.nix-profile/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix --tab input";
+          };
+
+          "custom/wiremix-btn" = {
+            format = "[wiremix]";
+            tooltip = false;
+            on-click = "${pkgs.ghostty}/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix";
+            on-click-right = "${pkgs.ghostty}/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix --tab input";
+          };
+
+          "custom/pavucontrol-btn" = {
+            format = "[pavucontrol]";
+            tooltip = false;
+            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
 
           "clock" = {
@@ -150,7 +181,6 @@ in {
         #cpu,
         #memory,
         #network,
-        #wireplumber,
         #battery,
         #custom-dictation,
         #custom-weather,
@@ -160,16 +190,27 @@ in {
           padding: 0 10px;
         }
 
+        #wireplumber,
+        #custom-audio-btn,
         #custom-bandwhich-btn,
         #custom-nload-btn,
-        #custom-nmtui-btn {
+        #custom-nmtui-btn,
+        #custom-wiremix-btn,
+        #custom-pavucontrol-btn {
           padding: 0 5px;
         }
 
         /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the
            group box when the drawer is open — there is no .open class. */
-        #network-group:hover {
+        #network-group:hover,
+        #audio-drawer:hover {
           background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        #audio-group {
+          background-color: rgba(100, 130, 180, 0.15);
+          border-radius: 4px;
+          padding: 0 4px;
         }
       '';
     };
