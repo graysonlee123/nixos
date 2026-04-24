@@ -26,7 +26,7 @@ in {
           fixed-center = false;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "cpu" "memory" "custom/mullvad" "group/network-group" "group/audio-group" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
+          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "group/hw-group" "custom/mullvad" "group/network-group" "group/audio-group" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -54,6 +54,42 @@ in {
 
           "memory" = {
             format = "  {}%";
+          };
+
+          "group/hw-group" = {
+            orientation = "horizontal";
+            modules = [ "group/hw-drawer" "cpu" "memory" ];
+          };
+
+          "group/hw-drawer" = {
+            orientation = "horizontal";
+            modules = [ "custom/hw-btn" "temperature" "disk" "custom/btop-btn" ];
+            drawer = {
+              transition-duration = 300;
+              transition-left-to-right = false;
+              click-to-reveal = true;
+            };
+          };
+
+          "custom/hw-btn" = {
+            format = "󰅁";
+            tooltip = false;
+          };
+
+          "temperature" = {
+            format = "󰔏 {temperatureC}°C";
+            tooltip = false;
+          };
+
+          "disk" = {
+            format = "󰋊 {percentage_used}%";
+            tooltip-format = "{used} / {total}";
+          };
+
+          "custom/btop-btn" = {
+            format = "[btop]";
+            tooltip = false;
+            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.btop}/bin/btop";
           };
 
           "group/network-group" = {
@@ -188,8 +224,6 @@ in {
         }
 
         #clock,
-        #cpu,
-        #memory,
         #battery,
         #custom-dictation,
         #custom-weather,
@@ -199,10 +233,16 @@ in {
           padding: 0 10px;
         }
 
+        #cpu,
+        #memory,
+        #temperature,
         #network,
+        #disk,
         #wireplumber,
+        #custom-hw-btn,
         #custom-network-btn,
         #custom-audio-btn,
+        #custom-btop-btn,
         #custom-bandwhich-btn,
         #custom-nload-btn,
         #custom-nmtui-btn,
@@ -213,15 +253,21 @@ in {
 
         /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the
            group box when the drawer is open — there is no .open class. */
+        #hw-drawer:hover,
         #network-drawer:hover,
         #audio-drawer:hover {
           background-color: rgba(255, 255, 255, 0.05);
         }
 
+        #hw-group,
         #network-group,
         #audio-group {
           border-radius: 4px;
           padding: 0 4px;
+        }
+
+        #hw-group {
+          background-color: rgba(180, 140, 100, 0.15);
         }
 
         #network-group {
