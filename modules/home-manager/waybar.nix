@@ -58,12 +58,22 @@ in {
 
           "group/network-group" = {
             orientation = "horizontal";
-            modules = [ "network" "network#bandwidth" "custom/bandwhich-btn" "custom/nload-btn" "custom/nmtui-btn" ];
+            modules = [ "group/network-drawer" "network" ];
+          };
+
+          "group/network-drawer" = {
+            orientation = "horizontal";
+            modules = [ "custom/network-btn" "network#bandwidth" "custom/bandwhich-btn" "custom/nload-btn" "custom/nmtui-btn" ];
             drawer = {
               transition-duration = 300;
               transition-left-to-right = false;
               click-to-reveal = true;
             };
+          };
+
+          "custom/network-btn" = {
+            format = "󰅁";
+            tooltip = false;
           };
 
           "network" = {
@@ -180,7 +190,6 @@ in {
         #clock,
         #cpu,
         #memory,
-        #network,
         #battery,
         #custom-dictation,
         #custom-weather,
@@ -190,7 +199,9 @@ in {
           padding: 0 10px;
         }
 
+        #network,
         #wireplumber,
+        #custom-network-btn,
         #custom-audio-btn,
         #custom-bandwhich-btn,
         #custom-nload-btn,
@@ -202,15 +213,23 @@ in {
 
         /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the
            group box when the drawer is open — there is no .open class. */
-        #network-group:hover,
+        #network-drawer:hover,
         #audio-drawer:hover {
           background-color: rgba(255, 255, 255, 0.05);
         }
 
+        #network-group,
         #audio-group {
-          background-color: rgba(100, 130, 180, 0.15);
           border-radius: 4px;
           padding: 0 4px;
+        }
+
+        #network-group {
+          background-color: rgba(100, 180, 130, 0.15);
+        }
+
+        #audio-group {
+          background-color: rgba(100, 130, 180, 0.15);
         }
       '';
     };
