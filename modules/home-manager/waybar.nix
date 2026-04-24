@@ -26,7 +26,7 @@ in {
           fixed-center = false;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "group/hw-group" "custom/mullvad" "group/network-group" "group/audio-group" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
+          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "group/hw-group" "custom/mullvad" "group/network-group" "group/audio-group" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "group/clock-group" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -196,9 +196,41 @@ in {
             on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
 
+          "group/clock-group" = {
+            orientation = "horizontal";
+            modules = [ "group/clock-drawer" "clock" ];
+          };
+
+          "group/clock-drawer" = {
+            orientation = "horizontal";
+            modules = [ "custom/clock-btn" "custom/uptime" "clock#utc-offset" ];
+            drawer = {
+              transition-duration = 300;
+              transition-left-to-right = false;
+              click-to-reveal = true;
+            };
+          };
+
+          "custom/clock-btn" = {
+            format = "󰅁";
+            tooltip = false;
+          };
+
           "clock" = {
             format = "󰃭 {0:%m/%d} {0:%I:%M}";
             tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          };
+
+          "clock#utc-offset" = {
+            format = "UTC{:%z}";
+            tooltip = false;
+          };
+
+          "custom/uptime" = {
+            exec = "${pkgs.gawk}/bin/awk '{s=$1; d=int(s/86400); h=int((s%86400)/3600); m=int((s%3600)/60); if(d>0) printf \"%dd %dh\", d, h; else printf \"%dh %dm\", h, m}' /proc/uptime";
+            interval = 60;
+            format = "󰅐 {}";
+            tooltip = false;
           };
 
           "custom/music" = {
@@ -223,7 +255,6 @@ in {
           padding: 0 5px;
         }
 
-        #clock,
         #battery,
         #custom-dictation,
         #custom-weather,
@@ -233,6 +264,7 @@ in {
           padding: 0 10px;
         }
 
+        #clock,
         #cpu,
         #memory,
         #temperature,
@@ -247,7 +279,9 @@ in {
         #custom-nload-btn,
         #custom-nmtui-btn,
         #custom-wiremix-btn,
-        #custom-pavucontrol-btn {
+        #custom-pavucontrol-btn,
+        #custom-clock-btn,
+        #custom-uptime {
           padding: 0 5px;
         }
 
@@ -255,19 +289,22 @@ in {
            group box when the drawer is open — there is no .open class. */
         #hw-drawer,
         #network-drawer,
-        #audio-drawer {
+        #audio-drawer,
+        #clock-drawer {
           border-radius: 4px;
         }
 
         #hw-drawer:hover,
         #network-drawer:hover,
-        #audio-drawer:hover {
+        #audio-drawer:hover,
+        #clock-drawer:hover {
           background-color: rgba(255, 255, 255, 0.05);
         }
 
         #hw-group,
         #network-group,
-        #audio-group {
+        #audio-group,
+        #clock-group {
           border-radius: 4px;
           padding: 4px;
           margin: 3px 2px;
@@ -283,6 +320,10 @@ in {
 
         #audio-group {
           background-color: rgba(100, 130, 180, 0.15);
+        }
+
+        #clock-group {
+          background-color: rgba(160, 100, 180, 0.15);
         }
       '';
     };
