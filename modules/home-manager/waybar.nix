@@ -253,6 +253,12 @@ in {
 
         /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the
            group box when the drawer is open — there is no .open class. */
+        #hw-drawer,
+        #network-drawer,
+        #audio-drawer {
+          border-radius: 4px;
+        }
+
         #hw-drawer:hover,
         #network-drawer:hover,
         #audio-drawer:hover {
@@ -263,7 +269,8 @@ in {
         #network-group,
         #audio-group {
           border-radius: 4px;
-          padding: 0 4px;
+          padding: 4px;
+          margin: 3px 2px;
         }
 
         #hw-group {
