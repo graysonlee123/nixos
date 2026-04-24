@@ -167,9 +167,9 @@ in {
 
           "wireplumber" = {
             format = "{icon} {volume}%";
-            format-muted = "󰣽 [m]";
+            format-muted = "󰝟 [m]";
             format-icons = {
-              default = [ "󰣴" "󰣶" "󰣸" "󰣺" ];
+              default = [ "󰕿" "󰖀" "󰕾" ];
             };
             scroll-step = 5;
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
