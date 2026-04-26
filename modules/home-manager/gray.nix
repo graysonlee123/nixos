@@ -75,6 +75,7 @@ in {
             wrapProgram $out/bin/atlauncher --set _JAVA_AWT_WM_NONREPARENTING 1
           '';
         }))
+        alsa-utils
         asciiquarium
         bandwhich
         nload
