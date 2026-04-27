@@ -224,7 +224,10 @@ in {
 
           (lib.mkIf (!cfg.isLaptop) [
             {
-              command = "swaymsg workspace 4";
+              command = "swaymsg workspace 4; swaymsg layout splitv";
+            }
+            {
+              command = "swaymsg workspace 5; swaymsg layout splitv";
             }
             {
               command = "swaymsg workspace 1";
