@@ -52,6 +52,7 @@ in {
           };
           "HDMI-A-1" = {
             position = "1440,0";
+            mode = "2560x1440@99.946Hz";
           };
         } else {
           "DP-1" = {
