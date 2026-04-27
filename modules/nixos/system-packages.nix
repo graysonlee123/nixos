@@ -5,6 +5,7 @@
       curl
       file
       inxi
+      mangohud
       openvpn
     ];
   };

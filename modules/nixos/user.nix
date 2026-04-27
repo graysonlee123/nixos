@@ -5,7 +5,7 @@
       isNormalUser = true;
       description = "Grayson";
       # TODO: Add "video" group for Corbelan
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" "gamemode" ];
       shell = pkgs.zsh;
     };
   };
