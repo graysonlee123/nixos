@@ -3,6 +3,7 @@
 {
   programs.vscode = {
     enable = true;
+    mutableExtensionsDir = false;
     profiles = {
       default = {
         extensions = with pkgs; [
@@ -16,6 +17,7 @@
           vscode-extensions.golang.go
           vscode-extensions.jnoortheen.nix-ide
           vscode-extensions.biomejs.biome
+          vscode-extensions.bradlc.vscode-tailwindcss
         ];
         userSettings = {
           "update.mode" = "none";
