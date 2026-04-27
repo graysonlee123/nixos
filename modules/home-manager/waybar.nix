@@ -152,7 +152,7 @@ in {
 
           "group/audio-drawer" = {
             orientation = "horizontal";
-            modules = [ "custom/audio-btn" "custom/wiremix-btn" "custom/pavucontrol-btn" ];
+            modules = [ "custom/audio-btn" "custom/alsamixer-btn" "custom/wiremix-btn" "custom/pavucontrol-btn" ];
             drawer = {
               transition-duration = 300;
               transition-left-to-right = false;
@@ -183,11 +183,16 @@ in {
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle";
           };
 
+          "custom/alsamixer-btn" = {
+            format = "[alsamixer]";
+            tooltip = false;
+            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.alsa-utils}/bin/alsamixer";
+          };
+
           "custom/wiremix-btn" = {
             format = "[wiremix]";
             tooltip = false;
-            on-click = "${pkgs.ghostty}/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix";
-            on-click-right = "${pkgs.ghostty}/bin/ghostty -e /home/gray/.nix-profile/bin/wiremix --tab input";
+            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.wiremix}/bin/wiremix";
           };
 
           "custom/pavucontrol-btn" = {
@@ -280,6 +285,7 @@ in {
         #custom-nmtui-btn,
         #custom-wiremix-btn,
         #custom-pavucontrol-btn,
+        #custom-alsamixer-btn,
         #custom-clock-btn,
         #custom-uptime {
           padding: 0 5px;
