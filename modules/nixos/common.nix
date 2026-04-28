@@ -20,6 +20,7 @@
     ./xdg.nix
     ./mullvad.nix
     ./bluetooth.nix
+    ./sudo.nix
   ];
   programs.sway.enable = true;
   nixpkgs.config.allowUnfree = true;
