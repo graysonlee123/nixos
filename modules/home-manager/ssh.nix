@@ -11,6 +11,9 @@
           identityFile = "~/.ssh/github";
           identitiesOnly = true;
         };
+        # sulaco: home server
+        # - remote (Tailscale): ssh sulaco
+        # - local network:      ssh sulaco.local
         "sulaco" = {
           hostname = "100.83.63.8";
           user = "grayson";
