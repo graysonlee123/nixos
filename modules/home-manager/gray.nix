@@ -120,6 +120,7 @@ in {
         r2modman
         rclone
         restic
+        scc
         slurp
         speedtest-cli
         teamspeak6-client
