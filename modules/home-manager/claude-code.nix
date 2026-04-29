@@ -79,6 +79,10 @@
           url = "https://mcp.clickup.com/mcp";
           type = "http";
         };
+        astro = {
+          url = "https://mcp.docs.astro.build/mcp";
+          type = "http";
+        };
       };
       skills = {
         wordpress-source-code = ../../claude/skills/wordpress-source-code;
