@@ -26,7 +26,7 @@ in {
           fixed-center = false;
 
           modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "group/hw-group" "custom/mullvad" "group/network-group" "group/audio-group" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "group/clock-group" ];
+          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "custom/mullvad" "group/hw-group" "group/network-group" "group/audio-group" "group/clock-group" ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -203,7 +203,7 @@ in {
 
           "group/clock-group" = {
             orientation = "horizontal";
-            modules = [ "group/clock-drawer" "clock" ];
+            modules = [ "group/clock-drawer" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
           };
 
           "group/clock-drawer" = {
@@ -260,7 +260,6 @@ in {
           padding: 0 5px;
         }
 
-        #battery,
         #custom-dictation,
         #custom-weather,
         #custom-music,
@@ -287,7 +286,8 @@ in {
         #custom-pavucontrol-btn,
         #custom-alsamixer-btn,
         #custom-clock-btn,
-        #custom-uptime {
+        #custom-uptime,
+        #battery {
           padding: 0 5px;
         }
 
