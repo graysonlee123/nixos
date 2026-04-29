@@ -119,6 +119,14 @@ sudo tailscale up --auth-key=KEY
 
 See [docs/audio.md](docs/audio.md).
 
+### ClamAV
+
+Virus signatures auto-updated via `services.clamav.updater`. Run a manual scan monthly:
+
+```bash
+clamscan -r --bell -i /home/gray
+```
+
 ### Services
 - OpenSSH daemon
 - Docker daemon

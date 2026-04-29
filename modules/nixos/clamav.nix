@@ -2,8 +2,8 @@
 
 {
   services.clamav = {
-    daemon.enable = true;
     updater.enable = true;
+    updater.frequency = 1;
   };
   environment.systemPackages = [ pkgs.clamav ];
 }
