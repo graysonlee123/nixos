@@ -216,13 +216,6 @@ in {
 
         # Startup
         startup = lib.mkMerge [
-          [
-            {
-              command = "vicinae server --replace";
-              always = true;
-            }
-          ]
-
           (lib.mkIf (!cfg.isLaptop) [
             {
               command = "swaymsg workspace 4; swaymsg layout splitv";
