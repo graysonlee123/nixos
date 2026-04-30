@@ -19,8 +19,8 @@
             pkgs.fetchFromGitHub {
             owner = "vicinaehq";
               repo = "extensions";
-              rev = "cc3326e7e07b4d2d0aa9ebc1a54ee3b0fb1db469";
-              sha256 = "sha256-bDC2q3GlDjEE5J2SPHpIdbYKcuLDw3fsxSh3emMOEXU=";
+              rev = "62bcab8ca590d37c8443cb2aee2e83ef656e389f";
+              sha256 = "sha256-j3g10f7sHHPbcN6tQIJmKatyOANJzHc5o9zAQlNrnOw=";
             } + /extensions/nix;
         })
       ];
