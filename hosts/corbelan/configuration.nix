@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ../../modules/nixos/common.nix
     ../../modules/nixos/fingerprint.nix
+    ../../modules/nixos/auto-cpufreq.nix
     ./home.nix
   ];
 
