@@ -58,11 +58,13 @@ in {
         ./nerd-dictation.nix
         ./radioboat.nix
         ./weather.nix
+        ./batsignal.nix
       ];
 
       # Set laptop-specific options
       sway.isLaptop = cfg.isLaptop;
       waybar.isLaptop = cfg.isLaptop;
+      batsignal.enable = cfg.isLaptop;
 
       # Fonts
       fonts.fontconfig.enable = true;
