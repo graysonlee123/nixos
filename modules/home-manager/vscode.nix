@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   programs.vscode = {
@@ -37,7 +37,7 @@
           "[go]" = { "editor.defaultFormatter" = "golang.go"; };
           "[nix]" = { "editor.defaultFormatter" = "jnoortheen.nix-ide"; };
           "extensions.ignoreRecommendations" = true;
-          "biome.lsp.bin" = "${pkgs.biome}/bin/biome";
+          "biome.lsp.bin" = "${pkgs-unstable.biome}/bin/biome";
           "terminal.integrated.defaultProfile.linux" = "zsh";
         };
         keybindings = [];
