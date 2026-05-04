@@ -38,6 +38,7 @@
           "[nix]" = { "editor.defaultFormatter" = "jnoortheen.nix-ide"; };
           "extensions.ignoreRecommendations" = true;
           "biome.lsp.bin" = "${pkgs.biome}/bin/biome";
+          "terminal.integrated.defaultProfile.linux" = "zsh";
         };
         keybindings = [];
       };
