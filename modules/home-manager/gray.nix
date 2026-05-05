@@ -131,6 +131,7 @@ in {
             wrapProgram $out/bin/tidal-hifi --add-flags "--no-sandbox"
           '';
         }))
+        trash-cli
         tree
         typescript-language-server
         tuir

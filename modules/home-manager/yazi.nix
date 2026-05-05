@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   config = {
     programs.yazi = {
@@ -60,6 +62,9 @@
           cursor_blink = true;
         };
       };
+      plugins = {
+        restore = pkgs.yaziPlugins.restore;
+      };
       keymap = {
         mgr.prepend_keymap = [
           { on = [ "g" "d" ]; run = "cd ~/downloads"; desc = "Go ~/downloads"; }
@@ -67,6 +72,7 @@
           { on = [ "g" "m" ]; run = "cd ~/repos/me/"; desc = "Go ~/repos/me"; }
           { on = [ "g" "t" ]; run = "cd /tmp"; desc = "Go /tmp"; }
           { on = [ "Y" ]; run = "shell 'wl-copy < \"$1\"'"; desc = "Copy to clipboard"; }
+          { on = [ "u" ]; run = "plugin restore -- --interactive"; desc = "Restore last deleted files/folders"; }
         ];
       };
     };
