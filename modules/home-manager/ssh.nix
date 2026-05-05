@@ -46,6 +46,10 @@
           identityFile = "~/.ssh/azenco";
           identitiesOnly = true;
         };
+        "*.servebolt.cloud" = {
+          identityFile = "~/.ssh/servebolt";
+          identitiesOnly = true;
+        };
       };
     };
   };
