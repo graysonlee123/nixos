@@ -28,6 +28,7 @@ Gamescope is a micro-compositor for scaling games. Key flags:
 - `-W` / `-H` — output (display) resolution
 - `-S` / `--scaler` — scaling mode: `auto`, `integer`, `fit`, `fill`, `stretch`
 - `-F` / `--filter` — upscale filter: `linear`, `nearest`, `fsr`, `nis`, `pixel`
+- `--force-grab-cursor` — helps contain cursor on multi-monitor setups
 
 ### Corbelan (2880x1800)
 
@@ -56,3 +57,12 @@ Native 800x600 → 3x integer to 1800p. Uses `PROTON_USE_WINED3D=1` to fix game 
 ```
 PROTON_USE_WINED3D=1 gamescope -w 800 -h 600 -W 2880 -H 1800 --scaler integer --filter nearest --fullscreen -- %command%
 ```
+
+### Noita
+
+Set Steam's launch option to:
+
+```
+gamescope -f -w 2560 -h 1440 --force-grab-cursor --mangoapp -- %command%
+```
+
