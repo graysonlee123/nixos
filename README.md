@@ -18,21 +18,21 @@ This repository contains my declarative NixOS system configuration, including:
 <project-root>/
 ├── flake.nix                       # Flake configuration
 ├── flake.lock                      # Flake lock file
-├── wallpaper.jpg                   # Desktop wallpaper
+├── assets/
+│   └── images/                     # Wallpapers and images
 ├── hosts/
 │   ├── corbelan/                   # Laptop configuration
 │   │   ├── configuration.nix
-│   │   ├── hardware-configuration.nix
-│   │   └── home.nix
+│   │   └── hardware-configuration.nix
 │   └── nostromo/                   # Desktop configuration
 │       ├── configuration.nix
-│       ├── hardware-configuration.nix
-│       └── home.nix
+│       └── hardware-configuration.nix
+├── lib/                            # Shared utility functions and data
 ├── modules/
-│   ├── nixos/                      # System-level modules (boot, services, drivers)
-│   ├── home-manager/               # User-level modules (programs, configs)
-│   ├── devices/                    # Device-specific configs
-│   └── utils/                      # Utility modules (bookmark helpers)
+│   ├── nixos/                      # System-level modules (boot, services, drivers, devices)
+│   └── home-manager/               # User-level modules (programs, configs)
+├── users/
+│   └── gray.nix                    # User NixOS module
 ├── docs/                           # Extended documentation
 └── scripts/                        # Helper scripts
 ```
@@ -159,7 +159,7 @@ Example: After visiting `/home/gray/repos/me/nixos` a few times, you can jump th
 
 ### Declarative Bookmark Management
 
-Chromium bookmarks are managed declaratively through `modules/home-manager/bookmarks.nix`, which provides:
+Chromium bookmarks are managed declaratively through `lib/bookmarks.nix` (data, git-crypt encrypted) and `lib/mkChromiumBookmarks.nix` (utility), which provides:
 
 - **Separate profiles**: Personal and work bookmarks in different Chromium profiles
 - **Read-only enforcement**: Bookmarks can only be changed via Nix configuration

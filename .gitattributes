@@ -1,2 +1,2 @@
-modules/home-manager/bookmarks.nix filter=git-crypt diff=git-crypt
+lib/bookmarks.nix filter=git-crypt diff=git-crypt
 

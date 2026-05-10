@@ -1,10 +1,10 @@
 { pkgs, config, lib, inputs, ... }:
 
 let
-  cfg = config.home;
+  cfg = config.gray;
   types = lib.types;
 in {
-  options.home = {
+  options.gray = {
     additionalPackages = lib.mkOption {
       type = types.listOf types.package;
       description = "Additional packages to add to the home manager configuration.";
@@ -24,41 +24,41 @@ in {
     home-manager.useGlobalPkgs = true;
     home-manager.users.gray = { config, lib, pkgs, ... }: {
       imports = [
-        ./btop.nix
-        ./chromium.nix
-        ./cursor.nix
-        ./environment-variables.nix
-        ./screenshots.nix
-        ./fzf.nix
-        ./ghostty.nix
-        ./git.nix
-        ./go.nix
-        ./iamb.nix
-        ./mako.nix
-        ./pgcli.nix
-        ./ripgrep.nix
-        ./ssh.nix
-        ./starship.nix
-        ./sway.nix
-        ./tealdeer.nix
-        ./vicinae.nix
-        ./vim.nix
-        ./vscode.nix
-        ./waybar.nix
-        ./yazi.nix
-        ./zoxide.nix
-        ./lazydocker.nix
-        ./lazygit.nix
-        ./zsh.nix
-        ./claude-code.nix
-        ./vesktop.nix
-        ./xdg.nix
-        ./imv.nix
-        ./mullvad-waybar.nix
-        ./nerd-dictation.nix
-        ./radioboat.nix
-        ./weather.nix
-        ./batsignal.nix
+        ../modules/home-manager/btop.nix
+        ../modules/home-manager/chromium.nix
+        ../modules/home-manager/cursor.nix
+        ../modules/home-manager/environment-variables.nix
+        ../modules/home-manager/screenshots.nix
+        ../modules/home-manager/fzf.nix
+        ../modules/home-manager/ghostty.nix
+        ../modules/home-manager/git.nix
+        ../modules/home-manager/go.nix
+        ../modules/home-manager/iamb.nix
+        ../modules/home-manager/mako.nix
+        ../modules/home-manager/pgcli.nix
+        ../modules/home-manager/ripgrep.nix
+        ../modules/home-manager/ssh.nix
+        ../modules/home-manager/starship.nix
+        ../modules/home-manager/sway.nix
+        ../modules/home-manager/tealdeer.nix
+        ../modules/home-manager/vicinae.nix
+        ../modules/home-manager/vim.nix
+        ../modules/home-manager/vscode.nix
+        ../modules/home-manager/waybar.nix
+        ../modules/home-manager/yazi.nix
+        ../modules/home-manager/zoxide.nix
+        ../modules/home-manager/lazydocker.nix
+        ../modules/home-manager/lazygit.nix
+        ../modules/home-manager/zsh.nix
+        ../modules/home-manager/claude-code.nix
+        ../modules/home-manager/vesktop.nix
+        ../modules/home-manager/xdg.nix
+        ../modules/home-manager/imv.nix
+        ../modules/home-manager/mullvad-waybar.nix
+        ../modules/home-manager/nerd-dictation.nix
+        ../modules/home-manager/radioboat.nix
+        ../modules/home-manager/weather.nix
+        ../modules/home-manager/batsignal.nix
       ];
 
       # Set laptop-specific options

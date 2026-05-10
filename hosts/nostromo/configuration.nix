@@ -5,8 +5,8 @@
     ./hardware-configuration.nix
     ../../modules/nixos/nvidia.nix
     ../../modules/nixos/common.nix
-    ../../modules/devices/galaxy70.nix
-    ./home.nix
+    ../../modules/nixos/galaxy70.nix
+    ../../users/gray.nix
   ];
 
   host.name = "nostromo";

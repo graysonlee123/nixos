@@ -6,11 +6,18 @@
     ../../modules/nixos/common.nix
     ../../modules/nixos/fingerprint.nix
     ../../modules/nixos/auto-cpufreq.nix
-    ./home.nix
+    ../../users/gray.nix
   ];
 
   host.name = "corbelan";
   system.stateVersion = "25.11";
   hardware.graphics.enable = true;
+
+  gray = {
+    isLaptop = true;
+    additionalPackages = with pkgs; [
+      brightnessctl
+    ];
+  };
 }
 

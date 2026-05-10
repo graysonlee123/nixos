@@ -13,24 +13,24 @@ This repository contains a version-controlled NixOS configuration using **Nix fl
 
 ```
 ~/repos/me/nixos/
-├── flake.nix                   # Flake configuration
-├── flake.lock                  # Flake lock file
+├── flake.nix                  # Flake configuration
+├── flake.lock                 # Flake lock file
+├── assets/
+│   └── images/                # Wallpapers and images
 ├── hosts/
 │   ├── corbelan/              # Laptop configuration
 │   │   ├── configuration.nix
-│   │   ├── hardware-configuration.nix
-│   │   └── home.nix
+│   │   └── hardware-configuration.nix
 │   └── nostromo/              # Desktop configuration
 │       ├── configuration.nix
-│       ├── hardware-configuration.nix
-│       └── home.nix
+│       └── hardware-configuration.nix
+├── lib/                       # Shared utility functions
 ├── modules/
 │   ├── nixos/                 # System-level modules
-│   ├── home-manager/          # User-level modules
-│   ├── devices/               # Device-specific configs
-│   └── utils/                 # Utility modules (bookmarks)
+│   └── home-manager/          # User program configs and dotfiles
+├── users/
+│   └── gray.nix               # User NixOS module
 ├── scripts/                   # Helper scripts
-├── wallpaper.jpg
 ├── CLAUDE.md                  # This file
 └── README.md                  # User-facing documentation
 ```
@@ -72,7 +72,7 @@ Making config changes:
 
 ## Module Organization
 
-- `modules/nixos/` - System services, packages, configs requiring root
+- `modules/nixos/` - System services, packages, device configs requiring root
 - `modules/home-manager/` - User programs, dotfiles, per-user settings
-- `modules/devices/` - Device-specific configs (e.g., Galaxy70 MTP)
-- `modules/utils/` - Shared utility functions (bookmark helpers)
+- `lib/` - Shared utility functions
+- `users/gray.nix` - NixOS module imported by hosts

@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 let
-  bookmark-utils = import ../utils/bookmarks.nix;
-  bookmarks = import ./bookmarks.nix;
+  bookmark-utils = import ../../lib/mkChromiumBookmarks.nix;
+  bookmarks = import ../../lib/bookmarks.nix;
 in {
   config = {
     programs.chromium = {
