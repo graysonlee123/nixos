@@ -83,6 +83,10 @@
           url = "https://mcp.docs.astro.build/mcp";
           type = "http";
         };
+        inspry = {
+          url = "https://inspry-mcp-hub-production.up.railway.app/mcp";
+          type = "http";
+        };
       };
       skills = {
         wordpress-source-code = ../../claude/skills/wordpress-source-code;
