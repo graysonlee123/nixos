@@ -34,6 +34,10 @@
           identityFile = "~/.ssh/github-inspry";
           identitiesOnly = true;
         };
+        "ssh.pressable.com" = {
+          identityFile = "~/.ssh/pressable";
+          identitiesOnly = true;
+        };
         "bitbucket.org" = {
           identityFile = "~/.ssh/bitbucket.org";
           identitiesOnly = true;
