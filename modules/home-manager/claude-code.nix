@@ -1,4 +1,4 @@
-{ pkgs-unstable, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   config = {
@@ -82,6 +82,11 @@
         astro = {
           url = "https://mcp.docs.astro.build/mcp";
           type = "http";
+        };
+        chrome-devtools = {
+          command = "npx";
+          args = [ "-y" "chrome-devtools-mcp@latest" "--executablePath" "${pkgs.chromium}/bin/chromium" ];
+          type = "stdio";
         };
         inspry = {
           url = "https://inspry-mcp-hub-production.up.railway.app/mcp";

@@ -379,17 +379,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1775101128,
-        "narHash": "sha256-RwjC39Dd5ydwi9O39CNiK+684mRoVTPcc3P7jdBTcn4=",
+        "lastModified": 1779639025,
+        "narHash": "sha256-glvGgrsrYSlt7fAb1IO2PIAXwvZbAKVjHeDv2OlxdQg=",
         "owner": "graysonlee123",
         "repo": "wttrbar",
-        "rev": "74332e3fc5f170c9b174f72d7948eda5797e7be9",
+        "rev": "db32f653ca75efe305b3fdb8de05223d1a013e53",
         "type": "github"
       },
       "original": {
         "owner": "graysonlee123",
         "repo": "wttrbar",
-        "rev": "74332e3fc5f170c9b174f72d7948eda5797e7be9",
+        "rev": "db32f653ca75efe305b3fdb8de05223d1a013e53",
         "type": "github"
       }
     }

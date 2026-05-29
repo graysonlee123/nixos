@@ -10,7 +10,7 @@
       url = "github:nix-community/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    wttrbar.url = "github:graysonlee123/wttrbar?rev=74332e3fc5f170c9b174f72d7948eda5797e7be9";
+    wttrbar.url = "github:graysonlee123/wttrbar?rev=db32f653ca75efe305b3fdb8de05223d1a013e53";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, stylix, wttrbar, ... } @inputs:
