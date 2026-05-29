@@ -62,9 +62,8 @@ in
         "*.servebolt.cloud" = mkSshHost {
           key = "~/.ssh/servebolt";
         };
-        "131.153.238.180" = {
-          identityFile = "~/.ssh/rocket.net";
-          identitiesOnly = true;
+        "131.153.238.180" = mkSshHost {
+          key = "~/.ssh/rocket.net";
         };
       };
     };
