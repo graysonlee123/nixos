@@ -1,3 +1,20 @@
+{ lib, ... }:
+
+let
+  mkSshHost = {
+    hostname ? null,
+    user ? null,
+    key,
+    keyOnly ? true,
+  }: {
+    identityFile = key;
+    identitiesOnly = keyOnly;
+  } // lib.optionalAttrs (hostname != null) {
+    hostname = hostname;
+  } // lib.optionalAttrs (user != null) {
+    user = user;
+  };
+in
 {
   config = {
     programs.ssh = {
@@ -5,54 +22,45 @@
       enableDefaultConfig = false;
       matchBlocks = {
         # Personal
-        "github.com" = {
+        "github.com" = mkSshHost {
           hostname = "github.com";
           user = "git";
-          identityFile = "~/.ssh/github";
-          identitiesOnly = true;
+          key = "~/.ssh/github";
         };
         # sulaco: home server
         # - remote (Tailscale): ssh sulaco
         # - local network:      ssh sulaco.local
-        "sulaco" = {
+        "sulaco" = mkSshHost {
           hostname = "100.83.63.8";
           user = "grayson";
-          identityFile = "~/.ssh/sulaco";
-          identitiesOnly = true;
+          key = "~/.ssh/sulaco";
         };
-        "sulaco.local" = {
+        "sulaco.local" = mkSshHost {
           hostname = "192.168.86.2";
           user = "grayson";
-          identityFile = "~/.ssh/sulaco";
-          identitiesOnly = true;
+          key = "~/.ssh/sulaco";
         };
 
         # Inspry
-        "inspry.github.com" = {
+        "inspry.github.com" = mkSshHost {
           hostname = "github.com";
           user = "git";
-          identityFile = "~/.ssh/github-inspry";
-          identitiesOnly = true;
+          key = "~/.ssh/github-inspry";
         };
-        "ssh.pressable.com" = {
-          identityFile = "~/.ssh/pressable";
-          identitiesOnly = true;
+        "ssh.pressable.com" = mkSshHost {
+          key = "~/.ssh/pressable";
         };
-        "bitbucket.org" = {
-          identityFile = "~/.ssh/bitbucket.org";
-          identitiesOnly = true;
+        "bitbucket.org" = mkSshHost {
+          key = "~/.ssh/bitbucket.org";
         };
-        "154.12.120.83" = {
-          identityFile = "~/.ssh/bigscoots";
-          identitiesOnly = true;
+        "154.12.120.83" = mkSshHost {
+          key = "~/.ssh/bigscoots";
         };
-        "3.82.7.41" = {
-          identityFile = "~/.ssh/azenco";
-          identitiesOnly = true;
+        "3.82.7.41" = mkSshHost {
+          key = "~/.ssh/azenco";
         };
-        "*.servebolt.cloud" = {
-          identityFile = "~/.ssh/servebolt";
-          identitiesOnly = true;
+        "*.servebolt.cloud" = mkSshHost {
+          key = "~/.ssh/servebolt";
         };
       };
     };
