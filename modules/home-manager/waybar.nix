@@ -13,6 +13,7 @@ let
       click-to-reveal = true;
     };
   };
+  mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty -e ${cmd}";
 in {
   options.waybar = {
     isLaptop = lib.mkOption {
@@ -100,7 +101,7 @@ in {
           "custom/btop-btn" = {
             format = "[btop]";
             tooltip = false;
-            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.btop}/bin/btop";
+            on-click = mkGhosttyCmd "${pkgs.btop}/bin/btop";
           };
 
           "group/network-group" = {
@@ -135,19 +136,19 @@ in {
           "custom/bandwhich-btn" = {
             format = "[bandwhich]";
             tooltip = false;
-            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.bash}/bin/bash -c '/run/wrappers/bin/sudo ${pkgs.bandwhich}/bin/bandwhich'";
+            on-click = mkGhosttyCmd "${pkgs.bash}/bin/bash -c '/run/wrappers/bin/sudo ${pkgs.bandwhich}/bin/bandwhich'";
           };
 
           "custom/nload-btn" = {
             format = "[nload]";
             tooltip = false;
-            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.nload}/bin/nload";
+            on-click = mkGhosttyCmd "${pkgs.nload}/bin/nload";
           };
 
           "custom/nmtui-btn" = {
             format = "[nmtui]";
             tooltip = false;
-            on-click = "${pkgs.ghostty}/bin/ghostty -e /run/current-system/sw/bin/nmtui";
+            on-click = mkGhosttyCmd "/run/current-system/sw/bin/nmtui";
           };
 
           "group/audio-group" = {
@@ -185,13 +186,13 @@ in {
           "custom/alsamixer-btn" = {
             format = "[alsamixer]";
             tooltip = false;
-            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.alsa-utils}/bin/alsamixer";
+            on-click = mkGhosttyCmd "${pkgs.alsa-utils}/bin/alsamixer";
           };
 
           "custom/wiremix-btn" = {
             format = "[wiremix]";
             tooltip = false;
-            on-click = "${pkgs.ghostty}/bin/ghostty -e ${pkgs.wiremix}/bin/wiremix";
+            on-click = mkGhosttyCmd "${pkgs.wiremix}/bin/wiremix";
           };
 
           "custom/pavucontrol-btn" = {
