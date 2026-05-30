@@ -2,6 +2,17 @@
 
 let
   cfg = config.waybar;
+  mkDrawer = {
+    orientation ? "horizontal",
+    modules,
+  }: {
+    inherit modules orientation;
+    drawer = {
+      transition-duration = 300;
+      transition-left-to-right = false;
+      click-to-reveal = true;
+    };
+  };
 in {
   options.waybar = {
     isLaptop = lib.mkOption {
@@ -97,14 +108,8 @@ in {
             modules = [ "group/network-drawer" "network" ];
           };
 
-          "group/network-drawer" = {
-            orientation = "horizontal";
+          "group/network-drawer" = mkDrawer {
             modules = [ "custom/network-btn" "network#bandwidth" "custom/bandwhich-btn" "custom/nload-btn" "custom/nmtui-btn" ];
-            drawer = {
-              transition-duration = 300;
-              transition-left-to-right = false;
-              click-to-reveal = true;
-            };
           };
 
           "custom/network-btn" = {
@@ -150,14 +155,8 @@ in {
             modules = [ "group/audio-drawer" "wireplumber" "wireplumber#source" ];
           };
 
-          "group/audio-drawer" = {
-            orientation = "horizontal";
+          "group/audio-drawer" = mkDrawer {
             modules = [ "custom/audio-btn" "custom/alsamixer-btn" "custom/wiremix-btn" "custom/pavucontrol-btn" ];
-            drawer = {
-              transition-duration = 300;
-              transition-left-to-right = false;
-              click-to-reveal = true;
-            };
           };
 
           "custom/audio-btn" = {
@@ -206,14 +205,8 @@ in {
             modules = [ "group/clock-drawer" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
           };
 
-          "group/clock-drawer" = {
-            orientation = "horizontal";
+          "group/clock-drawer" = mkDrawer {
             modules = [ "custom/clock-btn" "custom/uptime" "clock#utc-offset" ];
-            drawer = {
-              transition-duration = 300;
-              transition-left-to-right = false;
-              click-to-reveal = true;
-            };
           };
 
           "custom/clock-btn" = {
