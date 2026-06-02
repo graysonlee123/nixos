@@ -98,6 +98,7 @@ in {
         imagemagick
         jetbrains.phpstorm
         jq
+        lftp
         libnotify
         mullvad
         mycli
