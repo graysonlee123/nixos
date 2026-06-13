@@ -12,7 +12,8 @@
       package = pkgs-unstable.claude-code;
       settings = {
         includeCoAuthoredBy = false;
-        model = "claude-sonnet-4-6";
+        model = "claude-opus-4-6";
+        effortLevel = "high";
         extraKnownMarketplaces = {
           caveman = {
             source = {
