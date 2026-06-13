@@ -5,7 +5,7 @@
       settings = {
         general = {
           fullscreen = true;
-          early-exit = true;
+          early-exit = false;
           initial-tool = "arrow";
           copy-command = "wl-copy";
           output-filename = "/tmp/screenshot-%Y-%m-%d_%H:%M:%S.png";
