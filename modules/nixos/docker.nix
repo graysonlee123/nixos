@@ -3,4 +3,3 @@
     virtualisation.docker.enable = true;
   };
 }
-

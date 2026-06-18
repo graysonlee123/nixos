@@ -3,7 +3,8 @@
 let
   bookmark-utils = import ../../lib/mkChromiumBookmarks.nix;
   bookmarks = import ../../lib/bookmarks.nix;
-in {
+in
+{
   config = {
     programs.chromium = {
       enable = true;

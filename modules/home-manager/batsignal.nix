@@ -16,8 +16,7 @@ in
   config = {
     services.batsignal = {
       enable = cfg.enable;
-      extraArgs = [];
+      extraArgs = [ ];
     };
   };
 }
-

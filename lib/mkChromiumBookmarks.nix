@@ -19,21 +19,23 @@ rec {
   };
 
   # Convert bookmark list to Chromium format
-  convertBookmark = item:
+  convertBookmark =
+    item:
     if item ? children then
       mkFolder item.name (map convertBookmark item.children)
     else
       mkBookmark item.name item.url;
 
   # Generate Chromium bookmarks JSON for a bookmark set
-  mkChromiumBookmarks = bookmarkSet: builtins.toJSON {
-    checksum = "";
-    roots = {
-      bookmark_bar = mkFolder "Bookmarks bar" (map convertBookmark bookmarkSet.bookmarks_bar);
-      other = mkFolder "Other bookmarks" (map convertBookmark bookmarkSet.other);
-      synced = mkFolder "Mobile bookmarks" [];
+  mkChromiumBookmarks =
+    bookmarkSet:
+    builtins.toJSON {
+      checksum = "";
+      roots = {
+        bookmark_bar = mkFolder "Bookmarks bar" (map convertBookmark bookmarkSet.bookmarks_bar);
+        other = mkFolder "Other bookmarks" (map convertBookmark bookmarkSet.other);
+        synced = mkFolder "Mobile bookmarks" [ ];
+      };
+      version = 1;
     };
-    version = 1;
-  };
 }
-

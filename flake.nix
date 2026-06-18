@@ -13,7 +13,15 @@
     wttrbar.url = "github:graysonlee123/wttrbar?rev=db32f653ca75efe305b3fdb8de05223d1a013e53";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, stylix, wttrbar, ... } @inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      stylix,
+      wttrbar,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       pkgs-unstable = import nixpkgs-unstable {
@@ -22,27 +30,36 @@
       };
     in
     {
-    nixosConfigurations = {
-      nostromo = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./hosts/nostromo/configuration.nix
-          stylix.nixosModules.stylix
-          inputs.home-manager.nixosModules.default {
-            home-manager.extraSpecialArgs = { inherit pkgs-unstable; wttrbar = wttrbar.packages.x86_64-linux.default; };
-          }
-        ];
+      nixosConfigurations = {
+        nostromo = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/nostromo/configuration.nix
+            stylix.nixosModules.stylix
+            inputs.home-manager.nixosModules.default
+            {
+              home-manager.extraSpecialArgs = {
+                inherit pkgs-unstable;
+                wttrbar = wttrbar.packages.x86_64-linux.default;
+              };
+            }
+          ];
+        };
+        corbelan = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/corbelan/configuration.nix
+            stylix.nixosModules.stylix
+            inputs.home-manager.nixosModules.default
+            {
+              home-manager.extraSpecialArgs = {
+                inherit pkgs-unstable;
+                wttrbar = wttrbar.packages.x86_64-linux.default;
+              };
+            }
+          ];
+        };
       };
-      corbelan = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./hosts/corbelan/configuration.nix
-          stylix.nixosModules.stylix
-          inputs.home-manager.nixosModules.default {
-            home-manager.extraSpecialArgs = { inherit pkgs-unstable; wttrbar = wttrbar.packages.x86_64-linux.default; };
-          }
-        ];
-      };
+      formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
     };
-  };
 }

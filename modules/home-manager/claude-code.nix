@@ -86,7 +86,12 @@
         };
         chrome-devtools = {
           command = "npx";
-          args = [ "-y" "chrome-devtools-mcp@latest" "--executablePath" "${pkgs.chromium}/bin/chromium" ];
+          args = [
+            "-y"
+            "chrome-devtools-mcp@latest"
+            "--executablePath"
+            "${pkgs.chromium}/bin/chromium"
+          ];
           type = "stdio";
         };
         inspry = {

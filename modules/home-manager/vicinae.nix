@@ -17,11 +17,12 @@
           name = "nix";
           src =
             pkgs.fetchFromGitHub {
-            owner = "vicinaehq";
+              owner = "vicinaehq";
               repo = "extensions";
               rev = "62bcab8ca590d37c8443cb2aee2e83ef656e389f";
               sha256 = "sha256-j3g10f7sHHPbcN6tQIJmKatyOANJzHc5o9zAQlNrnOw=";
-            } + /extensions/nix;
+            }
+            + /extensions/nix;
         })
       ];
       systemd = {

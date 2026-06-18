@@ -34,15 +34,18 @@
           "git.confirmSync" = false;
           "html.autoCreateQuotes" = false;
           "html.format.indentInnerHtml" = true;
-          "[go]" = { "editor.defaultFormatter" = "golang.go"; };
-          "[nix]" = { "editor.defaultFormatter" = "jnoortheen.nix-ide"; };
+          "[go]" = {
+            "editor.defaultFormatter" = "golang.go";
+          };
+          "[nix]" = {
+            "editor.defaultFormatter" = "jnoortheen.nix-ide";
+          };
           "extensions.ignoreRecommendations" = true;
           "biome.lsp.bin" = "${pkgs-unstable.biome}/bin/biome";
           "terminal.integrated.defaultProfile.linux" = "zsh";
         };
-        keybindings = [];
+        keybindings = [ ];
       };
     };
   };
 }
-

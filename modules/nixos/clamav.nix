@@ -7,4 +7,3 @@
   };
   environment.systemPackages = [ pkgs.clamav ];
 }
-

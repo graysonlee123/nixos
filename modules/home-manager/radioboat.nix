@@ -19,4 +19,3 @@
     force = true; # Make read-only to enforce declarative management
   };
 }
-

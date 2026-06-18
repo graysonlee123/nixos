@@ -3,4 +3,3 @@
     services.openssh.enable = true;
   };
 }
-

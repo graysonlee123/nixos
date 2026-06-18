@@ -2,7 +2,8 @@
 
 let
   cfg = config.host;
-in {
+in
+{
   options.host = {
     name = lib.mkOption {
       type = lib.types.str;
@@ -20,4 +21,3 @@ in {
     ];
   };
 }
-

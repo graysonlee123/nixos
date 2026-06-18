@@ -1,20 +1,28 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.waybar;
-  mkDrawer = {
-    orientation ? "horizontal",
-    modules,
-  }: {
-    inherit modules orientation;
-    drawer = {
-      transition-duration = 300;
-      transition-left-to-right = false;
-      click-to-reveal = true;
+  mkDrawer =
+    {
+      orientation ? "horizontal",
+      modules,
+    }:
+    {
+      inherit modules orientation;
+      drawer = {
+        transition-duration = 300;
+        transition-left-to-right = false;
+        click-to-reveal = true;
+      };
     };
-  };
   mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty -e ${cmd}";
-in {
+in
+{
   options.waybar = {
     isLaptop = lib.mkOption {
       type = lib.types.bool;
@@ -37,8 +45,21 @@ in {
           height = 30;
           fixed-center = false;
 
-          modules-left = [ "sway/workspaces" "sway/mode" "sway/window" ];
-          modules-right = [ "custom/dictation" "custom/music" "custom/weather" "custom/mullvad" "group/hw-group" "group/network-group" "group/audio-group" "group/clock-group" ];
+          modules-left = [
+            "sway/workspaces"
+            "sway/mode"
+            "sway/window"
+          ];
+          modules-right = [
+            "custom/dictation"
+            "custom/music"
+            "custom/weather"
+            "custom/mullvad"
+            "group/hw-group"
+            "group/network-group"
+            "group/audio-group"
+            "group/clock-group"
+          ];
 
           "sway/workspaces" = {
             disable-scroll = true;
@@ -54,8 +75,30 @@ in {
           "battery" = {
             format = "{icon} {capacity}%";
             format-icons = {
-              default = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-              charging = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" "󰂅" ];
+              default = [
+                "󰁺"
+                "󰁻"
+                "󰁼"
+                "󰁽"
+                "󰁾"
+                "󰁿"
+                "󰂀"
+                "󰂁"
+                "󰂂"
+                "󰁹"
+              ];
+              charging = [
+                "󰢜"
+                "󰂆"
+                "󰂇"
+                "󰂈"
+                "󰢝"
+                "󰂉"
+                "󰢞"
+                "󰂊"
+                "󰂋"
+                "󰂅"
+              ];
             };
           };
 
@@ -70,12 +113,21 @@ in {
 
           "group/hw-group" = {
             orientation = "horizontal";
-            modules = [ "group/hw-drawer" "cpu" "memory" ];
+            modules = [
+              "group/hw-drawer"
+              "cpu"
+              "memory"
+            ];
           };
 
           "group/hw-drawer" = {
             orientation = "horizontal";
-            modules = [ "custom/hw-btn" "temperature" "disk" "custom/btop-btn" ];
+            modules = [
+              "custom/hw-btn"
+              "temperature"
+              "disk"
+              "custom/btop-btn"
+            ];
             drawer = {
               transition-duration = 300;
               transition-left-to-right = false;
@@ -106,11 +158,20 @@ in {
 
           "group/network-group" = {
             orientation = "horizontal";
-            modules = [ "group/network-drawer" "network" ];
+            modules = [
+              "group/network-drawer"
+              "network"
+            ];
           };
 
           "group/network-drawer" = mkDrawer {
-            modules = [ "custom/network-btn" "network#bandwidth" "custom/bandwhich-btn" "custom/nload-btn" "custom/nmtui-btn" ];
+            modules = [
+              "custom/network-btn"
+              "network#bandwidth"
+              "custom/bandwhich-btn"
+              "custom/nload-btn"
+              "custom/nmtui-btn"
+            ];
           };
 
           "custom/network-btn" = {
@@ -153,11 +214,20 @@ in {
 
           "group/audio-group" = {
             orientation = "horizontal";
-            modules = [ "group/audio-drawer" "wireplumber" "wireplumber#source" ];
+            modules = [
+              "group/audio-drawer"
+              "wireplumber"
+              "wireplumber#source"
+            ];
           };
 
           "group/audio-drawer" = mkDrawer {
-            modules = [ "custom/audio-btn" "custom/alsamixer-btn" "custom/wiremix-btn" "custom/pavucontrol-btn" ];
+            modules = [
+              "custom/audio-btn"
+              "custom/alsamixer-btn"
+              "custom/wiremix-btn"
+              "custom/pavucontrol-btn"
+            ];
           };
 
           "custom/audio-btn" = {
@@ -169,7 +239,11 @@ in {
             format = "{icon} {volume}%";
             format-muted = "󰝟 [m]";
             format-icons = {
-              default = [ "󰕿" "󰖀" "󰕾" ];
+              default = [
+                "󰕿"
+                "󰖀"
+                "󰕾"
+              ];
             };
             scroll-step = 5;
             on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
@@ -207,7 +281,11 @@ in {
           };
 
           "group/clock-drawer" = mkDrawer {
-            modules = [ "custom/clock-btn" "custom/uptime" "clock#utc-offset" ];
+            modules = [
+              "custom/clock-btn"
+              "custom/uptime"
+              "clock#utc-offset"
+            ];
           };
 
           "custom/clock-btn" = {

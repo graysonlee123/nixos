@@ -46,7 +46,8 @@ let
       echo '{"text": ""}'
     fi
   '';
-in {
+in
+{
   home.packages = with pkgs; [
     whisper-cpp
     wtype

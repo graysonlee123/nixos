@@ -5,7 +5,10 @@
     exec = "ghostty -e yazi %u";
     terminal = false;
     mimeType = [ "inode/directory" ];
-    categories = [ "Utility" "FileManager" ];
+    categories = [
+      "Utility"
+      "FileManager"
+    ];
   };
 
   xdg.mimeApps.enable = true;
@@ -45,4 +48,3 @@
     "application/xml" = "vim.desktop";
   };
 }
-

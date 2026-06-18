@@ -204,6 +204,9 @@ sudo nix-collect-garbage -d
 
 # Update flake inputs
 nix flake update
+
+# Run formatter
+nix format
 ```
 
 ## Useful Keybindings

@@ -1,6 +1,7 @@
 let
   timeout = 5000;
-in {
+in
+{
   config = {
     services.mako = {
       enable = true;

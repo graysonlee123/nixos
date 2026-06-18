@@ -7,34 +7,39 @@
     signal = 11;
     hide-empty-text = true;
     on-click = "${pkgs.mullvad}/bin/mullvad disconnect";
-    exec = "${pkgs.writeShellApplication {
-      name = "mullvad-status";
-      runtimeInputs = [ pkgs.mullvad pkgs.jq ];
-      excludeShellChecks = [ "SC2028" ];
-      text = ''
-        status=$(mullvad status --json)
-        state=$(echo "$status" | jq -r '.state')
+    exec = "${
+      pkgs.writeShellApplication {
+        name = "mullvad-status";
+        runtimeInputs = [
+          pkgs.mullvad
+          pkgs.jq
+        ];
+        excludeShellChecks = [ "SC2028" ];
+        text = ''
+          status=$(mullvad status --json)
+          state=$(echo "$status" | jq -r '.state')
 
-        case "$state" in
-          connected)
-            ip=$(echo "$status" | jq -r '.details.location.ipv4 // "?"')
-            city=$(echo "$status" | jq -r '(.details.location.city // "Unknown") | split(", ")[0]')
-            country=$(echo "$status" | jq -r '.details.location.country // "Unknown"')
-            hostname=$(echo "$status" | jq -r '.details.location.hostname // ""')
-            echo "{\"text\": \"󰒃 $ip\", \"class\": \"connected\", \"tooltip\": \"$city, $country\n$hostname\"}"
-            ;;
-          connecting)
-            echo '{"text": "󰒃 …", "class": "connecting", "tooltip": "Connecting…"}'
-            ;;
-          disconnected)
-            echo '{"text": ""}'
-            ;;
-          *)
-            echo "{\"text\": \"󰒄 $state\", \"class\": \"error\", \"tooltip\": \"$state\"}"
-            ;;
-        esac
-      '';
-    }}/bin/mullvad-status";
+          case "$state" in
+            connected)
+              ip=$(echo "$status" | jq -r '.details.location.ipv4 // "?"')
+              city=$(echo "$status" | jq -r '(.details.location.city // "Unknown") | split(", ")[0]')
+              country=$(echo "$status" | jq -r '.details.location.country // "Unknown"')
+              hostname=$(echo "$status" | jq -r '.details.location.hostname // ""')
+              echo "{\"text\": \"󰒃 $ip\", \"class\": \"connected\", \"tooltip\": \"$city, $country\n$hostname\"}"
+              ;;
+            connecting)
+              echo '{"text": "󰒃 …", "class": "connecting", "tooltip": "Connecting…"}'
+              ;;
+            disconnected)
+              echo '{"text": ""}'
+              ;;
+            *)
+              echo "{\"text\": \"󰒄 $state\", \"class\": \"error\", \"tooltip\": \"$state\"}"
+              ;;
+          esac
+        '';
+      }
+    }/bin/mullvad-status";
   };
 
   # Watches for mullvad status changes and immediately refreshes the waybar

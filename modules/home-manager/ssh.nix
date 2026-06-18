@@ -1,19 +1,23 @@
 { lib, ... }:
 
 let
-  mkSshHost = {
-    hostname ? null,
-    user ? null,
-    key,
-    keyOnly ? true,
-  }: {
-    identityFile = key;
-    identitiesOnly = keyOnly;
-  } // lib.optionalAttrs (hostname != null) {
-    hostname = hostname;
-  } // lib.optionalAttrs (user != null) {
-    user = user;
-  };
+  mkSshHost =
+    {
+      hostname ? null,
+      user ? null,
+      key,
+      keyOnly ? true,
+    }:
+    {
+      identityFile = key;
+      identitiesOnly = keyOnly;
+    }
+    // lib.optionalAttrs (hostname != null) {
+      hostname = hostname;
+    }
+    // lib.optionalAttrs (user != null) {
+      user = user;
+    };
 in
 {
   config = {

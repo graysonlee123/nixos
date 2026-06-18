@@ -8,4 +8,3 @@
 
   programs.gamemode.enable = true;
 }
-
