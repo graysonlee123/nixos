@@ -9,6 +9,13 @@ let
         "tcp://192.168.86.38"
       ];
     };
+    corbelan = {
+      id = "LQURRGV-4URVSOT-S2QMDXK-I2KETJD-POFM5CX-4KNHSGR-X2AAV44-5RYCJQJ";
+      addresses = [
+        "tcp://100.75.203.122"
+        "tcp://192.168.86.42"
+      ];
+    };
   };
 in
 {
