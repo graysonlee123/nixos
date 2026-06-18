@@ -16,6 +16,13 @@ let
         "tcp://192.168.86.42"
       ];
     };
+    sulaco = {
+      id = "UFVX7JU-EKAIN4J-GKUXM3E-BYC46RU-FZ7265C-LJUKXQI-3WDTA6N-D56J6QO";
+      addresses = [
+        "tcp://100.83.63.8"
+        "tcp://192.168.86.2"
+      ];
+    };
   };
 in
 {
