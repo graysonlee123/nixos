@@ -36,6 +36,12 @@ cat /sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference
 cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
 ```
 
+## Sulaco (Home Server)
+
+- **Role**: Always-on server for services like Syncthing
+- **Management**: Docker Compose (not managed by this NixOS repo)
+- **Syncthing**: Runs as Docker container with `network_mode: host` for LAN discovery
+
 ## Nostromo (Desktop)
 
 - **CPU**: Intel

@@ -127,6 +127,10 @@ Virus signatures auto-updated via `services.clamav.updater`. Run a manual scan m
 clamscan -r --bell -i /home/gray
 ```
 
+### Syncthing
+
+See [docs/syncthing.md](docs/syncthing.md).
+
 ### Services
 - OpenSSH daemon
 - Docker daemon
