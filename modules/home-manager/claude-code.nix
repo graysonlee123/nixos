@@ -24,7 +24,6 @@
         };
         enabledPlugins = {
           "gopls-lsp@claude-plugins-official" = true;
-          "typescript-lsp@claude-plugins-official" = true;
           "caveman@caveman" = true;
         };
         cleanupPeriodDays = 30;
