@@ -28,6 +28,13 @@ in
           id = "syncthing";
           path = "/home/gray/syncthing";
           devices = builtins.attrNames allDevices;
+          versioning = {
+            type = "staggered";
+            params = {
+              cleanInterval = "3600";
+              maxAge = "2592000"; # 30 days
+            };
+          };
         };
       };
     };
