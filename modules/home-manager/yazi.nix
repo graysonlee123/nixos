@@ -181,6 +181,14 @@
             desc = "Go /tmp";
           }
           {
+            on = [
+              "g"
+              "s"
+            ];
+            run = "cd /home/gray/syncthing";
+            desc = "Go ~/syncthing";
+          }
+          {
             on = [ "Y" ];
             run = "shell 'wl-copy < \"$1\"'";
             desc = "Copy to clipboard";
