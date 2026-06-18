@@ -73,6 +73,7 @@ in
           ../modules/home-manager/radioboat.nix
           ../modules/home-manager/weather.nix
           ../modules/home-manager/batsignal.nix
+          ../modules/home-manager/syncthing.nix
         ];
 
         # Set laptop-specific options
