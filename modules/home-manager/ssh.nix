@@ -69,6 +69,9 @@ in
         "131.153.238.180" = mkSshHost {
           key = "~/.ssh/rocket.net";
         };
+        "ssh.dev.azure.com" = mkSshHost {
+          key = "~/.ssh/jti";
+        };
       };
     };
   };
