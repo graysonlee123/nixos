@@ -37,6 +37,8 @@
           "[go]" = {
             "editor.defaultFormatter" = "golang.go";
           };
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nixd";
           "[nix]" = {
             "editor.defaultFormatter" = "jnoortheen.nix-ide";
           };

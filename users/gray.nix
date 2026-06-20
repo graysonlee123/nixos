@@ -123,6 +123,7 @@ in
             nerd-fonts.jetbrains-mono
             neofetch
             nethack
+            nixd
             nodejs_24
             obsidian # TODO: Manage through home-manager?
             postman
