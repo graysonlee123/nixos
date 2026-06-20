@@ -1,8 +1,6 @@
 {
-  pkgs,
   config,
   lib,
-  inputs,
   ...
 }:
 
@@ -31,8 +29,6 @@ in
     home-manager.useGlobalPkgs = true;
     home-manager.users.gray =
       {
-        config,
-        lib,
         pkgs,
         ...
       }:
