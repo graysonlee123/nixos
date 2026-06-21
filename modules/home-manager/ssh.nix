@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, isHeadless, ... }:
 
 let
   mkSshHost =
@@ -25,12 +25,13 @@ in
       enable = true;
       enableDefaultConfig = false;
       matchBlocks = {
-        # Personal
         "github.com" = mkSshHost {
           hostname = "github.com";
           user = "git";
           key = "~/.ssh/github";
         };
+      } // lib.optionalAttrs (!isHeadless) {
+        # Personal
         # sulaco: home server
         # - remote (Tailscale): ssh sulaco
         # - local network:      ssh sulaco.local

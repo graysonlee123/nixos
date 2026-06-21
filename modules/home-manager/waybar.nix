@@ -1,12 +1,11 @@
 {
-  config,
+  isLaptop,
   lib,
   pkgs,
   ...
 }:
 
 let
-  cfg = config.waybar;
   mkDrawer =
     {
       orientation ? "horizontal",
@@ -23,14 +22,6 @@ let
   mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty -e ${cmd}";
 in
 {
-  options.waybar = {
-    isLaptop = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Whether to enable laptop-specific waybar configurations.";
-    };
-  };
-
   config = {
     programs.waybar = {
       enable = true;
@@ -277,7 +268,7 @@ in
 
           "group/clock-group" = {
             orientation = "horizontal";
-            modules = [ "group/clock-drawer" ] ++ lib.optional cfg.isLaptop "battery" ++ [ "clock" ];
+            modules = [ "group/clock-drawer" ] ++ lib.optional isLaptop "battery" ++ [ "clock" ];
           };
 
           "group/clock-drawer" = mkDrawer {
@@ -313,7 +304,7 @@ in
           "custom/music" = {
             hide-empty-text = true;
             interval = 2; # TODO: Use signals to update?
-            max-length = if cfg.isLaptop then 32 else 64;
+            max-length = if isLaptop then 32 else 64;
             escape = true;
             exec = ''
               ${pkgs.playerctl}/bin/playerctl metadata --format '  {{title}} - {{artist}}'

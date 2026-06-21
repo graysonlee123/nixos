@@ -31,34 +31,71 @@
     in
     {
       nixosConfigurations = {
-        nostromo = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./hosts/nostromo/configuration.nix
-            stylix.nixosModules.stylix
-            inputs.home-manager.nixosModules.default
-            {
-              home-manager.extraSpecialArgs = {
-                inherit pkgs-unstable;
-                wttrbar = wttrbar.packages.x86_64-linux.default;
-              };
-            }
-          ];
-        };
-        corbelan = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./hosts/corbelan/configuration.nix
-            stylix.nixosModules.stylix
-            inputs.home-manager.nixosModules.default
-            {
-              home-manager.extraSpecialArgs = {
-                inherit pkgs-unstable;
-                wttrbar = wttrbar.packages.x86_64-linux.default;
-              };
-            }
-          ];
-        };
+        nostromo =
+          let
+            isLaptop = false;
+            isHeadless = false;
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system;
+            specialArgs = {
+              inherit isLaptop isHeadless;
+            };
+            modules = [
+              ./hosts/nostromo/configuration.nix
+              stylix.nixosModules.stylix
+              inputs.home-manager.nixosModules.default
+              {
+                home-manager.extraSpecialArgs = {
+                  inherit pkgs-unstable isLaptop isHeadless;
+                  wttrbar = wttrbar.packages.x86_64-linux.default;
+                };
+              }
+            ];
+          };
+        corbelan =
+          let
+            isLaptop = true;
+            isHeadless = false;
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system;
+            specialArgs = {
+              inherit isLaptop isHeadless;
+            };
+            modules = [
+              ./hosts/corbelan/configuration.nix
+              stylix.nixosModules.stylix
+              inputs.home-manager.nixosModules.default
+              {
+                home-manager.extraSpecialArgs = {
+                  inherit pkgs-unstable isLaptop isHeadless;
+                  wttrbar = wttrbar.packages.x86_64-linux.default;
+                };
+              }
+            ];
+          };
+        sulaco =
+          let
+            isLaptop = false;
+            isHeadless = true;
+          in
+          nixpkgs.lib.nixosSystem {
+            inherit system;
+            specialArgs = {
+              inherit isLaptop isHeadless;
+            };
+            modules = [
+              ./hosts/sulaco/configuration.nix
+              stylix.nixosModules.stylix
+              inputs.home-manager.nixosModules.default
+              {
+                home-manager.extraSpecialArgs = {
+                  inherit pkgs-unstable isLaptop isHeadless;
+                };
+              }
+            ];
+          };
       };
       formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
     };

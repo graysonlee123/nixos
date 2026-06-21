@@ -1,15 +1,13 @@
 {
-  config,
-  pkgs,
-  inputs,
   ...
 }:
 
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/nixos/base.nix
+    ../../modules/nixos/headed.nix
     ../../modules/nixos/nvidia.nix
-    ../../modules/nixos/common.nix
     ../../modules/nixos/galaxy70.nix
     ../../users/gray.nix
   ];

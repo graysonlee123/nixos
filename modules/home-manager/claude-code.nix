@@ -1,4 +1,10 @@
-{ pkgs, pkgs-unstable, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  lib,
+  isHeadless,
+  ...
+}:
 
 {
   config = {
@@ -23,8 +29,10 @@
           };
         };
         enabledPlugins = {
-          "gopls-lsp@claude-plugins-official" = true;
           "caveman@caveman" = true;
+        }
+        // lib.optionalAttrs (!isHeadless) {
+          "gopls-lsp@claude-plugins-official" = true;
         };
         cleanupPeriodDays = 30;
         statusLine = {
@@ -58,7 +66,8 @@
             "Bash(ls:*)"
             "Bash(pwd:*)"
             "Bash(wc:*)"
-
+          ]
+          ++ lib.optionals (!isHeadless) [
             # ClickUp
             "mcp__clickup__clickup_get_*"
             "mcp__clickup__clickup_list_*"
@@ -71,10 +80,12 @@
       memory.text = ''
         - In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
         - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise and sacrifice grammar for the sake of consision.
-        - Besides the expected ones, binaries I have installed that may be useful to you include tree, docker, ripgrep, zip, unzip, wl-copy, wl-paste, and wp-cli.
+        - Besides the expected ones, binaries I have installed that may be useful to you include tree, docker, ripgrep, zip, unzip${
+          (if !isHeadless then ", wl-copy, wl-paste, wp-cli." else ".")
+        }
         - Don't use em dashes in write-ups intended for clients.
       '';
-      mcpServers = {
+      mcpServers = lib.mkIf (!isHeadless) {
         clickup = {
           url = "https://mcp.clickup.com/mcp";
           type = "http";
@@ -98,7 +109,7 @@
           type = "http";
         };
       };
-      skills = {
+      skills = lib.mkIf (!isHeadless) {
         wordpress-source-code = ../../claude/skills/wordpress-source-code;
         woocommerce-source-code = ../../claude/skills/woocommerce-source-code;
       };

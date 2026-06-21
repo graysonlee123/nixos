@@ -1,8 +1,10 @@
+{ lib, isHeadless, ... }:
+
 {
   config = {
     programs.git = {
       enable = true;
-      includes = [
+      includes = lib.optionals (!isHeadless) [
         {
           condition = "gitdir:~/repos/inspry/";
           contents = {

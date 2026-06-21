@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  isHeadless,
+  ...
+}:
 
 {
   config = {
@@ -17,27 +22,23 @@
               for = "unix";
               block = true;
             }
-            {
-              run = "code \"$@\"";
-              desc = "VS Code";
-              for = "unix";
-              block = false;
-              orphan = true;
-            }
-          ];
-          play = [
-            {
-              run = "vlc \"$@\"";
-              orphan = true;
-              for = "unix";
-            }
-          ];
-          open = [
-            {
-              run = "xdg-open \"$@\"";
-              desc = "XDG Open";
-            }
-          ];
+          ]
+          ++ lib.optional (!isHeadless) {
+            run = "code \"$@\"";
+            desc = "VS Code";
+            for = "unix";
+            block = false;
+            orphan = true;
+          };
+          play = lib.optional (!isHeadless) {
+            run = "vlc \"$@\"";
+            orphan = true;
+            for = "unix";
+          };
+          open = lib.optional (!isHeadless) {
+            run = "xdg-open \"$@\"";
+            desc = "XDG Open";
+          };
           extract = [
             {
               run = "ya pub extract --list \"$@\"";
@@ -89,30 +90,7 @@
           # Images
           {
             mime = "image/svg+xml";
-            use = [
-              "open"
-              "edit"
-            ];
-          }
-          {
-            mime = "image/*";
-            use = "open";
-          }
-
-          # Media
-          {
-            mime = "video/*";
-            use = "play";
-          }
-          {
-            mime = "audio/*";
-            use = "play";
-          }
-
-          # Documents
-          {
-            mime = "application/pdf";
-            use = "open";
+            use = lib.optional (!isHeadless) "open" ++ [ "edit" ];
           }
 
           # Archives
@@ -132,6 +110,27 @@
             mime = "application/x-gzip";
             use = "extract";
           }
+        ]
+        ++ lib.optionals (!isHeadless) [
+          # Media
+          {
+            mime = "image/*";
+            use = "open";
+          }
+          {
+            mime = "video/*";
+            use = "play";
+          }
+          {
+            mime = "audio/*";
+            use = "play";
+          }
+
+          # Documents
+          {
+            mime = "application/pdf";
+            use = "open";
+          }
 
           # Fallback
           {
@@ -148,6 +147,29 @@
       };
       keymap = {
         mgr.prepend_keymap = [
+          {
+            on = [
+              "g"
+              "t"
+            ];
+            run = "cd /tmp";
+            desc = "Go /tmp";
+          }
+          {
+            on = [
+              "g"
+              "s"
+            ];
+            run = "cd /home/gray/syncthing";
+            desc = "Go ~/syncthing";
+          }
+          {
+            on = [ "u" ];
+            run = "plugin restore -- --interactive";
+            desc = "Restore last deleted files/folders";
+          }
+        ]
+        ++ lib.optionals (!isHeadless) [
           {
             on = [
               "g"
@@ -173,30 +195,9 @@
             desc = "Go ~/repos/me";
           }
           {
-            on = [
-              "g"
-              "t"
-            ];
-            run = "cd /tmp";
-            desc = "Go /tmp";
-          }
-          {
-            on = [
-              "g"
-              "s"
-            ];
-            run = "cd /home/gray/syncthing";
-            desc = "Go ~/syncthing";
-          }
-          {
             on = [ "Y" ];
             run = "shell 'wl-copy < \"$1\"'";
             desc = "Copy to clipboard";
-          }
-          {
-            on = [ "u" ];
-            run = "plugin restore -- --interactive";
-            desc = "Restore last deleted files/folders";
           }
         ];
       };

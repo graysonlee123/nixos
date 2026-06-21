@@ -1,14 +1,13 @@
 {
-  config,
   pkgs,
-  inputs,
   ...
 }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/common.nix
+    ../../modules/nixos/base.nix
+    ../../modules/nixos/headed.nix
     ../../modules/nixos/fingerprint.nix
     ../../modules/nixos/auto-cpufreq.nix
     ../../users/gray.nix
@@ -19,7 +18,6 @@
   hardware.graphics.enable = true;
 
   gray = {
-    isLaptop = true;
     additionalPackages = with pkgs; [
       brightnessctl
     ];

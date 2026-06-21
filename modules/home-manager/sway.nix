@@ -1,12 +1,11 @@
 {
-  config,
+  isLaptop,
   lib,
   pkgs,
   ...
 }:
 
 let
-  cfg = config.sway;
   recordScreen = pkgs.writeShellScriptBin "record-screen" ''
     if pgrep -x wf-recorder > /dev/null; then
       pkill -SIGINT wf-recorder
@@ -31,14 +30,6 @@ let
   '';
 in
 {
-  options.sway = {
-    isLaptop = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Whether to enable laptop-specific sway configurations.";
-    };
-  };
-
   config = {
     wayland.windowManager.sway = {
       enable = true;
@@ -54,7 +45,7 @@ in
 
           # Output configuration
           output =
-            if (cfg.isLaptop) then
+            if isLaptop then
               {
                 "eDP-1" = {
                   position = "0,540";
@@ -77,7 +68,7 @@ in
               };
 
           # Lid switch - disable laptop display when lid is closed
-          bindswitches = lib.mkIf cfg.isLaptop {
+          bindswitches = lib.mkIf isLaptop {
             "lid:on" = {
               action = "output eDP-1 disable";
             };
@@ -165,7 +156,7 @@ in
             "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_SINK@ 5%-";
             "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_SINK@ 5%+";
           }
-          // lib.optionalAttrs cfg.isLaptop {
+          // lib.optionalAttrs isLaptop {
             "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
             "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
           };
@@ -214,7 +205,7 @@ in
 
           # Workspace output assignments
           workspaceOutputAssign =
-            if (!cfg.isLaptop) then
+            if (!isLaptop) then
               [
                 {
                   workspace = "1";
@@ -263,7 +254,7 @@ in
 
           # Startup
           startup = lib.mkMerge [
-            (lib.mkIf (!cfg.isLaptop) [
+            (lib.mkIf (!isLaptop) [
               {
                 command = "swaymsg workspace 4; swaymsg layout splitv";
               }
@@ -275,7 +266,7 @@ in
               }
             ])
 
-            (lib.mkIf cfg.isLaptop [
+            (lib.mkIf isLaptop [
               {
                 command = "swaymsg workspace 4";
               }

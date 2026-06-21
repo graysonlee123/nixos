@@ -8,6 +8,7 @@
         chromium.enable = false;
       };
 
+      # Even on headless, requires a wallpaper
       image = ./../../assets/images/wallpaper.jpg;
 
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/atelier-dune.yaml";
