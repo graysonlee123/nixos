@@ -28,9 +28,15 @@ in
     {
       networking.hostName = cfg.name;
       networking.enableIPv6 = false;
-      networking.firewall.allowedTCPPorts = lib.optional (!isHeadless) 9003; # Xdebug
+      networking.firewall.allowedTCPPorts =
+        lib.optional (!isHeadless) 9003 # Xdebug
+        ++ lib.optionals isHeadless [ 80 443 ] # HTTP, HTTPS
+        ++ [ 22000 ]; # Syncthing
+      networking.firewall.allowedUDPPorts = [ 21027 ]; # Syncthing discovery
     }
     (lib.mkIf (cfg.staticIP != null) {
+      networking.useDHCP = false;
+      networking.useNetworkd = true;
       systemd.network.enable = true;
       systemd.network.networks."10-lan" = {
         matchConfig.Type = "ether";
