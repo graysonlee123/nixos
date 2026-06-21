@@ -4,7 +4,7 @@
 
 {
   imports = [
-    # TODO add ./hardware-configuration.nix
+    ./hardware-configuration.nix
     ../../modules/nixos/base.nix
     ../../modules/nixos/headless.nix
     ../../users/gray.nix
