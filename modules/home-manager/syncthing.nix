@@ -17,9 +17,9 @@ let
       ];
     };
     sulaco = {
-      id = "UFVX7JU-EKAIN4J-GKUXM3E-BYC46RU-FZ7265C-LJUKXQI-3WDTA6N-D56J6QO";
+      id = "E52YS3K-QNNKP2Z-R5LMP6E-7WSRDOC-KMPUGR2-Z4KHKK3-TH2XUBY-6VGJ4AI";
       addresses = [
-        "tcp://100.83.63.8"
+        "tcp://100.93.40.89"
         "tcp://192.168.86.2"
       ];
     };
