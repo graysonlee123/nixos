@@ -39,7 +39,7 @@ in
       networking.useNetworkd = true;
       systemd.network.enable = true;
       systemd.network.networks."10-lan" = {
-        matchConfig.Type = "ether";
+        matchConfig.Name = "en*";
         address = [ "${cfg.staticIP}/24" ];
         gateway = [ "192.168.86.1" ];
         dns = [ "192.168.86.1" ];
