@@ -3,6 +3,6 @@
 {
   services.tailscale = {
     enable = true;
-    authKeyFile = if isHeadless then "/run/secrets/tailscale_key" else null;
+    authKeyFile = if isHeadless then "/etc/secrets/tailscale_key" else null;
   };
 }

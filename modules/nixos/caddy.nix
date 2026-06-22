@@ -7,7 +7,7 @@
       plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
       hash = "sha256-4WF7tIx8d6O/Bd0q9GhMch8lS3nlR5N3Zg4ApA3hrKw=";
     };
-    environmentFile = "/run/secrets/caddy.env";
+    environmentFile = "/etc/secrets/caddy.env";
     globalConfig = ''
       acme_dns cloudflare {$CLOUDFLARE_ACCESS_TOKEN}
       admin 127.0.0.1:2019 {

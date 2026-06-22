@@ -9,8 +9,8 @@
       type = "postgres";
       user = "vikunja";
     };
-    # Should contain VIKUNJA_DATABASE_PASSWORD, VIKUNJA_MAILER_USERNAME, VIKUNJA_MAILER_PASSWORD
-    environmentFiles = [ "/run/secrets/vikunja.env" ];
+    # Should contain VIKUNJA_MAILER_USERNAME, VIKUNJA_MAILER_PASSWORD
+    environmentFiles = [ "/etc/secrets/vikunja.env" ];
     settings = {
       service = {
         timezone = "America/New_York";
