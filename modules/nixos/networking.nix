@@ -18,9 +18,16 @@ in
 
     staticIP = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
-      description = "Static IP of host. Enables systemd-networkd when set.";
+      description = "Static IP of host.";
       default = null;
       example = "192.168.86.2";
+    };
+
+    networkInterface = lib.mkOption {
+      type = lib.types.str;
+      description = "Primary network interface name.";
+      default = "eno1";
+      example = "enp3s0";
     };
   };
 
@@ -30,19 +37,28 @@ in
       networking.enableIPv6 = false;
       networking.firewall.allowedTCPPorts =
         lib.optional (!isHeadless) 9003 # Xdebug
-        ++ lib.optionals isHeadless [ 80 443 ] # HTTP, HTTPS
-        ++ [ 22000 ]; # Syncthing
+        ++ lib.optionals isHeadless [
+          80 # HTTP
+          443 # HTTPS
+          7777 # Terraria
+          25565 # Minecraft
+        ]
+        ++ [
+          22000 # Syncthing
+        ];
       networking.firewall.allowedUDPPorts = [ 21027 ]; # Syncthing discovery
     }
     (lib.mkIf (cfg.staticIP != null) {
       networking.useDHCP = false;
-      networking.useNetworkd = true;
-      systemd.network.enable = true;
-      systemd.network.networks."10-lan" = {
-        matchConfig.Name = "en*";
-        address = [ "${cfg.staticIP}/24" ];
-        gateway = [ "192.168.86.1" ];
-        dns = [ "192.168.86.1" ];
+      networking.defaultGateway = "192.168.86.1";
+      networking.nameservers = [ "192.168.86.1" ];
+      networking.interfaces.${cfg.networkInterface} = {
+        ipv4.addresses = [
+          {
+            address = cfg.staticIP;
+            prefixLength = 24;
+          }
+        ];
       };
     })
     (lib.mkIf (cfg.staticIP == null) {
