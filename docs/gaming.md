@@ -66,3 +66,10 @@ Set Steam's launch option to:
 gamescope -f -w 2560 -h 1440 --force-grab-cursor --mangoapp -- %command%
 ```
 
+### Terraria
+
+Set Steam's launch option to:
+
+```
+SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY=1 SDL_VIDEODRIVER=wayland %command%
+```
