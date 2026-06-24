@@ -1,0 +1,17 @@
+keys:
+  - &nostromo age1uf9vvhl3dl74fcg4w2crm0wak3hka2af793d2gmtmdlepjqsrqysh4p092
+  - &sulaco age1cw4a2hmv5yfy0v0phv9w88s5pthk529apt7spw4neyndadqs5dqsqya77z
+  - &corbelan age1kpdkydt9yrne808tfcgv3m9wamtdy5ecju3v2nc0tekfpnxkgy3qa45mrd
+creation_rules:
+  - path_regex: secrets/headless\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sulaco
+          - *nostromo
+          - *corbelan
+  - path_regex: secrets/headed\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sulaco
+          - *nostromo
+          - *corbelan

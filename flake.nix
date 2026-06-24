@@ -11,15 +11,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wttrbar.url = "github:graysonlee123/wttrbar?rev=db32f653ca75efe305b3fdb8de05223d1a013e53";
+    sops-nix = {
+      url = "github:Mic92/sops-nix?rev=56b24064fdcaedca53553b1a6d607fd23b613a24";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     {
-      self,
       nixpkgs,
       nixpkgs-unstable,
       stylix,
       wttrbar,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -45,11 +49,15 @@
               ./hosts/nostromo/configuration.nix
               stylix.nixosModules.stylix
               inputs.home-manager.nixosModules.default
+              sops-nix.nixosModules.sops
               {
                 home-manager.extraSpecialArgs = {
                   inherit pkgs-unstable isLaptop isHeadless;
                   wttrbar = wttrbar.packages.x86_64-linux.default;
                 };
+                home-manager.sharedModules = [
+                  sops-nix.homeManagerModules.sops
+                ];
               }
             ];
           };
@@ -67,11 +75,15 @@
               ./hosts/corbelan/configuration.nix
               stylix.nixosModules.stylix
               inputs.home-manager.nixosModules.default
+              sops-nix.nixosModules.sops
               {
                 home-manager.extraSpecialArgs = {
                   inherit pkgs-unstable isLaptop isHeadless;
                   wttrbar = wttrbar.packages.x86_64-linux.default;
                 };
+                home-manager.sharedModules = [
+                  sops-nix.homeManagerModules.sops
+                ];
               }
             ];
           };
@@ -89,10 +101,14 @@
               ./hosts/sulaco/configuration.nix
               stylix.nixosModules.stylix
               inputs.home-manager.nixosModules.default
+              sops-nix.nixosModules.sops
               {
                 home-manager.extraSpecialArgs = {
                   inherit pkgs-unstable isLaptop isHeadless;
                 };
+                home-manager.sharedModules = [
+                  sops-nix.homeManagerModules.sops
+                ];
               }
             ];
           };

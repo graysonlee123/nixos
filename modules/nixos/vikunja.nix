@@ -1,3 +1,5 @@
+{ config, ... }:
+
 {
   services.vikunja = {
     enable = true;
@@ -9,8 +11,7 @@
       type = "postgres";
       user = "vikunja";
     };
-    # Should contain VIKUNJA_MAILER_USERNAME, VIKUNJA_MAILER_PASSWORD
-    environmentFiles = [ "/etc/secrets/vikunja.env" ];
+    environmentFiles = [ config.sops.templates."vikunja.env".path ];
     settings = {
       service = {
         timezone = "America/New_York";

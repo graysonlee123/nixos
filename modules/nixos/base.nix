@@ -12,6 +12,7 @@
     ./stylix.nix
     ./sudo.nix
     ./journald.nix
+    ./sops.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
