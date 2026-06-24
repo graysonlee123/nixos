@@ -7,6 +7,8 @@
       inxi
       mangohud
       openvpn
+      age
+      sops
     ];
   };
 }
