@@ -15,6 +15,7 @@
       "services/caddy/cloudflare_access_token" = { };
       "services/vikunja/mailer_username" = { };
       "services/vikunja/mailer_password" = { };
+      "gameservers/terraria/peepeepoopoo/password" = { };
     };
 
     templates = lib.mkIf isHeadless {
