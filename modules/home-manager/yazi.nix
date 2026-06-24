@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   isHeadless,
@@ -160,7 +161,7 @@
               "g"
               "s"
             ];
-            run = "cd /home/gray/syncthing";
+            run = "cd ${config.home.homeDirectory}/syncthing";
             desc = "Go ~/syncthing";
           }
           {

@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 let
   allDevices = {
@@ -33,7 +33,7 @@ in
       folders = {
         "Syncthing" = {
           id = "syncthing";
-          path = "/home/gray/syncthing";
+          path = "${config.home.homeDirectory}/syncthing";
           devices = builtins.attrNames allDevices;
           versioning = {
             type = "staggered";
