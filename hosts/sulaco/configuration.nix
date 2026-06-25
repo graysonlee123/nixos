@@ -22,4 +22,6 @@
     worldName = "peepeepoopoo";
     passwordFile = config.sops.secrets."gameservers/terraria/peepeepoopoo/password".path;
   };
+
+  services.linkding.enable = true;
 }

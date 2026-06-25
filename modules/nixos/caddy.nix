@@ -27,6 +27,11 @@
           reverse_proxy localhost:8096
         '';
       };
+      "links.lab.ggantek.net" = {
+        extraConfig = ''
+          reverse_proxy localhost:9090
+        '';
+      };
       "uptime.lab.ggantek.net" = {
         extraConfig = ''
           reverse_proxy localhost:3001
