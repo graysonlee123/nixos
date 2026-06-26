@@ -73,6 +73,7 @@ let
     speedtest-cli
     trash-cli
     tree
+    trufflehog
     tuir
     unzip
     yt-dlp
