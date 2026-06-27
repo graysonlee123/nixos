@@ -8,6 +8,7 @@ let
         "tcp://100.73.78.2"
         "tcp://192.168.86.38"
       ];
+      autoAcceptFolders = true;
     };
     corbelan = {
       id = "LQURRGV-4URVSOT-S2QMDXK-I2KETJD-POFM5CX-4KNHSGR-X2AAV44-5RYCJQJ";
@@ -15,6 +16,7 @@ let
         "tcp://100.75.203.122"
         "tcp://192.168.86.42"
       ];
+      autoAcceptFolders = true;
     };
     sulaco = {
       id = "E52YS3K-QNNKP2Z-R5LMP6E-7WSRDOC-KMPUGR2-Z4KHKK3-TH2XUBY-6VGJ4AI";
@@ -22,6 +24,7 @@ let
         "tcp://100.93.40.89"
         "tcp://192.168.86.2"
       ];
+      autoAcceptFolders = true;
     };
   };
 in
