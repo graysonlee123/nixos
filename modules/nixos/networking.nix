@@ -49,6 +49,9 @@ in
       networking.firewall.allowedUDPPorts = [ 21027 ]; # Syncthing discovery
     }
     (lib.mkIf (cfg.staticIP != null) {
+      networking.firewall.interfaces."docker0".allowedTCPPorts = [
+        5432 # PostgreSQL
+      ];
       networking.useDHCP = false;
       networking.defaultGateway = "192.168.86.1";
       networking.nameservers = [ "192.168.86.1" ];
