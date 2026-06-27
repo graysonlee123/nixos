@@ -50,4 +50,21 @@ in
       };
     };
   };
+
+  home.file."syncthing/.stignore".text = ''
+    .git
+    node_modules
+    vendor
+    .next
+    .idea
+    .vscode
+    *.swp
+    *.swo
+    *~
+    .DS_Store
+    .Trash-*
+    *.tmp
+    *.temp
+    *.log
+  '';
 }
