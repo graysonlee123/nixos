@@ -2,6 +2,9 @@
 
 let
   cfg = config.services.linkding;
+  database = lib.findSingle (x: x == "linkding") null null config.services.postgresql.ensureDatabases;
+  user =
+    (lib.findSingle (x: x.name == "linkding") null null config.services.postgresql.ensureUsers).name;
 in
 {
   options.services.linkding = {
@@ -18,6 +21,13 @@ in
       image = "sissbruecker/linkding@sha256:0f75a89fceff820960cec7a1e5fe46519530e356b0de6b21ca38e8881b9f72e3";
       volumes = [ "/var/lib/linkding:/etc/linkding/data" ];
       ports = [ "${toString cfg.port}:9090" ];
+      environmentFiles = [ config.sops.templates."postgres/linkding.env".path ];
+      environment = {
+        LD_DB_ENGINE = "postgres";
+        LD_DB_DATABASE = database;
+        LD_DB_USER = user;
+        LD_DB_HOST = "172.17.0.1";
+      };
     };
   };
 }
