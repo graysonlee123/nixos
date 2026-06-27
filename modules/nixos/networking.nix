@@ -42,6 +42,7 @@ in
           443 # HTTPS
           7777 # Terraria
           25565 # Minecraft
+          8384 # Syncthing GUI
         ]
         ++ [
           22000 # Syncthing

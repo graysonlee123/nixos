@@ -37,6 +37,11 @@
           reverse_proxy localhost:8945
         '';
       };
+      "syncthing.lab.ggantek.net" = {
+        extraConfig = ''
+          reverse_proxy localhost:8384
+        '';
+      };
       "uptime.lab.ggantek.net" = {
         extraConfig = ''
           reverse_proxy localhost:3001
