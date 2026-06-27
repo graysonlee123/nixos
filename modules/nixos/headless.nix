@@ -5,6 +5,7 @@
     ./jellyfin.nix
     ./linkding.nix
     ./postgres.nix
+    ./teamspeak.nix
     ./uptime-kuma.nix
     ./vikunja.nix
   ];

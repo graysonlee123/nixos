@@ -145,7 +145,6 @@ in
       example = "[ brightnessctl ]";
       default = [ ];
     };
-
   };
 
   config = {
