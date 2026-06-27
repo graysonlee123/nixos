@@ -32,6 +32,11 @@
           reverse_proxy localhost:9090
         '';
       };
+      "pinchflat.lab.ggantek.net" = {
+        extraConfig = ''
+          reverse_proxy localhost:8945
+        '';
+      };
       "uptime.lab.ggantek.net" = {
         extraConfig = ''
           reverse_proxy localhost:3001
