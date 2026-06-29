@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  fileserverPath = "/srv/caddy/fileserver";
+in
 {
   services.caddy = {
     enable = true;
@@ -16,7 +19,13 @@
     '';
     email = "graysonleegantek@gmail.com";
     virtualHosts = {
-      # Redirect ggantek.net to my portfolio
+      "files.ggantek.net" = {
+        extraConfig = ''
+          file_server browse {
+            root ${fileserverPath}
+          }
+        '';
+      };
       "ggantek.net" = {
         extraConfig = ''
           redir https://graysn.com
@@ -51,6 +60,16 @@
         extraConfig = ''
           reverse_proxy localhost:3456
         '';
+      };
+    };
+  };
+
+  systemd.tmpfiles.settings."10-caddy-fileserver" = {
+    "${fileserverPath}" = {
+      d = {
+        user = config.users.users.gray.name;
+        group = config.services.caddy.group;
+        mode = "0755";
       };
     };
   };
