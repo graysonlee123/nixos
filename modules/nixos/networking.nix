@@ -43,8 +43,10 @@ in
           7777 # Terraria
           8384 # Syncthing GUI
         ]
-        ++ lib.mapAttrsToList (_: srv: srv.port) (
-          lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.minecraft
+        ++ lib.optionals isHeadless (
+          lib.mapAttrsToList (_: srv: srv.port) (
+            lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.minecraft
+          )
         )
         ++ [
           22000 # Syncthing
