@@ -95,6 +95,23 @@ in
               type = lib.types.str;
               default = "";
             };
+            ops = lib.mkOption {
+              description = "Operator player usernames.";
+              type = lib.types.listOf lib.types.str;
+              default = [ "pizzaThis" ];
+            };
+            whitelist = lib.mkOption {
+              description = "Whitelisted player usernames.";
+              type = lib.types.listOf lib.types.str;
+              default = [ "pizzaThis" ];
+            };
+            modrinth = {
+              projects = lib.mkOption {
+                description = "Modrinth project slugs to install.";
+                type = lib.types.listOf lib.types.str;
+                default = [ ];
+              };
+            };
           };
         }
       );
@@ -156,21 +173,9 @@ in
             ICON = srv.icon;
             PAUSE_WHEN_EMPTY_SECONDS = "600";
             RCON_PASSWORD_FILE = "/rcon-password";
-            # TODO: Configure this as a module option
-            WHITELIST = ''
-              pizzaThis
-            '';
-            # TODO: Configure this as a module option
-            MODRINTH_PROJECTS = ''
-              fabric-api
-              lithium
-              appleskin
-              jade
-              chunky
-              rei
-              distanthorizons:beta
-              shulkerboxtooltip
-            '';
+            WHITELIST = lib.concatStringsSep "\n" srv.whitelist;
+            OPS = lib.concatStringsSep "\n" srv.ops;
+            MODRINTH_PROJECTS = lib.concatStringsSep "\n" srv.modrinth.projects;
             MODRINTH_DOWNLOAD_DEPENDENCIES = "required";
           };
         }
