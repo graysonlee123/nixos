@@ -41,9 +41,11 @@ in
           80 # HTTP
           443 # HTTPS
           7777 # Terraria
-          25565 # Minecraft
           8384 # Syncthing GUI
         ]
+        ++ lib.mapAttrsToList (_: srv: srv.port) (
+          lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.minecraft
+        )
         ++ [
           22000 # Syncthing
         ];
