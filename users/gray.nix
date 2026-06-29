@@ -29,7 +29,9 @@ let
     ../modules/home-manager/zoxide.nix
     ../modules/home-manager/zsh.nix
   ];
-  hmHeadlessImports = [ ];
+  hmHeadlessImports = [
+    ../modules/home-manager/sops.nix
+  ];
   hmHeadedImports = [
     ../modules/home-manager/batsignal.nix
     ../modules/home-manager/chromium.nix

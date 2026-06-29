@@ -1,4 +1,9 @@
-{ config, isHeadless, ... }:
+{
+  config,
+  lib,
+  isHeadless,
+  ...
+}:
 
 let
   allDevices = {
@@ -29,9 +34,14 @@ let
   };
 in
 {
+  sops.secrets = lib.mkIf isHeadless {
+    "services/syncthing/password" = { };
+  };
+
   services.syncthing = {
     enable = true;
     guiAddress = if isHeadless then "0.0.0.0:8384" else "127.0.0.1:8384";
+    passwordFile = if isHeadless then config.sops.secrets."services/syncthing/password".path else null;
     settings = {
       devices = allDevices;
       folders = {
