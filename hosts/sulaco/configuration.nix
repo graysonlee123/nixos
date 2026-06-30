@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}:
+{ ... }:
 
 {
   imports = [
@@ -20,8 +17,6 @@
   services.gameservers = {
     terraria.peepeepoopoo = {
       enable = true;
-      worldName = "peepeepoopoo";
-      passwordFile = config.sops.secrets."gameservers/terraria/peepeepoopoo/password".path;
     };
 
     minecraft.test =

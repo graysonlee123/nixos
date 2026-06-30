@@ -18,7 +18,6 @@
       "services/postgres/linkding/password" = { };
       "services/postgres/linkding/superuser_username" = { };
       "services/postgres/linkding/superuser_password" = { };
-      "gameservers/terraria/peepeepoopoo/password" = { };
     };
 
     templates = lib.mkIf isHeadless {

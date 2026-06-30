@@ -7,10 +7,18 @@
 let
   cfg = config.services.gameservers;
   gameserverDir = "/var/lib/gameservers";
+  getGameserverInstanceDir = game: name: "${gameserverDir}/${game}/${name}";
+
+  # Terraria
+  getTerrariaSlug = name: "terraria-${name}";
+  getTerrariaPasswordSopsKey = name: "gameservers/terraria/${name}/password";
+  getTerrariaDir = name: getGameserverInstanceDir "terraria" name;
+
+  # Minecraft
   getMcSlug = name: "minecraft-${name}";
   getMcBackupsSlug = name: "minecraft-backups-${name}";
-  getMcDir = name: "${gameserverDir}/minecraft/${name}";
-  getMcRconSecret = name: "gameservers/minecraft/${name}/rcon_password";
+  getMcDir = name: getGameserverInstanceDir "minecraft" name;
+  getMcRconPasswordSopsKey = name: "gameservers/minecraft/${name}/rcon_password";
 in
 {
   options.services.gameservers = {
@@ -21,21 +29,10 @@ in
         lib.types.submodule {
           options = {
             enable = lib.mkEnableOption "Terraria server";
-            worldName = lib.mkOption {
-              description = "World name. Treated as a slug for server setup. Used in world name itself, password path, host password path, world file name.";
-              type = lib.types.nonEmptyStr;
-            };
             port = lib.mkOption {
               description = "Host container port.";
               type = lib.types.port;
               default = 7777;
-            };
-            passwordFile = lib.mkOption {
-              description = "Password file for the server.";
-              type = lib.types.pathWith {
-                absolute = true;
-                inStore = false;
-              };
             };
           };
         }
@@ -124,9 +121,10 @@ in
       (lib.mapAttrs' (
         name: srv:
         let
-          passwordPath = config.sops.secrets."gameservers/terraria/peepeepoopoo/password".path;
+          slug = getTerrariaSlug name;
+          passwordPath = config.sops.secrets.${getTerrariaPasswordSopsKey name}.path;
         in
-        lib.nameValuePair "terraria-${name}" {
+        lib.nameValuePair slug {
           image = "ryshe/terraria@sha256:55539b1d972159109875c1ba8bda221b718983a8fd4726e6ff8249a026233fd5";
           entrypoint = "/bin/sh";
           cmd = [
@@ -134,12 +132,12 @@ in
             ''exec /terraria-server/bootstrap.sh -password "$(tr -d '\n' < ${passwordPath})"''
           ];
           volumes = [
-            "${gameserverDir}/terraria/${srv.worldName}:/root/.local/share/Terraria/Worlds"
-            "${srv.passwordFile}:${passwordPath}"
+            "${getTerrariaDir name}:/root/.local/share/Terraria/Worlds"
+            "${passwordPath}:${passwordPath}"
           ];
           ports = [ "${toString srv.port}:7777" ];
           environment = {
-            "WORLD_FILENAME" = "${srv.worldName}.wld";
+            "WORLD_FILENAME" = "${name}.wld";
           };
         }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.terraria))
@@ -147,17 +145,25 @@ in
       # Minecraft
       (lib.mapAttrs' (
         name: srv:
-        lib.nameValuePair (getMcSlug name) {
+        let
+          slug = getMcSlug name;
+          hostDir = "${getMcDir name}";
+          rconPassword = {
+            hostPath = config.sops.secrets.${getMcRconPasswordSopsKey name}.path;
+            containerPath = "/rcon-password";
+          };
+        in
+        lib.nameValuePair slug {
           image = "itzg/minecraft-server@sha256:ca02da99646d1d670a591f0694c683b8e81224d27e8430bd058db435a0939382";
           extraOptions = [
             # "--tty"
             "--interactive"
           ];
-          hostname = getMcSlug name;
+          hostname = slug;
           ports = [ "${toString srv.port}:25565" ];
           volumes = [
-            "${getMcDir name}/data:/data"
-            "${config.sops.secrets.${getMcRconSecret name}.path}:/rcon-password:ro"
+            "${hostDir}/data:/data"
+            "${rconPassword.hostPath}:${rconPassword.containerPath}:ro"
           ];
           environment = {
             TZ = "America/New_York";
@@ -172,7 +178,7 @@ in
             ALLOW_FLIGHT = "true";
             ICON = srv.icon;
             PAUSE_WHEN_EMPTY_SECONDS = "600";
-            RCON_PASSWORD_FILE = "/rcon-password";
+            RCON_PASSWORD_FILE = rconPassword.containerPath;
             WHITELIST = lib.concatStringsSep "\n" srv.whitelist;
             OPS = lib.concatStringsSep "\n" srv.ops;
             MODRINTH_PROJECTS = lib.concatStringsSep "\n" srv.modrinth.projects;
@@ -184,31 +190,46 @@ in
       # Minecraft Backups
       (lib.mapAttrs' (
         name: srv:
-        lib.nameValuePair (getMcBackupsSlug name) {
+        let
+          slug = getMcBackupsSlug name;
+          gameServerSlug = getMcSlug name;
+          hostDir = "${getMcDir name}";
+          rconPassword = {
+            hostPath = config.sops.secrets.${getMcRconPasswordSopsKey name}.path;
+            containerPath = "/rcon-password";
+          };
+        in
+        lib.nameValuePair slug {
           image = "itzg/mc-backup@sha256:5d2c1fb80f4a225927e6ff05305d915ee2866bc320dd999f23373360cf88bd40";
-          dependsOn = [ (getMcSlug name) ];
-          extraOptions = [ "--network=container:${getMcSlug name}" ];
+          dependsOn = [ gameServerSlug ];
+          extraOptions = [ "--network=container:${gameServerSlug}" ];
           volumes = [
-            "${getMcDir name}/data:/data:ro"
-            "${getMcDir name}/backups:/backups"
-            "${config.sops.secrets.${getMcRconSecret name}.path}:/rcon-password:ro"
+            "${hostDir}/data:/data:ro"
+            "${hostDir}/backups:/backups"
+            "${rconPassword.hostPath}:${rconPassword.containerPath}:ro"
           ];
           environment = {
             TZ = "America/New_York";
             BACKUP_INTERVAL = "2h";
             PAUSE_IF_NO_PLAYERS = "true";
-            RCON_HOST = getMcSlug name;
-            RCON_PASSWORD_FILE = "/rcon-password";
+            RCON_HOST = gameServerSlug;
+            RCON_PASSWORD_FILE = rconPassword.containerPath;
           };
         }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft))
     ];
 
-    sops.secrets = lib.mapAttrs' (
-      name: srv:
-      lib.nameValuePair (getMcRconSecret name) {
-        mode = "0444";
-      }
-    ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft);
+    sops.secrets = lib.mkMerge [
+      (lib.mapAttrs' (name: srv: lib.nameValuePair (getTerrariaPasswordSopsKey name) { }) (
+        lib.filterAttrs (_: srv: srv.enable) cfg.terraria
+      ))
+
+      (lib.mapAttrs' (
+        name: srv:
+        lib.nameValuePair (getMcRconPasswordSopsKey name) {
+          mode = "0444"; # Container runs as user 1000; secret is mounted as root
+        }
+      ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft))
+    ];
   };
 }
