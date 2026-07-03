@@ -15,6 +15,11 @@ in
       lib.types.submodule {
         options = {
           enable = lib.mkEnableOption "SSH key";
+          sopsFile = lib.mkOption {
+            description = "Sops secrets file to use.";
+            type = lib.types.str;
+            default = "headed.yaml";
+          };
           hostName = lib.mkOption {
             description = "Host name. Optional. Maps to SSH HostName directive.";
             type = lib.types.nullOr lib.types.str;
@@ -62,6 +67,7 @@ in
             fn = fileNameOf name srv;
           in
           lib.nameValuePair "ssh/keys/${fn}" {
+            sopsFile = ../../secrets/${srv.sopsFile};
             mode = "0600";
             path = "${config.home.homeDirectory}/.ssh/${fn}";
           }

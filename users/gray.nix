@@ -170,11 +170,13 @@ in
             # Personal
             "github.com" = {
               enable = true;
+              sopsFile = "shared.yaml";
               publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPMvd+/flMOPe9Ei/FqGC5I73tQSTGq3sh5hD3ymxGn4 ${email}";
               user = "git";
             };
             "sulaco" = {
               enable = !isHeadless;
+              sopsFile = "shared.yaml";
               hostName = "100.93.40.89";
               publicKey = sulacoPublicKey;
               privateKeyName = "sulaco";
@@ -182,6 +184,7 @@ in
             };
             "sulaco.local" = {
               enable = !isHeadless;
+              sopsFile = "shared.yaml";
               hostName = "192.168.86.2";
               publicKey = sulacoPublicKey;
               privateKeyName = "sulaco";
