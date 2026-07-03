@@ -1,79 +1,101 @@
-{ lib, isHeadless, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 let
-  mkSshHost =
-    {
-      hostname ? null,
-      user ? null,
-      key,
-      keyOnly ? true,
-    }:
-    {
-      identityFile = key;
-      identitiesOnly = keyOnly;
-    }
-    // lib.optionalAttrs (hostname != null) {
-      hostname = hostname;
-    }
-    // lib.optionalAttrs (user != null) {
-      user = user;
-    };
+  cfg = config.keys.ssh;
 in
 {
-  config = {
-    programs.ssh = {
-      enable = true;
-      enableDefaultConfig = false;
-      matchBlocks = {
-        "github.com" = mkSshHost {
-          hostname = "github.com";
-          user = "git";
-          key = "~/.ssh/github";
+  options.keys.ssh = lib.mkOption {
+    description = "SSH keys.";
+    default = { };
+    type = lib.types.attrsOf (
+      lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "SSH key";
+          hostName = lib.mkOption {
+            description = "Host name. Optional. Maps to SSH HostName directive.";
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+          };
+          publicKey = lib.mkOption {
+            description = "Public key content.";
+            type = lib.types.str;
+          };
+          user = lib.mkOption {
+            description = "User name. Optional.";
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+          };
+          port = lib.mkOption {
+            description = "Port. Optional.";
+            type = lib.types.nullOr lib.types.port;
+            default = null;
+          };
+          privateKeyName = lib.mkOption {
+            description = "Sops secret and key file name. Defaults to host name.";
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+          };
         };
-      } // lib.optionalAttrs (!isHeadless) {
-        # Personal
-        # sulaco: home server
-        # - remote (Tailscale): ssh sulaco
-        # - local network:      ssh sulaco.local
-        "sulaco" = mkSshHost {
-          hostname = "100.83.63.8";
-          user = "grayson";
-          key = "~/.ssh/sulaco";
-        };
-        "sulaco.local" = mkSshHost {
-          hostname = "192.168.86.2";
-          user = "grayson";
-          key = "~/.ssh/sulaco";
-        };
+      }
+    );
+  };
 
-        # Inspry
-        "inspry.github.com" = mkSshHost {
-          hostname = "github.com";
-          user = "git";
-          key = "~/.ssh/github-inspry";
-        };
-        "ssh.pressable.com" = mkSshHost {
-          key = "~/.ssh/pressable";
-        };
-        "bitbucket.org" = mkSshHost {
-          key = "~/.ssh/bitbucket.org";
-        };
-        "154.12.120.83" = mkSshHost {
-          key = "~/.ssh/bigscoots";
-        };
-        "3.82.7.41" = mkSshHost {
-          key = "~/.ssh/azenco";
-        };
-        "*.servebolt.cloud" = mkSshHost {
-          key = "~/.ssh/servebolt";
-        };
-        "131.153.238.180" = mkSshHost {
-          key = "~/.ssh/rocket.net";
-        };
-        "ssh.dev.azure.com" = mkSshHost {
-          key = "~/.ssh/jti";
-        };
+  config =
+    let
+      enabledKeys = lib.filterAttrs (_: srv: srv.enable) cfg;
+      fileNameOf =
+        name: value:
+        let
+          raw = if value.privateKeyName != null then value.privateKeyName else name;
+        in
+        lib.removePrefix "*." raw;
+    in
+    {
+      sops = {
+        secrets = lib.mapAttrs' (
+          name: srv:
+          let
+            fn = fileNameOf name srv;
+          in
+          lib.nameValuePair "ssh/keys/${fn}" {
+            mode = "0600";
+            path = "${config.home.homeDirectory}/.ssh/${fn}";
+          }
+        ) enabledKeys;
+      };
+
+      home.file = lib.mapAttrs' (
+        name: srv:
+        let
+          fn = fileNameOf name srv;
+        in
+        (lib.nameValuePair ".ssh/${fn}.pub" {
+          text = srv.publicKey;
+        })
+      ) enabledKeys;
+
+      programs.ssh = {
+        enable = true;
+        enableDefaultConfig = false;
+        matchBlocks =
+          (lib.mapAttrs' (
+            name: srv:
+            let
+              fn = fileNameOf name srv;
+            in
+            lib.nameValuePair name {
+              identityFile = "${config.home.homeDirectory}/.ssh/${fn}";
+              identitiesOnly = true;
+              hostname = srv.hostName;
+              user = srv.user;
+              port = srv.port;
+            }
+          ))
+            enabledKeys;
       };
     };
-  };
 }
