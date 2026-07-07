@@ -41,7 +41,6 @@ in
           80 # HTTP
           443 # HTTPS
           7777 # Terraria
-          8384 # Syncthing GUI
         ]
         ++ lib.optionals isHeadless (
           lib.mapAttrsToList (_: srv: srv.port) (
@@ -54,6 +53,9 @@ in
       networking.firewall.allowedUDPPorts = [ 21027 ]; # Syncthing discovery
     }
     (lib.mkIf (cfg.staticIP != null) {
+      networking.firewall.interfaces.${cfg.networkInterface}.allowedTCPPorts = [
+        22 # SSH
+      ];
       networking.firewall.interfaces."docker0".allowedTCPPorts = [
         5432 # PostgreSQL
       ];
