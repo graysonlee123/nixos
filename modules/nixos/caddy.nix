@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   fileserverPath = "/srv/caddy/fileserver";
@@ -13,15 +18,13 @@ in
     environmentFile = config.sops.templates."caddy.env".path;
     globalConfig = ''
       acme_dns cloudflare {$CLOUDFLARE_ACCESS_TOKEN}
-      admin 127.0.0.1:2019 {
-        origins 127.0.0.1:2019 localhost:2019
-      }
+      admin off
     '';
     email = "graysonleegantek@gmail.com";
     virtualHosts = {
       "adguardhome.lab.ggantek.net" = {
         extraConfig = ''
-          reverse_proxy localhost:3000
+          reverse_proxy localhost:${toString config.services.adguardhome.port}
         '';
       };
       "files.ggantek.net" = {
@@ -37,33 +40,35 @@ in
         '';
       };
       "jellyfin.lab.ggantek.net" = {
+        # Port should match in-app administration configured port
         extraConfig = ''
           reverse_proxy localhost:8096
         '';
       };
       "links.lab.ggantek.net" = {
         extraConfig = ''
-          reverse_proxy localhost:9090
+          reverse_proxy localhost:${toString config.services.linkding.port}
         '';
       };
       "pinchflat.lab.ggantek.net" = {
         extraConfig = ''
-          reverse_proxy localhost:8945
+          reverse_proxy localhost:${toString config.services.pinchflat.port}
         '';
       };
       "syncthing.lab.ggantek.net" = {
+        # Port should match home manager Syncthing guiAddress
         extraConfig = ''
           reverse_proxy localhost:8384
         '';
       };
       "uptime.lab.ggantek.net" = {
         extraConfig = ''
-          reverse_proxy localhost:3001
+          reverse_proxy localhost:${config.services.uptime-kuma.settings.PORT}
         '';
       };
       "vikunja.lab.ggantek.net" = {
         extraConfig = ''
-          reverse_proxy localhost:3456
+          reverse_proxy localhost:${toString config.services.vikunja.port}
         '';
       };
     };
