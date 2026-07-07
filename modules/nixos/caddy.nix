@@ -6,6 +6,7 @@
 }:
 
 let
+  constants = import ../../data/constants.nix;
   fileserverPath = "/srv/caddy/fileserver";
 in
 {
@@ -20,7 +21,7 @@ in
       acme_dns cloudflare {$CLOUDFLARE_ACCESS_TOKEN}
       admin off
     '';
-    email = "graysonleegantek@gmail.com";
+    email = constants.emails.gmail;
     virtualHosts = {
       "adguardhome.lab.ggantek.net" = {
         extraConfig = ''

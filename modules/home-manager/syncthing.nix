@@ -6,28 +6,27 @@
 }:
 
 let
+  constants = import ../../data/constants.nix;
   allDevices = {
     nostromo = {
       id = "5N4LBAT-Q3W7TMI-4QG2Y66-3HUGMR7-PDL7WBJ-OHOBREZ-5P6LHT5-4BRVSQ7";
       addresses = [
-        "tcp://100.73.78.2"
-        "tcp://192.168.86.38"
+        "tcp://${constants.hosts.nostromo.ips.tailscale}"
       ];
       autoAcceptFolders = true;
     };
     corbelan = {
       id = "LQURRGV-4URVSOT-S2QMDXK-I2KETJD-POFM5CX-4KNHSGR-X2AAV44-5RYCJQJ";
       addresses = [
-        "tcp://100.75.203.122"
-        "tcp://192.168.86.42"
+        "tcp://${constants.hosts.corbelan.ips.tailscale}"
       ];
       autoAcceptFolders = true;
     };
     sulaco = {
       id = "E52YS3K-QNNKP2Z-R5LMP6E-7WSRDOC-KMPUGR2-Z4KHKK3-TH2XUBY-6VGJ4AI";
       addresses = [
-        "tcp://100.93.40.89"
-        "tcp://192.168.86.2"
+        "tcp://${constants.hosts.sulaco.ips.tailscale}"
+        "tcp://${constants.hosts.sulaco.ips.lan}"
       ];
       autoAcceptFolders = true;
     };

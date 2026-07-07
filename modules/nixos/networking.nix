@@ -7,6 +7,7 @@
 
 let
   cfg = config.host;
+  constants = import ../../data/constants.nix;
 in
 {
   options.host = {
@@ -60,8 +61,8 @@ in
         5432 # PostgreSQL
       ];
       networking.useDHCP = false;
-      networking.defaultGateway = "192.168.86.1";
-      networking.nameservers = [ "192.168.86.1" ];
+      networking.defaultGateway = constants.network.gateway;
+      networking.nameservers = constants.network.dns;
       networking.interfaces.${cfg.networkInterface} = {
         ipv4.addresses = [
           {

@@ -9,6 +9,7 @@
 let
   cfg = config.gray;
   types = lib.types;
+  constants = import ../data/constants.nix;
   hmBaseImports = [
     ../modules/home-manager/btop.nix
     ../modules/home-manager/claude-code.nix
@@ -162,8 +163,8 @@ in
 
         keys.ssh =
           let
-            email = "hello@graysn.com";
-            inspryEmail = "grayson@inspry.com";
+            email = constants.emails.personal;
+            inspryEmail = constants.emails.work;
             sulacoPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFUikXnlXo9JwzeSMwdH4PCw/dgKnDYbIgSJxjXSEzMX ${email}";
           in
           {
@@ -177,7 +178,7 @@ in
             "sulaco" = {
               enable = !isHeadless;
               sopsFile = "shared.yaml";
-              hostName = "100.93.40.89";
+              hostName = constants.hosts.sulaco.ips.tailscale;
               publicKey = sulacoPublicKey;
               privateKeyName = "sulaco";
               user = config.users.users.gray.name;
@@ -185,7 +186,7 @@ in
             "sulaco.local" = {
               enable = !isHeadless;
               sopsFile = "shared.yaml";
-              hostName = "192.168.86.2";
+              hostName = constants.hosts.sulaco.ips.lan;
               publicKey = sulacoPublicKey;
               privateKeyName = "sulaco";
               user = config.users.users.gray.name;

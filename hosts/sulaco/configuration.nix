@@ -1,5 +1,8 @@
 { ... }:
 
+let
+  constants = import ../../data/constants.nix;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -9,7 +12,7 @@
   ];
 
   host.name = "sulaco";
-  host.staticIP = "192.168.86.2";
+  host.staticIP = constants.hosts.sulaco.ips.lan;
   host.networkInterface = "enp2s0";
   system.stateVersion = "25.11";
   virtualisation.oci-containers.backend = "docker";

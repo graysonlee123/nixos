@@ -2,6 +2,7 @@
 
 let
   cfg = config.services.linkding;
+  constants = import ../../data/constants.nix;
   database = lib.findSingle (x: x == "linkding") null null config.services.postgresql.ensureDatabases;
   user =
     (lib.findSingle (x: x.name == "linkding") null null config.services.postgresql.ensureUsers).name;
@@ -26,7 +27,7 @@ in
         LD_DB_ENGINE = "postgres";
         LD_DB_DATABASE = database;
         LD_DB_USER = user;
-        LD_DB_HOST = "172.17.0.1";
+        LD_DB_HOST = constants.network.dockerBridge;
       };
     };
   };

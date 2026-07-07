@@ -1,5 +1,8 @@
 { lib, isHeadless, ... }:
 
+let
+  constants = import ../../data/constants.nix;
+in
 {
   config = {
     programs.git = {
@@ -9,7 +12,7 @@
           condition = "gitdir:~/repos/inspry/";
           contents = {
             user = {
-              email = "grayson@inspry.com";
+              email = constants.emails.work;
             };
             url."git@inspry.github.com:".insteadOf = "git@github.com:";
           };

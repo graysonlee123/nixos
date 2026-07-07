@@ -1,14 +1,17 @@
 { lib, pkgs, ... }:
 
+let
+  constants = import ../../data/constants.nix;
+in
 {
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
     settings = {
-      listen_addresses = lib.mkForce "localhost,172.17.0.1";
+      listen_addresses = lib.mkForce "localhost,${constants.network.dockerBridge}";
     };
     authentication = lib.mkAfter ''
-      host all all 172.17.0.0/16 md5
+      host all all ${constants.network.dockerSubnet} md5
     '';
     ensureDatabases = [
       "vikunja"

@@ -1,3 +1,6 @@
+let
+  constants = import ../../data/constants.nix;
+in
 {
   # openFirewall only opens web UI port, not DNS
   networking.firewall.interfaces."enp2s0".allowedTCPPorts = [ 53 ];
@@ -27,7 +30,7 @@
       block_auth_min = 15;
       dns = {
         bind_hosts = [
-          "192.168.86.2"
+          constants.hosts.sulaco.ips.lan
           "127.0.0.1"
         ];
         port = 53;
