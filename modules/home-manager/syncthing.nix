@@ -40,7 +40,7 @@ in
 
   services.syncthing = {
     enable = true;
-    guiAddress = if isHeadless then "0.0.0.0:8384" else "127.0.0.1:8384";
+    guiAddress = "127.0.0.1:8384";
     passwordFile = if isHeadless then config.sops.secrets."services/syncthing/password".path else null;
     settings = {
       devices = allDevices;

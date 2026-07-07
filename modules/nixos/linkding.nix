@@ -20,7 +20,7 @@ in
     virtualisation.oci-containers.containers.linkding = {
       image = "sissbruecker/linkding@sha256:0f75a89fceff820960cec7a1e5fe46519530e356b0de6b21ca38e8881b9f72e3";
       volumes = [ "/var/lib/linkding:/etc/linkding/data" ];
-      ports = [ "${toString cfg.port}:9090" ];
+      ports = [ "127.0.0.1:${toString cfg.port}:9090" ];
       environmentFiles = [ config.sops.templates."postgres/linkding.env".path ];
       environment = {
         LD_DB_ENGINE = "postgres";

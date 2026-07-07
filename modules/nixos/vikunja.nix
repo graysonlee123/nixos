@@ -3,6 +3,7 @@
 {
   services.vikunja = {
     enable = true;
+    port = 3456;
     frontendScheme = "https";
     frontendHostname = "vikunja.lab.ggantek.net";
     database = {

@@ -1,7 +1,7 @@
 {
   services.pinchflat = {
     enable = true;
-    openFirewall = true;
+    port = 8945;
     selfhosted = true;
     extraConfig = {
       TZ = "America/New_York";
