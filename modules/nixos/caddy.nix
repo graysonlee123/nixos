@@ -19,6 +19,11 @@ in
     '';
     email = "graysonleegantek@gmail.com";
     virtualHosts = {
+      "adguardhome.lab.ggantek.net" = {
+        extraConfig = ''
+          reverse_proxy localhost:3000
+        '';
+      };
       "files.ggantek.net" = {
         extraConfig = ''
           file_server browse {
