@@ -26,6 +26,7 @@
         "dcu" = "docker compose up";
         "dcud" = "docker compose up -d";
         "dclf" = "docker compose logs --follow";
+        "lftpi" = "lftp -e 'set ssl:verify-certificate no'";
       };
       initContent = ''
         bindkey "^[[3~" delete-char

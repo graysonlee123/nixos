@@ -19,6 +19,7 @@ let
     ../modules/home-manager/go.nix
     ../modules/home-manager/lazydocker.nix
     ../modules/home-manager/lazygit.nix
+    ../modules/home-manager/lftp.nix
     ../modules/home-manager/pgcli.nix
     ../modules/home-manager/ripgrep.nix
     ../modules/home-manager/sops.nix
