@@ -120,6 +120,7 @@ let
     radioboat
     r2modman
     scc
+    serie
     slurp
     teamspeak6-client
     (tidal-hifi.overrideAttrs (old: {
