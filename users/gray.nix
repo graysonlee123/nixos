@@ -35,17 +35,22 @@ let
   hmHeadlessImports = [ ];
   hmHeadedImports = [
     ../modules/home-manager/batsignal.nix
+    ../modules/home-manager/calendar.nix
     ../modules/home-manager/chromium.nix
+    ../modules/home-manager/contacts.nix
     ../modules/home-manager/cursor.nix
     ../modules/home-manager/ghostty.nix
     ../modules/home-manager/iamb.nix
     ../modules/home-manager/imv.nix
+    ../modules/home-manager/khal.nix
+    ../modules/home-manager/khard.nix
     ../modules/home-manager/mako.nix
     ../modules/home-manager/mullvad-waybar.nix
     ../modules/home-manager/nerd-dictation.nix
     ../modules/home-manager/radioboat.nix
     ../modules/home-manager/screenshots.nix
     ../modules/home-manager/sway.nix
+    ../modules/home-manager/vdirsyncer.nix
     ../modules/home-manager/vesktop.nix
     ../modules/home-manager/vicinae.nix
     ../modules/home-manager/vscode.nix

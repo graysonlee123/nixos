@@ -7,6 +7,7 @@
     ./linkding.nix
     ./pinchflat.nix
     ./postgres.nix
+    ./radicale.nix
     ./teamspeak.nix
     ./uptime-kuma.nix
     ./vikunja.nix

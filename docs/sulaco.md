@@ -10,6 +10,7 @@
 | 3001  | TCP      | Uptime Kuma               | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3456  | TCP      | Vikunja                   | \*                      | No              | Firewall blocks                              |
 | 4369  | TCP      | EPMD (Erlang)             | 0.0.0.0                 | No              | From Pinchflat runtime                       |
+| 5232  | TCP      | Radicale (CalDAV/CardDAV) | 0.0.0.0                 | No              | Behind Caddy                                 |
 | 5432  | TCP      | PostgreSQL                | 127.0.0.1, 172.17.0.1   | docker0 only    | Peer auth (host), password auth (containers) |
 | 7359  | UDP      | Jellyfin (Discovery)      | 0.0.0.0                 | No              | DLNA/client discovery                        |
 | 7777  | TCP      | Terraria                  | 0.0.0.0                 | Yes             | Game server                                  |

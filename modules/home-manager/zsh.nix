@@ -42,6 +42,7 @@
           rm -f -- "$tmp"
         }
 
+        eval "$(_KHAL_COMPLETE=zsh_source khal)"
       '';
     };
   };

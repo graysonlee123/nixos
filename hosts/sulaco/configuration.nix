@@ -1,7 +1,8 @@
-{ ... }:
+{ lib, ... }:
 
 let
   constants = import ../../data/constants.nix;
+  radicaleCollections = import ../../data/radicale-collections.nix;
 in
 {
   imports = [
@@ -49,4 +50,10 @@ in
   };
 
   services.linkding.enable = true;
+  services.radicale.collections = (
+    lib.mapAttrs (_: value: {
+      color = value.color;
+      type = value.type;
+    }) radicaleCollections
+  );
 }
