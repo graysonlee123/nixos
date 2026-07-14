@@ -122,8 +122,9 @@ let
     pnpm
     python3
     qalculate-gtk
-    radioboat
     r2modman
+    radioboat
+    regex-tui
     scc
     serie
     slurp
