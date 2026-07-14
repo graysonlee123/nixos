@@ -66,7 +66,7 @@ khard edit <name>               # edit contact
 khard export <name>             # export as vCard
 ```
 
-All contacts use vCard 4.0 (`preferred_version` set in khard config).
+All contacts use vCard 3.0 (`preferred_version` set in khard config).
 
 ### vdirsyncer
 
@@ -109,3 +109,4 @@ Notes:
 - iPhone discovers all collections automatically via PROPFIND
 - iPhone treats CardDAV as read-write (no native read-only option)
 - For org-type contacts, iPhone displays `ORG` field instead of `FN` as the contact name
+- **vCard 3.0 required**: vCard 4.0 uses `VALUE=uri:tel:+1...` for phone numbers. iOS stores these literally, causing iMessage conversations to not link to contacts (iMessage can't match `tel:+1...` to a phone number). Converting to vCard 3.0 (bare `+1...` numbers) fixes this. Key v4-to-v3 changes: `VERSION:3.0`, remove `VALUE=uri:tel:` prefix from TEL values, convert `PREF=1` parameter to `TYPE=...,PREF`, convert `KIND:` to `X-KIND:` (v3 doesn't support `KIND:`, but khard re-adds `X-KIND` on edit anyway), normalize `BDAY` to `YYYY-MM-DD`
