@@ -66,6 +66,7 @@
             "Bash(ls:*)"
             "Bash(pwd:*)"
             "Bash(wc:*)"
+            "Bash(rg:*)"
           ]
           ++ lib.optionals (!isHeadless) [
             # ClickUp
