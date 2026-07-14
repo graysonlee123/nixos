@@ -70,6 +70,7 @@ let
     ffmpeg
     gh
     git-crypt
+    glow
     imagemagick
     jq
     nixfmt
