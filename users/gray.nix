@@ -19,7 +19,6 @@ let
     ../modules/home-manager/go.nix
     ../modules/home-manager/lazydocker.nix
     ../modules/home-manager/lazygit.nix
-    ../modules/home-manager/lftp.nix
     ../modules/home-manager/pgcli.nix
     ../modules/home-manager/ripgrep.nix
     ../modules/home-manager/sops.nix
@@ -44,6 +43,7 @@ let
     ../modules/home-manager/imv.nix
     ../modules/home-manager/khal.nix
     ../modules/home-manager/khard.nix
+    ../modules/home-manager/lftp.nix
     ../modules/home-manager/mako.nix
     ../modules/home-manager/mullvad-waybar.nix
     ../modules/home-manager/nerd-dictation.nix
