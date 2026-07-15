@@ -59,7 +59,9 @@ in
       "syncthing.lab.ggantek.net" = {
         # Port should match home manager Syncthing guiAddress
         extraConfig = ''
-          reverse_proxy localhost:8384
+          reverse_proxy localhost:8384 {
+              header_up Host localhost:8384
+          }
         '';
       };
       "uptime.lab.ggantek.net" = {

@@ -24,7 +24,6 @@ let
     ../modules/home-manager/sops.nix
     ../modules/home-manager/ssh.nix
     ../modules/home-manager/starship.nix
-    ../modules/home-manager/syncthing.nix
     ../modules/home-manager/tealdeer.nix
     ../modules/home-manager/vim.nix
     ../modules/home-manager/yazi.nix
@@ -50,6 +49,7 @@ let
     ../modules/home-manager/radioboat.nix
     ../modules/home-manager/screenshots.nix
     ../modules/home-manager/sway.nix
+    ../modules/home-manager/syncthing.nix
     ../modules/home-manager/vdirsyncer.nix
     ../modules/home-manager/vesktop.nix
     ../modules/home-manager/vicinae.nix

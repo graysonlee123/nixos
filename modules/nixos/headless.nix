@@ -8,6 +8,7 @@
     ./pinchflat.nix
     ./postgres.nix
     ./radicale.nix
+    ./syncthing.nix
     ./teamspeak.nix
     ./uptime-kuma.nix
     ./vikunja.nix
