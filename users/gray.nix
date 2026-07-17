@@ -71,6 +71,8 @@ let
     gh
     git-crypt
     glow
+    httpie
+    httpie-desktop
     imagemagick
     jq
     nixfmt
