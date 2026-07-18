@@ -219,6 +219,8 @@ in
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft))
     ];
 
+    #TODO: Manage ports?
+
     sops.secrets = lib.mkMerge [
       (lib.mapAttrs' (name: srv: lib.nameValuePair (getTerrariaPasswordSopsKey name) { }) (
         lib.filterAttrs (_: srv: srv.enable) cfg.terraria
