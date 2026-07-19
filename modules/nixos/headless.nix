@@ -2,6 +2,7 @@
   imports = [
     ./adguardhome.nix
     ./caddy.nix
+    ./express-postmark.nix
     ./gameservers.nix
     ./jellyfin.nix
     ./linkding.nix

@@ -1,6 +1,7 @@
 {
   emails = {
     gmail = "graysonleegantek@gmail.com";
+    postmark = "postmark@graysn.com";
     personal = "hello@graysn.com";
     work = "grayson@inspry.com";
   };

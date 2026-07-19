@@ -8,6 +8,7 @@
 | 67    | TCP/UDP  | AdGuard Home (DHCP)       | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DNS                                      |
 | 80    | TCP      | Caddy (HTTP)              | \*                      | Yes             | Redirect to HTTPS                            |
 | 443   | TCP/UDP  | Caddy (HTTPS)             | \*                      | Yes             | Reverse proxy                                |
+| 1224  | TCP      | Express Postmark          | 127.0.0.1               | No              |                                              |
 | 3000  | TCP      | AdGuard Home (Web)        | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3001  | TCP      | Uptime Kuma               | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3456  | TCP      | Vikunja                   | \*                      | No              | Firewall blocks                              |
@@ -81,6 +82,20 @@ For containers to reach host services (e.g. PostgreSQL on port 5432):
 3. Containers use `172.17.0.1` as the host address in their config.
 
 Auth: containers run as root (UID 0) inside, so PostgreSQL peer auth (which matches Unix UID to DB user) won't work. Use password auth (md5/scram-sha-256) for container connections. Store passwords in sops, pass to containers via `environmentFiles` and `sops.templates` to keep secrets out of the nix store (which is world-readable).
+
+## Container-to-container networking
+
+To create Docker networks declaratively, use `system.activationScripts`. The example below creates a network named "foo":
+
+```nix
+system.activationScripts.mkFooNetwork = ''
+  ${pkgs.docker}/bin/docker network inspect ${network} > /dev/null 2>&1 || ${pkgs.docker}/bin/docker network create ${network}
+'';
+```
+
+Running `docker network create foo` subsequently will fail, including on future NixOS activations, therefore we need to check for its existence before creating it.
+
+Then, containers within the "foo" network will be able to reach each other.
 
 ## Host-level services and PostgreSQL
 
