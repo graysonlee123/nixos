@@ -1,10 +1,54 @@
+{ lib, ... }:
+
 let
+  dnsPort = 53;
   constants = import ../../data/constants.nix;
+  hosts = import ../../data/hosts.nix;
+  mkClient =
+    {
+      name,
+      ids,
+      uuid,
+    }:
+    {
+      inherit name ids uuid;
+      safe_search = {
+        enabled = false;
+        bing = true;
+        duckduckgo = true;
+        ecosia = true;
+        google = true;
+        pixabay = true;
+        yandex = true;
+        youtube = true;
+      };
+      blocked_services = {
+        ids = [ ];
+        schedule.time_zone = "Local";
+      };
+      tags = [ ];
+      upstreams = [ ];
+      upstreams_cache_size = 0;
+      upstreams_cache_enabled = false;
+      use_global_settings = true;
+      filtering_enabled = false;
+      parental_enabled = false;
+      safebrowsing_enabled = false;
+      use_global_blocked_services = true;
+      ignore_querylog = false;
+      ignore_statistics = false;
+    };
 in
 {
-  # openFirewall only opens web UI port, not DNS
-  networking.firewall.interfaces."enp2s0".allowedTCPPorts = [ 53 ];
-  networking.firewall.interfaces."enp2s0".allowedUDPPorts = [ 53 ];
+  # openFirewall only opens web UI port, not DNS/DHCP
+  networking.firewall.interfaces."enp2s0".allowedTCPPorts = [
+    dnsPort # DNS
+  ];
+  networking.firewall.interfaces."enp2s0".allowedUDPPorts = [
+    dnsPort # DNS
+    67 # DHCP
+    68 # DHCP
+  ];
   networking.nameservers = [ "127.0.0.1" ];
   networking.networkmanager.dns = "none";
 
@@ -30,10 +74,10 @@ in
       block_auth_min = 15;
       dns = {
         bind_hosts = [
-          constants.hosts.sulaco.ips.lan
+          hosts.sulaco.ips.lan
           "127.0.0.1"
         ];
-        port = 53;
+        port = dnsPort;
         ratelimit = 300;
         enable_dnssec = true;
         upstream_dns = [
@@ -90,7 +134,29 @@ in
           id = 48;
         }
       ];
-      dhcp.enabled = false;
+      dhcp = {
+        enabled = true;
+        interface_name = "enp2s0";
+        dhcpv4 = {
+          gateway_ip = constants.network.gateway;
+          subnet_mask = "255.255.255.0";
+          range_start = "192.168.86.20";
+          range_end = "192.168.86.254";
+          lease_duration = 0; # 24-hour default
+          local_domain_name = "lan";
+        };
+      };
+      # MAC identifiers don't aggregate in client stats: https://github.com/AdguardTeam/AdGuardHome/issues/4649
+      clients.persistent = (
+        lib.mapAttrsToList (
+          _: value:
+          (mkClient {
+            name = value.label;
+            ids = [ value.mac ];
+            uuid = value.uuid;
+          })
+        ) hosts
+      );
       tls.enabled = false;
     };
   };

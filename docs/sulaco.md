@@ -4,6 +4,8 @@
 | ----- | -------- | ------------------------- | ----------------------- | --------------- | -------------------------------------------- |
 | 22    | TCP      | SSH                       | 0.0.0.0                 | LAN + Tailscale |                                              |
 | 53    | TCP/UDP  | AdGuard Home (DNS)        | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DNS                                      |
+| 68    | TCP/UDP  | AdGuard Home (DHCP)       | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DNS                                      |
+| 67    | TCP/UDP  | AdGuard Home (DHCP)       | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DNS                                      |
 | 80    | TCP      | Caddy (HTTP)              | \*                      | Yes             | Redirect to HTTPS                            |
 | 443   | TCP/UDP  | Caddy (HTTPS)             | \*                      | Yes             | Reverse proxy                                |
 | 3000  | TCP      | AdGuard Home (Web)        | 127.0.0.1               | No              | Behind Caddy                                 |

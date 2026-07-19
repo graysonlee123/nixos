@@ -1,7 +1,7 @@
 { lib, ... }:
 
 let
-  constants = import ../../data/constants.nix;
+  hosts = import ../../data/hosts.nix;
   radicaleCollections = import ../../data/radicale-collections.nix;
 in
 {
@@ -13,7 +13,7 @@ in
   ];
 
   host.name = "sulaco";
-  host.staticIP = constants.hosts.sulaco.ips.lan;
+  host.staticIP = hosts.sulaco.ips.lan;
   host.networkInterface = "enp2s0";
   system.stateVersion = "25.11";
   virtualisation.oci-containers.backend = "docker";
