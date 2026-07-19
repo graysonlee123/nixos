@@ -22,7 +22,7 @@
         "lzd" = "lazydocker";
         "lzg" = "lazygit";
         "pn" = "pnpm";
-        "rb" = "radioboat --volume 50 --track-file ~/.config/radioboat/tracks.txt";
+        "rb" = "radioboat --volume 75 --track-file ~/.config/radioboat/tracks.txt";
         "dcd" = "docker compose down";
         "dcu" = "docker compose up";
         "dcud" = "docker compose up -d";
@@ -35,7 +35,8 @@
         bindkey "^[[1;5D" backward-word
         bindkey "''${key[Up]}" history-substring-search-up
         bindkey "''${key[Down]}" history-substring-search-down
-      '' + lib.optionalString config.programs.khal.enable ''
+      ''
+      + lib.optionalString config.programs.khal.enable ''
         eval "$(_KHAL_COMPLETE=zsh_source khal)"
       '';
     };
