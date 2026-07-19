@@ -10,6 +10,7 @@ let
   cfg = config.gray;
   types = lib.types;
   constants = import ../data/constants.nix;
+  hosts = import ../data/hosts.nix;
   hmBaseImports = [
     ../modules/home-manager/btop.nix
     ../modules/home-manager/claude-code.nix
@@ -189,7 +190,7 @@ in
             "sulaco" = {
               enable = !isHeadless;
               sopsFile = "shared.yaml";
-              hostName = constants.hosts.sulaco.ips.tailscale;
+              hostName = hosts.sulaco.ips.tailscale;
               publicKey = sulacoPublicKey;
               privateKeyName = "sulaco";
               user = config.users.users.gray.name;
@@ -197,7 +198,7 @@ in
             "sulaco.local" = {
               enable = !isHeadless;
               sopsFile = "shared.yaml";
-              hostName = constants.hosts.sulaco.ips.lan;
+              hostName = hosts.sulaco.ips.lan;
               publicKey = sulacoPublicKey;
               privateKeyName = "sulaco";
               user = config.users.users.gray.name;
