@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   config = {
@@ -32,18 +32,15 @@
         bindkey "^[[3~" delete-char
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
-
-        # yazi shell wrapper providing cwd changes on exit
-        function y() {
-          local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-          command yazi "$@" --cwd-file="$tmp"
-          IFS= read -r -d \'\' cwd < "$tmp"
-          [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-          rm -f -- "$tmp"
-        }
-
-        eval "$(_KHAL_COMPLETE=zsh_source khal)"
-      '';
+      ''
+      + (
+        if config.programs.khal.enable then
+          ''
+            eval "$(_KHAL_COMPLETE=zsh_source khal)"
+          ''
+        else
+          ""
+      );
     };
   };
 }
