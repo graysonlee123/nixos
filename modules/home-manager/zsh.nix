@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   config = {
@@ -15,6 +15,7 @@
         extended = true;
       };
       autosuggestion.enable = true;
+      historySubstringSearch.enable = true;
       syntaxHighlighting.enable = true;
       shellAliases = {
         "cl" = "claude";
@@ -32,15 +33,11 @@
         bindkey "^[[3~" delete-char
         bindkey "^[[1;5C" forward-word
         bindkey "^[[1;5D" backward-word
-      ''
-      + (
-        if config.programs.khal.enable then
-          ''
-            eval "$(_KHAL_COMPLETE=zsh_source khal)"
-          ''
-        else
-          ""
-      );
+        bindkey "''${key[Up]}" history-substring-search-up
+        bindkey "''${key[Down]}" history-substring-search-down
+      '' + lib.optionalString config.programs.khal.enable ''
+        eval "$(_KHAL_COMPLETE=zsh_source khal)"
+      '';
     };
   };
 }
