@@ -1,14 +1,16 @@
 # AdGuard Home
 
-Network-wide DNS ad/tracker blocker running on Sulaco. All LAN devices use it via router DHCP configuration.
+Network-wide DNS ad/tracker blocker and DHCP server running on Sulaco.
 
 ## How it works
 
 ```
-LAN devices --> Router (192.168.86.1) --> Sulaco/AdGuard (192.168.86.2) --> Cloudflare/Mullvad DoH
+LAN devices --> Sulaco/AdGuard (192.168.86.2, DHCP + DNS) --> Cloudflare/Mullvad DoH
 ```
 
-Router's custom DNS is set to 192.168.86.2. Router advertises itself as DNS to DHCP clients, then forwards queries to Sulaco. Sulaco resolves via encrypted DNS-over-HTTPS upstream.
+AGH serves as both DHCP and DNS for the LAN. Router (192.168.86.1) is in DHCP relay mode pointing at Sulaco and acts as gateway only. Clients get their IP and DNS server directly from AGH.
+
+Sulaco itself has a static IP (192.168.86.2) outside the DHCP range and uses `127.0.0.1` as its nameserver to avoid a DNS loop.
 
 ## Configuration
 
@@ -26,13 +28,32 @@ Web UI: `adguardhome.lab.ggantek.net` (reverse proxied via Caddy from port 3000)
 - **Bootstrap**: 9.9.9.9 (resolves DoH hostnames)
 - **Fallback**: Cloudflare DoH
 - **Port**: 53 (TCP + UDP, opened manually since `openFirewall` only covers web UI)
+- **DNSSEC**: enabled
 
-Sulaco's own DNS points to `127.0.0.1` to avoid a DNS loop (router forwards to Sulaco, Sulaco must not forward back to router).
+## DHCP
+
+AGH runs the DHCP server on `enp2s0`. Router DHCP is disabled (relay mode).
+
+- **Range**: 192.168.86.20 - 192.168.86.254
+- **Gateway**: 192.168.86.1 (router)
+- **Subnet**: 255.255.255.0
+- **Lease duration**: 24 hours (default)
+- **Local domain**: `.lan` (available for local DNS resolution)
+- **Ports**: 67/UDP, 68/UDP (opened on `enp2s0`)
+
+### Persistent clients
+
+Device inventory lives in `data/hosts.nix` (git-crypt encrypted). Contains MACs, IPs, UUIDs. All known devices are registered as persistent clients using MAC identifiers.
+
+Known issue: MAC-based client identifiers don't aggregate in AGH's per-client statistics. Query log resolves clients correctly, but the client settings page shows 0 requests. See [AdguardTeam/AdGuardHome#4649](https://github.com/AdguardTeam/AdGuardHome/issues/4649).
 
 ## Filters
 
 - AdGuard DNS filter
+- AdAway Default Blocklist
+- Smart-TV Blocklist (Perflyst/Dandelion Sprout)
 - Steven Black's List
+- HaGeZi's Pro Blocklist
 
 ## Password
 
@@ -40,6 +61,6 @@ Generated with `mkpasswd -m bcrypt`. Stored as bcrypt hash in the Nix module (sa
 
 ## Gotchas
 
-- `openFirewall` only opens the web UI port (3000), not DNS (53). DNS ports must be opened separately.
+- `openFirewall` only opens the web UI port (3000), not DNS (53) or DHCP (67-68). These ports must be opened separately.
 - Sulaco must use `127.0.0.1` as its nameserver, not the router. Otherwise: DNS loop.
-- Rate limit (`ratelimit`) applies per `/24` subnet. Set to 300 to avoid false blocks when router proxies all LAN traffic through a single IP.
+- Rate limit (`ratelimit`) applies per `/24` subnet. Set to 300 to avoid false blocks from high-traffic devices.
