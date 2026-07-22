@@ -10,7 +10,7 @@
       url = "github:nix-community/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    wttrbar.url = "github:graysonlee123/wttrbar?rev=db32f653ca75efe305b3fdb8de05223d1a013e53";
+    wttrbar.url = "github:graysonlee123/wttrbar?rev=5268867aad69899f016f9c2cc7ecab3f655f4e13";
     sops-nix = {
       url = "github:Mic92/sops-nix?rev=56b24064fdcaedca53553b1a6d607fd23b613a24";
       inputs.nixpkgs.follows = "nixpkgs";

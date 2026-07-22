@@ -401,17 +401,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1779639025,
-        "narHash": "sha256-glvGgrsrYSlt7fAb1IO2PIAXwvZbAKVjHeDv2OlxdQg=",
+        "lastModified": 1784690926,
+        "narHash": "sha256-mLTzx8dzs5mYxxpeAjlY7I2BWPdwuRtaju8i4ikvToo=",
         "owner": "graysonlee123",
         "repo": "wttrbar",
-        "rev": "db32f653ca75efe305b3fdb8de05223d1a013e53",
+        "rev": "5268867aad69899f016f9c2cc7ecab3f655f4e13",
         "type": "github"
       },
       "original": {
         "owner": "graysonlee123",
         "repo": "wttrbar",
-        "rev": "db32f653ca75efe305b3fdb8de05223d1a013e53",
+        "rev": "5268867aad69899f016f9c2cc7ecab3f655f4e13",
         "type": "github"
       }
     }
