@@ -83,6 +83,16 @@ For containers to reach host services (e.g. PostgreSQL on port 5432):
 
 Auth: containers run as root (UID 0) inside, so PostgreSQL peer auth (which matches Unix UID to DB user) won't work. Use password auth (md5/scram-sha-256) for container connections. Store passwords in sops, pass to containers via `environmentFiles` and `sops.templates` to keep secrets out of the nix store (which is world-readable).
 
+To set a database user's password manually:
+
+```shell
+pgcli database
+```
+
+```sql
+ALTER ROLE username WITH PASSWORD 'new_password';
+```
+
 ## Container-to-container networking
 
 To create Docker networks declaratively, use `system.activationScripts`. The example below creates a network named "foo":
