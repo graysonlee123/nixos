@@ -19,7 +19,6 @@ in
     environmentFile = config.sops.templates."caddy.env".path;
     globalConfig = ''
       acme_dns cloudflare {$CLOUDFLARE_ACCESS_TOKEN}
-      admin off
     '';
     email = constants.emails.gmail;
     virtualHosts = {
