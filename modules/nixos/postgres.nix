@@ -16,7 +16,6 @@ in
     ensureDatabases = [
       "vikunja"
       "linkding"
-      "huginn"
     ];
     ensureUsers = [
       {
@@ -25,10 +24,6 @@ in
       }
       {
         name = "linkding";
-        ensureDBOwnership = true;
-      }
-      {
-        name = "huginn";
         ensureDBOwnership = true;
       }
       {
