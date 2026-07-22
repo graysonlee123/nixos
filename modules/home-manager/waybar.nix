@@ -161,7 +161,7 @@ in
               "network#bandwidth"
               "custom/bandwhich-btn"
               "custom/nload-btn"
-              "custom/nmtui-btn"
+              (if isLaptop then "custom/impala-btn" else "custom/nmtui-btn")
             ];
           };
 
@@ -195,6 +195,12 @@ in
             format = "[nload]";
             tooltip = false;
             on-click = mkGhosttyCmd "${pkgs.nload}/bin/nload";
+          };
+
+          "custom/impala-btn" = {
+            format = "[impala]";
+            tooltip = false;
+            on-click = mkGhosttyCmd "${pkgs.impala}/bin/impala";
           };
 
           "custom/nmtui-btn" = {
@@ -345,6 +351,7 @@ in
         #custom-bandwhich-btn,
         #custom-nload-btn,
         #custom-nmtui-btn,
+        #custom-impala-btn,
         #custom-wiremix-btn,
         #custom-pavucontrol-btn,
         #custom-alsamixer-btn,

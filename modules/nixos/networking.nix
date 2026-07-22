@@ -72,8 +72,5 @@ in
         ];
       };
     })
-    (lib.mkIf (cfg.staticIP == null) {
-      networking.networkmanager.enable = true;
-    })
   ];
 }
