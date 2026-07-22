@@ -13,6 +13,7 @@
 | 3001  | TCP      | Uptime Kuma               | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3456  | TCP      | Vikunja                   | \*                      | No              | Firewall blocks                              |
 | 4369  | TCP      | EPMD (Erlang)             | 0.0.0.0                 | No              | From Pinchflat runtime                       |
+| 5050  | TCP      | pgAdmin 4                 | \*                      | No              | Behind Caddy                                 |
 | 5232  | TCP      | Radicale (CalDAV/CardDAV) | 0.0.0.0                 | No              | Behind Caddy                                 |
 | 5432  | TCP      | PostgreSQL                | 127.0.0.1, 172.17.0.1   | docker0 only    | Peer auth (host), password auth (containers) |
 | 7359  | UDP      | Jellyfin (Discovery)      | 0.0.0.0                 | No              | DLNA/client discovery                        |
@@ -56,6 +57,10 @@ Or using `pgcli` as `gray`:
 ```shell
 pgcli vikunja
 ```
+
+### pgAdmin
+
+Web UI at `pgadmin.lab.ggantek.net`. After login, register a server connection (host: `localhost`, user: `gray`, maintenance DB: `postgres`). Saved servers persist per pgAdmin user account. Data lives at `/var/lib/pgadmin`.
 
 - Yes — each oci-containers entry becomes a systemd service (docker-<name>.service) that runs docker run. NixOS manages the lifecycle, not Docker. So docker ps only shows it while the service is active.
 

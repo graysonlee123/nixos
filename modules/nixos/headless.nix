@@ -6,6 +6,7 @@
     ./gameservers.nix
     ./jellyfin.nix
     ./linkding.nix
+    ./pgadmin.nix
     ./pinchflat.nix
     ./postgres.nix
     ./radicale.nix
