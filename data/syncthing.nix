@@ -32,18 +32,29 @@ rec {
       ];
       autoAcceptFolders = true;
     };
+    iphone = {
+      id = "WRRCWDT-PYIB3K3-E2FI3KO-NUXIJ5B-JRRJX6A-N3EQOV7-HCR2KNU-7FSMIAS";
+      addresses = [
+        "tcp://${hosts.grayson-iphone.ips.tailscale}"
+      ];
+    };
   };
   folders = {
-    Syncthing = {
-      id = "syncthing";
+    Personal = {
+      id = "personal";
       devices = builtins.attrNames devices;
       inherit versioning;
     };
-    # Inspry = {
-    #   id = "inspry";
-    #   devices = builtins.attrNames devices;
-    #   inherit versioning;
-    # };
+    Tarn = {
+      id = "tarn";
+      devices = builtins.attrNames devices;
+      inherit versioning;
+    };
+    Inspry = {
+      id = "inspry";
+      devices = (builtins.filter (x: x != "sulaco") (builtins.attrNames devices));
+      inherit versioning;
+    };
   };
   ignorePatterns = ''
     .git

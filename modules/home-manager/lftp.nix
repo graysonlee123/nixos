@@ -1,7 +1,7 @@
 { config, ... }:
 
 let
-  syncthingDir = config.services.syncthing.settings.folders.Syncthing.path;
+  syncthingDir = config.services.syncthing.settings.folders.Personal.path;
 in
 {
   # The benefit of the Syncthing approach is that each change to the high-velocity

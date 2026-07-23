@@ -17,11 +17,22 @@ in
         _: value:
         value
         // {
-          path = "${config.home.homeDirectory}/syncthing";
+          path = "${config.home.homeDirectory}/syncthing/${value.id}";
         }
       ) syncthingData.folders;
     };
   };
 
-  home.file."syncthing/.stignore".text = syncthingData.ignorePatterns;
+  systemd.user.tmpfiles.rules = lib.mapAttrsToList (
+    name: value: "d %h/syncthing/${value.id}/.stfolder 0755"
+  ) syncthingData.folders;
+
+  home.file = (
+    lib.mapAttrs' (
+      name: value:
+      lib.nameValuePair "syncthing/${value.id}/.stignore" {
+        text = syncthingData.ignorePatterns;
+      }
+    ) syncthingData.folders
+  );
 }
