@@ -246,6 +246,20 @@ in
               publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGMdLQjQVk1WVTjynhGc60zRHFbJacAqFI5A274IdxKf ${inspryEmail}";
               user = "p59furxwzjsc";
             };
+            "moosetracks.com" = {
+              enable = !isHeadless;
+              hostName = config.home-manager.users.gray.keys.ssh.bigscoots.hostName;
+              publicKey = config.home-manager.users.gray.keys.ssh.bigscoots.publicKey;
+              user = config.home-manager.users.gray.keys.ssh.bigscoots.user;
+              port = config.home-manager.users.gray.keys.ssh.bigscoots.port;
+            };
+            "staging.moosetracks.com" = {
+              enable = !isHeadless;
+              hostName = config.home-manager.users.gray.keys.ssh.bigscoots.hostName;
+              publicKey = config.home-manager.users.gray.keys.ssh.bigscoots.publicKey;
+              user = config.home-manager.users.gray.keys.ssh.bigscoots.user;
+              port = config.home-manager.users.gray.keys.ssh.bigscoots.port;
+            };
           };
       };
   };
