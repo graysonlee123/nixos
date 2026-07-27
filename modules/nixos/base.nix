@@ -13,6 +13,7 @@
     ./sudo.nix
     ./journald.nix
     ./sops.nix
+    ./gcp.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
