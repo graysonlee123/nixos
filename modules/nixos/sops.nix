@@ -11,7 +11,13 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "${config.users.users.gray.home}/.config/sops/age/keys.txt";
 
-    secrets = lib.mkIf isHeadless {
+    secrets = {
+      "restic/ggantek-archives/password" = {
+        sopsFile = ../../secrets/shared.yaml;
+        owner = if isHeadless then null else "gray";
+      };
+    }
+    // lib.optionalAttrs isHeadless {
       "services/caddy/cloudflare_access_token" = { };
       "services/vikunja/mailer_username" = { };
       "services/vikunja/mailer_password" = { };

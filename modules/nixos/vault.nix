@@ -19,10 +19,6 @@ let
   };
 in
 {
-  sops.secrets."restic/ggantek-archives/password" = {
-    sopsFile = ../../secrets/shared.yaml;
-  };
-
   systemd.tmpfiles.rules = [
     "d /srv/vault 0755 root root -"
   ];
