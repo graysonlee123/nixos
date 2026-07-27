@@ -6,6 +6,7 @@
     ./express-postmark.nix
     ./gameservers.nix
     ./jellyfin.nix
+    ./kavita.nix
     ./linkding.nix
     ./pgadmin.nix
     ./pinchflat.nix
