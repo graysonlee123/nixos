@@ -115,7 +115,7 @@ let
     nerd-fonts.jetbrains-mono
     nethack
     nodejs_24
-    obsidian # TODO: Manage through home-manager?
+    obsidian
     postman
     prismlauncher
     pgadmin4-desktopmode
