@@ -33,3 +33,14 @@ export RESTIC_PASSWORD_FILE=/run/secrets/restic/ggantek-archives/password
 
 restic -r gs:ggan-vault:/ snapshots
 ```
+
+## Permissions
+
+`/srv/vault` is owned by `root:root` with mode `0755` (`rwxr-xr-x`), set via `systemd.tmpfiles.rules` in `vault.nix`.
+
+- **root** can read/write/create anything inside `/srv/vault`
+- **Non-root users** can read and traverse but not write
+- **Subdirectory permissions** are independent -- a subfolder with different ownership/mode is still accessible as long as the user can traverse the parent (guaranteed by the `r-x` on `/srv/vault`)
+- **Backup container** mounts `/srv/vault` as read-only (`:ro`), so even a container compromise can't modify vault data
+- **Other containers** (e.g., Kavita) mount specific subdirectories read-only for access to vault content without write risk
+- **Native services** (e.g., Jellyfin for music) read directly from `/srv/vault` as non-root users, relying on the world-readable permissions
