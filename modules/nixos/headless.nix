@@ -14,6 +14,7 @@
     ./syncthing.nix
     ./teamspeak.nix
     ./uptime-kuma.nix
+    ./vault.nix
     ./vikunja.nix
   ];
 }
