@@ -41,8 +41,8 @@ in
             "sway/mode"
             "sway/window"
           ];
+
           modules-right = [
-            "custom/dictation"
             "custom/music"
             "custom/weather"
             "custom/mullvad"
@@ -329,7 +329,6 @@ in
           padding: 0 5px;
         }
 
-        #custom-dictation,
         #custom-weather,
         #custom-music,
         #window,

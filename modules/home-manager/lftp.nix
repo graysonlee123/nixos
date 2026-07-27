@@ -1,9 +1,11 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   syncthingDir = config.services.syncthing.settings.folders.Personal.path;
 in
 {
+  home.packages = [ pkgs.lftp ];
+
   # The benefit of the Syncthing approach is that each change to the high-velocity
   # bookmarks file doesn't need to be modified and committed in git.
   home.file.".local/share/lftp/bookmarks".source =

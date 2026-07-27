@@ -305,12 +305,6 @@ in
             }
             {
               criteria = {
-                title = "^ATLauncher Console$";
-              };
-              command = "floating enable";
-            }
-            {
-              criteria = {
                 app_id = "^code$";
                 title = "- Chromium$";
               };

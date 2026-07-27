@@ -39,14 +39,12 @@ let
     ../modules/home-manager/contacts.nix
     ../modules/home-manager/cursor.nix
     ../modules/home-manager/ghostty.nix
-    ../modules/home-manager/iamb.nix
     ../modules/home-manager/imv.nix
     ../modules/home-manager/khal.nix
     ../modules/home-manager/khard.nix
     ../modules/home-manager/lftp.nix
     ../modules/home-manager/mako.nix
     ../modules/home-manager/mullvad-waybar.nix
-    ../modules/home-manager/nerd-dictation.nix
     ../modules/home-manager/radioboat.nix
     ../modules/home-manager/screenshots.nix
     ../modules/home-manager/sway.nix
@@ -72,12 +70,10 @@ let
     gh
     git-crypt
     glow
-    httpie
     httpie-desktop
     imagemagick
     jq
     nixfmt
-    neofetch
     nixd
     pwgen
     rclone
@@ -86,7 +82,6 @@ let
     trash-cli
     tree
     trufflehog
-    tuir
     unzip
     yt-dlp
     zip
@@ -94,11 +89,6 @@ let
   headlessPackages = with pkgs; [ ];
   headedPackages = with pkgs; [
     _2048-in-terminal
-    (atlauncher.overrideAttrs (old: {
-      postInstall = (old.postInstall or "") + ''
-        wrapProgram $out/bin/atlauncher --set _JAVA_AWT_WM_NONREPARENTING 1
-      '';
-    }))
     alsa-utils
     asciiquarium
     bibata-cursors
@@ -106,9 +96,7 @@ let
     jdk25
     filezilla
     grim
-    heynote
     jetbrains.phpstorm
-    lftp
     libnotify
     mullvad
     mycli
@@ -116,7 +104,6 @@ let
     nethack
     nodejs_24
     obsidian
-    postman
     prismlauncher
     pgadmin4-desktopmode
     (php82.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug ]))
@@ -127,8 +114,6 @@ let
     python3
     qalculate-gtk
     r2modman
-    radioboat
-    regex-tui
     scc
     serie
     slurp

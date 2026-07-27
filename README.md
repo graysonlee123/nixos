@@ -9,7 +9,7 @@ This repository contains my declarative NixOS system configuration, including:
 - **Window Manager**: Sway (Wayland compositor)
 - **Terminal**: Ghostty with JetBrains Mono
 - **Shell**: Zsh with Starship prompt
-- **Display Manager**: ly (Corbelan), greetd with tuigreet (Nostromo)
+- **Display Manager**: greetd with tuigreet
 - **Development**: Docker, Git, Go, Node.js, various IDEs
 
 ## Repository Structure
@@ -68,12 +68,14 @@ nix.settings.experimental-features = [ "nix-command" "flakes" ];
 ### Initial Setup
 
 1. Clone this repository:
+
    ```bash
    git clone https://github.com/graysonlee123/nixos
    cd nixos
    ```
 
 2. Build and activate the configuration:
+
    ```bash
    # For current host (auto-detected)
    sudo nixos-rebuild switch --flake .
@@ -94,25 +96,26 @@ sudo tailscale up --auth-key=KEY
 ## System Configuration Highlights
 
 ### System Packages
+
 - curl, inxi
 - ClamAV (antivirus)
 - Fonts: Agave Nerd Font, Lora, Work Sans (via Stylix)
 
 ### User Packages (via Home Manager)
-- **Productivity**: 1Password, Obsidian, Discord, Heynote
+
+- **Productivity**: 1Password, Obsidian, Discord
 - **Development**: Claude Code, VS Code, PhpStorm, Docker, Git
 - **Languages**: Go (with gopls), Node.js 24, PHP 8.2 (with Composer)
 - **Browsers**: Chromium (with WideVine)
 - **File Management**: FileZilla, Yazi
-- **System Monitoring**: btop, dust, dive, neofetch
+- **System Monitoring**: btop, dust, dive
 - **Database Tools**: pgcli, mycli, pgadmin4 (desktop mode)
 - **Git Tools**: lazygit, git-crypt
 - **Docker Tools**: lazydocker
 - **Terminal Tools**: vim, fzf, ripgrep, tealdeer, zoxide
 - **Utilities**: wl-clipboard, wp-cli, rclone, restic, satty (screenshots)
-- **Communication**: iamb (Matrix client)
 - **Media**: vlc, wf-recorder
-- **Entertainment**: 2048-in-terminal, asciiquarium, crawl, nethack, tuir
+- **Entertainment**: 2048-in-terminal, asciiquarium, crawl, nethack
 - **Other**: tree, zip/unzip, jq, nixfmt, dig, speedtest-cli, pnpm
 
 ### Audio
@@ -132,11 +135,13 @@ clamscan -r --bell -i /home/gray
 See [docs/syncthing.md](docs/syncthing.md).
 
 ### Services
+
 - OpenSSH daemon
 - Docker daemon
 - NetworkManager
 
 ### Sway Configuration
+
 - **Modifier**: Super/Windows key (Mod4)
 - **Terminal**: Ghostty
 - **App Launcher**: Vicinae (Mod+d)
@@ -144,6 +149,7 @@ See [docs/syncthing.md](docs/syncthing.md).
 - Custom keybindings for window management and workspaces
 
 ### Terminal Setup
+
 - **Font**: JetBrains Mono Nerd Font
 - **Theme**: Rose Pine Moon
 - **Shell**: Zsh with Starship prompt
@@ -153,6 +159,7 @@ See [docs/syncthing.md](docs/syncthing.md).
 See [docs/git.md](docs/git.md).
 
 ### Zoxide - Smart Directory Navigation
+
 Zoxide tracks your most used directories and lets you jump to them quickly:
 
 - `z <pattern>` - Jump to the highest-ranked directory matching the pattern
@@ -217,18 +224,6 @@ nix format
 
 - `Print`: Screenshot with grim, satty and slurp
 - `Super + Print`: Open screen recording menu (region/fullscreen, with/without audio) via Vicinae. If a recording is already in progress, stops it immediately.
-
-## Voice Dictation
-
-Push-to-talk dictation using whisper-cpp. Press `Super+M` to start recording, press again to stop, transcribe, and type the result into the focused window. Uses PipeWire's default audio source.
-
-A waybar indicator shows `󰍬 REC` (red) while recording and `󰓆 ...` (yellow) while transcribing.
-
-**Setup:** download a whisper model and place it at `~/.local/share/whisper/model.bin`:
-```bash
-whisper-cpp-download-ggml-model base.en
-mv ggml-base.en.bin ~/.local/share/whisper/model.bin
-```
 
 ## Gaming
 

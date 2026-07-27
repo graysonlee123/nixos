@@ -2,7 +2,7 @@
 
 ## Minecraft (via Prism Launcher)
 
-Prism Launcher is installed via nixpkgs and has much better overall compatibility than ATLauncher.
+Prism Launcher is installed via nixpkgs.
 
 ### Streaming audio via Vesktop
 
