@@ -8,17 +8,12 @@
 
 {
   config = {
-    home.file.".claude/statusline.sh" = {
-      source = ../../scripts/claude-statusline.sh;
-      executable = true;
-    };
-
     programs.claude-code = {
       enable = true;
       package = pkgs-unstable.claude-code;
       settings = {
         includeCoAuthoredBy = false;
-        model = "claude-opus-4-6";
+        model = "claude-opus-4-8";
         effortLevel = "high";
         extraKnownMarketplaces = {
           caveman = {
