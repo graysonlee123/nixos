@@ -1,4 +1,4 @@
-{ pkgs, wttrbar, ... }:
+{ wttrbar, ... }:
 
 {
   programs.waybar.settings.mainBar."custom/weather" = {
