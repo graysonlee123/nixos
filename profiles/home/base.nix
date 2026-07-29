@@ -27,7 +27,6 @@
 
   home.packages = with pkgs; [
     bandwhich
-    nload
     bat
     dig
     dive
@@ -40,8 +39,9 @@
     httpie-desktop
     imagemagick
     jq
-    nixfmt
     nixd
+    nixfmt
+    nload
     pwgen
     rclone
     restic

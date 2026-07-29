@@ -34,9 +34,9 @@
     asciiquarium
     bibata-cursors
     crawl
-    jdk25
     filezilla
     grim
+    jdk25
     jetbrains.phpstorm
     libnotify
     mullvad
@@ -45,13 +45,13 @@
     nethack
     nodejs_24
     obsidian
-    prismlauncher
+    pavucontrol
     pgadmin4-desktopmode
     (php82.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug ]))
     php82Packages.composer
-    pavucontrol
     playerctl
     pnpm
+    prismlauncher
     python3
     qalculate-gtk
     r2modman
@@ -66,10 +66,10 @@
     }))
     typescript-language-server
     vlc
-    wf-recorder
     waylyrics
-    wl-clipboard
+    wf-recorder
     wiremix
+    wl-clipboard
     (wp-cli.override {
       php = php82;
       phpIniFile = writeText "php.ini" (builtins.readFile "${php82}/etc/php.ini");
