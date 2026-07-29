@@ -26,9 +26,6 @@ in
           text-alignment = "left";
           width = 256;
         };
-        "desktop-entry=\"com.mitchellh.ghostty\"" = {
-          default-timeout = timeout;
-        };
         "app-name=\"satty\"" = {
           default-timeout = timeout;
         };
