@@ -1,8 +1,10 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  constants,
+  ...
+}:
 
-let
-  constants = import ../../../data/constants.nix;
-in
 {
   services.postgresql = {
     enable = true;

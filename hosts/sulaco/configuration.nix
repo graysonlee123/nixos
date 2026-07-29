@@ -1,7 +1,6 @@
-{ lib, ... }:
+{ lib, hosts, ... }:
 
 let
-  hosts = import ../../data/hosts.nix;
   radicaleCollections = import ../../data/radicale-collections.nix;
 in
 {

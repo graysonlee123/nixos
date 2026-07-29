@@ -2,14 +2,14 @@
   config,
   lib,
   isHeadless,
+  constants,
+  hosts,
   ...
 }:
 
 let
   cfg = config.gray;
   types = lib.types;
-  constants = import ../data/constants.nix;
-  hosts = import ../data/hosts.nix;
 in
 {
   options.gray = {

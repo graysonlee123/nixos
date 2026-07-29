@@ -2,12 +2,12 @@
   lib,
   config,
   isHeadless,
+  constants,
   ...
 }:
 
 let
   cfg = config.host;
-  constants = import ../../../data/constants.nix;
 in
 {
   options.host = {

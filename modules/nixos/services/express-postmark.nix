@@ -1,8 +1,12 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  constants,
+  ...
+}:
 
 let
   secret = "services/express_postmark/postmark_api_token";
-  constants = import ../../../data/constants.nix;
   network = "express-postmark";
 in
 {

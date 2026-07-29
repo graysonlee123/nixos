@@ -1,8 +1,5 @@
-{ config, ... }:
+{ config, constants, ... }:
 
-let
-  constants = import ../../../data/constants.nix;
-in
 {
   services.pgadmin = {
     enable = true;

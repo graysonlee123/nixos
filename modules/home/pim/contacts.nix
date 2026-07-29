@@ -1,7 +1,11 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  constants,
+  ...
+}:
 
 let
-  constants = import ../../../data/constants.nix;
   radicaleCollections = import ../../../data/radicale-collections.nix;
 in
 {

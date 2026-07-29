@@ -1,8 +1,10 @@
-{ lib, isHeadless, ... }:
+{
+  lib,
+  isHeadless,
+  constants,
+  ...
+}:
 
-let
-  constants = import ../../../data/constants.nix;
-in
 {
   config = {
     programs.git = {

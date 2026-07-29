@@ -32,6 +32,8 @@
         inherit system;
         config.allowUnfree = true;
       };
+      constants = import ./data/constants.nix;
+      hosts = import ./data/hosts.nix;
       mkHost =
         {
           hostname,
@@ -41,7 +43,12 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit isLaptop isHeadless;
+            inherit
+              isLaptop
+              isHeadless
+              constants
+              hosts
+              ;
           };
           modules = [
             ./hosts/${hostname}/configuration.nix
@@ -50,7 +57,13 @@
             sops-nix.nixosModules.sops
             {
               home-manager.extraSpecialArgs = {
-                inherit pkgs-unstable isLaptop isHeadless;
+                inherit
+                  pkgs-unstable
+                  isLaptop
+                  isHeadless
+                  constants
+                  hosts
+                  ;
               }
               // nixpkgs.lib.optionalAttrs (!isHeadless) {
                 wttrbar = wttrbar.packages.x86_64-linux.default;

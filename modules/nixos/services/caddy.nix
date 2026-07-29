@@ -1,11 +1,11 @@
 {
   config,
   pkgs,
+  constants,
   ...
 }:
 
 let
-  constants = import ../../../data/constants.nix;
   fileserverPath = "/srv/caddy/fileserver";
 in
 {

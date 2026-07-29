@@ -1,9 +1,12 @@
-{ lib, ... }:
+{
+  lib,
+  constants,
+  hosts,
+  ...
+}:
 
 let
   dnsPort = 53;
-  constants = import ../../../data/constants.nix;
-  hosts = import ../../../data/hosts.nix;
   mkClient =
     {
       name,
