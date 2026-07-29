@@ -12,9 +12,25 @@
       enable = true;
       package = pkgs-unstable.claude-code;
       settings = {
-        includeCoAuthoredBy = false;
-        model = "claude-opus-4-8";
+        autoCompactEnabled = false;
+        autoMemoryEnabled = false;
+        awaySummaryEnabled = false;
+        cleanupPeriodDays = 30;
+        defaultShell = "bash";
+        disableArtifact = true;
+        disableBundledSkills = true;
+        disableClaudeAiConnectors = true;
+        disableMobileSimulatorTools = true;
+        disableRemoteControl = true;
+        disableWorkflows = true;
         effortLevel = "high";
+        emojiCompletionEnabled = false;
+        enabledPlugins = {
+          "caveman@caveman" = true;
+        }
+        // lib.optionalAttrs (!isHeadless) {
+          "gopls-lsp@claude-plugins-official" = true;
+        };
         extraKnownMarketplaces = {
           caveman = {
             source = {
@@ -23,17 +39,11 @@
             };
           };
         };
-        enabledPlugins = {
-          "caveman@caveman" = true;
-        }
-        // lib.optionalAttrs (!isHeadless) {
-          "gopls-lsp@claude-plugins-official" = true;
-        };
-        cleanupPeriodDays = 30;
-        statusLine = {
-          type = "command";
-          command = "~/.claude/statusline.sh";
-        };
+        feedbackSurveyRate = 0;
+        fileCheckpointingEnabled = false;
+        includeCoAuthoredBy = false;
+        inputNeededNotifEnabled = false;
+        model = "claude-opus-4-8";
         permissions = {
           allow = [
             # Bash
@@ -105,6 +115,16 @@
             "mcp__jetbrains__rename_refactoring"
             "mcp__jetbrains__search_in_files_by_text"
           ];
+        };
+        spinnerTipsEnabled = false;
+        statusLine = {
+          type = "command";
+          command = "~/.claude/statusline.sh";
+        };
+        tui = "fullscreen";
+        voice = {
+          enabled = true;
+          mode = "hold";
         };
       };
       memory.text = ''
