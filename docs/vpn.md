@@ -6,7 +6,7 @@ VPN connections use OpenVPN with `.ovpn` config files downloaded from the NordVP
 
 **Components:**
 
-- **`openvpn`** (`modules/nixos/system-packages.nix`) — OpenVPN client
+- **`openvpn`** (`profiles/base.nix`) — OpenVPN client
 - **`/etc/openvpn/us11617.nordvpn.com.tcp.ovpn`** — dedicated IP config (TCP, not in repo, contains secrets)
 - **`/etc/openvpn/nordvpn-auth.txt`** — service credentials (not in repo); format: username on line 1, password on line 2
 
@@ -31,7 +31,7 @@ sudo openvpn --config /etc/openvpn/us11617.nordvpn.com.tcp.ovpn
 
 ## Mullvad VPN
 
-Mullvad is managed via `services.mullvad-vpn` (system daemon) and includes a custom Waybar module (`modules/home-manager/mullvad-waybar.nix`).
+Mullvad is managed via `services.mullvad-vpn` (system daemon) and includes a custom Waybar module (`modules/home/desktop/mullvad-waybar.nix`).
 
 **Waybar module behavior:**
 

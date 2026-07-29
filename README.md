@@ -18,24 +18,44 @@ This repository contains my declarative NixOS system configuration, including:
 <project-root>/
 ├── flake.nix                       # Flake configuration
 ├── flake.lock                      # Flake lock file
-├── assets/
-│   └── images/                     # Wallpapers and images
-├── hosts/
-│   ├── corbelan/                   # Laptop configuration
-│   │   ├── configuration.nix
-│   │   └── hardware-configuration.nix
-│   └── nostromo/                   # Desktop configuration
-│       ├── configuration.nix
-│       └── hardware-configuration.nix
-├── lib/                            # Shared utility functions and data
-├── modules/
-│   ├── nixos/                      # System-level modules (boot, services, drivers, devices)
-│   └── home-manager/               # User-level modules (programs, configs)
-├── users/
-│   └── gray.nix                    # User NixOS module
+├── assets/images/                  # Wallpapers and images
+├── data/                           # Shared data (hosts, constants, collections)
 ├── docs/                           # Extended documentation
-└── scripts/                        # Helper scripts
+├── hosts/                          # Per-host configs (configuration + hardware)
+│   ├── corbelan/                   # Laptop (headed)
+│   ├── nostromo/                   # Desktop (headed)
+│   └── sulaco/                     # Server (headless)
+├── lib/                            # Shared utility functions
+├── modules/
+│   ├── nixos/                      # System modules, grouped by category
+│   │   ├── core/                   # boot, users, sudo, docker, xdg, greeter...
+│   │   ├── system/                 # sops, gcp
+│   │   ├── theme/                  # stylix
+│   │   ├── network/                # networking, openssh, tailscale, mullvad
+│   │   ├── hardware/               # gpu, bluetooth, fingerprint, audio...
+│   │   ├── security/               # 1password, clamav, keyring
+│   │   ├── desktop/                # sway
+│   │   ├── gaming/                 # steam, gamemode
+│   │   └── services/               # headless services (jellyfin, caddy...)
+│   └── home/                       # Home Manager modules, grouped by category
+│       ├── cli/                    # terminal tools (zsh, yazi, lftp...)
+│       ├── dev/                    # git, go, editors
+│       ├── desktop/                # sway, waybar, mako, cursor...
+│       ├── apps/                   # GUI apps (chromium, vesktop)
+│       ├── pim/                    # calendars, contacts
+│       └── system/                 # env vars, sops, ssh, xdg, syncthing
+├── profiles/                       # Aggregators selecting module sets per host
+│   ├── base.nix                    # shared by every host
+│   ├── headed.nix                  # desktop hosts (imports base)
+│   ├── headless.nix                # servers (imports base)
+│   └── home/                       # matching Home Manager profiles
+├── secrets/                        # sops-encrypted secrets
+├── claude/                         # Claude Code skills
+└── users/
+    └── gray.nix                    # User module (HM wiring + SSH keys)
 ```
+
+Hosts import a single profile (`headed`/`headless`), which pulls in `base` plus its category modules; host-specific hardware is imported directly by each host.
 
 This configuration uses flakes, so you can rebuild directly from the repository without symlinks:
 

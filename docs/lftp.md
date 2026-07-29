@@ -1,6 +1,6 @@
 # lftp Configuration
 
-Configured in `modules/home-manager/lftp.nix`.
+Configured in `modules/home/cli/lftp.nix`.
 
 ## Bookmarks
 

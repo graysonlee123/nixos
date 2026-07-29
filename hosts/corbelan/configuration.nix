@@ -6,10 +6,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/base.nix
-    ../../modules/nixos/headed.nix
-    ../../modules/nixos/fingerprint.nix
-    ../../modules/nixos/auto-cpufreq.nix
+    ../../profiles/headed.nix
+    ../../modules/nixos/hardware/fingerprint.nix
+    ../../modules/nixos/hardware/auto-cpufreq.nix
     ../../users/gray.nix
   ];
 

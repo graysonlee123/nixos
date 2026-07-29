@@ -21,4 +21,4 @@ Restart Vesktop.
 
 ## Prevention
 
-`checkUpdates = false` in `modules/home-manager/vesktop.nix` disables update notifications so the prompt doesn't appear.
+`checkUpdates = false` in `modules/home/apps/vesktop.nix` disables update notifications so the prompt doesn't appear.

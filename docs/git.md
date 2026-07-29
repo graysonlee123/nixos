@@ -11,11 +11,11 @@ The configuration handles multiple GitHub accounts (personal + work) using SSH c
 
 **How it works:**
 
-1. **SSH Config** (`modules/home-manager/ssh.nix`):
+1. **SSH Config** (`modules/home/system/ssh.nix`):
    - `github.com` → personal key (`~/.ssh/github`)
    - `inspry.github.com` → work key (`~/.ssh/github-inspry`)
 
-2. **Git URL Rewriting** (`modules/home-manager/git.nix`):
+2. **Git URL Rewriting** (`modules/home/dev/git.nix`):
    - In `~/repos/inspry/`: Git auto-rewrites `git@github.com:inspry/` → `git@inspry.github.com:inspry/`
    - SSH config then routes to work key
 

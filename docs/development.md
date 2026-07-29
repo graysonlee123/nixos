@@ -28,7 +28,7 @@ Add `phpcs.xml` to a project root to avoid repeating `--standard=WordPress` and 
 
 ## XDG MIME Defaults
 
-Default applications are configured in `modules/home-manager/xdg.nix` via `xdg.mimeApps.defaultApplications`. Note that XDG MIME wildcards (e.g. `video/*`) don't work in `mimeapps.list` — each MIME type must be listed explicitly.
+Default applications are configured in `modules/home/system/xdg.nix` via `xdg.mimeApps.defaultApplications`. Note that XDG MIME wildcards (e.g. `video/*`) don't work in `mimeapps.list` — each MIME type must be listed explicitly.
 
 However, many associations happen automatically without explicit configuration. Apps like VLC declare supported MIME types in their `.desktop` files, which get indexed into `mimeinfo.cache`. The XDG lookup chain is:
 
@@ -39,7 +39,7 @@ So explicit entries in xdg.nix are only needed when you want to *override* what 
 
 ### XDG Desktop Portals
 
-XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled access to system resources on Wayland. Configured in `modules/nixos/xdg.nix` using `xdg-desktop-portal-wlr` for Sway. Enables:
+XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled access to system resources on Wayland. Configured in `modules/nixos/core/xdg.nix` using `xdg-desktop-portal-wlr` for Sway. Enables:
 
 - File picker dialogs in browsers and apps
 - Screen sharing/recording in web apps

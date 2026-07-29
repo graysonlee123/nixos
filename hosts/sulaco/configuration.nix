@@ -7,8 +7,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/base.nix
-    ../../modules/nixos/headless.nix
+    ../../profiles/headless.nix
     ../../users/gray.nix
   ];
 

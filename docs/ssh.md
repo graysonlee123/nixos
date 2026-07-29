@@ -1,10 +1,10 @@
 # SSH Configuration
 
-User SSH Configuration file (`~/.ssh/config`) is managed by `modules/home-manager/ssh.nix`.
+User SSH Configuration file (`~/.ssh/config`) is managed by `modules/home/system/ssh.nix`.
 
 - Each entry in `users/gray.nix` requires a private key defined in `secrets/headed.yaml` under `ssh/keys/<entry_name>`.
 - Public keys are not sensitive and therefore defined inline.
-- Private keys are decrypted by sops-nix at activation and placed into `~/.ssh/` (see `modules/home-manager/sops.nix`).
+- Private keys are decrypted by sops-nix at activation and placed into `~/.ssh/` (see `modules/home/system/sops.nix`).
 
 ## Host blocks
 

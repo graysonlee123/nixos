@@ -6,7 +6,7 @@
 - **Graphics**: Integrated AMD (Radeon)
 - **Brightness Control**: brightnessctl package for managing screen brightness
 - **Font Size**: Smaller font size for teeny Hi-DPI laptop display
-- **Fingerprint Reader**: Enabled via fprintd (`modules/nixos/fingerprint.nix`). Works for sudo, TTY login, and the ly greeter.
+- **Fingerprint Reader**: Enabled via fprintd (`modules/nixos/hardware/fingerprint.nix`). Works for sudo, TTY login, and the ly greeter.
 
 **Fingerprint enrollment** (first-time setup or re-enrollment):
 ```bash
@@ -20,7 +20,7 @@ sudo fprintd-verify $USER
 
 ### Power Management
 
-`auto-cpufreq` manages CPU frequency scaling across AC/battery transitions and post-sleep resume events. Configured via `modules/nixos/auto-cpufreq.nix`:
+`auto-cpufreq` manages CPU frequency scaling across AC/battery transitions and post-sleep resume events. Configured via `modules/nixos/hardware/auto-cpufreq.nix`:
 
 - **Charger**: `performance` governor, `performance` EPP
 - **Battery**: `powersave` governor, `balance_power` EPP

@@ -27,8 +27,8 @@ All three devices use staggered file versioning (30-day retention, hourly cleanu
 ## Configuration
 
 - Shared device/folder/ignore data: `data/syncthing.nix`
-- Corbelan/Nostromo: `modules/home-manager/syncthing.nix`
-- Sulaco: `modules/nixos/syncthing.nix` (NixOS-level service, GUI auth via sops)
+- Corbelan/Nostromo: `modules/home/system/syncthing.nix`
+- Sulaco: `modules/nixos/services/syncthing.nix` (NixOS-level service, GUI auth via sops)
 - GUI: accessible at `http://localhost:8384` on each device
 - Sulaco GUI: also accessible at `https://syncthing.lab.ggantek.net`
 - Caddy reverse proxy requires `header_up Host localhost:8384` to avoid Syncthing's "Host check error" ([docs](https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api))

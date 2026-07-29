@@ -24,12 +24,12 @@ Radicale runs on Sulaco and stores collections as flat files. vdirsyncer keeps l
 
 | Component   | Config Location                       |
 | ----------- | ------------------------------------- |
-| Radicale    | `modules/nixos/radicale.nix`          |
-| vdirsyncer  | `modules/home-manager/vdirsyncer.nix` |
-| khal        | `modules/home-manager/khal.nix`       |
-| khard       | `modules/home-manager/khard.nix`      |
-| Calendars   | `modules/home-manager/calendar.nix`   |
-| Contacts    | `modules/home-manager/contacts.nix`   |
+| Radicale    | `modules/nixos/services/radicale.nix` |
+| vdirsyncer  | `modules/home/pim/vdirsyncer.nix`     |
+| khal        | `modules/home/pim/khal.nix`           |
+| khard       | `modules/home/pim/khard.nix`          |
+| Calendars   | `modules/home/pim/calendar.nix`       |
+| Contacts    | `modules/home/pim/contacts.nix`       |
 | Collections | `data/radicale-collections.nix`       |
 
 Collections are defined once in `data/radicale-collections.nix` and consumed by both the server (Radicale) and client (vdirsyncer/khal/khard) modules.

@@ -1,6 +1,6 @@
 # Audio
 
-PipeWire with ALSA and PulseAudio compatibility layers (`modules/nixos/audio.nix`):
+PipeWire with ALSA and PulseAudio compatibility layers (`modules/nixos/hardware/audio.nix`):
 
 - **PipeWire**: The primary audio server, replacing the older PulseAudio and JACK servers. Handles routing audio between apps and hardware devices.
 - **ALSA compat** (`alsa.enable`): Exposes a virtual ALSA device backed by PipeWire, so apps that use ALSA directly (instead of PulseAudio) still work.

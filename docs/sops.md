@@ -6,7 +6,7 @@ Encrypts secrets with age public keys, commits encrypted files to git, decrypts 
 
 1. **Age keypair** -- `age-keygen -o ~/.config/sops/age/keys.txt`. Private key stays on machine, never committed. Public key goes in `.sops.yaml`.
 2. **`.sops.yaml`** -- Defines which age public keys to encrypt with. Multiple keys = multiple machines can decrypt same file. See repo root.
-3. **NixOS module** (`modules/nixos/sops.nix`) -- Declares which secrets to decrypt at boot. Each entry becomes a file under `/run/secrets/` (root:root 0400 by default).
+3. **NixOS module** (`modules/nixos/system/sops.nix`) -- Declares which secrets to decrypt at boot. Each entry becomes a file under `/run/secrets/` (root:root 0400 by default).
 
 ## Operations
 

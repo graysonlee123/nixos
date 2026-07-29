@@ -5,10 +5,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/base.nix
-    ../../modules/nixos/headed.nix
-    ../../modules/nixos/nvidia.nix
-    ../../modules/nixos/galaxy70.nix
+    ../../profiles/headed.nix
+    ../../modules/nixos/hardware/nvidia.nix
+    ../../modules/nixos/hardware/galaxy70.nix
     ../../users/gray.nix
   ];
 

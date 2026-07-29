@@ -1,0 +1,22 @@
+{
+  imports = [
+    ./base.nix
+    ../modules/nixos/services/adguardhome.nix
+    ../modules/nixos/services/caddy.nix
+    ../modules/nixos/services/deeptutor.nix
+    ../modules/nixos/services/express-postmark.nix
+    ../modules/nixos/services/gameservers.nix
+    ../modules/nixos/services/jellyfin.nix
+    ../modules/nixos/services/kavita.nix
+    ../modules/nixos/services/linkding.nix
+    ../modules/nixos/services/pgadmin.nix
+    ../modules/nixos/services/pinchflat.nix
+    ../modules/nixos/services/postgres.nix
+    ../modules/nixos/services/radicale.nix
+    ../modules/nixos/services/syncthing.nix
+    ../modules/nixos/services/teamspeak.nix
+    ../modules/nixos/services/uptime-kuma.nix
+    ../modules/nixos/services/vault.nix
+    ../modules/nixos/services/vikunja.nix
+  ];
+}
