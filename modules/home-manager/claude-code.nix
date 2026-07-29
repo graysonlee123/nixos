@@ -117,10 +117,6 @@
           ];
         };
         spinnerTipsEnabled = false;
-        statusLine = {
-          type = "command";
-          command = "~/.claude/statusline.sh";
-        };
         tui = "fullscreen";
         voice = {
           enabled = true;
