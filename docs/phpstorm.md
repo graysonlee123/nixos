@@ -1,5 +1,21 @@
 # PhpStorm
 
+## Syncing deployment/SSH/web-server configs across machines
+
+Deployment servers, SSH, and web servers are per-project (`.idea/`) because "Visible only for this project" is checked. Uncheck it → they move to IDE level (`options/{webServers,sshConfigs}.xml`) and **Settings Sync** (JBA account, already on) replicates them to the other machine.
+
+- These three files hold **no secrets**: SSH auth rides `~/.ssh/config` + agent. (`workspace.xml`/DB `dataSources` can hold secrets — never sync those.)
+- Staging hosts/roots are host-assigned, not derivable from the domain, so they must be stored, not generated.
+
+**Fix** — two levels, both must be made global:
+
+1. Settings → Build, Execution, Deployment → **Deployment** → uncheck "Visible only for this project" per server.
+2. Settings → Tools → **SSH Configurations** → uncheck "Visible only for this project" per config.
+
+Leave both unchecked for new ones. Ensure Settings Sync includes the **Tools** category.
+
+Stays per-project: `deployment.xml` (default server + `/`↔`$PROJECT_DIR$` mapping) — pick the now-global server once per project on machine 2. Trade-off: one global server dropdown for all sites.
+
 ## Search Everywhere (Shift+Shift) popup opens off-screen on Sway
 
 ### Symptom
