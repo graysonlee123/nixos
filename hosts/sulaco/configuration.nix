@@ -19,37 +19,13 @@ in
   services.gameservers =
     let
       players = import ../../data/minecraft-players.nix;
-      playerNames = map (p: p.name) players;
     in
     {
       pumpkin.survival = {
         enable = true;
-        port = 25566;
+        port = 25565;
         whitelist = players;
         ops = builtins.filter (p: p.name == "pizzaThis") players;
-      };
-      minecraft.middle-earth = {
-        enable = true;
-        version = "1.21.8";
-        type = "fabric";
-        seed = "middle-earth";
-        icon = "https://cdn.modrinth.com/data/aT3Teaxa/e164de405371a39ab34cd26f8a798131ba6bf4c1.gif";
-        whitelist = playerNames;
-        memory = "4G";
-        modrinth = {
-          projects = [
-            "fabric-api"
-            "middle-earth:beta"
-            "seven-stars-api:beta"
-            "of-beasts-and-wild-things:beta"
-            "xaeros-minimap"
-            "xaeros-world-map"
-            "jade"
-            "distanthorizons:beta"
-            "rei"
-            "appleskin"
-          ];
-        };
       };
     };
 
