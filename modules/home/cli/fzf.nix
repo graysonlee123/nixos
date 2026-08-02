@@ -1,6 +1,4 @@
 {
-  config = {
-    programs.fzf.enable = true;
-    programs.fzf.enableZshIntegration = true;
-  };
+  programs.fzf.enable = true;
+  programs.fzf.enableZshIntegration = true;
 }

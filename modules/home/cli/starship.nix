@@ -1,12 +1,10 @@
 {
-  config = {
-    programs.starship = {
-      enable = true;
-      enableZshIntegration = true;
-      settings = {
-        gcloud = {
-          disabled = true;
-        };
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      gcloud = {
+        disabled = true;
       };
     };
   };

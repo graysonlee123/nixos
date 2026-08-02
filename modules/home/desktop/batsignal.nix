@@ -1,10 +1,8 @@
 { isLaptop, ... }:
 
 {
-  config = {
-    services.batsignal = {
-      enable = isLaptop;
-      extraArgs = [ ];
-    };
+  services.batsignal = {
+    enable = isLaptop;
+    extraArgs = [ ];
   };
 }
