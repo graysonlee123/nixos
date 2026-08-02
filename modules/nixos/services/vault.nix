@@ -29,10 +29,12 @@ in
       hostname = "vault-backup";
       volumes = volumes ++ [
         "/srv/vault:/data:ro"
+        "/var/lib/syncthing/tarn:/tarn:ro"
       ];
       environment = baseEnvironment // {
         BACKUP_CRON = "0 0 6 * * *";
-        RESTIC_BACKUP_SOURCES = "/data";
+        RESTIC_BACKUP_SOURCES = "/data /tarn";
+        RESTIC_BACKUP_ARGS = "--exclude /tarn/.stversions --exclude /tarn/.stfolder";
         RESTIC_RETRY_LOCK = "5m";
         RESTIC_FORGET_ARGS = "--keep-daily 7 --keep-weekly 8 --keep-monthly 24";
         POST_COMMANDS_SUCCESS = ''curl -X POST -H 'Content-Type: application/json' -d '{"subject": "Vault backed up successfully", "html": "The vault was backed up successfully.", "text": "The vault was backed up successfully."}' http://express-postmark:3000'';

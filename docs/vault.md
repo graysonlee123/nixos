@@ -4,6 +4,8 @@ All data requiring backup lives in the "vault." Backups are stored as a Restic r
 
 Data lives at `/srv/vault` (owned by `root:root`, world-readable). The restic repo password is managed by sops-nix at `restic/ggantek-archives/password` in `secrets/shared.yaml`.
 
+The Obsidian vault (`/var/lib/syncthing/tarn`) is also mounted read-only (`/tarn`) into `vault-backup` and included as a backup source. Syncthing's `.stversions`/`.stfolder` are excluded. Both paths land in a single daily snapshot, so retention applies to both.
+
 ## Containers
 
 Three `mazzolino/restic` containers handle automated maintenance:
