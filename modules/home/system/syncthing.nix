@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 
 let
   syncthingData = import ../../../data/syncthing.nix;

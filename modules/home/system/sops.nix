@@ -1,8 +1,4 @@
-{
-  config,
-  isHeadless,
-  ...
-}:
+{ config, isHeadless, ... }:
 
 {
   sops = {

@@ -1,4 +1,5 @@
 { isLaptop, ... }:
+
 {
   config = {
     services.batsignal = {
