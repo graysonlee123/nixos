@@ -28,12 +28,12 @@ in
       inherit image networks;
       hostname = "vault-backup";
       volumes = volumes ++ [
-        "/srv/vault:/data:ro"
+        "/srv/vault/data:/vault:ro"
         "/var/lib/syncthing/tarn:/tarn:ro"
       ];
       environment = baseEnvironment // {
         BACKUP_CRON = "0 0 6 * * *";
-        RESTIC_BACKUP_SOURCES = "/data /tarn";
+        RESTIC_BACKUP_SOURCES = "/vault /tarn";
         RESTIC_BACKUP_ARGS = "--exclude /tarn/.stversions --exclude /tarn/.stfolder";
         RESTIC_RETRY_LOCK = "5m";
         RESTIC_FORGET_ARGS = "--keep-daily 7 --keep-weekly 8 --keep-monthly 24";
