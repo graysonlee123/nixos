@@ -11,7 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wttrbar.url = "github:graysonlee123/wttrbar?rev=5268867aad69899f016f9c2cc7ecab3f655f4e13";
-    pumpkin.url = "git+https://github.com/Pumpkin-MC/Pumpkin?submodules=1";
     sops-nix = {
       url = "github:Mic92/sops-nix?rev=56b24064fdcaedca53553b1a6d607fd23b613a24";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,13 +52,6 @@
           };
           modules = [
             ./hosts/${hostname}/configuration.nix
-            {
-              nixpkgs.overlays = [
-                (_final: _prev: {
-                  pumpkin-server = inputs.pumpkin.packages.${system}.default;
-                })
-              ];
-            }
             stylix.nixosModules.stylix
             inputs.home-manager.nixosModules.default
             sops-nix.nixosModules.sops

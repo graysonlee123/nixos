@@ -16,18 +16,7 @@ in
   system.stateVersion = "25.11";
   virtualisation.oci-containers.backend = "docker";
 
-  services.gameservers =
-    let
-      players = import ../../data/minecraft-players.nix;
-    in
-    {
-      pumpkin.survival = {
-        enable = true;
-        port = 25565;
-        whitelist = players;
-        ops = builtins.filter (p: p.name == "pizzaThis") players;
-      };
-    };
+  services.gameservers = { };
 
   services.linkding.enable = true;
   services.radicale.collections = (

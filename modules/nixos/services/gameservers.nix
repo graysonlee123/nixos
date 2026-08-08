@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -20,30 +19,6 @@ let
   getMcBackupsSlug = name: "minecraft-backups-${name}";
   getMcDir = name: getGameserverInstanceDir "minecraft" name;
   getMcRconPasswordSopsKey = name: "gameservers/minecraft/${name}/rcon_password";
-
-  # Pumpkin
-  enabledPumpkinServers = lib.filterAttrs (_: srv: srv.enable) cfg.pumpkin;
-  hasPumpkinServers = enabledPumpkinServers != { };
-  getPumpkinSlug = name: "pumpkin-${name}";
-  getPumpkinStateDir = name: "gameservers/pumpkin/${name}";
-  pumpkinBinary = pkgs.pumpkin-server; # source build pinned via the `pumpkin` flake input
-  tomlFormat = pkgs.formats.toml { };
-
-  # Player = { name, uuid }. UUID is the immutable match key; resolve names to
-  # UUIDs at build time (see data/minecraft-players.nix) so the server never
-  # depends on the Mojang API at boot.
-  playerType = lib.types.submodule {
-    options = {
-      name = lib.mkOption {
-        description = "Player username (cosmetic; may go stale).";
-        type = lib.types.str;
-      };
-      uuid = lib.mkOption {
-        description = "Dashed Mojang UUID.";
-        type = lib.types.str;
-      };
-    };
-  };
 in
 {
   options.services.gameservers = {
@@ -133,78 +108,6 @@ in
                 type = lib.types.listOf lib.types.str;
                 default = [ ];
               };
-            };
-          };
-        }
-      );
-    };
-
-    pumpkin = lib.mkOption {
-      description = "Pumpkin Minecraft servers running as native systemd services.";
-      default = { };
-      type = lib.types.attrsOf (
-        lib.types.submodule {
-          options = {
-            enable = lib.mkEnableOption "Pumpkin server";
-            port = lib.mkOption {
-              description = "Server port.";
-              type = lib.types.port;
-              default = 25565;
-            };
-            seed = lib.mkOption {
-              description = "World seed.";
-              type = lib.types.str;
-              default = "";
-            };
-            difficulty = lib.mkOption {
-              description = "Difficulty.";
-              type = lib.types.enum [
-                "Peaceful"
-                "Easy"
-                "Normal"
-                "Hard"
-              ];
-              default = "Normal";
-            };
-            gamemode = lib.mkOption {
-              description = "Default gamemode.";
-              type = lib.types.enum [
-                "Survival"
-                "Creative"
-                "Adventure"
-                "Spectator"
-              ];
-              default = "Survival";
-            };
-            motd = lib.mkOption {
-              description = "Message of the day.";
-              type = lib.types.str;
-              default = "A Pumpkin server";
-            };
-            maxPlayers = lib.mkOption {
-              description = "Max players.";
-              type = lib.types.int;
-              default = 20;
-            };
-            viewDistance = lib.mkOption {
-              description = "View distance in chunks.";
-              type = lib.types.int;
-              default = 16;
-            };
-            simulationDistance = lib.mkOption {
-              description = "Simulation distance in chunks.";
-              type = lib.types.int;
-              default = 10;
-            };
-            ops = lib.mkOption {
-              description = "Operator players ({ name, uuid }).";
-              type = lib.types.listOf playerType;
-              default = [ ];
-            };
-            whitelist = lib.mkOption {
-              description = "Whitelisted players ({ name, uuid }).";
-              type = lib.types.listOf playerType;
-              default = [ ];
             };
           };
         }
@@ -314,82 +217,6 @@ in
           };
         }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft))
-    ];
-
-    # Pumpkin systemd services
-    systemd.services = lib.mapAttrs' (
-      name: srv:
-      let
-        slug = getPumpkinSlug name;
-        stateDir = getPumpkinStateDir name;
-        configFile = tomlFormat.generate "pumpkin.toml" {
-          seed = srv.seed;
-          default_difficulty = srv.difficulty;
-          default_gamemode = srv.gamemode;
-          white_list = srv.whitelist != [ ];
-          enforce_whitelist = srv.whitelist != [ ];
-          commands = {
-            use_tty = false;
-          };
-          networking.java = {
-            address = "0.0.0.0:${toString srv.port}";
-            max_players = srv.maxPlayers;
-            view_distance = srv.viewDistance;
-            simulation_distance = srv.simulationDistance;
-            motd = srv.motd;
-          };
-        };
-        whitelistJson = pkgs.writeText "pumpkin-${name}-whitelist.json" (
-          builtins.toJSON (map (p: { inherit (p) uuid name; }) srv.whitelist)
-        );
-        opsJson = pkgs.writeText "pumpkin-${name}-ops.json" (
-          builtins.toJSON (
-            map (p: {
-              inherit (p) uuid name;
-              level = 4;
-              bypasses_player_limit = false;
-            }) srv.ops
-          )
-        );
-        # pumpkin.toml sits at the working-dir root; whitelist.json/ops.json
-        # live in the data/ subdir (alongside Pumpkin's banned-*.json).
-        setupScript = pkgs.writeShellScript "pumpkin-${name}-setup" ''
-          # Copies land read-only from the store; make them writable so Pumpkin
-          # can manage them at runtime (changes reset to config on restart).
-          install -m644 ${configFile} pumpkin.toml
-          mkdir -p data
-          install -m644 ${whitelistJson} data/whitelist.json
-          install -m644 ${opsJson} data/ops.json
-        '';
-      in
-      lib.nameValuePair slug {
-        description = "Pumpkin Minecraft server (${name})";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
-
-        serviceConfig = {
-          Type = "simple";
-          ExecStartPre = setupScript;
-          ExecStart = "${pumpkinBinary}/bin/pumpkin";
-          WorkingDirectory = "/var/lib/${stateDir}";
-          StateDirectory = stateDir;
-          Restart = "on-failure";
-          RestartSec = 10;
-          User = "pumpkin";
-          Group = "pumpkin";
-        };
-      }
-    ) enabledPumpkinServers;
-
-    users.users.pumpkin = lib.mkIf hasPumpkinServers {
-      isSystemUser = true;
-      group = "pumpkin";
-    };
-    users.groups.pumpkin = lib.mkIf hasPumpkinServers { };
-
-    networking.firewall.allowedTCPPorts = lib.pipe enabledPumpkinServers [
-      (lib.mapAttrsToList (_: srv: srv.port))
     ];
 
     sops.secrets = lib.mkMerge [
