@@ -34,4 +34,9 @@
       }
     ];
   };
+
+  systemd.services.postgresql = {
+    after = [ "docker.service" "network-online.target" ];
+    wants = [ "network-online.target" ];
+  };
 }
