@@ -162,6 +162,7 @@
       wordpress-source-code = ../../../claude/skills/wordpress-source-code;
       woocommerce-source-code = ../../../claude/skills/woocommerce-source-code;
       wp-discovery = ../../../claude/skills/wp-discovery;
+      inspry-estimate = ../../../claude/skills/inspry-estimate;
     };
   };
 }

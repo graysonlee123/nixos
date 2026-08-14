@@ -118,7 +118,7 @@ Organize by priority. Each recommendation should be actionable.
 
 **Output**
 
-Write the markdown file to `~/syncthing/wp-discovery-$folder_name.md`.
+Write the markdown file to `~/syncthing/inspry/wp-discovery-$folder_name.md`.
 
 **Example**
 
