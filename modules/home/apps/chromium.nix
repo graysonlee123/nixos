@@ -13,6 +13,7 @@ in
     extensions = [
       { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
       { id = "dnebklifojaaecmheejjopgjdljebpeo"; } # everhour
+      { id = "apaakgfongbkeecchhhjocpgjchbdenl"; } # wordpress
     ];
   };
 
