@@ -46,7 +46,12 @@
           "biome.lsp.bin" = "${pkgs-unstable.biome}/bin/biome";
           "terminal.integrated.defaultProfile.linux" = "zsh";
         };
-        keybindings = [ ];
+        keybindings = [
+          {
+            key = "alt+f5";
+            command = "workbench.action.debug.selectandstart";
+          }
+        ];
       };
     };
   };
