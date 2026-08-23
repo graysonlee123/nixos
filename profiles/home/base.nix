@@ -46,6 +46,7 @@
     rclone
     restic
     speedtest-cli
+    thokr
     traceroute
     trash-cli
     tree
