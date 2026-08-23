@@ -46,6 +46,7 @@
     rclone
     restic
     speedtest-cli
+    traceroute
     trash-cli
     tree
     trufflehog
