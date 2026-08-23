@@ -100,12 +100,6 @@ in
               enable = !isHeadless;
               publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC6B/D+V7277HHCohcRLhz+QOiMPbOZaaU/mii9hZSEmA3aTWRWuu+v3bLjCRSRFKAUBVWxEnomIcGVmEnLMMjOlnfyEFGxCeJzlkuyV/erKU+RCUE8BqRaixF6ZJuMKb6kELcuNhnXSzl28lN6taTvFvPR47Y/wwcOHYHZwHmUyj1tvbfXL/Z/06lxEJ82UWK25LktJGHuLHIvOSpJ+3U74nPmBwNRPkULOMNUD/uK+Sn35nQjQm6zHZDmleN9XzxfX1+vepIcvJ7DCU8KChyUgeczyQvWWmH0rTZlHVHKRC/YNMdk8Zm/a5k7koFmMPIZp69iJ+QezL0GAZL3U4QWx/9U3ifJNpnthHH0LsYXrk532staHfKivyLSqIf34xVUiOj5WJQrEGAODVQkdbivoosB1IZP7nm4r+hsqenVk1u0BJfGxaNAHEiItHJXaXMfsYdSocMcL0F7k8rI/GcWIXSoCvLjYHhj21Ya/tbBK7QmpPTB25melMAybpt9Rs8= ${inspryEmail}";
             };
-            "usartframes.com" = {
-              enable = !isHeadless;
-              hostName = "72.167.87.201";
-              publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGMdLQjQVk1WVTjynhGc60zRHFbJacAqFI5A274IdxKf ${inspryEmail}";
-              user = "p59furxwzjsc";
-            };
             "moosetracks.com" = {
               enable = !isHeadless;
               hostName = config.home-manager.users.gray.keys.ssh.bigscoots.hostName;
