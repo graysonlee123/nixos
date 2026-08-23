@@ -83,7 +83,7 @@ in
       programs.ssh = {
         enable = true;
         enableDefaultConfig = false;
-        matchBlocks =
+        settings =
           (lib.mapAttrs' (
             name: srv:
             let

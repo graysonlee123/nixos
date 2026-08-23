@@ -6,13 +6,13 @@
 }:
 
 let
-  cfg = config.services.linkding;
+  cfg = config.services.linkdingContainer;
   database = lib.findSingle (x: x == "linkding") null null config.services.postgresql.ensureDatabases;
   user =
     (lib.findSingle (x: x.name == "linkding") null null config.services.postgresql.ensureUsers).name;
 in
 {
-  options.services.linkding = {
+  options.services.linkdingContainer = {
     enable = lib.mkEnableOption "Linkding";
     port = lib.mkOption {
       type = lib.types.port;

@@ -18,6 +18,8 @@ Stays per-project: `deployment.xml` (default server + `/`↔`$PROJECT_DIR$` mapp
 
 ## Search Everywhere (Shift+Shift) popup opens off-screen on Sway
 
+**FIXED in PhpStorm 2026.01 ([relase notice](https://www.jetbrains.com/phpstorm/whatsnew/2026-1/)).**
+
 ### Symptom
 
 Pressing Shift+Shift (Search Everywhere) does nothing visible, but PhpStorm behaves as if the popup is open: the editor loses focus and keystrokes don't land in it. Other UI like Settings opens fine. The popup is actually rendering far off-screen and can't be dragged back.

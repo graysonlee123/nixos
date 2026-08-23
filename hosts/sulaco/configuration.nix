@@ -41,7 +41,7 @@ in
     };
   };
 
-  services.linkding.enable = true;
+  services.linkdingContainer.enable = true;
   services.radicale.collections = (
     lib.mapAttrs (_: value: {
       color = value.color;

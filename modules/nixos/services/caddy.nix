@@ -46,7 +46,7 @@ in
       };
       "links.lab.ggantek.net" = {
         extraConfig = ''
-          reverse_proxy localhost:${toString config.services.linkding.port}
+          reverse_proxy localhost:${toString config.services.linkdingContainer.port}
         '';
       };
       "pinchflat.lab.ggantek.net" = {
