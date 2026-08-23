@@ -10,6 +10,7 @@
   programs.claude-code = {
     enable = true;
     package = pkgs-unstable.claude-code;
+    # Reference: https://code.claude.com/docs/en/settings-reference
     settings = {
       autoCompactEnabled = false;
       autoMemoryEnabled = false;
@@ -41,7 +42,6 @@
       feedbackSurveyRate = 0;
       fileCheckpointingEnabled = false;
       includeCoAuthoredBy = false;
-      inputNeededNotifEnabled = false;
       model = "claude-opus-4-8";
       permissions = {
         allow = [
