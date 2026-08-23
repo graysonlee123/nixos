@@ -52,7 +52,7 @@ rec {
     };
     Inspry = {
       id = "inspry";
-      devices = (builtins.filter (x: x != "sulaco") (builtins.attrNames devices));
+      devices = builtins.attrNames devices;
       inherit versioning;
     };
   };
