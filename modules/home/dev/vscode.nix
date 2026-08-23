@@ -45,6 +45,7 @@
           "extensions.ignoreRecommendations" = true;
           "biome.lsp.bin" = "${pkgs-unstable.biome}/bin/biome";
           "terminal.integrated.defaultProfile.linux" = "zsh";
+          "chat.disableAIFeatures" = true;
         };
         keybindings = [
           {
