@@ -145,6 +145,9 @@ in
           # Vicinae
           "${modifier}+d" = "exec vicinae toggle";
 
+          # Notifications
+          "${modifier}+n" = "exec makoctl dismiss --all";
+
           # Screenshots
           "Print" = "exec grim -g \"$(slurp -b '#00000099' -c '#00ff41')\" - | satty --filename -";
 
