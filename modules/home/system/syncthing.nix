@@ -23,12 +23,17 @@ in
     name: value: "d %h/syncthing/${value.id}/.stfolder 0755"
   ) syncthingData.folders;
 
-  home.file = (
-    lib.mapAttrs' (
-      name: value:
-      lib.nameValuePair "syncthing/${value.id}/.stignore" {
-        text = syncthingData.ignorePatterns;
-      }
-    ) syncthingData.folders
+  # Syncthing refuses to follow a symlinked .stignore (rooted FS reports
+  # ELOOP), so write real files instead of home.file symlinks.
+  home.activation.syncthingIgnores = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+    let
+      stignore = builtins.toFile "stignore" syncthingData.ignorePatterns;
+    in
+    lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (
+        name: value:
+        ''run install -Dm644 ${stignore} "${config.home.homeDirectory}/syncthing/${value.id}/.stignore"''
+      ) syncthingData.folders
+    )
   );
 }
