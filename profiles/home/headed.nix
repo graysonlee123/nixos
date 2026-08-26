@@ -34,6 +34,7 @@
     asciiquarium
     bibata-cursors
     crawl
+    gimp
     filezilla
     grim
     jdk25
