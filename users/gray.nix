@@ -38,6 +38,7 @@ in
             email = constants.emails.personal;
             inspryEmail = constants.emails.work;
             sulacoPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFUikXnlXo9JwzeSMwdH4PCw/dgKnDYbIgSJxjXSEzMX ${email}";
+            bigscootsPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPXWYAv1t8J/NJsXrGlnuD2wtY5B/B18rwDgy5ZZzsHp ${inspryEmail}";
           in
           {
             # Personal
@@ -76,7 +77,7 @@ in
             "bigscoots" = {
               enable = !isHeadless;
               hostName = "154.12.120.83";
-              publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPXWYAv1t8J/NJsXrGlnuD2wtY5B/B18rwDgy5ZZzsHp ${inspryEmail}";
+              publicKey = bigscootsPublicKey;
               user = "nginx";
               port = 2222;
             };
@@ -90,6 +91,13 @@ in
               hostName = "github.com";
               publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuKD0o+ZwnwxkYAg/niixNMzZPeyTDOa84ALYoMA2uQ ${inspryEmail}";
               user = "git";
+            };
+            "lacrawfish.com" = {
+              enable = !isHeadless;
+              hostName = "154.18.246.230";
+              publicKey = bigscootsPublicKey;
+              user = "nginx";
+              port = 2222;
             };
             "rocket.net" = {
               enable = !isHeadless;
