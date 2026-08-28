@@ -43,6 +43,7 @@
     nixd
     nixfmt
     nload
+    openshot-qt
     pwgen
     rclone
     restic
