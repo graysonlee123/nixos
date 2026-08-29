@@ -97,6 +97,10 @@ in
           "${modifier}+Up" = "focus up";
           "${modifier}+Right" = "focus right";
 
+          # Scratchpad
+          "${modifier}+plus" = "move scratchpad";
+          "${modifier}+minus" = "scratchpad show";
+
           # Move focused window
           "${modifier}+Shift+Left" = "move left";
           "${modifier}+Shift+Down" = "move down";
