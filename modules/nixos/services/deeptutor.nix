@@ -3,7 +3,8 @@ let
 in
 {
   virtualisation.oci-containers.containers.deeptutor = {
-    image = "ghcr.io/hkuds/deeptutor@sha256:b07c9ed2ea573384ded5dc174abb812c2ec9249ae5aa48766e8b58f446525cde";
+    # Version 1.6.0
+    image = "ghcr.io/hkuds/deeptutor@sha256:53807413c2cd943b7bd1c9b85b3834c4a05c03586d5694a07172b3a93519439a";
     hostname = "deeptutor";
     ports = [ "127.0.0.1:${toString port}:3782" ];
     volumes = [
