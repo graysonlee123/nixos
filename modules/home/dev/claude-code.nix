@@ -114,6 +114,9 @@
           "mcp__jetbrains__rename_refactoring"
           "mcp__jetbrains__search_in_files_by_text"
         ];
+        ask = [
+          "Bash(git commit:*)"
+        ];
       };
       spinnerTipsEnabled = false;
       tui = "fullscreen";
