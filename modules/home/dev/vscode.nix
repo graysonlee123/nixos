@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, pkgs-unstable, lib, ... }:
 
 {
   programs.vscode = {
@@ -46,6 +46,16 @@
           "biome.lsp.bin" = "${pkgs-unstable.biome}/bin/biome";
           "terminal.integrated.defaultProfile.linux" = "zsh";
           "chat.disableAIFeatures" = true;
+          "json.schemaDownload.trustedDomains" = lib.genAttrs [
+            "https://schemastore.azurewebsites.net/"
+            "https://raw.githubusercontent.com/microsoft/vscode/"
+            "https://raw.githubusercontent.com/devcontainers/spec/"
+            "https://www.schemastore.org/"
+            "https://json.schemastore.org/"
+            "https://json-schema.org/"
+            "https://developer.microsoft.com/json-schemas/"
+            "https://biomejs.dev"
+          ] (_: true);
         };
         keybindings = [
           {
