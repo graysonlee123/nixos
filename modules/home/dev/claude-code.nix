@@ -118,6 +118,7 @@
           "Bash(git commit:*)"
         ];
       };
+      respondToBashCommands = false;
       spinnerTipsEnabled = false;
       tui = "fullscreen";
       voice = {
