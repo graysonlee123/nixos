@@ -18,6 +18,8 @@
     syntaxHighlighting.enable = true;
     shellAliases = {
       "cl" = "claude";
+      "clc" = "claude -c";
+      "clr" = "claude -r";
       "lzd" = "lazydocker";
       "lzg" = "lazygit";
       "pn" = "pnpm";
