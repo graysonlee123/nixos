@@ -28,6 +28,16 @@ let
         wf-recorder --audio --file "$FILE" && notify-send "Recording saved" "$FILE" ;;
     esac
   '';
+  # Chromium tab search (Ctrl+Shift+A) remapped to an easier chord.
+  # Only fires when Chromium is focused so it's a no-op elsewhere.
+  chromiumTabSearch = pkgs.writeShellScriptBin "chromium-tab-search" ''
+    app=$(${pkgs.sway}/bin/swaymsg -t get_tree \
+      | ${pkgs.jq}/bin/jq -r '.. | select(.focused? == true) | .app_id // empty')
+    case "$app" in
+      *chromium*|*chrome*)
+        ${pkgs.wtype}/bin/wtype -M ctrl -M shift a -m shift -m ctrl ;;
+    esac
+  '';
 in
 {
   wayland.windowManager.sway = {
@@ -145,6 +155,9 @@ in
           # Modes
           "${modifier}+r" = "mode resize";
           "${modifier}+slash" = "mode launch";
+
+          # Chromium tab search (remap of Ctrl+Shift+A)
+          "${modifier}+Tab" = "exec chromium-tab-search";
 
           # Vicinae
           "${modifier}+d" = "exec vicinae toggle";
@@ -332,5 +345,8 @@ in
       };
   };
 
-  home.packages = [ recordScreen ];
+  home.packages = [
+    recordScreen
+    chromiumTabSearch
+  ];
 }
