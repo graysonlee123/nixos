@@ -10,6 +10,10 @@ let
   envPath = "kaneo.env";
   secret = "services/kaneo/auth/secret";
   passwordSecret = "services/postgres/kaneo/password";
+  ghSecrets = {
+    clientId = "external/github/oauth/kaneo/client_id";
+    clientSecret = "external/github/oauth/kaneo/client_secret";
+  };
   db = {
     name = lib.findFirst (
       x: x == "kaneo"
@@ -26,6 +30,8 @@ in
   # Example env file: https://github.com/usekaneo/kaneo/blob/main/.env.sample
   sops.secrets.${secret} = { };
   sops.secrets.${passwordSecret} = { };
+  sops.secrets.${ghSecrets.clientId} = { };
+  sops.secrets.${ghSecrets.clientSecret} = { };
   sops.templates.${envPath}.content = ''
     AUTH_SECRET=${config.sops.placeholder."services/kaneo/auth/secret"}
     SMTP_USER=${config.sops.placeholder."external/postmark/streams/outbound/smtp/username"}
@@ -33,6 +39,8 @@ in
     SMTP_HOST=${config.sops.placeholder."external/postmark/streams/outbound/smtp/host"}
     SMTP_PORT=${config.sops.placeholder."external/postmark/streams/outbound/smtp/port"}
     POSTGRES_PASSWORD=${config.sops.placeholder.${passwordSecret}}
+    GITHUB_OAUTH_CLIENT_ID=${config.sops.placeholder.${ghSecrets.clientId}}
+    GITHUB_OAUTH_CLIENT_SECRET=${config.sops.placeholder.${ghSecrets.clientSecret}}
   '';
 
   virtualisation.oci-containers.containers.kaneo = {
