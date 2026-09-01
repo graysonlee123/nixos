@@ -7,6 +7,7 @@
     ../modules/nixos/services/express-postmark.nix
     ../modules/nixos/services/gameservers.nix
     ../modules/nixos/services/jellyfin.nix
+    ../modules/nixos/services/kaneo.nix
     ../modules/nixos/services/kavita.nix
     ../modules/nixos/services/linkding.nix
     ../modules/nixos/services/pgadmin.nix

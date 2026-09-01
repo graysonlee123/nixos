@@ -6,7 +6,7 @@
 }:
 
 let
-  secret = "services/express_postmark/postmark_api_token";
+  secret = "external/postmark/api_token";
   network = "express-postmark";
 in
 {
