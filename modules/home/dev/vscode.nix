@@ -55,6 +55,7 @@
             "https://json-schema.org/"
             "https://developer.microsoft.com/json-schemas/"
             "https://biomejs.dev"
+            "https://turbo.build/schema.json"
           ] (_: true);
         };
         keybindings = [
