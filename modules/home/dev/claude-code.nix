@@ -163,7 +163,8 @@
         type = "sse";
       };
     };
-    skills = lib.mkIf (!isHeadless) {
+    skills = lib.optionalAttrs (!isHeadless) {
+      minecraft = ../../../claude/skills/minecraft;
       wordpress-source-code = ../../../claude/skills/wordpress-source-code;
       woocommerce-source-code = ../../../claude/skills/woocommerce-source-code;
       wp-discovery = ../../../claude/skills/wp-discovery;
