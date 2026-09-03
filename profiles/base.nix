@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ../modules/nixos/core/boot.nix
     ../modules/nixos/core/docker.nix

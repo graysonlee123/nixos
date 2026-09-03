@@ -3,9 +3,7 @@
   isHeadless,
   constants,
   ...
-}:
-
-{
+}: {
   programs.git = {
     enable = true;
     includes = lib.optionals (!isHeadless) [

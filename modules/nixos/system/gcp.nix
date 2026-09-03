@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   sops.secrets."gcp/ggantek-archives/private_key" = {
     sopsFile = ../../../secrets/shared.yaml;
     owner = config.users.users.gray.name;

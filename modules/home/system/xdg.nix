@@ -1,12 +1,10 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   xdg.desktopEntries.yazi-open = {
     name = "Yazi";
     comment = "Terminal file manager";
     exec = "ghostty -e yazi %u";
     terminal = false;
-    mimeType = [ "inode/directory" ];
+    mimeType = ["inode/directory"];
     categories = [
       "Utility"
       "FileManager"

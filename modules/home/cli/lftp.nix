@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
-
-let
-  syncthingDir = config.services.syncthing.settings.folders.Personal.path;
-in
 {
-  home.packages = [ pkgs.lftp ];
+  config,
+  pkgs,
+  ...
+}: let
+  syncthingDir = config.services.syncthing.settings.folders.Personal.path;
+in {
+  home.packages = [pkgs.lftp];
 
   # The benefit of the Syncthing approach is that each change to the high-velocity
   # bookmarks file doesn't need to be modified and committed in git.
@@ -13,6 +14,6 @@ in
   home.file.".config/lftp/rc".text = ''
     set cmd:default-protocol sftp
     set cmd:ls-default -l
-    set cmd:prompt ---\n\h:\w\n\s (v\v)\>\ 
+    set cmd:prompt ---\n\h:\w\n\s (v\v)\>\
   '';
 }

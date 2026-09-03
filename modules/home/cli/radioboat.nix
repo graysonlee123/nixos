@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = [ pkgs.radioboat ];
+{pkgs, ...}: {
+  home.packages = [pkgs.radioboat];
 
   xdg.configFile."radioboat/urls.csv" = {
     text = ''

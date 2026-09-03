@@ -3,9 +3,7 @@
   pkgs,
   constants,
   ...
-}:
-
-{
+}: {
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
@@ -45,6 +43,6 @@
       "docker.service"
       "network-online.target"
     ];
-    wants = [ "network-online.target" ];
+    wants = ["network-online.target"];
   };
 }

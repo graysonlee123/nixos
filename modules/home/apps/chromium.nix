@@ -1,19 +1,16 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   bookmark-utils = import ../../../lib/mkChromiumBookmarks.nix;
   bookmarks = import ../../../lib/bookmarks.nix;
-in
-{
+in {
   programs.chromium = {
     enable = true;
     package = pkgs.chromium.override {
       enableWideVine = true;
     };
     extensions = [
-      { id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa"; } # 1password
-      { id = "dnebklifojaaecmheejjopgjdljebpeo"; } # everhour
-      { id = "apaakgfongbkeecchhhjocpgjchbdenl"; } # wordpress
+      {id = "aeblfdkhhhdcdjpifhhbdiojplfjncoa";} # 1password
+      {id = "dnebklifojaaecmheejjopgjdljebpeo";} # everhour
+      {id = "apaakgfongbkeecchhhjocpgjchbdenl";} # wordpress
     ];
   };
 

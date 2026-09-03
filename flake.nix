@@ -17,46 +17,44 @@
     };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      nixpkgs-unstable,
-      stylix,
-      wttrbar,
-      sops-nix,
-      ...
-    }@inputs:
-    let
-      system = "x86_64-linux";
-      pkgs-unstable = import nixpkgs-unstable {
+  outputs = {
+    nixpkgs,
+    nixpkgs-unstable,
+    stylix,
+    wttrbar,
+    sops-nix,
+    ...
+  } @ inputs: let
+    system = "x86_64-linux";
+    pkgs-unstable = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    constants = import ./data/constants.nix;
+    hosts = import ./data/hosts.nix;
+    mkHost = {
+      hostname,
+      isLaptop ? false,
+      isHeadless ? false,
+    }:
+      nixpkgs.lib.nixosSystem {
         inherit system;
-        config.allowUnfree = true;
-      };
-      constants = import ./data/constants.nix;
-      hosts = import ./data/hosts.nix;
-      mkHost =
-        {
-          hostname,
-          isLaptop ? false,
-          isHeadless ? false,
-        }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit
-              isLaptop
-              isHeadless
-              constants
-              hosts
-              ;
-          };
-          modules = [
-            ./hosts/${hostname}/configuration.nix
-            stylix.nixosModules.stylix
-            inputs.home-manager.nixosModules.default
-            sops-nix.nixosModules.sops
-            {
-              home-manager.extraSpecialArgs = {
+        specialArgs = {
+          inherit
+            isLaptop
+            isHeadless
+            constants
+            hosts
+            ;
+        };
+        modules = [
+          ./hosts/${hostname}/configuration.nix
+          stylix.nixosModules.stylix
+          inputs.home-manager.nixosModules.default
+          sops-nix.nixosModules.sops
+          {
+            home-manager.extraSpecialArgs =
+              {
                 inherit
                   pkgs-unstable
                   isLaptop
@@ -68,27 +66,26 @@
               // nixpkgs.lib.optionalAttrs (!isHeadless) {
                 wttrbar = wttrbar.packages.x86_64-linux.default;
               };
-              home-manager.sharedModules = [
-                sops-nix.homeManagerModules.sops
-              ];
-            }
-          ];
-        };
-    in
-    {
-      nixosConfigurations = {
-        nostromo = mkHost {
-          hostname = "nostromo";
-        };
-        corbelan = mkHost {
-          hostname = "corbelan";
-          isLaptop = true;
-        };
-        sulaco = mkHost {
-          hostname = "sulaco";
-          isHeadless = true;
-        };
+            home-manager.sharedModules = [
+              sops-nix.homeManagerModules.sops
+            ];
+          }
+        ];
       };
-      formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+  in {
+    nixosConfigurations = {
+      nostromo = mkHost {
+        hostname = "nostromo";
+      };
+      corbelan = mkHost {
+        hostname = "corbelan";
+        isLaptop = true;
+      };
+      sulaco = mkHost {
+        hostname = "sulaco";
+        isHeadless = true;
+      };
     };
+    formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+  };
 }

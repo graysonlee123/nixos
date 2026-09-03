@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.go.enable = true;
-  home.packages = [ pkgs.gopls ];
+  home.packages = [pkgs.gopls];
 }

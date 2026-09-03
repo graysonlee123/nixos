@@ -1,6 +1,8 @@
-{ config, constants, ... }:
-
 {
+  config,
+  constants,
+  ...
+}: {
   services.pgadmin = {
     enable = true;
     port = 5050;
@@ -18,5 +20,5 @@
     '';
   };
 
-  sops.secrets."services/pgadmin/password" = { };
+  sops.secrets."services/pgadmin/password" = {};
 }

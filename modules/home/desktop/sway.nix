@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   recordScreen = pkgs.writeShellScriptBin "record-screen" ''
     if pgrep -x wf-recorder > /dev/null; then
       pkill -SIGINT wf-recorder
@@ -38,57 +36,54 @@ let
         ${pkgs.wtype}/bin/wtype -M ctrl -M shift a -m shift -m ctrl ;;
     esac
   '';
-in
-{
+in {
   wayland.windowManager.sway = {
     enable = true;
     systemd.enable = true;
     wrapperFeatures.gtk = true;
-    config =
-      let
-        modifier = "Mod4";
-      in
-      {
-        modifier = modifier;
-        terminal = "ghostty";
-        focus.mouseWarping = "container";
+    config = let
+      modifier = "Mod4";
+    in {
+      modifier = modifier;
+      terminal = "ghostty";
+      focus.mouseWarping = "container";
 
-        # Output configuration
-        output =
-          if isLaptop then
-            {
-              "eDP-1" = {
-                position = "0,540";
-                scale = "2";
-              };
-              "HDMI-A-1" = {
-                position = "1440,0";
-                mode = "2560x1440@99.946Hz";
-              };
-            }
-          else
-            {
-              "DP-1" = {
-                position = "1080,160";
-              };
-              "HDMI-A-1" = {
-                transform = "270";
-                position = "0,0";
-              };
-            };
-
-        # Lid switch - disable laptop display when lid is closed
-        bindswitches = lib.mkIf isLaptop {
-          "lid:on" = {
-            action = "output eDP-1 disable";
+      # Output configuration
+      output =
+        if isLaptop
+        then {
+          "eDP-1" = {
+            position = "0,540";
+            scale = "2";
           };
-          "lid:off" = {
-            action = "output eDP-1 enable";
+          "HDMI-A-1" = {
+            position = "1440,0";
+            mode = "2560x1440@99.946Hz";
+          };
+        }
+        else {
+          "DP-1" = {
+            position = "1080,160";
+          };
+          "HDMI-A-1" = {
+            transform = "270";
+            position = "0,0";
           };
         };
 
-        # Keybindings
-        keybindings = {
+      # Lid switch - disable laptop display when lid is closed
+      bindswitches = lib.mkIf isLaptop {
+        "lid:on" = {
+          action = "output eDP-1 disable";
+        };
+        "lid:off" = {
+          action = "output eDP-1 enable";
+        };
+      };
+
+      # Keybindings
+      keybindings =
+        {
           # Launch terminal
           "${modifier}+Return" = "exec ghostty";
 
@@ -181,168 +176,167 @@ in
           "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
         };
 
-        # Resize mode keybindings
-        modes = {
-          resize = {
-            "Left" = "resize shrink width 10px";
-            "Down" = "resize grow height 10px";
-            "Up" = "resize shrink height 10px";
-            "Right" = "resize grow width 10px";
-            "h" = "resize shrink width 10px";
-            "j" = "resize grow height 10px";
-            "k" = "resize shrink height 10px";
-            "semicolon" = "resize grow width 10px";
-            "Escape" = "mode default";
-            "Return" = "mode default";
-          };
-          launch = {
-            "1" = "exec sh -c '1password && swaymsg mode default'";
-            "c" = "exec sh -c 'chromium && swaymsg mode default'";
-            "o" = "exec sh -c 'obsidian && swaymsg mode default'";
-            "t" = "exec sh -c 'ghostty && swaymsg mode default'";
-            "d" = "exec discord; mode default";
-            "v" = "exec sh -c 'code && swaymsg mode default'";
-            "p" = "exec phpstorm; mode default";
-            "Escape" = "mode default";
-            "Return" = "mode default";
-          };
+      # Resize mode keybindings
+      modes = {
+        resize = {
+          "Left" = "resize shrink width 10px";
+          "Down" = "resize grow height 10px";
+          "Up" = "resize shrink height 10px";
+          "Right" = "resize grow width 10px";
+          "h" = "resize shrink width 10px";
+          "j" = "resize grow height 10px";
+          "k" = "resize shrink height 10px";
+          "semicolon" = "resize grow width 10px";
+          "Escape" = "mode default";
+          "Return" = "mode default";
         };
-
-        # Inputs
-        input = {
-          "type:keyboard" = {
-            repeat_rate = "75";
-            repeat_delay = "200";
-          };
-          "1133:49291:Logitech_G502_HERO_Gaming_Mouse" = {
-            accel_profile = "flat";
-            pointer_accel = "0.3";
-          };
+        launch = {
+          "1" = "exec sh -c '1password && swaymsg mode default'";
+          "c" = "exec sh -c 'chromium && swaymsg mode default'";
+          "o" = "exec sh -c 'obsidian && swaymsg mode default'";
+          "t" = "exec sh -c 'ghostty && swaymsg mode default'";
+          "d" = "exec discord; mode default";
+          "v" = "exec sh -c 'code && swaymsg mode default'";
+          "p" = "exec phpstorm; mode default";
+          "Escape" = "mode default";
+          "Return" = "mode default";
         };
-
-        # Disable default bar (using Waybar instead)
-        bars = [ ];
-
-        # Workspace output assignments
-        workspaceOutputAssign =
-          if (!isLaptop) then
-            [
-              {
-                workspace = "1";
-                output = "DP-1";
-              }
-              {
-                workspace = "2";
-                output = "DP-1";
-              }
-              {
-                workspace = "3";
-                output = "DP-1";
-              }
-              {
-                workspace = "4";
-                output = "HDMI-A-1";
-              }
-              {
-                workspace = "5";
-                output = "HDMI-A-1";
-              }
-            ]
-          else
-            [
-              {
-                workspace = "1";
-                output = "HDMI-A-1";
-              }
-              {
-                workspace = "2";
-                output = "HDMI-A-1";
-              }
-              {
-                workspace = "3";
-                output = "HDMI-A-1";
-              }
-              {
-                workspace = "4";
-                output = "eDP-1";
-              }
-              {
-                workspace = "5";
-                output = "eDP-1";
-              }
-            ];
-
-        # Startup
-        startup = lib.mkMerge [
-          (lib.mkIf (!isLaptop) [
-            {
-              command = "swaymsg workspace 4; swaymsg layout splitv";
-            }
-            {
-              command = "swaymsg workspace 5; swaymsg layout splitv";
-            }
-            {
-              command = "swaymsg workspace 1";
-            }
-          ])
-
-          (lib.mkIf isLaptop [
-            {
-              command = "swaymsg workspace 4";
-            }
-            {
-              command = "swaymsg workspace 1";
-            }
-          ])
-        ];
-
-        # Window rules
-        window.commands = [
-          {
-            criteria = {
-              app_id = "^mako$";
-            };
-            command = "floating enable, border none";
-          }
-          {
-            criteria = {
-              title = "Picture in picture";
-            };
-            command = "floating enable, sticky enable";
-          }
-          {
-            criteria = {
-              title = "^1Password$";
-            };
-            command = "floating enable; sticky enable";
-          }
-          {
-            criteria = {
-              app_id = "^io\\.github\\.waylyrics\\.Waylyrics$";
-            };
-            command = "floating enable";
-          }
-          {
-            criteria = {
-              app_id = "^code$";
-              title = "- Chromium$";
-            };
-            command = "floating enable";
-          }
-          {
-            criteria = {
-              app_id = "^vesktop$";
-            };
-            command = "move window workspace 4";
-          }
-          {
-            criteria = {
-              class = "^tidal-hifi$";
-            };
-            command = "move window workspace 5";
-          }
-        ];
       };
+
+      # Inputs
+      input = {
+        "type:keyboard" = {
+          repeat_rate = "75";
+          repeat_delay = "200";
+        };
+        "1133:49291:Logitech_G502_HERO_Gaming_Mouse" = {
+          accel_profile = "flat";
+          pointer_accel = "0.3";
+        };
+      };
+
+      # Disable default bar (using Waybar instead)
+      bars = [];
+
+      # Workspace output assignments
+      workspaceOutputAssign =
+        if (!isLaptop)
+        then [
+          {
+            workspace = "1";
+            output = "DP-1";
+          }
+          {
+            workspace = "2";
+            output = "DP-1";
+          }
+          {
+            workspace = "3";
+            output = "DP-1";
+          }
+          {
+            workspace = "4";
+            output = "HDMI-A-1";
+          }
+          {
+            workspace = "5";
+            output = "HDMI-A-1";
+          }
+        ]
+        else [
+          {
+            workspace = "1";
+            output = "HDMI-A-1";
+          }
+          {
+            workspace = "2";
+            output = "HDMI-A-1";
+          }
+          {
+            workspace = "3";
+            output = "HDMI-A-1";
+          }
+          {
+            workspace = "4";
+            output = "eDP-1";
+          }
+          {
+            workspace = "5";
+            output = "eDP-1";
+          }
+        ];
+
+      # Startup
+      startup = lib.mkMerge [
+        (lib.mkIf (!isLaptop) [
+          {
+            command = "swaymsg workspace 4; swaymsg layout splitv";
+          }
+          {
+            command = "swaymsg workspace 5; swaymsg layout splitv";
+          }
+          {
+            command = "swaymsg workspace 1";
+          }
+        ])
+
+        (lib.mkIf isLaptop [
+          {
+            command = "swaymsg workspace 4";
+          }
+          {
+            command = "swaymsg workspace 1";
+          }
+        ])
+      ];
+
+      # Window rules
+      window.commands = [
+        {
+          criteria = {
+            app_id = "^mako$";
+          };
+          command = "floating enable, border none";
+        }
+        {
+          criteria = {
+            title = "Picture in picture";
+          };
+          command = "floating enable, sticky enable";
+        }
+        {
+          criteria = {
+            title = "^1Password$";
+          };
+          command = "floating enable; sticky enable";
+        }
+        {
+          criteria = {
+            app_id = "^io\\.github\\.waylyrics\\.Waylyrics$";
+          };
+          command = "floating enable";
+        }
+        {
+          criteria = {
+            app_id = "^code$";
+            title = "- Chromium$";
+          };
+          command = "floating enable";
+        }
+        {
+          criteria = {
+            app_id = "^vesktop$";
+          };
+          command = "move window workspace 4";
+        }
+        {
+          criteria = {
+            class = "^tidal-hifi$";
+          };
+          command = "move window workspace 5";
+        }
+      ];
+    };
   };
 
   home.packages = [

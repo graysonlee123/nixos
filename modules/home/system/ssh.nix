@@ -1,12 +1,13 @@
-{ config, lib, ... }:
-
-let
-  cfg = config.keys.ssh;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.keys.ssh;
+in {
   options.keys.ssh = lib.mkOption {
     description = "SSH keys.";
-    default = { };
+    default = {};
     type = lib.types.attrsOf (
       lib.types.submodule {
         options = {
@@ -45,50 +46,49 @@ in
     );
   };
 
-  config =
-    let
-      enabledKeys = lib.filterAttrs (_: srv: srv.enable) cfg;
-      fileNameOf =
-        name: value:
-        let
-          raw = if value.privateKeyName != null then value.privateKeyName else name;
-        in
-        lib.removePrefix "*." raw;
+  config = let
+    enabledKeys = lib.filterAttrs (_: srv: srv.enable) cfg;
+    fileNameOf = name: value: let
+      raw =
+        if value.privateKeyName != null
+        then value.privateKeyName
+        else name;
     in
-    {
-      sops = {
-        secrets = lib.mapAttrs' (
-          name: srv:
-          let
+      lib.removePrefix "*." raw;
+  in {
+    sops = {
+      secrets =
+        lib.mapAttrs' (
+          name: srv: let
             fn = fileNameOf name srv;
           in
-          lib.nameValuePair "ssh/keys/${fn}" {
-            sopsFile = ../../../secrets/${srv.sopsFile};
-            mode = "0600";
-            path = "${config.home.homeDirectory}/.ssh/${fn}";
-          }
-        ) enabledKeys;
-      };
+            lib.nameValuePair "ssh/keys/${fn}" {
+              sopsFile = ../../../secrets/${srv.sopsFile};
+              mode = "0600";
+              path = "${config.home.homeDirectory}/.ssh/${fn}";
+            }
+        )
+        enabledKeys;
+    };
 
-      home.file = lib.mapAttrs' (
-        name: srv:
-        let
+    home.file =
+      lib.mapAttrs' (
+        name: srv: let
           fn = fileNameOf name srv;
-        in
-        (lib.nameValuePair ".ssh/${fn}.pub" {
+        in (lib.nameValuePair ".ssh/${fn}.pub" {
           text = srv.publicKey;
         })
-      ) enabledKeys;
+      )
+      enabledKeys;
 
-      programs.ssh = {
-        enable = true;
-        enableDefaultConfig = false;
-        settings =
-          (lib.mapAttrs' (
-            name: srv:
-            let
-              fn = fileNameOf name srv;
-            in
+    programs.ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      settings =
+        (lib.mapAttrs' (
+          name: srv: let
+            fn = fileNameOf name srv;
+          in
             lib.nameValuePair name {
               identityFile = "${config.home.homeDirectory}/.ssh/${fn}";
               identitiesOnly = true;
@@ -96,8 +96,8 @@ in
               user = srv.user;
               port = srv.port;
             }
-          ))
-            enabledKeys;
-      };
+        ))
+        enabledKeys;
     };
+  };
 }

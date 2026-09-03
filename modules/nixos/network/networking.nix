@@ -4,12 +4,9 @@
   isHeadless,
   constants,
   ...
-}:
-
-let
+}: let
   cfg = config.host;
-in
-{
+in {
   options.host = {
     name = lib.mkOption {
       type = lib.types.str;
@@ -51,7 +48,7 @@ in
         ++ [
           22000 # Syncthing
         ];
-      networking.firewall.allowedUDPPorts = [ 21027 ]; # Syncthing discovery
+      networking.firewall.allowedUDPPorts = [21027]; # Syncthing discovery
     }
     (lib.mkIf (cfg.staticIP != null) {
       networking.firewall.interfaces.${cfg.networkInterface}.allowedTCPPorts = [

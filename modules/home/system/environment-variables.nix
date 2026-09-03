@@ -1,6 +1,8 @@
-{ lib, isHeadless, ... }:
-
 {
+  lib,
+  isHeadless,
+  ...
+}: {
   home.sessionVariables = {
     EDITOR = "vim";
   };

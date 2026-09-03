@@ -1,9 +1,7 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.clamav = {
     updater.enable = true;
     updater.frequency = 1;
   };
-  environment.systemPackages = [ pkgs.clamav ];
+  environment.systemPackages = [pkgs.clamav];
 }

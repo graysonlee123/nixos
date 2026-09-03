@@ -1,6 +1,8 @@
-{ pkgs, isHeadless, ... }:
-
 {
+  pkgs,
+  isHeadless,
+  ...
+}: {
   imports = [
     ../../modules/home/cli/btop.nix
     ../../modules/home/cli/fzf.nix

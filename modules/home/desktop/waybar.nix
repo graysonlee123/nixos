@@ -3,30 +3,25 @@
   lib,
   pkgs,
   ...
-}:
-
-let
-  mkDrawer =
-    {
-      orientation ? "horizontal",
-      modules,
-    }:
-    {
-      inherit modules orientation;
-      drawer = {
-        transition-duration = 300;
-        transition-left-to-right = false;
-        click-to-reveal = true;
-      };
+}: let
+  mkDrawer = {
+    orientation ? "horizontal",
+    modules,
+  }: {
+    inherit modules orientation;
+    drawer = {
+      transition-duration = 300;
+      transition-left-to-right = false;
+      click-to-reveal = true;
     };
+  };
   mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty -e ${cmd}";
-in
-{
+in {
   programs.waybar = {
     enable = true;
     systemd = {
       enable = true;
-      targets = [ "sway-session.target" ];
+      targets = ["sway-session.target"];
     };
     settings = {
       mainBar = {
@@ -160,7 +155,11 @@ in
             "network#bandwidth"
             "custom/bandwhich-btn"
             "custom/nload-btn"
-            (if isLaptop then "custom/impala-btn" else "custom/nmtui-btn")
+            (
+              if isLaptop
+              then "custom/impala-btn"
+              else "custom/nmtui-btn"
+            )
           ];
         };
 
@@ -273,7 +272,7 @@ in
 
         "group/clock-group" = {
           orientation = "horizontal";
-          modules = [ "group/clock-drawer" ] ++ lib.optional isLaptop "battery" ++ [ "clock" ];
+          modules = ["group/clock-drawer"] ++ lib.optional isLaptop "battery" ++ ["clock"];
         };
 
         "group/clock-drawer" = mkDrawer {
@@ -309,7 +308,10 @@ in
         "custom/music" = {
           hide-empty-text = true;
           interval = 2; # TODO: Use signals to update?
-          max-length = if isLaptop then 32 else 64;
+          max-length =
+            if isLaptop
+            then 32
+            else 64;
           escape = true;
           exec = ''
             ${pkgs.playerctl}/bin/playerctl metadata --format '  {{title}} - {{artist}}'

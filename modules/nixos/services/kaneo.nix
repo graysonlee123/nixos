@@ -3,9 +3,7 @@
   lib,
   constants,
   ...
-}:
-
-let
+}: let
   port = 5173;
   sops = {
     kaneo = {
@@ -29,24 +27,26 @@ let
     };
   };
   postgres = {
-    database = lib.findFirst (
-      x: x == "kaneo"
-    ) (throw "missing kaneo database name") config.services.postgresql.ensureDatabases;
+    database =
+      lib.findFirst (
+        x: x == "kaneo"
+      ) (throw "missing kaneo database name")
+      config.services.postgresql.ensureDatabases;
     user =
       (lib.findFirst (
-        x: x.name == "kaneo"
-      ) (throw "missing kaneo database user") config.services.postgresql.ensureUsers).name;
+          x: x.name == "kaneo"
+        ) (throw "missing kaneo database user")
+        config.services.postgresql.ensureUsers).name;
     host = constants.network.dockerBridge;
   };
-in
-{
+in {
   # SMTP secrets: declared in modules/nixos/system/sops.nix
   # Example env file: https://github.com/usekaneo/kaneo/blob/main/.env.sample
   sops.secrets = {
-    ${sops.kaneo.auth.secret} = { };
-    ${sops.postgres.users.kaneo.password} = { };
-    ${sops.github.oauth.clientId} = { };
-    ${sops.github.oauth.clientSecret} = { };
+    ${sops.kaneo.auth.secret} = {};
+    ${sops.postgres.users.kaneo.password} = {};
+    ${sops.github.oauth.clientId} = {};
+    ${sops.github.oauth.clientSecret} = {};
   };
   sops.templates.${sops.kaneo.envFile}.content = ''
     AUTH_SECRET=${config.sops.placeholder.${sops.kaneo.auth.secret}}
@@ -62,8 +62,8 @@ in
   virtualisation.oci-containers.containers.kaneo = {
     image = "ghcr.io/usekaneo/kaneo:2.22.0@sha256:362139ce143ea5f21c170d2626f654d21991bd48f51340913a54d427b4cfda2c";
     hostname = "kaneo";
-    ports = [ "127.0.0.1:${toString port}:5173" ];
-    environmentFiles = [ config.sops.templates.${sops.kaneo.envFile}.path ];
+    ports = ["127.0.0.1:${toString port}:5173"];
+    environmentFiles = [config.sops.templates.${sops.kaneo.envFile}.path];
     environment = {
       KANEO_CLIENT_URL = "https://kaneo.lab.ggantek.net";
       POSTGRES_DB = postgres.database;

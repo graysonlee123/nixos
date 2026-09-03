@@ -1,6 +1,4 @@
-{ wttrbar, ... }:
-
-{
+{wttrbar, ...}: {
   programs.waybar.settings.mainBar."custom/weather" = {
     exec = "LOCATION=Atlanta ${wttrbar}/bin/wttrbar";
     return-type = "json";

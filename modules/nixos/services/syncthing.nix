@@ -1,9 +1,10 @@
-{ lib, config, ... }:
-
-let
-  syncthingData = import ../../../data/syncthing.nix;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  syncthingData = import ../../../data/syncthing.nix;
+in {
   sops.secrets = {
     "services/syncthing/password" = {
       owner = config.services.syncthing.user;
@@ -17,14 +18,16 @@ in
     openDefaultPorts = true;
     settings = {
       devices = syncthingData.devices;
-      folders = lib.mapAttrs (
-        _: value:
-        value
-        // {
-          path = "~/${value.id}";
-          ignorePatterns = lib.splitString "\n" syncthingData.ignorePatterns;
-        }
-      ) syncthingData.folders;
+      folders =
+        lib.mapAttrs (
+          _: value:
+            value
+            // {
+              path = "~/${value.id}";
+              ignorePatterns = lib.splitString "\n" syncthingData.ignorePatterns;
+            }
+        )
+        syncthingData.folders;
       options.urAccepted = -1;
       gui.user = "gray";
     };

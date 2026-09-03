@@ -3,12 +3,9 @@
   lib,
   config,
   ...
-}:
-
-let
+}: let
   cfg = config.greeter;
-in
-{
+in {
   options.greeter.unsupportedGpu = lib.mkOption {
     type = lib.types.bool;
     default = false;
@@ -23,7 +20,9 @@ in
       settings = {
         default_session = {
           command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd \"${
-            if cfg.unsupportedGpu then "sway --unsupported-gpu" else "sway"
+            if cfg.unsupportedGpu
+            then "sway --unsupported-gpu"
+            else "sway"
           }\"";
           user = "greeter";
         };

@@ -1,5 +1,4 @@
 # https://wiki.nixos.org/wiki/PipeWire
-
 {
   security.rtkit.enable = true;
   services.pipewire = {

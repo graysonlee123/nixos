@@ -7,8 +7,7 @@ let
       maxAge = "2592000"; # 30 days
     };
   };
-in
-rec {
+in rec {
   devices = {
     nostromo = {
       id = "5N4LBAT-Q3W7TMI-4QG2Y66-3HUGMR7-PDL7WBJ-OHOBREZ-5P6LHT5-4BRVSQ7";

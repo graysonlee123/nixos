@@ -3,46 +3,41 @@
   constants,
   hosts,
   ...
-}:
-
-let
+}: let
   dnsPort = 53;
-  mkClient =
-    {
-      name,
-      ids,
-      uuid,
-    }:
-    {
-      inherit name ids uuid;
-      safe_search = {
-        enabled = false;
-        bing = true;
-        duckduckgo = true;
-        ecosia = true;
-        google = true;
-        pixabay = true;
-        yandex = true;
-        youtube = true;
-      };
-      blocked_services = {
-        ids = [ ];
-        schedule.time_zone = "Local";
-      };
-      tags = [ ];
-      upstreams = [ ];
-      upstreams_cache_size = 0;
-      upstreams_cache_enabled = false;
-      use_global_settings = true;
-      filtering_enabled = false;
-      parental_enabled = false;
-      safebrowsing_enabled = false;
-      use_global_blocked_services = true;
-      ignore_querylog = false;
-      ignore_statistics = false;
+  mkClient = {
+    name,
+    ids,
+    uuid,
+  }: {
+    inherit name ids uuid;
+    safe_search = {
+      enabled = false;
+      bing = true;
+      duckduckgo = true;
+      ecosia = true;
+      google = true;
+      pixabay = true;
+      yandex = true;
+      youtube = true;
     };
-in
-{
+    blocked_services = {
+      ids = [];
+      schedule.time_zone = "Local";
+    };
+    tags = [];
+    upstreams = [];
+    upstreams_cache_size = 0;
+    upstreams_cache_enabled = false;
+    use_global_settings = true;
+    filtering_enabled = false;
+    parental_enabled = false;
+    safebrowsing_enabled = false;
+    use_global_blocked_services = true;
+    ignore_querylog = false;
+    ignore_statistics = false;
+  };
+in {
   # openFirewall only opens web UI port, not DNS/DHCP
   networking.firewall.interfaces."enp2s0".allowedTCPPorts = [
     dnsPort # DNS
@@ -52,7 +47,7 @@ in
     67 # DHCP
     68 # DHCP
   ];
-  networking.nameservers = [ "127.0.0.1" ];
+  networking.nameservers = ["127.0.0.1"];
   networking.networkmanager.dns = "none";
 
   services.adguardhome = {
@@ -152,13 +147,13 @@ in
       # MAC identifiers don't aggregate in client stats: https://github.com/AdguardTeam/AdGuardHome/issues/4649
       clients.persistent = (
         lib.mapAttrsToList (
-          _: value:
-          (mkClient {
+          _: value: (mkClient {
             name = value.label;
-            ids = [ value.mac ];
+            ids = [value.mac];
             uuid = value.uuid;
           })
-        ) hosts
+        )
+        hosts
       );
       tls.enabled = false;
     };

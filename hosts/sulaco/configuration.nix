@@ -1,10 +1,11 @@
-{ lib, hosts, ... }:
-
-let
+{
+  lib,
+  hosts,
+  ...
+}: let
   radicaleCollections = import ../../data/radicale-collections.nix;
   minecraft-players = import ../../data/minecraft-players.nix;
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
     ../../profiles/headless.nix
@@ -25,7 +26,7 @@ in
       type = "fabric";
       difficulty = "normal";
       seed = "august2026";
-      whitelist = map (v: v.uuid) minecraft-players; 
+      whitelist = map (v: v.uuid) minecraft-players;
       motd = "August 2026";
       modrinth.projects = [
         "appleskin"
@@ -46,6 +47,7 @@ in
     lib.mapAttrs (_: value: {
       color = value.color;
       type = value.type;
-    }) radicaleCollections
+    })
+    radicaleCollections
   );
 }

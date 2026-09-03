@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.waybar.settings.mainBar."custom/mullvad" = {
     return-type = "json";
     interval = 30;
@@ -14,7 +12,7 @@
           pkgs.mullvad
           pkgs.jq
         ];
-        excludeShellChecks = [ "SC2028" ];
+        excludeShellChecks = ["SC2028"];
         text = ''
           status=$(mullvad status --json)
           state=$(echo "$status" | jq -r '.state')
@@ -65,7 +63,7 @@
       Restart = "on-failure";
       RestartSec = "5s";
     };
-    Install.WantedBy = [ "sway-session.target" ];
+    Install.WantedBy = ["sway-session.target"];
   };
 
   programs.waybar.style = ''

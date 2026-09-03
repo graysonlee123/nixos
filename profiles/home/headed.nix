@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./base.nix
     ../../modules/home/apps/chromium.nix
@@ -48,7 +46,11 @@
     obsidian
     pavucontrol
     pgadmin4-desktopmode
-    (php82.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug ]))
+    (php82.withExtensions ({
+      enabled,
+      all,
+    }:
+      enabled ++ [all.xdebug]))
     php82Packages.composer
     playerctl
     pnpm
@@ -61,9 +63,11 @@
     slurp
     teamspeak6-client
     (tidal-hifi.overrideAttrs (old: {
-      postFixup = (old.postFixup or "") + ''
-        wrapProgram $out/bin/tidal-hifi --add-flags "--no-sandbox"
-      '';
+      postFixup =
+        (old.postFixup or "")
+        + ''
+          wrapProgram $out/bin/tidal-hifi --add-flags "--no-sandbox"
+        '';
     }))
     typescript-language-server
     vlc

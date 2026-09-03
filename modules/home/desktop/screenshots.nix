@@ -13,8 +13,8 @@
           "save-to-file"
           "exit"
         ];
-        actions-on-right-click = [ ];
-        actions-on-escape = [ "exit" ];
+        actions-on-right-click = [];
+        actions-on-escape = ["exit"];
       };
       font = {
         family = "JetBrainsMono Nerd Font";

@@ -1,6 +1,4 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   services.vikunja = {
     enable = true;
     port = 3456;
@@ -12,7 +10,7 @@
       type = "postgres";
       user = "vikunja";
     };
-    environmentFiles = [ config.sops.templates."vikunja.env".path ];
+    environmentFiles = [config.sops.templates."vikunja.env".path];
     settings = {
       service = {
         timezone = "America/New_York";
