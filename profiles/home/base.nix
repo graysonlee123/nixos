@@ -26,6 +26,7 @@
   fonts.fontconfig.enable = !isHeadless;
 
   home.packages = with pkgs; [
+    alejandra
     bandwhich
     bat
     dig

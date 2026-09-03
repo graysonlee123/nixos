@@ -49,6 +49,9 @@ in {
           "nix.serverPath" = "nixd";
           "nix.serverSettings" = {
             "nixd" = {
+              "formatting" = {
+                "command" = ["alejandra"];
+              };
               "options" = {
                 "nixos" = {
                   "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options";
