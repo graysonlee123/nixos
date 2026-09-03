@@ -1,6 +1,14 @@
-{ pkgs, pkgs-unstable, lib, ... }:
-
 {
+  pkgs,
+  pkgs-unstable,
+  lib,
+  osConfig,
+  config,
+  ...
+}: let
+  flakePath = "${config.home.homeDirectory}/repos/me/nixos";
+  hostName = osConfig.networking.hostName;
+in {
   programs.vscode = {
     enable = true;
     mutableExtensionsDir = false;
@@ -39,6 +47,18 @@
           };
           "nix.enableLanguageServer" = true;
           "nix.serverPath" = "nixd";
+          "nix.serverSettings" = {
+            "nixd" = {
+              "options" = {
+                "nixos" = {
+                  "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options";
+                };
+                "home-manager" = {
+                  "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options.home-manager.users.type.getSubOptions []";
+                };
+              };
+            };
+          };
           "[nix]" = {
             "editor.defaultFormatter" = "jnoortheen.nix-ide";
           };
