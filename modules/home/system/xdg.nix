@@ -2,7 +2,7 @@
   xdg.desktopEntries.yazi-open = {
     name = "Yazi";
     comment = "Terminal file manager";
-    exec = "ghostty -e yazi %u";
+    exec = "ghostty -e yazi %f";
     terminal = false;
     mimeType = ["inode/directory"];
     categories = [
