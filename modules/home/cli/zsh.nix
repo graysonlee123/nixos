@@ -25,7 +25,7 @@
       "lzd" = "lazydocker";
       "lzg" = "lazygit";
       "pn" = "pnpm";
-      "rb" = "radioboat --volume 75 --track-file ~/.config/radioboat/tracks.txt";
+      "rb" = "radioboat";
       "dcd" = "docker compose down";
       "dcu" = "docker compose up";
       "dcud" = "docker compose up -d";
