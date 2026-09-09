@@ -9,6 +9,8 @@
 | 80    | TCP      | Caddy (HTTP)              | \*                      | Yes             | Redirect to HTTPS                            |
 | 443   | TCP/UDP  | Caddy (HTTPS)             | \*                      | Yes             | Reverse proxy                                |
 | 1224  | TCP      | Express Postmark          | 127.0.0.1               | No              |                                              |
+| 2456-2457 | UDP  | Valheim (vikings)         | 0.0.0.0                 | Yes             | Game + query; WAN (router forward)           |
+| 2458-2459 | UDP  | Valheim (nora)            | 0.0.0.0                 | Yes             | Game + query; LAN only                       |
 | 3000  | TCP      | AdGuard Home (Web)        | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3001  | TCP      | Uptime Kuma               | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3456  | TCP      | Vikunja                   | \*                      | No              | Firewall blocks                              |

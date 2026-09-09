@@ -40,6 +40,17 @@ in {
         "shulkerboxtooltip"
       ];
     };
+
+    valheim.vikings = {
+      enable = true;
+      serverName = "Da viking bois";
+    };
+
+    valheim.nora = {
+      enable = true;
+      serverName = "Julep's server";
+      port = 2458;
+    };
   };
 
   services.linkdingContainer.enable = true;
