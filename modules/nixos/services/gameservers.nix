@@ -17,6 +17,12 @@
   getMcBackupsSlug = name: "minecraft-backups-${name}";
   getMcDir = name: getGameserverInstanceDir "minecraft" name;
   getMcRconPasswordSopsKey = name: "gameservers/minecraft/${name}/rcon_password";
+
+  # Valheim
+  getValheimSlug = name: "valheim-${name}";
+  getValheimDir = name: getGameserverInstanceDir "valheim" name;
+  getValheimPasswordSopsKey = name: "gameservers/valheim/${name}/password";
+  getValheimEnvTemplate = name: "valheim-${name}.env";
 in {
   options.services.gameservers = {
     terraria = lib.options.mkOption {
@@ -105,6 +111,32 @@ in {
                 type = lib.types.listOf lib.types.str;
                 default = [];
               };
+            };
+          };
+        }
+      );
+    };
+
+    valheim = lib.options.mkOption {
+      description = "Valheim servers to run within Docker.";
+      default = {};
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          options = {
+            enable = lib.mkEnableOption "Valheim server";
+            port = lib.mkOption {
+              description = "Host UDP port; server also uses port+1 for queries.";
+              type = lib.types.port;
+              default = 2456;
+            };
+            serverName = lib.mkOption {
+              description = "Server name shown in the browser.";
+              type = lib.types.str;
+            };
+            world = lib.mkOption {
+              description = "World name. Defaults to the instance name.";
+              type = lib.types.nullOr lib.types.str;
+              default = null;
             };
           };
         }
@@ -211,6 +243,42 @@ in {
             };
           }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft))
+
+      # Valheim
+      (lib.mapAttrs' (
+        name: srv: let
+          slug = getValheimSlug name;
+          hostDir = getValheimDir name;
+        in
+          lib.nameValuePair slug {
+            image = "lloesche/valheim-server@sha256:bbda47cbbc9fd7b0385803ba0a70ba2084df4cb87ec6170a145aec5df06be07e";
+            hostname = slug;
+            ports = [
+              "${toString srv.port}:2456/udp"
+              "${toString (srv.port + 1)}:2457/udp"
+            ];
+            volumes = [
+              "${hostDir}/config:/config"
+              "${hostDir}/server:/opt/valheim"
+            ];
+            environmentFiles = [
+              config.sops.templates.${getValheimEnvTemplate name}.path
+            ];
+            environment = {
+              TZ = "America/New_York";
+              SERVER_NAME = srv.serverName;
+              WORLD_NAME =
+                if srv.world == null
+                then name
+                else srv.world;
+              SERVER_PORT = "2456"; # Container-internal port; host port set via `ports`
+              SERVER_PUBLIC = "0"; # Never list in public browser; join via direct IP + pass
+              BACKUPS_MAX_AGE = "7"; # Days of backups to keep
+              PUID = "1000";
+              PGID = "1000";
+            };
+          }
+      ) (lib.filterAttrs (_: srv: srv.enable) cfg.valheim))
     ];
 
     sops.secrets = lib.mkMerge [
@@ -224,6 +292,19 @@ in {
             mode = "0444"; # Container runs as user 1000; secret is mounted as root
           }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft))
+
+      (lib.mapAttrs' (name: srv: lib.nameValuePair (getValheimPasswordSopsKey name) {}) (
+        lib.filterAttrs (_: srv: srv.enable) cfg.valheim
+      ))
     ];
+
+    # Render the Valheim password into an env file; SERVER_PASS has no *_FILE variant.
+    sops.templates =
+      lib.mapAttrs' (
+        name: srv:
+          lib.nameValuePair (getValheimEnvTemplate name) {
+            content = "SERVER_PASS=${config.sops.placeholder.${getValheimPasswordSopsKey name}}";
+          }
+      ) (lib.filterAttrs (_: srv: srv.enable) cfg.valheim);
   };
 }

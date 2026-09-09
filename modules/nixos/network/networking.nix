@@ -48,7 +48,15 @@ in {
         ++ [
           22000 # Syncthing
         ];
-      networking.firewall.allowedUDPPorts = [21027]; # Syncthing discovery
+      networking.firewall.allowedUDPPorts =
+        [21027] # Syncthing discovery
+        ++ lib.optionals isHeadless (
+          lib.concatMap (srv: [srv.port (srv.port + 1)]) (
+            lib.attrValues (
+              lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.valheim
+            )
+          )
+        );
     }
     (lib.mkIf (cfg.staticIP != null) {
       networking.firewall.interfaces.${cfg.networkInterface}.allowedTCPPorts = [
