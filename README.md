@@ -227,6 +227,14 @@ sudo nixos-rebuild build --flake .
 # Rollback to previous generation
 sudo nixos-rebuild switch --rollback
 
+# Deploy to a remote host over SSH (e.g. headless Sulaco), building ON the target.
+# --build-host makes the target build its own outputs, avoiding "lacks a signature
+# by a trusted key" errors from copying locally-built paths. Evaluates from the
+# local working dir, so uncommitted changes deploy without a commit.
+nixos-rebuild switch --flake .#sulaco \
+  --build-host gray@sulaco --target-host gray@sulaco \
+  --sudo --ask-sudo-password
+
 # List all generations
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 
