@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   pkgs-unstable,
   lib,
@@ -29,12 +30,19 @@
         }
         // lib.optionalAttrs (!isHeadless) {
           "gopls-lsp@claude-plugins-official" = true;
+          "inspry-php@skills" = true;
         };
       extraKnownMarketplaces = {
         caveman = {
           source = {
             source = "github";
             repo = "JuliusBrussee/caveman";
+          };
+        };
+        skills = {
+          source = {
+            source = "directory";
+            path = "${config.home.homeDirectory}/repos/inspry/skills";
           };
         };
       };
