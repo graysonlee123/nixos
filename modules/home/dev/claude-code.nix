@@ -38,6 +38,7 @@
           source = {
             source = "github";
             repo = "JuliusBrussee/caveman";
+            autoUpdate = true;
           };
         };
         skills = {
