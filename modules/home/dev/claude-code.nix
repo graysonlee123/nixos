@@ -133,6 +133,7 @@
           ];
         ask = [
           "Bash(git commit:*)"
+          "Bash(git push:*)"
         ];
       };
       respondToBashCommands = false;
