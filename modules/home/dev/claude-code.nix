@@ -31,6 +31,7 @@
         // lib.optionalAttrs (!isHeadless) {
           "gopls-lsp@claude-plugins-official" = true;
           "inspry-php@skills" = true;
+          "inspry-skills@inspry" = true;
         };
       extraKnownMarketplaces = {
         caveman = {
@@ -43,6 +44,13 @@
           source = {
             source = "directory";
             path = "${config.home.homeDirectory}/repos/inspry/skills";
+          };
+        };
+        inspry-skills = {
+          source = {
+            source = "git";
+            url = "git@inspry.github.com:inspry/claude-plugins.git";
+            autoUpdate = true;
           };
         };
       };
@@ -164,10 +172,6 @@
       };
       clickup = {
         url = "https://mcp.clickup.com/mcp";
-        type = "http";
-      };
-      inspry = {
-        url = "https://inspry-mcp-hub-production.up.railway.app/mcp";
         type = "http";
       };
       jetbrains = {
