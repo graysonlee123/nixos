@@ -296,6 +296,7 @@ in {
               }
               // lib.optionalAttrs (srv.valheimPlus) {
                 # Valheim Plus
+                # Configuration reference: https://github.com/Grantapher/ValheimPlus/blob/main/valheim_plus.cfg
                 VALHEIM_PLUS = "true";
                 VPCFG_ValheimPlus_serverBrowserAdvertisement = "false";
 
@@ -303,9 +304,22 @@ in {
                 VPCFG_Bed_enabled = "true";
                 VPCFG_Bed_sleepWithoutSpawn = "true";
 
+                # Camera
+                VPCFG_Camera_enabled = "true";
+                VPCFG_Camera_cameraMaximumZoomDistance = "12";
+                VPCFG_Camera_cameraBoatMaximumZoomDistance = "24";
+
+                # Fermenter
+                VPCFG_Fermenter_enabled = "true";
+                VPCFG_Fermenter_showDuration = "true";
+
                 # Fire Source configuration
                 VPCFG_FireSource_enabled = "true";
                 VPCFG_FireSource_torches = "true";
+
+                # Game
+                VPCFG_Game_enabled = "true";
+                VPCFG_Game_bigPortalNames = "true";
 
                 # Items configuration
                 VPCFG_Items_enabled = "true";
@@ -370,6 +384,15 @@ in {
                 VPCFG_Ship_rudderSpeed = "50";
                 VPCFG_Ship_steerForce = "50";
                 VPCFG_Ship_waterImpactDamage = "-50";
+
+                # Workbench
+                VPCFG_Workbench_enabled = "true";
+                VPCFG_Workbench_workbenchAttachmentRange = "10";
+                VPCFG_Workbench_disableRoofCheck = "true";
+
+                # GameClock
+                VPCFG_GameClock_enable = "true";
+                VPCFG_GameClock_useAMPM = "true";
               };
           }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.valheim))
