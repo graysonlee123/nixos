@@ -40,6 +40,7 @@ in {
       enable = true;
       serverName = "Julep's server";
       port = 2458;
+      valheimPlus = true;
     };
   };
 
