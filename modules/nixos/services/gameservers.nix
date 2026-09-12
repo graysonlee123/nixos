@@ -145,6 +145,11 @@ in {
               type = lib.types.nullOr lib.types.str;
               default = null;
             };
+            valheimPlus = lib.mkOption {
+              description = "Whether or not to enable Valheim+ with opinionated configuration.";
+              type = lib.types.bool;
+              default = false;
+            };
           };
         }
       );
@@ -275,19 +280,97 @@ in {
             environmentFiles = [
               config.sops.templates.${getValheimEnvTemplate name}.path
             ];
-            environment = {
-              TZ = "America/New_York";
-              SERVER_NAME = srv.serverName;
-              WORLD_NAME =
-                if srv.world == null
-                then name
-                else srv.world;
-              SERVER_PORT = "2456"; # Container-internal port; host port set via `ports`
-              SERVER_PUBLIC = "0"; # Never list in public browser; join via direct IP + pass
-              BACKUPS_MAX_AGE = "7"; # Days of backups to keep
-              PUID = "1000";
-              PGID = "1000";
-            };
+            environment =
+              {
+                TZ = "America/New_York";
+                SERVER_NAME = srv.serverName;
+                WORLD_NAME =
+                  if srv.world == null
+                  then name
+                  else srv.world;
+                SERVER_PORT = "2456"; # Container-internal port; host port set via `ports`
+                SERVER_PUBLIC = "0"; # Never list in public browser; join via direct IP + pass
+                BACKUPS_MAX_AGE = "7"; # Days of backups to keep
+                PUID = "1000";
+                PGID = "1000";
+              }
+              // lib.optionalAttrs (srv.valheimPlus) {
+                # Valheim Plus
+                VALHEIM_PLUS = "true";
+                VPCFG_ValheimPlus_serverBrowserAdvertisement = "false";
+
+                # Bed configuration
+                VPCFG_Bed_enabled = "true";
+                VPCFG_Bed_sleepWithoutSpawn = "true";
+
+                # Fire Source configuration
+                VPCFG_FireSource_enabled = "true";
+                VPCFG_FireSource_torches = "true";
+
+                # Items configuration
+                VPCFG_Items_enabled = "true";
+                VPCFG_Items_noTeleportPrevention = "true";
+                VPCFG_Items_baseItemWeightReduction = "-90";
+                VPCFG_Items_itemStackMultiplier = "1000";
+                VPCFG_Items_droppedItemOnGroundDurationInSeconds = "${toString 3600 * 6}";
+
+                # HUD configuration
+                VPCFG_Hud_enabled = "true";
+                VPCFG_Hud_experienceGainedNotifications = "true";
+
+                # Map configuration
+                VPCFG_Map_enabled = "true";
+                VPCFG_Map_shareMapProgression = "true";
+                VPCFG_Map_shareAllPins = "true";
+                VPCFG_Map_displayCartsAndBoats = "true";
+
+                # Player configuration
+                VPCFG_Player_enabled = "true";
+                VPCFG_Player_baseMaximumWeight = "1337";
+                VPCFG_Player_disableEncumbered = "true";
+                VPCFG_Player_autoPickUpWhenEncumbered = "true";
+
+                # Server configuration
+                VPCFG_Server_enabled = "true";
+                VPCFG_Server_enforceMod = "true";
+                VPCFG_Server_serverSyncsConfig = "true";
+                VPCFG_Server_maxPlayers = "2";
+                VPCFG_Server_disableServerPassword = "true";
+
+                # Structural Integrity configuration
+                VPCFG_StructuralIntegrity_enabled = "true";
+                VPCFG_StructuralIntegrity_wood = "100";
+                VPCFG_StructuralIntegrity_stone = "100";
+                VPCFG_StructuralIntegrity_iron = "100";
+                VPCFG_StructuralIntegrity_hardWood = "100";
+                VPCFG_StructuralIntegrity_marble = "100";
+                VPCFG_StructuralIntegrity_ashstone = "100";
+                VPCFG_StructuralIntegrity_ancient = "100";
+
+                # Inventory configuration
+                VPCFG_Inventory_enabled = "true";
+                VPCFG_Inventory_playerInventoryRows = "6";
+                VPCFG_Inventory_woodChestRows = "3";
+                VPCFG_Inventory_woodChestColumns = "6";
+                VPCFG_Inventory_ironChestRows = "5";
+                VPCFG_Inventory_ironChestColumns = "7";
+                VPCFG_Inventory_blackmetalChestRows = "6";
+                VPCFG_Inventory_blackmetalChestColumns = "8"; # Max
+                VPCFG_Inventory_karveInventoryRows = "3";
+                VPCFG_Inventory_karveInventoryColumns = "3";
+                VPCFG_Inventory_longboatInventoryRows = "4";
+                VPCFG_Inventory_longboatInventoryColumns = "8"; # Max
+                VPCFG_Inventory_inventoryFillTopToBottom = "true";
+                VPCFG_Inventory_mergeWithExistingStacks = "true";
+
+                # Ship
+                VPCFG_Ship_enabled = "true";
+                VPCFG_Ship_forwardSpeed = "50";
+                VPCFG_Ship_backwardSpeed = "50";
+                VPCFG_Ship_rudderSpeed = "50";
+                VPCFG_Ship_steerForce = "50";
+                VPCFG_Ship_waterImpactDamage = "-50";
+              };
           }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.valheim))
     ];
