@@ -22,23 +22,13 @@ in {
     minecraft.august2026 = {
       enable = true;
       memory = "4G";
-      version = "26.1.1";
+      version = "26.1.2";
       type = "fabric";
       difficulty = "normal";
       seed = "august2026";
       whitelist = map (v: v.uuid) minecraft-players;
       motd = "August 2026";
-      modrinth.projects = [
-        "appleskin"
-        "chunky"
-        "distanthorizons:beta"
-        "fabric-api"
-        "jade"
-        "jei:beta"
-        "lithium"
-        "rei"
-        "shulkerboxtooltip"
-      ];
+      packwiz.url = "https://raw.githubusercontent.com/graysonlee123/packwiz-vanilla-plus/main/pack.toml";
     };
 
     valheim.vikings = {

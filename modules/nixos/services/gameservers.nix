@@ -112,6 +112,13 @@ in {
                 default = [];
               };
             };
+            packwiz = {
+              url = lib.mkOption {
+                description = "URL to a packwiz pack.toml. Installs/updates the modpack on each start.";
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+              };
+            };
           };
         }
       );
@@ -192,25 +199,29 @@ in {
               "${hostDir}/data:/data"
               "${rconPassword.hostPath}:${rconPassword.containerPath}:ro"
             ];
-            environment = {
-              TZ = "America/New_York";
-              MEMORY = srv.memory;
-              EULA = "true";
-              VERSION = srv.version;
-              TYPE = srv.type;
-              DIFFICULTY = srv.difficulty;
-              SEED = srv.seed;
-              SERVER_NAME = "Minecraft (${name})";
-              MOTD = srv.motd;
-              ALLOW_FLIGHT = "true";
-              ICON = srv.icon;
-              PAUSE_WHEN_EMPTY_SECONDS = "600";
-              RCON_PASSWORD_FILE = rconPassword.containerPath;
-              WHITELIST = lib.concatStringsSep "\n" srv.whitelist;
-              OPS = lib.concatStringsSep "\n" srv.ops;
-              MODRINTH_PROJECTS = lib.concatStringsSep "\n" srv.modrinth.projects;
-              MODRINTH_DOWNLOAD_DEPENDENCIES = "required";
-            };
+            environment =
+              {
+                TZ = "America/New_York";
+                MEMORY = srv.memory;
+                EULA = "true";
+                VERSION = srv.version;
+                TYPE = srv.type;
+                DIFFICULTY = srv.difficulty;
+                SEED = srv.seed;
+                SERVER_NAME = "Minecraft (${name})";
+                MOTD = srv.motd;
+                ALLOW_FLIGHT = "true";
+                ICON = srv.icon;
+                PAUSE_WHEN_EMPTY_SECONDS = "600";
+                RCON_PASSWORD_FILE = rconPassword.containerPath;
+                WHITELIST = lib.concatStringsSep "\n" srv.whitelist;
+                OPS = lib.concatStringsSep "\n" srv.ops;
+                MODRINTH_PROJECTS = lib.concatStringsSep "\n" srv.modrinth.projects;
+                MODRINTH_DOWNLOAD_DEPENDENCIES = "required";
+              }
+              // lib.optionalAttrs (srv.packwiz.url != null) {
+                PACKWIZ_URL = srv.packwiz.url;
+              };
           }
       ) (lib.filterAttrs (_: srv: srv.enable) cfg.minecraft))
 
@@ -299,12 +310,11 @@ in {
     ];
 
     # Render the Valheim password into an env file; SERVER_PASS has no *_FILE variant.
-    sops.templates =
-      lib.mapAttrs' (
-        name: srv:
-          lib.nameValuePair (getValheimEnvTemplate name) {
-            content = "SERVER_PASS=${config.sops.placeholder.${getValheimPasswordSopsKey name}}";
-          }
-      ) (lib.filterAttrs (_: srv: srv.enable) cfg.valheim);
+    sops.templates = lib.mapAttrs' (
+      name: srv:
+        lib.nameValuePair (getValheimEnvTemplate name) {
+          content = "SERVER_PASS=${config.sops.placeholder.${getValheimPasswordSopsKey name}}";
+        }
+    ) (lib.filterAttrs (_: srv: srv.enable) cfg.valheim);
   };
 }
