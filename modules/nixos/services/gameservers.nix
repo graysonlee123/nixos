@@ -326,7 +326,7 @@ in {
                 VPCFG_Items_noTeleportPrevention = "true";
                 VPCFG_Items_baseItemWeightReduction = "-90";
                 VPCFG_Items_itemStackMultiplier = "1000";
-                VPCFG_Items_droppedItemOnGroundDurationInSeconds = "${toString 3600 * 6}";
+                VPCFG_Items_droppedItemOnGroundDurationInSeconds = "${toString (3600 * 6)}";
 
                 # HUD configuration
                 VPCFG_Hud_enabled = "true";
