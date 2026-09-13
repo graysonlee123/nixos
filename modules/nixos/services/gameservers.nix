@@ -321,6 +321,13 @@ in {
                 VPCFG_Game_enabled = "true";
                 VPCFG_Game_bigPortalNames = "true";
 
+                # Gathering
+                VPCFG_Gathering_enabled = "true";
+                VPCFG_Gathering_tinOre = "50";
+                VPCFG_Gathering_copperOre = "50";
+                VPCFG_Gathering_ironScrap = "200";
+                VPCFG_Gathering_fineWood = "50";
+
                 # Items configuration
                 VPCFG_Items_enabled = "true";
                 VPCFG_Items_noTeleportPrevention = "true";
