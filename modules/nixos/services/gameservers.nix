@@ -294,6 +294,9 @@ in {
                 PUID = "1000";
                 PGID = "1000";
               }
+              // lib.optionalAttrs (!srv.valheimPlus) {
+                SERVER_ARGS = "-modifier portals casual";
+              }
               // lib.optionalAttrs (srv.valheimPlus) {
                 # Valheim Plus
                 # Configuration reference: https://github.com/Grantapher/ValheimPlus/blob/main/valheim_plus.cfg
