@@ -26,11 +26,12 @@
       emojiCompletionEnabled = false;
       enabledPlugins =
         {
+          # Format: plugin@marketplace
           "caveman@caveman" = true;
         }
         // lib.optionalAttrs (!isHeadless) {
           "gopls-lsp@claude-plugins-official" = true;
-          "inspry-php@skills" = true;
+          "inspry-php@inspry" = true;
           "inspry-skills@inspry" = true;
         };
       extraKnownMarketplaces = {
@@ -41,17 +42,10 @@
             autoUpdate = true;
           };
         };
-        skills = {
+        inspry = {
           source = {
             source = "directory";
-            path = "${config.home.homeDirectory}/repos/inspry/skills";
-          };
-        };
-        inspry-skills = {
-          source = {
-            source = "git";
-            url = "git@inspry.github.com:inspry/claude-plugins.git";
-            autoUpdate = true;
+            path = "${config.home.homeDirectory}/repos/inspry/claude-plugins";
           };
         };
       };
