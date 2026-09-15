@@ -89,6 +89,7 @@
             "Bash(pwd:*)"
             "Bash(wc:*)"
             "Bash(rg:*)"
+            "Bash(php -l:*)"
           ]
           ++ lib.optionals (!isHeadless) [
             # ClickUp (read-only)
