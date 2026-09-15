@@ -4,6 +4,7 @@
     ../../profiles/headed.nix
     ../../modules/nixos/hardware/nvidia.nix
     ../../modules/nixos/hardware/galaxy70.nix
+    ../../modules/nixos/hardware/samson-q9u-gain.nix
     ../../users/gray.nix
   ];
 

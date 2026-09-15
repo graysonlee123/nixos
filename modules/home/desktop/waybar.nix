@@ -2,8 +2,10 @@
   isLaptop,
   lib,
   pkgs,
+  osConfig,
   ...
 }: let
+  isNostromo = osConfig.networking.hostName == "nostromo";
   mkDrawer = {
     orientation ? "horizontal",
     modules,
@@ -209,11 +211,27 @@ in {
 
         "group/audio-group" = {
           orientation = "horizontal";
-          modules = [
-            "group/audio-drawer"
-            "wireplumber"
-            "wireplumber#source"
-          ];
+          modules =
+            [
+              "group/audio-drawer"
+              "wireplumber"
+              "wireplumber#source"
+            ]
+            ++ lib.optional isNostromo "custom/mic-gain";
+        };
+
+        # Samson Q9U hardware "Mic Gain" (ALSA), distinct from PipeWire input
+        # volume above. Report the dB gain (what alsamixer's header shows); it
+        # is linear in the raw value and avoids the percent-curve mismatch.
+        # Keep exec a single line — a multiline exec makes waybar treat it as a
+        # continuous script and ignore `interval`. Emit a trailing newline
+        # (awk `print`) or waybar never commits the updated value.
+        "custom/mic-gain" = {
+          exec = "${pkgs.alsa-utils}/bin/amixer -c Q9U sget 'Mic Gain' | ${pkgs.gawk}/bin/awk -F'[][]' '/Mono:.*Capture/{gsub(\"dB\",\"\",$4); print int($4)}'";
+          interval = 5;
+          format = "󰢻 {}dB";
+          tooltip-format = "Samson Q9U mic gain";
+          on-click = mkGhosttyCmd "${pkgs.alsa-utils}/bin/alsamixer";
         };
 
         "group/audio-drawer" = mkDrawer {
@@ -353,6 +371,7 @@ in {
       #custom-nmtui-btn,
       #custom-impala-btn,
       #custom-wiremix-btn,
+      #custom-mic-gain,
       #custom-pavucontrol-btn,
       #custom-alsamixer-btn,
       #custom-clock-btn,
