@@ -19,6 +19,7 @@
     historySubstringSearch.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
+      "open" = "xdg-open";
       "cl" = "claude";
       "clc" = "claude -c";
       "clr" = "claude -r";
