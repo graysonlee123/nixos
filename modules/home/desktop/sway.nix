@@ -87,6 +87,9 @@ in {
           # Launch terminal
           "${modifier}+Return" = "exec ghostty";
 
+          # Launch floating terminal
+          "${modifier}+Shift+Return" = "exec ghostty --class=com.mitchellh.ghostty.float";
+
           # Kill focused window
           "${modifier}+Shift+q" = "kill";
 
@@ -292,6 +295,12 @@ in {
 
       # Window rules
       window.commands = [
+        {
+          criteria = {
+            app_id = "^com\\.mitchellh\\.ghostty\\.float$";
+          };
+          command = "floating enable";
+        }
         {
           criteria = {
             app_id = "^mako$";
