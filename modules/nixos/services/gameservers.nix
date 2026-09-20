@@ -373,7 +373,7 @@ in {
 
                 # Inventory configuration
                 VPCFG_Inventory_enabled = "true";
-                VPCFG_Inventory_playerInventoryRows = "6";
+                VPCFG_Inventory_playerInventoryRows = "8";
                 VPCFG_Inventory_woodChestRows = "3";
                 VPCFG_Inventory_woodChestColumns = "6";
                 VPCFG_Inventory_ironChestRows = "5";
