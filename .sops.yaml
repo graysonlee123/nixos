@@ -18,6 +18,5 @@ creation_rules:
   - path_regex: secrets/headed\.(yaml|json|env|ini)$
     key_groups:
       - age:
-          - *sulaco
           - *nostromo
           - *corbelan
