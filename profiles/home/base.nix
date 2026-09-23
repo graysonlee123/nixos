@@ -31,6 +31,7 @@
     alejandra
     bandwhich
     bat
+    ddev
     dig
     dive
     docker
