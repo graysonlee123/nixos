@@ -22,6 +22,7 @@
     ../../modules/home/pim/khal.nix
     ../../modules/home/pim/khard.nix
     ../../modules/home/pim/vdirsyncer.nix
+    ../../modules/home/system/age.nix
     ../../modules/home/system/syncthing.nix
     ../../modules/home/system/xdg.nix
   ];
