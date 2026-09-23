@@ -144,13 +144,6 @@
     context = ''
       - In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
       - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise and sacrifice grammar for the sake of consision.
-      - Besides the expected ones, binaries I have installed that may be useful to you include tree, docker, ripgrep, zip, unzip${
-        (
-          if !isHeadless
-          then ", wl-copy, wl-paste, wp-cli."
-          else "."
-        )
-      }
       - Don't use em dashes in write-ups intended for clients.
       - WordPress projects: repos are usually HOLLOW (not a live instance) - no `wp` command works and no db access. Don't attempt either. I upload files to the staging server manually as I work, to test. Pushing triggers a GitHub Actions deploy: `staging` branch deploys to staging, `main` branch deploys to live.
     '';
