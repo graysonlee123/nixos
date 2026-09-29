@@ -52,7 +52,7 @@
       feedbackSurveyRate = 0;
       fileCheckpointingEnabled = false;
       includeCoAuthoredBy = false;
-      model = "claude-opus-4-8";
+      model = "claude-opus-5-5";
       permissions = {
         defaultMode = "manual";
         allow =
