@@ -9,6 +9,7 @@
   programs.vicinae = {
     enable = true;
     settings = {
+      pop_to_root_on_close = true;
       theme = {
         name = "stylix";
       };
