@@ -135,6 +135,11 @@
       };
       respondToBashCommands = false;
       spinnerTipsEnabled = false;
+      statusLine = {
+        type = "command";
+        # Resolve newest caveman cache dir; hash changes on plugin autoUpdate
+        command = ''bash "$(ls -td ${config.home.homeDirectory}/.claude/plugins/cache/caveman/caveman/*/ | head -1)hooks/caveman-statusline.sh"'';
+      };
       tui = "fullscreen";
       voice = {
         enabled = true;
