@@ -5,6 +5,7 @@
     ../modules/nixos/core/polkit.nix
     ../modules/nixos/core/xdg.nix
     ../modules/nixos/desktop/sway.nix
+    ../modules/nixos/desktop/thunar.nix
     ../modules/nixos/gaming/gamemode.nix
     ../modules/nixos/gaming/steam.nix
     ../modules/nixos/hardware/audio.nix
