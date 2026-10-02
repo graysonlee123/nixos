@@ -44,6 +44,19 @@
         <startup-notify/>
         <directories/>
       </action>
+      <action>
+        <icon>vscode</icon>
+        <name>Open in VS Code</name>
+        <submenu></submenu>
+        <unique-id>1790964923859740-2</unique-id>
+        <command>code %f</command>
+        <description>Open in Visual Studio Code</description>
+        <range></range>
+        <patterns>*</patterns>
+        <directories/>
+        <text-files/>
+        <other-files/>
+      </action>
       </actions>
     '';
   };
