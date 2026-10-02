@@ -13,6 +13,7 @@
     ../../modules/home/desktop/mullvad-waybar.nix
     ../../modules/home/desktop/screenshots.nix
     ../../modules/home/desktop/sway.nix
+    ../../modules/home/desktop/thunar.nix
     ../../modules/home/desktop/vicinae.nix
     ../../modules/home/desktop/waybar.nix
     ../../modules/home/desktop/weather.nix
