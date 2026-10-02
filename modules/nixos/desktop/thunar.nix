@@ -6,4 +6,8 @@
   programs.xfconf.enable = true; # persist thunar prefs
   services.gvfs.enable = true; # davs://, sftp://, trash, mounts
   services.tumbler.enable = true; # thumbnails
+
+  # Backend for thunar-archive-plugin; plugin only ships wrappers for
+  # file-roller/engrampa/ark (xarchiver's own wrapper isn't found)
+  environment.systemPackages = [pkgs.file-roller];
 }
