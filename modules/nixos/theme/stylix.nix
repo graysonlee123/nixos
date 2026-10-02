@@ -22,13 +22,6 @@
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/penumbra-dark-contrast-plus.yaml";
 
-    icons = {
-      enable = true;
-      package = pkgs.papirus-icon-theme;
-      dark = "Papirus-Dark";
-      light = "Papirus-Light";
-    };
-
     fonts = {
       serif = {
         package = pkgs.lora;

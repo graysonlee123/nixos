@@ -15,5 +15,6 @@
     ../modules/nixos/security/1password.nix
     ../modules/nixos/security/clamav.nix
     ../modules/nixos/security/keyring.nix
+    ../modules/nixos/theme/icons.nix
   ];
 }
