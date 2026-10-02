@@ -14,7 +14,7 @@
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
     # Directories
-    "inode/directory" = "yazi-open.desktop";
+    "inode/directory" = "thunar.desktop";
     # Video
     "video/mp4" = "vlc.desktop";
     "video/x-matroska" = "vlc.desktop";
@@ -60,4 +60,17 @@
     templates = "${config.home.homeDirectory}/templates";
     videos = "${config.home.homeDirectory}/videos";
   };
+
+  # File manager sidebar (Thunar, GTK file pickers)
+  gtk.gtk3.bookmarks = [
+    "file://${config.xdg.userDirs.download} Downloads"
+    "file://${config.xdg.userDirs.documents} Documents"
+    "file://${config.xdg.userDirs.pictures} Pictures"
+    "file://${config.home.homeDirectory}/syncthing Syncthing"
+    "file://${config.home.homeDirectory}/repos Repos"
+    "file:///tmp Temp"
+    "file:///run/current-system/sw System packages"
+    "file://${config.home.homeDirectory}/.nix-profile User packages"
+    "file://${config.home.homeDirectory}/.local/state/home-manager/gcroots/current-home Home Manager"
+  ];
 }
