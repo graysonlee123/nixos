@@ -72,5 +72,10 @@
     "file:///run/current-system/sw System packages"
     "file://${config.home.homeDirectory}/.nix-profile User packages"
     "file://${config.home.homeDirectory}/.local/state/home-manager/gcroots/current-home Home Manager"
+    "file://${config.home.homeDirectory}/repos/me/nixos NixOS"
+    "file://${config.home.homeDirectory}/repos/inspry/checkview Checkview"
+    "file://${config.home.homeDirectory}/repos/inspry/helper Helper Plugin"
   ];
+  # GTK replaces the symlink with a real file when bookmarks change in the UI
+  xdg.configFile."gtk-3.0/bookmarks".force = true;
 }
