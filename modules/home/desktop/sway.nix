@@ -326,6 +326,14 @@ in {
           command = "floating enable";
         }
         {
+          # Thunar dialogs (rename, progress, properties); main window ends "- Thunar"
+          criteria = {
+            app_id = "^thunar$";
+            title = "^(?!.* - Thunar$)";
+          };
+          command = "floating enable";
+        }
+        {
           criteria = {
             app_id = "^code$";
             title = "- Chromium$";
