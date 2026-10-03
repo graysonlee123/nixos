@@ -24,6 +24,8 @@
   environment.systemPackages = with pkgs; [
     curl
     file
+    gdb
+    gcc
     inxi
     mangohud
     openvpn

@@ -8,11 +8,13 @@
     ../../modules/home/desktop/batsignal.nix
     ../../modules/home/desktop/cursor.nix
     ../../modules/home/desktop/ghostty.nix
+    ../../modules/home/desktop/gtk.nix
     ../../modules/home/desktop/imv.nix
     ../../modules/home/desktop/mako.nix
     ../../modules/home/desktop/mullvad-waybar.nix
     ../../modules/home/desktop/screenshots.nix
     ../../modules/home/desktop/sway.nix
+    ../../modules/home/desktop/thunar.nix
     ../../modules/home/desktop/vicinae.nix
     ../../modules/home/desktop/waybar.nix
     ../../modules/home/desktop/weather.nix

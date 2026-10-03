@@ -26,6 +26,7 @@ in {
           vscode-extensions.jnoortheen.nix-ide
           vscode-extensions.biomejs.biome
           vscode-extensions.bradlc.vscode-tailwindcss
+          vscode-extensions.ms-vscode.cpptools
         ];
         userSettings = {
           "update.mode" = "none";
@@ -80,6 +81,7 @@ in {
             "https://biomejs.dev"
             "https://turbo.build/schema.json"
           ] (_: true);
+          "C_Cpp.default.compilerPath" = "${pkgs.gcc}/bin/gcc";
         };
         keybindings = [
           {

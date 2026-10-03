@@ -5,6 +5,7 @@
     ../modules/nixos/core/polkit.nix
     ../modules/nixos/core/xdg.nix
     ../modules/nixos/desktop/sway.nix
+    ../modules/nixos/desktop/thunar.nix
     ../modules/nixos/gaming/gamemode.nix
     ../modules/nixos/gaming/steam.nix
     ../modules/nixos/hardware/audio.nix
@@ -15,5 +16,6 @@
     ../modules/nixos/security/1password.nix
     ../modules/nixos/security/clamav.nix
     ../modules/nixos/security/keyring.nix
+    ../modules/nixos/theme/icons.nix
   ];
 }
