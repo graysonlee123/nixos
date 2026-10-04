@@ -22,6 +22,7 @@
     ../../modules/home/system/environment-variables.nix
     ../../modules/home/system/sops.nix
     ../../modules/home/system/ssh.nix
+    ../../modules/home/system/trash.nix
   ];
 
   home.stateVersion = "25.11";
