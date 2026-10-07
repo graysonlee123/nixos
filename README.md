@@ -212,6 +212,10 @@ See [docs/hosts.md](docs/hosts.md).
 
 See [docs/vpn.md](docs/vpn.md).
 
+## Garbage Collection
+
+See [docs/garbage-collection.md](docs/garbage-collection.md).
+
 ## Useful Commands
 
 ```bash
