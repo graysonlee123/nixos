@@ -4,8 +4,6 @@
   pkgs,
   ...
 }: {
-  systemd.user.services.vicinae.Service.Environment = "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin";
-
   programs.vicinae = {
     enable = true;
     settings = {
