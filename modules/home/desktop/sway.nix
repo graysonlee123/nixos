@@ -46,7 +46,7 @@ in {
     in {
       modifier = modifier;
       terminal = "ghostty";
-      focus.mouseWarping = "container";
+      focus.mouseWarping = "output";
 
       # Output configuration
       output =
