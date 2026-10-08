@@ -43,6 +43,8 @@ in {
   systemd.user.services.vicinae = {
     # Vicinae has no reload IPC; sd-switch restarts once when either store changes.
     Unit.X-Restart-Triggers = ["${shortcutsFile}" "${snippetsFile}"];
+    # Setcap'd wrapper from modules/nixos/desktop/vicinae.nix (snippet expansion).
+    Service.Environment = "VICINAE_INPUT_SERVER_BIN=/run/wrappers/bin/vicinae-input-server";
   };
 
   programs.vicinae = {
