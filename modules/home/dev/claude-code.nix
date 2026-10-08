@@ -54,7 +54,7 @@
       includeCoAuthoredBy = false;
       model = "claude-opus-5-5";
       permissions = {
-        defaultMode = "manual";
+        defaultMode = "auto";
         allow =
           [
             # Bash
