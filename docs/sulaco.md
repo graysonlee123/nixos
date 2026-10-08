@@ -4,8 +4,8 @@
 | ----- | -------- | ------------------------- | ----------------------- | --------------- | -------------------------------------------- |
 | 22    | TCP      | SSH                       | 0.0.0.0                 | LAN + Tailscale |                                              |
 | 53    | TCP/UDP  | AdGuard Home (DNS)        | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DNS                                      |
-| 68    | TCP/UDP  | AdGuard Home (DHCP)       | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DNS                                      |
-| 67    | TCP/UDP  | AdGuard Home (DHCP)       | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DNS                                      |
+| 67    | TCP/UDP  | AdGuard Home (DHCP)       | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DHCP                                     |
+| 68    | TCP/UDP  | AdGuard Home (DHCP)       | 127.0.0.1, 192.168.86.2 | enp2s0          | LAN DHCP                                     |
 | 80    | TCP      | Caddy (HTTP)              | \*                      | Yes             | Redirect to HTTPS                            |
 | 443   | TCP/UDP  | Caddy (HTTPS)             | \*                      | Yes             | Reverse proxy                                |
 | 1224  | TCP      | Express Postmark          | 127.0.0.1               | No              |                                              |
@@ -14,8 +14,11 @@
 | 3000  | TCP      | AdGuard Home (Web)        | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3001  | TCP      | Uptime Kuma               | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3456  | TCP      | Vikunja                   | \*                      | No              | Firewall blocks                              |
+| 3782  | TCP      | DeepTutor                 | 127.0.0.1               | No              | Behind Caddy (container)                     |
 | 4369  | TCP      | EPMD (Erlang)             | 0.0.0.0                 | No              | From Pinchflat runtime                       |
+| 5000  | TCP      | Kavita                    | 127.0.0.1               | No              | Behind Caddy (container)                     |
 | 5050  | TCP      | pgAdmin 4                 | \*                      | No              | Behind Caddy                                 |
+| 5173  | TCP      | Kaneo                     | 127.0.0.1               | No              | Behind Caddy (container)                     |
 | 5232  | TCP      | Radicale (CalDAV/CardDAV) | 0.0.0.0                 | No              | Behind Caddy                                 |
 | 5432  | TCP      | PostgreSQL                | 127.0.0.1, 172.17.0.1   | docker0 only    | Peer auth (host), password auth (containers) |
 | 7359  | UDP      | Jellyfin (Discovery)      | 0.0.0.0                 | No              | DLNA/client discovery                        |

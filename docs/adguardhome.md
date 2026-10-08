@@ -25,7 +25,7 @@ Web UI: `adguardhome.lab.ggantek.net` (reverse proxied via Caddy from port 3000)
 ## DNS
 
 - **Upstream**: Cloudflare DoH, Mullvad DoH
-- **Bootstrap**: 9.9.9.9 (resolves DoH hostnames)
+- **Bootstrap**: 9.9.9.9, 1.1.1.1 (resolve DoH hostnames)
 - **Fallback**: Cloudflare DoH
 - **Port**: 53 (TCP + UDP, opened manually since `openFirewall` only covers web UI)
 - **DNSSEC**: enabled

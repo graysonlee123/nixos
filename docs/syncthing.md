@@ -1,6 +1,9 @@
 # Syncthing
 
-Peer-to-peer file sync across all devices. Syncs `~/syncthing` folder.
+Peer-to-peer file sync across all devices. Three folders are synced: Personal, Tarn, and Inspry (ids `personal`, `tarn`, `inspry`).
+
+- Corbelan/Nostromo: `~/syncthing/<id>` (e.g. `~/syncthing/personal`)
+- Sulaco: `/var/lib/syncthing/<id>` (e.g. `/var/lib/syncthing/personal`). Config says `~/<id>`, but the service runs as the `syncthing` user, whose home is `/var/lib/syncthing`.
 
 ## Devices
 
@@ -9,6 +12,7 @@ Peer-to-peer file sync across all devices. Syncs `~/syncthing` folder.
 | Corbelan | Laptop      | Nix (Home Manager) | No        |
 | Nostromo | Desktop     | Nix (Home Manager) | No        |
 | Sulaco   | Home server | Nix (NixOS module) | Yes       |
+| iPhone   | Phone       | Manual (app)       | No        |
 
 Sulaco acts as an always-on peer, ensuring corbelan and nostromo can sync even when the other is off. Without sulaco, both devices must be online simultaneously to exchange files.
 
@@ -18,11 +22,11 @@ All devices connect via Tailscale. Sulaco also advertises a LAN address for fast
 
 ## Versioning
 
-All three devices use staggered file versioning (30-day retention, hourly cleanup). Old versions stored in `.stversions` within the sync folder. This means accidental deletes or overwrites are recoverable from any device.
+Every folder uses staggered file versioning (30-day retention, hourly cleanup), set per folder in `data/syncthing.nix`. Old versions are stored in `.stversions` within each folder. This means accidental deletes or overwrites are recoverable from any device.
 
 ## Ignore Patterns
 
-`~/syncthing/.stignore` excludes common unwanted files (.git, node_modules, build artifacts, editor files, OS junk). This file itself syncs across all devices.
+Ignore patterns exclude common unwanted files (.git, node_modules, build artifacts, editor files, OS junk). They are declared once in `data/syncthing.nix` (`ignorePatterns`) and applied to every folder via Nix, not a hand-edited `.stignore`.
 
 ## Configuration
 

@@ -10,18 +10,20 @@ Encrypts secrets with age public keys, commits encrypted files to git, decrypts 
 
 ## Operations
 
+Secret files: `secrets/headed.yaml` (Corbelan/Nostromo), `secrets/headless.yaml` (Sulaco), `secrets/shared.yaml` (all hosts).
+
 | Task                       | Command                                                                  |
 | -------------------------- | ------------------------------------------------------------------------ |
-| Encrypt new file           | `sops --encrypt --in-place secrets/secrets.yaml`                         |
-| Edit encrypted file        | `sops secrets/secrets.yaml` (decrypts in `$EDITOR`, re-encrypts on save) |
+| Encrypt new file           | `sops --encrypt --in-place secrets/<file>.yaml`                          |
+| Edit encrypted file        | `sops secrets/<file>.yaml` (decrypts in `$EDITOR`, re-encrypts on save)  |
 | Read secret                | `sudo cat /run/secrets/<path>`                                           |
-| Re-encrypt for new machine | `sops updatekeys secrets/secrets.yaml`                                   |
+| Re-encrypt for new machine | `sops updatekeys secrets/<file>.yaml`                                    |
 
 ### Add a machine
 
 1. Generate age keypair on new machine
 2. Add public key to `.sops.yaml`
-3. Re-encrypt: `sops updatekeys secrets/secrets.yaml`
+3. Re-encrypt each file it needs: `sops updatekeys secrets/<file>.yaml`
 
 ### Set permissions / use in a service
 

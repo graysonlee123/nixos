@@ -2,9 +2,9 @@
 
 User SSH Configuration file (`~/.ssh/config`) is managed by `modules/home/system/ssh.nix`.
 
-- Each entry in `users/gray.nix` requires a private key defined in `secrets/headed.yaml` under `ssh/keys/<entry_name>`.
+- Each entry in `users/gray.nix` requires a private key in a sops file under `ssh/keys/<entry_name>` (a leading `*.` is stripped, e.g. `*.pressable.com` → `ssh/keys/pressable.com`). The file is set per entry via `sopsFile`: `github.com`, `sulaco`, and `sulaco.local` use `secrets/shared.yaml`; everything else defaults to `secrets/headed.yaml`.
 - Public keys are not sensitive and therefore defined inline.
-- Private keys are decrypted by sops-nix at activation and placed into `~/.ssh/` (see `modules/home/system/sops.nix`).
+- Private keys are decrypted by sops-nix at activation and placed into `~/.ssh/<name>` with mode 0600 (see `modules/home/system/ssh.nix`; `modules/home/system/sops.nix` only sets the default sops file and age key).
 
 ## Host blocks
 
@@ -41,6 +41,14 @@ SSH/SFTP into BigScoots server (contains all websites).
 ssh bigscoots
 lftp sftp://bigscoots
 ```
+
+**`lacrawfish.com`**:
+
+LA Crawfish on BigScoots (user `nginx`, port 2222).
+
+**`moosetracks.com`, `staging.moosetracks.com`**:
+
+Moose Tracks live and staging. Reuse the `bigscoots` host, key, user, and port.
 
 **`bitbucket.org`**:
 

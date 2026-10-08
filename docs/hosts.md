@@ -38,9 +38,10 @@ cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
 
 ## Sulaco (Home Server)
 
-- **Role**: Always-on server for services like Syncthing
-- **Management**: Docker Compose (not managed by this NixOS repo)
-- **Syncthing**: Runs as Docker container with `network_mode: host` for LAN discovery
+- **Role**: Always-on headless server: LAN DNS/DHCP, self-hosted services, game servers
+- **Management**: Fully managed by this repo (`hosts/sulaco/configuration.nix` imports `profiles/headless.nix`). Containers run via NixOS `virtualisation.oci-containers`.
+- **Syncthing**: Native NixOS service (`modules/nixos/services/syncthing.nix`)
+- **Ports**: See [sulaco.md](./sulaco.md)
 
 ## Nostromo (Desktop)
 

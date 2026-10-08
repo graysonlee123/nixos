@@ -4,7 +4,7 @@ Configured in `modules/home/cli/lftp.nix`.
 
 ## Bookmarks
 
-Bookmarks are symlinked from Syncthing (`~/syncthing/lftp/bookmarks`) via `mkOutOfStoreSymlink`. This avoids committing a high-churn file to git -- bookmark changes sync across machines via Syncthing instead.
+Bookmarks are symlinked from Syncthing (`~/syncthing/personal/lftp/bookmarks`, the Personal folder) via `mkOutOfStoreSymlink`. This avoids committing a high-churn file to git -- bookmark changes sync across machines via Syncthing instead.
 
 ## RC Settings
 

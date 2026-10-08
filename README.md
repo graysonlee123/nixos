@@ -7,7 +7,7 @@ Personal NixOS configuration using flakes for declarative system management.
 This repository contains my declarative NixOS system configuration, including:
 
 - **Window Manager**: Sway (Wayland compositor)
-- **Terminal**: Ghostty with JetBrains Mono
+- **Terminal**: Ghostty with Agave Nerd Font
 - **Shell**: Zsh with Starship prompt
 - **Display Manager**: greetd with tuigreet
 - **Development**: Docker, Git, Go, Node.js, various IDEs
@@ -32,9 +32,9 @@ This repository contains my declarative NixOS system configuration, including:
 │   │   ├── system/                 # sops, gcp
 │   │   ├── theme/                  # stylix
 │   │   ├── network/                # networking, openssh, tailscale, mullvad
-│   │   ├── hardware/               # gpu, bluetooth, fingerprint, audio...
+│   │   ├── hardware/               # nvidia, bluetooth, fingerprint, audio, openlogi...
 │   │   ├── security/               # 1password, clamav, keyring
-│   │   ├── desktop/                # sway
+│   │   ├── desktop/                # sway, thunar, vicinae
 │   │   ├── gaming/                 # steam, gamemode
 │   │   └── services/               # headless services (jellyfin, caddy...)
 │   └── home/                       # Home Manager modules, grouped by category
@@ -164,14 +164,14 @@ See [docs/syncthing.md](docs/syncthing.md).
 
 - **Modifier**: Super/Windows key (Mod4)
 - **Terminal**: Ghostty
-- **App Launcher**: Vicinae (Mod+d)
-- **Status Bar**: Waybar
+- **App Launcher**: Vicinae (Mod+d). Shortcuts and snippets are declared in `modules/home/desktop/vicinae.nix` and written read-only, so GUI edits fail; change them in Nix. Snippet expansion needs the setcap `vicinae-input-server` wrapper from `modules/nixos/desktop/vicinae.nix`.
+- **Status Bar**: Waybar. Includes a Logitech mouse battery module read from `openlogi list` (the kernel can't see the Lightspeed receiver, so upower can't either).
 - Custom keybindings for window management and workspaces
 
 ### Terminal Setup
 
-- **Font**: JetBrains Mono Nerd Font
-- **Theme**: Rose Pine Moon
+- **Font**: Agave Nerd Font (Stylix monospace; Ghostty sets no font of its own)
+- **Theme**: Penumbra Dark Contrast Plus (Stylix base16 scheme, `modules/nixos/theme/stylix.nix`)
 - **Shell**: Zsh with Starship prompt
 
 ### Git Configuration
@@ -249,7 +249,7 @@ sudo nix-collect-garbage -d
 nix flake update
 
 # Run formatter
-nix format
+nix fmt
 ```
 
 ## Useful Keybindings
