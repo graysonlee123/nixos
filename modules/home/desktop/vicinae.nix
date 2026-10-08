@@ -3,7 +3,48 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  # Vicinae reads these JSON stores once at startup. Home Manager owns them as
+  # read-only symlinks: Nix is the source of truth, GUI edits and usage counters
+  # fail (logged warning only). Ids are fixed so `fallbacks` can reference them.
+  shortcuts = [
+    {
+      id = "google";
+      name = "Google";
+      url = "https://google.com/search?q={argument}";
+      app = "chromium-browser.desktop";
+      icon = "icon://favicon/google.com?fallback=icon://omnicast/image?fill%3Dprimary-text";
+    }
+    {
+      id = "duckduckgo";
+      name = "DuckDuckGo";
+      url = "https://duckduckgo.com/?q={argument}";
+      app = "chromium-browser.desktop";
+      icon = "icon://favicon/duckduckgo.com?fallback=icon://omnicast/image?fill%3Dprimary-text";
+    }
+  ];
+  snippets = [
+    {
+      id = "right-arrow";
+      name = "Right Arrow";
+      data.text = "→";
+      expansion = {
+        keyword = ":!ra";
+        apps = [];
+        word = true;
+      };
+    }
+  ];
+  toStore = name: entries:
+    pkgs.writeText "vicinae-${name}.json" (builtins.toJSON (map (e: e // {createdAt = 0;}) entries));
+  shortcutsFile = toStore "shortcuts" shortcuts;
+  snippetsFile = toStore "snippets" snippets;
+in {
+  systemd.user.services.vicinae = {
+    # Vicinae has no reload IPC; sd-switch restarts once when either store changes.
+    Unit.X-Restart-Triggers = ["${shortcutsFile}" "${snippetsFile}"];
+  };
+
   programs.vicinae = {
     enable = true;
     settings = {
@@ -41,4 +82,7 @@
       target = "sway-session.target";
     };
   };
+
+  xdg.dataFile."vicinae/shortcuts/shortcuts.json".source = shortcutsFile;
+  xdg.dataFile."vicinae/snippets/snippets.json".source = snippetsFile;
 }
