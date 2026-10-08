@@ -18,6 +18,39 @@
     };
   };
   mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty -e ${cmd}";
+  # Mouse battery via OpenLogi (kernel hid-logitech-dj lacks the c547
+  # Lightspeed receiver, so upower can't see it). Parses `openlogi list`, e.g.
+  #   └─ slot 1 ● PRO X Wireless (mouse, wpid=4093, battery=46% good (discharging))
+  # Empty text when no mouse, so waybar hides the module on mouseless hosts.
+  # Class (normal/warning/danger/charging/absent) drives CSS.
+  hasOpenlogi = osConfig.programs.openlogi.enable or false;
+  mouseBatterySignal = 12; # SIGRTMIN+12; mullvad uses 11
+  mouseBatteryScript = pkgs.writeShellScript "waybar-mouse-battery" ''
+    set -uo pipefail
+    emit() {
+      ${lib.getExe pkgs.jq} -nc --arg text "$1" --arg tooltip "$2" --arg class "$3" \
+        '{$text, $tooltip, $class}'
+    }
+    line=$(${lib.getExe' osConfig.programs.openlogi.package "openlogi"} list 2>/dev/null \
+      | ${lib.getExe pkgs.gnugrep} -m1 '(mouse,' || true)
+    if [[ -z $line ]]; then
+      emit "" "" "absent"
+      exit 0
+    fi
+    [[ $line =~ ●\ +(.+)\ \(mouse, ]] && name=''${BASH_REMATCH[1]} || name="Mouse"
+    if [[ ! $line =~ battery=([0-9]+)%[^\(]*\(([^\)]*)\) ]]; then
+      emit "󰍽 ?" "$name: battery unknown" "absent"
+      exit 0
+    fi
+    pct=''${BASH_REMATCH[1]}
+    status=''${BASH_REMATCH[2]}
+    if [[ $status == *charg* && $status != *discharg* ]]; then
+      cls="charging"; icon=" 󰂄"
+    elif (( pct <= 15 )); then cls="danger"; icon=""
+    elif (( pct <= 30 )); then cls="warning"; icon=""
+    else cls="normal"; icon=""; fi
+    emit "󰍽 $pct%$icon" "$name: $pct% ($status)" "$cls"
+  '';
 in {
   programs.waybar = {
     enable = true;
@@ -38,15 +71,19 @@ in {
           "sway/window"
         ];
 
-        modules-right = [
-          "custom/music"
-          "custom/weather"
-          "custom/mullvad"
-          "group/hw-group"
-          "group/network-group"
-          "group/audio-group"
-          "group/clock-group"
-        ];
+        modules-right =
+          [
+            "custom/music"
+            "custom/weather"
+            "custom/mullvad"
+          ]
+          ++ lib.optional hasOpenlogi "custom/mouse-battery"
+          ++ [
+            "group/hw-group"
+            "group/network-group"
+            "group/audio-group"
+            "group/clock-group"
+          ];
 
         "sway/workspaces" = {
           disable-scroll = true;
@@ -87,6 +124,16 @@ in {
               "󰂅"
             ];
           };
+        };
+
+        # OpenLogi hosts only. Click refreshes via signal.
+        "custom/mouse-battery" = {
+          exec = "${mouseBatteryScript}";
+          return-type = "json";
+          interval = 60;
+          signal = mouseBatterySignal;
+          tooltip = true;
+          on-click = "${pkgs.procps}/bin/pkill -RTMIN+${toString mouseBatterySignal} waybar";
         };
 
         "cpu" = {
@@ -376,8 +423,33 @@ in {
       #custom-alsamixer-btn,
       #custom-clock-btn,
       #custom-uptime,
+      #custom-mouse-battery,
       #battery {
         padding: 0 5px;
+      }
+
+      /* Mouse battery low/critical states. Normal = inherit bar style. */
+      #custom-mouse-battery.warning {
+        background-color: rgba(240, 180, 40, 0.35);
+        color: #ffcc55;
+        border-radius: 4px;
+      }
+
+      #custom-mouse-battery.danger {
+        background-color: #cc2222;
+        color: #ffffff;
+        border-radius: 4px;
+        animation-name: mouse-battery-blink;
+        animation-duration: 1s;
+        animation-timing-function: steps(1);
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes mouse-battery-blink {
+        50% {
+          background-color: transparent;
+          color: #cc2222;
+        }
       }
 
       /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the
