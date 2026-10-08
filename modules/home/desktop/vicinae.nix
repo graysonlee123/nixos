@@ -13,6 +13,8 @@
       theme = {
         name = "stylix";
       };
+      # Clipboard history: Enter copies instead of pasting into focused app.
+      providers.clipboard.entrypoints.history.preferences.defaultAction = "copy";
     };
     extensions = [
       (config.lib.vicinae.mkExtension {
