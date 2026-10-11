@@ -46,7 +46,7 @@ in {
     valheim.gnorts = {
       enable = true;
       serverName = "Gnorts, Mr. Alien";
-      port = 2459;
+      port = 2460;
     };
   };
 
