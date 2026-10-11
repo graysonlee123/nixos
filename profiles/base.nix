@@ -7,6 +7,7 @@
     ../modules/nixos/core/sudo.nix
     ../modules/nixos/core/user.nix
     ../modules/nixos/core/zsh.nix
+    ../modules/nixos/hardware/fwupd.nix
     ../modules/nixos/network/networking.nix
     ../modules/nixos/network/openssh.nix
     ../modules/nixos/network/tailscale.nix
