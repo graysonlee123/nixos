@@ -42,6 +42,12 @@ in {
       port = 2458;
       valheimPlus = true;
     };
+
+    valheim.gnorts = {
+      enable = true;
+      serverName = "Gnorts, Mr. Alien";
+      port = 2459;
+    };
   };
 
   services.linkdingContainer.enable = true;
