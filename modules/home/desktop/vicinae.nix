@@ -22,18 +22,59 @@
       app = "chromium-browser.desktop";
       icon = "icon://favicon/duckduckgo.com?fallback=icon://omnicast/image?fill%3Dprimary-text";
     }
-  ];
-  snippets = [
     {
-      id = "right-arrow";
-      name = "Right Arrow";
-      data.text = "→";
-      expansion = {
-        keyword = ":!ra";
-        apps = [];
-        word = true;
-      };
+      id = "inspry-repos";
+      name = "Inspry Repos";
+      url = "https://github.com/orgs/inspry/repositories?q={argument}";
+      app = "chromium-browser.desktop";
+      icon = "icon://favicon/github.com?fallback=icon://omnicast/image?fill%3Dprimary-text";
     }
+    {
+      id = "inspry-pressable";
+      name = "Pressable";
+      url = "https://my.pressable.com/sites?search_term={argument}";
+      app = "chromium-browser.desktop";
+      icon = "icon://favicon/pressable.com?fallback=icon://omnicast/image?fill%3Dprimary-text";
+    }
+    {
+      id = "minecraft-wiki";
+      name = "Minecraft wiki";
+      url = "https://minecraft.wiki/?search={argument}";
+      app = "chromium-browser.desktop";
+      icon = "icon://favicon/minecraft.wiki?fallback=icon://omnicast/image?fill%3Dprimary-text";
+    }
+  ];
+  # Text supports placeholders: {cursor}, {clipboard}, {uuid}, {date format="<Qt format>"},
+  # {shell code="..."}. Word mode expands after a word boundary (e.g. space).
+  #
+  # Keywords are ";<group><name>".
+  mkSnippet = id: name: keyword: text: {
+    inherit id name;
+    data.text = text;
+    expansion = {
+      inherit keyword;
+      apps = [];
+      word = true;
+    };
+  };
+  snippets = [
+    # a = arrows
+    (mkSnippet "right-arrow" "Right Arrow" ";ar" "→")
+    (mkSnippet "left-arrow" "Left Arrow" ";al" "←")
+    (mkSnippet "up-arrow" "Up Arrow" ";au" "↑")
+    (mkSnippet "down-arrow" "Down Arrow" ";ad" "↓")
+
+    # d = dates/time
+    (mkSnippet "date" "Date" ";dd" ''{date format="yyyy-MM-dd"}'')
+    (mkSnippet "datetime" "Date and Time" ";ddt" ''{date format="yyyy-MM-dd HH:mm"}'')
+    (mkSnippet "timestamp" "Unix Timestamp" ";dts" ''{shell code="date +%s"}'')
+
+    # g = generated
+    (mkSnippet "uuid" "UUID" ";gid" "{uuid}")
+
+    # i = Inspry
+    (mkSnippet "inspry-phone" "Inspry Phone" ";iph" "(470) 970-3903")
+    (mkSnippet "inspry-email" "Inspry Email" ";iem" "hello@inspry.com")
   ];
   toStore = name: entries:
     pkgs.writeText "vicinae-${name}.json" (builtins.toJSON (map (e: e // {createdAt = 0;}) entries));
@@ -56,6 +97,9 @@ in {
       };
       # Clipboard history: Enter copies instead of pasting into focused app.
       providers.clipboard.entrypoints.history.preferences.defaultAction = "copy";
+      # Snippet undo (backspace right after expansion) fires on key press; VS Code
+      # drops injected backspaces while the real one is held, leaving e.g. "→;ar".
+      providers.snippets.preferences.undo = false;
     };
     extensions = [
       (config.lib.vicinae.mkExtension {
