@@ -49,3 +49,7 @@ Restart PhpStorm.
 - Other X11-side popup tweaks
 
 These don't help because the popup is a mis-placed override-redirect X11 surface, not a hidden/blank render — only switching off the XWayland surface path resolves it.
+
+## Clipboard history pastes raw RTF (`{\rtf1\ansi...`)
+
+PhpStorm copies RTF alongside plain text; Vicinae's clipboard history sometimes restores the RTF as text. Fix: Settings → Editor → General → Rich-Text Copy → uncheck "Copy as rich text".
