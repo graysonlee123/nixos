@@ -42,6 +42,7 @@
     jetbrains.phpstorm
     libnotify
     mullvad
+    mullvad-browser
     mycli
     nerd-fonts.jetbrains-mono
     nethack
