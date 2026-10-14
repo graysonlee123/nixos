@@ -31,7 +31,7 @@
         }
         // lib.optionalAttrs (!isHeadless) {
           "gopls-lsp@claude-plugins-official" = true;
-          "inspry-php@inspry" = true;
+          "inspry-wp@inspry" = true;
           "inspry-skills@inspry" = true;
         };
       extraKnownMarketplaces = {
