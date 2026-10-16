@@ -75,3 +75,15 @@ Set Steam's launch option to:
 ```
 SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY=1 SDL_VIDEODRIVER=wayland %command%
 ```
+
+### Valheim
+
+Set Steam's launch option to:
+
+```
+MANGOHUD_CONFIG=read_cfg,fps_limit=60 dp1-60hz gamemoderun mangohud %command%
+```
+
+`MANGOHUD_CONFIG` caps FPS at 60 for this game only; `read_cfg` keeps the normal config loaded (without it, only the env var options apply).
+
+`dp1-60hz` (Nostromo only, `modules/home/desktop/dp1-60hz.nix`) drops DP-1 to 60 Hz while the game runs and restores 180 Hz on exit. With a 60 FPS cap at 180 Hz, 1% lows sat around 48 FPS because frames occasionally missed a refresh tick; at 60 Hz they hold at ~59. Enabling VRR (`adaptive_sync on`) did not help.

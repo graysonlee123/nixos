@@ -8,6 +8,7 @@
     ../../modules/home/cli/radioboat.nix
     ../../modules/home/desktop/batsignal.nix
     ../../modules/home/desktop/cursor.nix
+    ../../modules/home/desktop/dp1-60hz.nix
     ../../modules/home/desktop/ghostty.nix
     ../../modules/home/desktop/gtk.nix
     ../../modules/home/desktop/imv.nix
