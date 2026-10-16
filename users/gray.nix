@@ -76,7 +76,7 @@ in {
           user = "nginx";
           port = 2222;
         };
-        "bitbucket.org" = {
+        "ssh.bitbucket.org" = {
           enable = !isHeadless;
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4XIeCOgGQrV7OitP5mMimJSI/bHZDmF/RMmazljroL ${inspryEmail}";
           user = "git";
