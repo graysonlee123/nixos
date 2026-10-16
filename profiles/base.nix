@@ -35,7 +35,6 @@
     gdb
     gcc
     inxi
-    mangohud
     openvpn
     age
     sops

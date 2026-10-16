@@ -1,5 +1,7 @@
 # Gaming
 
+For the performance overlay, see [mangohud.md](mangohud.md).
+
 ## Minecraft (via Prism Launcher)
 
 Prism Launcher is installed via nixpkgs.
