@@ -293,9 +293,9 @@ in {
                 BACKUPS_MAX_AGE = "7"; # Days of backups to keep
                 PUID = "1000";
                 PGID = "1000";
-              }
-              // lib.optionalAttrs (!srv.valheimPlus) {
-                SERVER_ARGS = "-modifier portals casual";
+                SERVER_ARGS =
+                  "-modifier deathpenalty casual"
+                  + lib.optionalString (!srv.valheimPlus) " -modifier portals casual";
               }
               // lib.optionalAttrs (srv.valheimPlus) {
                 # Valheim Plus
