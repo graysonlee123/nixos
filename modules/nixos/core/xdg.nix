@@ -6,7 +6,8 @@
       settings.screencast = {
         chooser_type = "simple";
         chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-        max_fps = 60;
+        # Match Discord stream fps; capturing 60 wastes half the frames (CPU encode on NVIDIA)
+        max_fps = 30;
       };
     };
   };
