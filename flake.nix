@@ -21,12 +21,17 @@
       url = "github:Mic92/sops-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    colmena = {
+      url = "github:nix-community/colmena?ref=release-0.4.x";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     nixpkgs,
     nixpkgs-unstable,
     stylix,
+    colmena,
     wttrbar,
     sops-nix,
     ...
@@ -38,61 +43,109 @@
     };
     constants = import ./data/constants.nix;
     hosts = import ./data/hosts.nix;
-    mkHost = {
-      hostname,
-      isLaptop ? false,
-      isHeadless ? false,
-    }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
+    # mkHost = {
+    #   hostname,
+    #   isLaptop ? false,
+    #   isHeadless ? false,
+    # }:
+    #   nixpkgs.lib.nixosSystem {
+    #     inherit system;
+    #     specialArgs = {
+    #       inherit
+    #         isLaptop
+    #         isHeadless
+    #         constants
+    #         hosts
+    #         ;
+    #     };
+    #     modules = [
+    #       ./hosts/${hostname}/configuration.nix
+    #       stylix.nixosModules.stylix
+    #       inputs.home-manager.nixosModules.default
+    #       sops-nix.nixosModules.sops
+    #       inputs.openlogi.nixosModules.default
+    #       {
+    #         home-manager.extraSpecialArgs =
+    #           {
+    #             inherit
+    #               pkgs-unstable
+    #               isLaptop
+    #               isHeadless
+    #               constants
+    #               hosts
+    #               ;
+    #           }
+    #           // nixpkgs.lib.optionalAttrs (!isHeadless) {
+    #             wttrbar = wttrbar.packages.x86_64-linux.default;
+    #           };
+    #         home-manager.sharedModules = [
+    #           sops-nix.homeManagerModules.sops
+    #         ];
+    #       }
+    #     ];
+    #   };
+  in {
+    # nixosConfigurations = {
+    #   nostromo = mkHost {
+    #     hostname = "nostromo";
+    #   };
+    #   corbelan = mkHost {
+    #     hostname = "corbelan";
+    #     isLaptop = true;
+    #   };
+    #   sulaco = mkHost {
+    #     hostname = "sulaco";
+    #     isHeadless = true;
+    #   };
+    # };
+    formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+    colmenaHive = colmena.lib.makeHive {
+      meta = {
+        nixpkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = [];
+        };
         specialArgs = {
           inherit
-            isLaptop
-            isHeadless
             constants
             hosts
             ;
         };
-        modules = [
-          ./hosts/${hostname}/configuration.nix
+        nodeSpecialArgs = {
+          sulaco = {
+            isLaptop = false;
+            isHeadless = true;
+          };
+        };
+      };
+
+      sulaco = {
+        deployment = {
+          targetHost = hosts.sulaco.ips.tailscale;
+          targetUser = "gray"; # TODO: Pull in this value programmatically?
+          allowLocalDeployment = true;
+        };
+        imports = [
+          ./hosts/sulaco/configuration.nix
           stylix.nixosModules.stylix
           inputs.home-manager.nixosModules.default
           sops-nix.nixosModules.sops
-          inputs.openlogi.nixosModules.default
           {
-            home-manager.extraSpecialArgs =
-              {
-                inherit
-                  pkgs-unstable
-                  isLaptop
-                  isHeadless
-                  constants
-                  hosts
-                  ;
-              }
-              // nixpkgs.lib.optionalAttrs (!isHeadless) {
-                wttrbar = wttrbar.packages.x86_64-linux.default;
-              };
+            home-manager.extraSpecialArgs = {
+              inherit
+                pkgs-unstable
+                constants
+                hosts
+                ;
+              isLaptop = false;
+              isHeadless = true;
+            };
             home-manager.sharedModules = [
               sops-nix.homeManagerModules.sops
             ];
           }
         ];
       };
-  in {
-    nixosConfigurations = {
-      nostromo = mkHost {
-        hostname = "nostromo";
-      };
-      corbelan = mkHost {
-        hostname = "corbelan";
-        isLaptop = true;
-      };
-      sulaco = mkHost {
-        hostname = "sulaco";
-        isHeadless = true;
-      };
     };
-    formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
   };
 }
