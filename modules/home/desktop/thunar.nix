@@ -57,6 +57,22 @@
         <text-files/>
         <other-files/>
       </action>
+      <action>
+        <icon>edit-copy</icon>
+        <name>Copy Path</name>
+        <submenu></submenu>
+        <unique-id>1790964923859740-3</unique-id>
+        <command>wl-copy %F</command>
+        <description>Copy full path to clipboard</description>
+        <range></range>
+        <patterns>*</patterns>
+        <directories/>
+        <audio-files/>
+        <image-files/>
+        <other-files/>
+        <text-files/>
+        <video-files/>
+      </action>
       </actions>
     '';
   };
