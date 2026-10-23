@@ -21,6 +21,7 @@
     ../../modules/home/desktop/vicinae.nix
     ../../modules/home/desktop/waybar.nix
     ../../modules/home/desktop/weather.nix
+    ../../modules/home/dev/composer.nix
     ../../modules/home/dev/vscode.nix
     ../../modules/home/dev/wordpress-source.nix
     ../../modules/home/pim/calendar.nix
