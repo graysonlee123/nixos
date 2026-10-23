@@ -53,8 +53,12 @@
   systemd.user.services.mullvad-waybar-listener = {
     Unit = {
       Description = "Signal waybar on mullvad status changes";
+      After = ["waybar.service"];
     };
     Service = {
+      # waybar is Type=simple, so After= doesn't wait for its signal handlers;
+      # an early RTMIN+11 would kill it.
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
       ExecStart = pkgs.writeShellScript "mullvad-waybar-listener" ''
         ${pkgs.mullvad}/bin/mullvad status listen | while IFS= read -r _; do
           ${pkgs.procps}/bin/pkill -RTMIN+11 waybar || true
