@@ -8,6 +8,7 @@
     ../modules/nixos/desktop/thunar.nix
     ../modules/nixos/desktop/vicinae.nix
     ../modules/nixos/gaming/gamemode.nix
+    ../modules/nixos/gaming/gpu-screen-recorder.nix
     ../modules/nixos/gaming/steam.nix
     ../modules/nixos/hardware/audio.nix
     ../modules/nixos/hardware/bluetooth.nix

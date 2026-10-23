@@ -2,6 +2,7 @@
   imports = [
     ./base.nix
     ../../modules/home/apps/chromium.nix
+    ../../modules/home/apps/gpu-screen-recorder.nix
     ../../modules/home/apps/mangohud.nix
     ../../modules/home/apps/vesktop.nix
     ../../modules/home/cli/lftp.nix
