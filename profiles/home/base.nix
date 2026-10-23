@@ -45,6 +45,7 @@
     httpie-desktop
     imagemagick
     jq
+    nix-tree
     nixd
     nixfmt
     nload
