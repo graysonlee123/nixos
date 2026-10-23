@@ -124,13 +124,16 @@ in {
 
   # Games run fullscreen on DP-1 and cover notifications there; show gsr
   # events on the side monitor instead, styled to stand out.
-  services.mako.settings = lib.mkIf (!isLaptop) {
-    "app-name=\"gsr\"" = {
-      output = "HDMI-A-1";
-      default-timeout = 4000;
-      border-size = 4;
-      border-color = config.lib.stylix.colors.withHashtag.base08;
-    };
+  services.mako.settings = {
+    "app-name=\"gsr\"" =
+      {
+        default-timeout = 4000;
+        border-size = 4;
+        border-color = config.lib.stylix.colors.withHashtag.base08;
+      }
+      // lib.optionalAttrs (!isLaptop) {
+        output = "HDMI-A-1";
+      };
   };
 
   # Listed in modules-right in waybar.nix. Empty text (service off) hides it.
