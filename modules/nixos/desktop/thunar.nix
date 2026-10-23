@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.thunar = {
     enable = true;
-    plugins = with pkgs; [thunar-archive-plugin thunar-volman thunar-vcs-plugin];
+    plugins = with pkgs; [thunar-archive-plugin thunar-volman];
   };
   programs.xfconf.enable = true; # persist thunar prefs
   services.gvfs.enable = true; # davs://, sftp://, trash, mounts
