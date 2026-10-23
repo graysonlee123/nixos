@@ -19,6 +19,7 @@
     ../../modules/home/dev/claude-code.nix
     ../../modules/home/dev/git.nix
     ../../modules/home/dev/go.nix
+    ../../modules/home/dev/comma.nix
     ../../modules/home/system/environment-variables.nix
     ../../modules/home/system/sops.nix
     ../../modules/home/system/ssh.nix
