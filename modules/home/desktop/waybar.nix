@@ -22,17 +22,26 @@
   # Lightspeed receiver, so upower can't see it). Parses `openlogi list`, e.g.
   #   └─ slot 1 ● PRO X Wireless (mouse, wpid=4093, battery=46% good (discharging))
   # Empty text when no mouse, so waybar hides the module on mouseless hosts.
-  # Class (normal/warning/danger/charging/absent) drives CSS.
+  # Class (normal/warning/danger/danger-dim/charging/absent) drives CSS.
+  # Runs every 1s so danger can blink (GTK CSS animations don't tick in
+  # waybar); `openlogi list` itself is cached for 60s.
   hasOpenlogi = osConfig.programs.openlogi.enable or false;
   mouseBatterySignal = 12; # SIGRTMIN+12; mullvad uses 11
+  mouseBatteryCache = "$XDG_RUNTIME_DIR/waybar-mouse-battery";
   mouseBatteryScript = pkgs.writeShellScript "waybar-mouse-battery" ''
     set -uo pipefail
     emit() {
       ${lib.getExe pkgs.jq} -nc --arg text "$1" --arg tooltip "$2" --arg class "$3" \
         '{$text, $tooltip, $class}'
     }
-    line=$(${lib.getExe' osConfig.programs.openlogi.package "openlogi"} list 2>/dev/null \
-      | ${lib.getExe pkgs.gnugrep} -m1 '(mouse,' || true)
+    cache="${mouseBatteryCache}"
+    now=$(${pkgs.coreutils}/bin/date +%s)
+    if [[ ! -e $cache ]] || (( now - $(${pkgs.coreutils}/bin/stat -c %Y "$cache") >= 60 )); then
+      { ${lib.getExe' osConfig.programs.openlogi.package "openlogi"} list 2>/dev/null \
+        | ${lib.getExe pkgs.gnugrep} -m1 '(mouse,' || true; } > "$cache.tmp"
+      ${pkgs.coreutils}/bin/mv "$cache.tmp" "$cache"
+    fi
+    line=$(<"$cache")
     if [[ -z $line ]]; then
       emit "" "" "absent"
       exit 0
@@ -46,7 +55,8 @@
     status=''${BASH_REMATCH[2]}
     if [[ $status == *charg* && $status != *discharg* ]]; then
       cls="charging"; icon=" 󰂄"
-    elif (( pct <= 15 )); then cls="danger"; icon=""
+    elif (( pct <= 15 )); then
+      (( now % 2 )) && cls="danger" || cls="danger-dim"; icon=""
     elif (( pct <= 30 )); then cls="warning"; icon=""
     else cls="normal"; icon=""; fi
     emit "󰍽 $pct%$icon" "$name: $pct% ($status)" "$cls"
@@ -127,14 +137,14 @@ in {
           };
         };
 
-        # OpenLogi hosts only. Click refreshes via signal.
+        # OpenLogi hosts only. Click drops the cache and refreshes via signal.
         "custom/mouse-battery" = {
           exec = "${mouseBatteryScript}";
           return-type = "json";
-          interval = 60;
+          interval = 1;
           signal = mouseBatterySignal;
           tooltip = true;
-          on-click = "${pkgs.procps}/bin/pkill -RTMIN+${toString mouseBatterySignal} waybar";
+          on-click = "${pkgs.coreutils}/bin/rm -f ${mouseBatteryCache}; ${pkgs.procps}/bin/pkill -RTMIN+${toString mouseBatterySignal} waybar";
         };
 
         "cpu" = {
@@ -436,21 +446,16 @@ in {
         border-radius: 4px;
       }
 
+      /* danger/danger-dim alternate each second from the script = blink. */
       #custom-mouse-battery.danger {
         background-color: #cc2222;
         color: #ffffff;
         border-radius: 4px;
-        animation-name: mouse-battery-blink;
-        animation-duration: 1s;
-        animation-timing-function: steps(1);
-        animation-iteration-count: infinite;
       }
 
-      @keyframes mouse-battery-blink {
-        50% {
-          background-color: transparent;
-          color: #cc2222;
-        }
+      #custom-mouse-battery.danger-dim {
+        color: #cc2222;
+        border-radius: 4px;
       }
 
       /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the
