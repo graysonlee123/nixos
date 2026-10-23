@@ -21,6 +21,7 @@
     ../../modules/home/desktop/waybar.nix
     ../../modules/home/desktop/weather.nix
     ../../modules/home/dev/vscode.nix
+    ../../modules/home/dev/wordpress-source.nix
     ../../modules/home/pim/calendar.nix
     ../../modules/home/pim/contacts.nix
     ../../modules/home/pim/khal.nix
