@@ -73,9 +73,10 @@ in {
 
         modules-right =
           [
-            "custom/music"
-            "custom/weather"
             "custom/mullvad"
+            "custom/music"
+            "custom/gsr"
+            "custom/weather"
           ]
           ++ lib.optional hasOpenlogi "custom/mouse-battery"
           ++ [
