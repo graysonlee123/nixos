@@ -1,4 +1,5 @@
 {
+  config,
   isLaptop,
   lib,
   pkgs,
@@ -7,6 +8,8 @@
   replayDir = "%h/Videos/Replays";
   recordingDir = "%h/Videos/Recordings";
   unit = "gpu-screen-recorder-replay";
+  # App name lets mako route these to a visible output (see below).
+  notify = "${pkgs.libnotify}/bin/notify-send -a gsr";
   # Marks a regular recording in progress; gsr doesn't report start itself.
   recordingFlag = "$XDG_RUNTIME_DIR/gsr-recording";
   # Called by gsr after each save with file path ($1) and type ($2).
@@ -14,25 +17,25 @@
     case "$2" in
       regular)
         rm -f "${recordingFlag}"
-        ${pkgs.libnotify}/bin/notify-send "Recording saved" "$1" ;;
+        ${notify} "Recording saved" "$1" ;;
       *)
-        ${pkgs.libnotify}/bin/notify-send "Replay saved" "$1" ;;
+        ${notify} "Replay saved" "$1" ;;
     esac
   '';
   # SIGUSR1 to main PID only: pkill -f also hit gsr-kms-server (killing capture).
   save = pkgs.writeShellScript "gsr-save" ''
     systemctl --user kill -s SIGUSR1 --kill-whom=main ${unit} \
-      || ${pkgs.libnotify}/bin/notify-send "Replay buffer not running"
+      || ${notify} "Replay buffer not running"
   '';
   # SIGRTMIN starts/stops a regular recording alongside the replay buffer.
   record = pkgs.writeShellScript "gsr-record" ''
     if ! systemctl --user kill -s SIGRTMIN --kill-whom=main ${unit}; then
-      ${pkgs.libnotify}/bin/notify-send "Replay buffer not running"
+      ${notify} "Replay buffer not running"
     elif [ -e "${recordingFlag}" ]; then
       rm -f "${recordingFlag}"
     else
       touch "${recordingFlag}"
-      ${pkgs.libnotify}/bin/notify-send "Recording started"
+      ${notify} "Recording started"
     fi
   '';
   toggle = pkgs.writeShellScript "gsr-toggle" ''
@@ -43,16 +46,16 @@
 
     if systemctl --user is-active -q ${unit}; then
       systemctl --user stop ${unit}
-      ${pkgs.libnotify}/bin/notify-send "Replay buffer stopped"
+      ${notify} "Replay buffer stopped"
     else
       systemctl --user reset-failed ${unit} 2>/dev/null
       systemctl --user start ${unit}
       # gsr fails a moment after launch (e.g. no kms), so check before notifying.
       sleep 1
       if systemctl --user is-active -q ${unit}; then
-        ${pkgs.libnotify}/bin/notify-send "Replay buffer started"
+        ${notify} "Replay buffer started"
       else
-        ${pkgs.libnotify}/bin/notify-send -u critical "Replay buffer failed" "journalctl --user -u ${unit}"
+        ${notify} -u critical "Replay buffer failed" "journalctl --user -u ${unit}"
       fi
     fi
   '';
@@ -95,6 +98,17 @@ in {
       RestartSec = 5;
     };
     Install.WantedBy = lib.optionals (!isLaptop) ["sway-session.target"];
+  };
+
+  # Games run fullscreen on DP-1 and cover notifications there; show gsr
+  # events on the side monitor instead, styled to stand out.
+  services.mako.settings = lib.mkIf (!isLaptop) {
+    "app-name=\"gsr\"" = {
+      output = "HDMI-A-1";
+      default-timeout = 4000;
+      border-size = 4;
+      border-color = config.lib.stylix.colors.withHashtag.base08;
+    };
   };
 
   wayland.windowManager.sway.config.keybindings = {
