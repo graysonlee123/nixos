@@ -71,10 +71,6 @@
   };
 
   programs.waybar.style = ''
-    #custom-mullvad {
-      padding: 0 10px;
-    }
-
     #custom-mullvad.connected {
       color: #a6e3a1;
     }

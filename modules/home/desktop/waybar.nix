@@ -406,11 +406,21 @@ in {
         padding: 0 5px;
       }
 
-      #custom-weather,
-      #custom-music,
       #window,
       #mode {
         padding: 0 10px;
+      }
+
+      /* Standalone right-side modules share one box so spacing matches the
+         group pills; hidden (empty) modules take no space. */
+      #custom-music,
+      #custom-weather,
+      #custom-mullvad,
+      #custom-gsr,
+      #custom-mouse-battery {
+        padding: 0 8px;
+        margin: 3px 2px;
+        border-radius: 4px;
       }
 
       #clock,
@@ -434,7 +444,6 @@ in {
       #custom-alsamixer-btn,
       #custom-clock-btn,
       #custom-uptime,
-      #custom-mouse-battery,
       #battery {
         padding: 0 5px;
       }
