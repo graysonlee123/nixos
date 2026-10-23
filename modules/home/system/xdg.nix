@@ -40,12 +40,12 @@
     "application/pdf" = "chromium-browser.desktop";
 
     # Text/code
-    "text/plain" = "vim.desktop";
-    "text/markdown" = "vim.desktop";
+    "text/plain" = "code.desktop";
+    "text/markdown" = "code.desktop";
     "text/html" = "chromium-browser.desktop";
-    "text/x-shellscript" = "vim.desktop";
-    "application/json" = "vim.desktop";
-    "application/xml" = "vim.desktop";
+    "text/x-shellscript" = "code.desktop";
+    "application/json" = "code.desktop";
+    "application/xml" = "code.desktop";
   };
 
   xdg.userDirs = {
