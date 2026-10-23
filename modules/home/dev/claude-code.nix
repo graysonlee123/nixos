@@ -184,4 +184,10 @@
       inspry-estimate = ../../../claude/skills/inspry-estimate;
     };
   };
+
+  services.mako.settings = {
+    "desktop-entry=\"com.mitchellh.ghostty\" summary=\"Claude Code\"" = {
+      default-timeout = 4000;
+    };
+  };
 }
