@@ -53,7 +53,10 @@
   systemd.user.services.mullvad-waybar-listener = {
     Unit = {
       Description = "Signal waybar on mullvad status changes";
+      # Hang off waybar, not sway-session.target: targets get implicit After=
+      # on units they want, which cycles with After=waybar.service.
       After = ["waybar.service"];
+      PartOf = ["waybar.service"];
     };
     Service = {
       # waybar is Type=simple, so After= doesn't wait for its signal handlers;
@@ -67,7 +70,7 @@
       Restart = "on-failure";
       RestartSec = "5s";
     };
-    Install.WantedBy = ["sway-session.target"];
+    Install.WantedBy = ["waybar.service"];
   };
 
   programs.waybar.style = ''
