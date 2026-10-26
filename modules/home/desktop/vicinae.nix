@@ -64,6 +64,16 @@
     (mkSnippet "up-arrow" "Up Arrow" ";au" "↑")
     (mkSnippet "down-arrow" "Down Arrow" ";ad" "↓")
 
+    # m = math
+    (mkSnippet "division-slash" "Division Slash" ";mds" "∕")
+    (mkSnippet "division-sign" "Division Sign" ";mdsi" "÷")
+    (mkSnippet "multiply-sign" "Multiply Sign" ";mms" "×")
+    (mkSnippet "plus-minus" "Plus/Minus" ";mpm" "∓")
+
+    # d = dashes
+    (mkSnippet "en-dash" "En dash" ";den" "–")
+    (mkSnippet "em-dash" "Em dash" ";dem" "—")
+
     # d = dates/time
     (mkSnippet "date" "Date" ";dd" ''{date format="yyyy-MM-dd"}'')
     (mkSnippet "datetime" "Date and Time" ";ddt" ''{date format="yyyy-MM-dd HH:mm"}'')
