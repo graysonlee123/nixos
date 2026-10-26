@@ -170,7 +170,7 @@ in {
           "${modifier}+Print" = "exec record-screen";
 
           # Audio
-          "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMute" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
           "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_SINK@ 5%-";
           "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_SINK@ 5%+";
         }
