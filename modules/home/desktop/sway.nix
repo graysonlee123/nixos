@@ -26,17 +26,6 @@
         wf-recorder --audio --file "$FILE" && notify-send "Recording saved" "$FILE" ;;
     esac
   '';
-  # Thunar runs as a D-Bus daemon, so `thunar` just asks it for a new window and
-  # GTK flags like --class are ignored (and only affect X11 anyway). Instead,
-  # watch for the next new thunar window and float it.
-  floatThunar = pkgs.writeShellScript "float-thunar" ''
-    timeout 5 swaymsg -t subscribe -m '["window"]' \
-      | ${pkgs.jq}/bin/jq --unbuffered -r 'select(.change == "new" and .container.app_id == "thunar") | .container.id' \
-      | { read -r id && swaymsg "[con_id=$id] floating enable"; } &
-    sleep 0.1
-    thunar
-    wait
-  '';
   # Chromium tab search (Ctrl+Shift+A) remapped to an easier chord.
   # Only fires when Chromium is focused so it's a no-op elsewhere.
   chromiumTabSearch = pkgs.writeShellScriptBin "chromium-tab-search" ''
