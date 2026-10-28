@@ -215,9 +215,9 @@ in {
           repeat_rate = "75";
           repeat_delay = "200";
         };
-        "1133:49291:Logitech_G502_HERO_Gaming_Mouse" = {
+        "type:pointer" = {
           accel_profile = "flat";
-          pointer_accel = "0.3";
+          pointer_accel = "-0.2";
         };
       };
 
