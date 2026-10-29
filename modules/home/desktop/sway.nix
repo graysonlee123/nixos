@@ -1,9 +1,28 @@
 {
   isLaptop,
+  config,
   lib,
   pkgs,
   ...
 }: let
+  weekdayGchat = pkgs.writeShellScriptBin "weekday-gchat" ''
+    set -euo pipefail
+
+    # %u: 1 = Mon ... 7 = Sun
+    if (( $(printf '%(%u)T' -1) > 5 )); then
+        exit 0
+    fi
+
+    apps="${config.xdg.dataHome}/applications"
+    file=$(grep -lx 'Name=Google Chat' "$apps"/*.desktop 2>/dev/null | head -1 || true)
+
+    if [[ -z $file ]]; then
+        echo "Could not find Google Chat desktop file." >&2
+        exit 1
+    fi
+
+    exec ${pkgs.gtk3}/bin/gtk-launch "''${file##*/}"
+  '';
   recordScreen = pkgs.writeShellScriptBin "record-screen" ''
     if pgrep -x wf-recorder > /dev/null; then
       pkill -SIGINT wf-recorder
@@ -294,6 +313,12 @@ in {
             command = "swaymsg workspace 1";
           }
         ])
+
+        [
+          {
+            command = "${weekdayGchat}/bin/weekday-gchat";
+          }
+        ]
       ];
 
       # Window rules
@@ -350,6 +375,13 @@ in {
           command = "move window workspace 4";
         }
         {
+          # Google Chat PWA
+          criteria = {
+            app_id = "^chrome-pommaclcbfghclhalboakcipcmmndhcj-";
+          };
+          command = "move window workspace 4";
+        }
+        {
           criteria = {
             class = "^tidal-hifi$";
           };
@@ -362,5 +394,6 @@ in {
   home.packages = [
     recordScreen
     chromiumTabSearch
+    weekdayGchat
   ];
 }
