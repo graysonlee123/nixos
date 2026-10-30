@@ -385,7 +385,7 @@ in {
           criteria = {
             class = "^tidal-hifi$";
           };
-          command = "move window workspace 5";
+          command = "move window workspace 8";
         }
       ];
     };
