@@ -137,6 +137,7 @@
       sulaco = {config, ...}:
         mkNode {
           inherit config;
+          # SSH alias (not IP) so HM ssh config supplies key/user/host
           targetHost = "sulaco";
           hostname = "sulaco";
           isHeadless = true;

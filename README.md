@@ -216,6 +216,10 @@ See [docs/vpn.md](docs/vpn.md).
 
 See [docs/garbage-collection.md](docs/garbage-collection.md).
 
+## Remote Deployment (Colmena)
+
+See [docs/colmena.md](docs/colmena.md).
+
 ## Useful Commands
 
 ```bash
@@ -231,13 +235,11 @@ sudo nixos-rebuild build --flake .
 # Rollback to previous generation
 sudo nixos-rebuild switch --rollback
 
-# Deploy to a remote host over SSH (e.g. headless Sulaco), building ON the target.
-# --build-host makes the target build its own outputs, avoiding "lacks a signature
-# by a trusted key" errors from copying locally-built paths. Evaluates from the
-# local working dir, so uncommitted changes deploy without a commit.
-nixos-rebuild switch --flake .#sulaco \
-  --build-host gray@sulaco --target-host gray@sulaco \
-  --sudo --ask-sudo-password
+# Deploy to Sulaco with Colmena (see docs/colmena.md)
+colmena apply --on sulaco
+
+# Build every host without deploying
+colmena build
 
 # List all generations
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
