@@ -32,7 +32,7 @@ This repository contains my declarative NixOS system configuration, including:
 │   │   ├── system/                 # sops, gcp
 │   │   ├── theme/                  # stylix
 │   │   ├── network/                # networking, openssh, tailscale, mullvad
-│   │   ├── hardware/               # nvidia, bluetooth, fingerprint, audio, openlogi...
+│   │   ├── hardware/               # nvidia, bluetooth, fingerprint, audio...
 │   │   ├── security/               # 1password, clamav, keyring
 │   │   ├── desktop/                # sway, thunar, vicinae
 │   │   ├── gaming/                 # steam, gamemode
@@ -165,7 +165,7 @@ See [docs/syncthing.md](docs/syncthing.md).
 - **Modifier**: Super/Windows key (Mod4)
 - **Terminal**: Ghostty
 - **App Launcher**: Vicinae (Mod+d). Shortcuts and snippets are declared in `modules/home/desktop/vicinae.nix` and written read-only, so GUI edits fail; change them in Nix. Snippet expansion needs the setcap `vicinae-input-server` wrapper from `modules/nixos/desktop/vicinae.nix`.
-- **Status Bar**: Waybar. Includes a Logitech mouse battery module read from `openlogi list` (the kernel can't see the Lightspeed receiver, so upower can't either).
+- **Status Bar**: Waybar
 - Custom keybindings for window management and workspaces
 
 ### Terminal Setup

@@ -11,12 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wttrbar.url = "github:graysonlee123/wttrbar?ref=main";
-    # Follow nixpkgs-unstable (not nixos-26.05): OpenLogi's rust build needs
-    # unstable rustc (26.05 lags workspace rust-version). rust-overlay stays.
-    openlogi = {
-      url = "github:AprilNEA/OpenLogi/a92aa43bed3732be5f7fde7aed2fc12cc48ba001";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +31,6 @@
     nixpkgs-unstable,
     home-manager,
     stylix,
-    openlogi,
     colmena,
     wttrbar,
     sops-nix,
@@ -87,7 +80,6 @@
         stylix.nixosModules.stylix
         home-manager.nixosModules.default
         sops-nix.nixosModules.sops
-        openlogi.nixosModules.default
         {
           home-manager.extraSpecialArgs =
             {

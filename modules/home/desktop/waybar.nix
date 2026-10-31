@@ -18,49 +18,6 @@
     };
   };
   mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty -e ${cmd}";
-  # Mouse battery via OpenLogi (kernel hid-logitech-dj lacks the c547
-  # Lightspeed receiver, so upower can't see it). Parses `openlogi list`, e.g.
-  #   └─ slot 1 ● PRO X Wireless (mouse, wpid=4093, battery=46% good (discharging))
-  # Empty text when no mouse, so waybar hides the module on mouseless hosts.
-  # Class (normal/warning/danger/danger-dim/charging/absent) drives CSS.
-  # Runs every 1s so danger can blink (GTK CSS animations don't tick in
-  # waybar); `openlogi list` itself is cached for 60s.
-  hasOpenlogi = osConfig.programs.openlogi.enable or false;
-  mouseBatterySignal = 12; # SIGRTMIN+12; mullvad uses 11
-  mouseBatteryCache = "$XDG_RUNTIME_DIR/waybar-mouse-battery";
-  mouseBatteryScript = pkgs.writeShellScript "waybar-mouse-battery" ''
-    set -uo pipefail
-    emit() {
-      ${lib.getExe pkgs.jq} -nc --arg text "$1" --arg tooltip "$2" --arg class "$3" \
-        '{$text, $tooltip, $class}'
-    }
-    cache="${mouseBatteryCache}"
-    now=$(${pkgs.coreutils}/bin/date +%s)
-    if [[ ! -e $cache ]] || (( now - $(${pkgs.coreutils}/bin/stat -c %Y "$cache") >= 60 )); then
-      { ${lib.getExe' osConfig.programs.openlogi.package "openlogi"} list 2>/dev/null \
-        | ${lib.getExe pkgs.gnugrep} -m1 '(mouse,' || true; } > "$cache.tmp"
-      ${pkgs.coreutils}/bin/mv "$cache.tmp" "$cache"
-    fi
-    line=$(<"$cache")
-    if [[ -z $line ]]; then
-      emit "" "" "absent"
-      exit 0
-    fi
-    [[ $line =~ ●\ +(.+)\ \(mouse, ]] && name=''${BASH_REMATCH[1]} || name="Mouse"
-    if [[ ! $line =~ battery=([0-9]+)%[^\(]*\(([^\)]*)\) ]]; then
-      emit "󰍽 ?" "$name: battery unknown" "absent"
-      exit 0
-    fi
-    pct=''${BASH_REMATCH[1]}
-    status=''${BASH_REMATCH[2]}
-    if [[ $status == *charg* && $status != *discharg* ]]; then
-      cls="charging"; icon=" 󰂄"
-    elif (( pct <= 15 )); then
-      (( now % 2 )) && cls="danger" || cls="danger-dim"; icon=""
-    elif (( pct <= 30 )); then cls="warning"; icon=""
-    else cls="normal"; icon=""; fi
-    emit "󰍽 $pct%$icon" "$name: $pct% ($status)" "$cls"
-  '';
 in {
   programs.waybar = {
     enable = true;
@@ -81,20 +38,16 @@ in {
           "sway/window"
         ];
 
-        modules-right =
-          [
-            "custom/mullvad"
-            "custom/music"
-            "custom/gsr"
-            "custom/weather"
-          ]
-          ++ lib.optional hasOpenlogi "custom/mouse-battery"
-          ++ [
-            "group/hw-group"
-            "group/network-group"
-            "group/audio-group"
-            "group/clock-group"
-          ];
+        modules-right = [
+          "custom/mullvad"
+          "custom/music"
+          "custom/gsr"
+          "custom/weather"
+          "group/hw-group"
+          "group/network-group"
+          "group/audio-group"
+          "group/clock-group"
+        ];
 
         "sway/workspaces" = {
           disable-scroll = true;
@@ -135,16 +88,6 @@ in {
               "󰂅"
             ];
           };
-        };
-
-        # OpenLogi hosts only. Click drops the cache and refreshes via signal.
-        "custom/mouse-battery" = {
-          exec = "${mouseBatteryScript}";
-          return-type = "json";
-          interval = 1;
-          signal = mouseBatterySignal;
-          tooltip = true;
-          on-click = "${pkgs.coreutils}/bin/rm -f ${mouseBatteryCache}; ${pkgs.procps}/bin/pkill -RTMIN+${toString mouseBatterySignal} waybar";
         };
 
         "cpu" = {
@@ -416,8 +359,7 @@ in {
       #custom-music,
       #custom-weather,
       #custom-mullvad,
-      #custom-gsr,
-      #custom-mouse-battery {
+      #custom-gsr {
         padding: 0 8px;
         margin: 3px 2px;
         border-radius: 4px;
@@ -446,25 +388,6 @@ in {
       #custom-uptime,
       #battery {
         padding: 0 5px;
-      }
-
-      /* Mouse battery low/critical states. Normal = inherit bar style. */
-      #custom-mouse-battery.warning {
-        background-color: rgba(240, 180, 40, 0.35);
-        color: #ffcc55;
-        border-radius: 4px;
-      }
-
-      /* danger/danger-dim alternate each second from the script = blink. */
-      #custom-mouse-battery.danger {
-        background-color: #cc2222;
-        color: #ffffff;
-        border-radius: 4px;
-      }
-
-      #custom-mouse-battery.danger-dim {
-        color: #cc2222;
-        border-radius: 4px;
       }
 
       /* Waybar sets STATE_FLAG_PRELIGHT (mapped to :hover in GTK CSS) on the

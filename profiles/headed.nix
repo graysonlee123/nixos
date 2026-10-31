@@ -12,7 +12,6 @@
     ../modules/nixos/gaming/steam.nix
     ../modules/nixos/hardware/audio.nix
     ../modules/nixos/hardware/bluetooth.nix
-    ../modules/nixos/hardware/openlogi.nix
     ../modules/nixos/hardware/udev.nix
     ../modules/nixos/hardware/upower.nix
     ../modules/nixos/network/mullvad.nix
