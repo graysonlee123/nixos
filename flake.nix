@@ -35,13 +35,16 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    home-manager,
     stylix,
+    openlogi,
     colmena,
     wttrbar,
     sops-nix,
     nix-index-database,
     ...
-  } @ inputs: let
+  }: let
+    inherit (nixpkgs) lib;
     system = "x86_64-linux";
     pkgs-unstable = import nixpkgs-unstable {
       inherit system;
@@ -49,24 +52,42 @@
     };
     constants = import ./data/constants.nix;
     hosts = import ./data/hosts.nix;
-    mkNode = {
-      hostname,
-      config,
+
+    # Hive nodes. targetHost = null: skipped by `colmena apply`, rebuilt locally.
+    nodes = lib.mapAttrs (_: node:
+      {
+        isLaptop = false;
+        isHeadless = false;
+      }
+      // node) {
+      nostromo.targetHost = null;
+      corbelan = {
+        targetHost = null;
+        isLaptop = true;
+      };
+      sulaco = {
+        # SSH alias (not IP) so HM ssh config supplies key/user/host
+        targetHost = "sulaco";
+        isHeadless = true;
+      };
+    };
+
+    mkNode = name: {
       targetHost,
-      isLaptop ? false,
-      isHeadless ? false,
-    }: {
+      isLaptop,
+      isHeadless,
+    }: {config, ...}: {
       deployment = {
         inherit targetHost;
         targetUser = config.users.users.gray.name;
         allowLocalDeployment = true;
       };
       imports = [
-        ./hosts/${hostname}/configuration.nix
+        ./hosts/${name}/configuration.nix
         stylix.nixosModules.stylix
-        inputs.home-manager.nixosModules.default
+        home-manager.nixosModules.default
         sops-nix.nixosModules.sops
-        inputs.openlogi.nixosModules.default
+        openlogi.nixosModules.default
         {
           home-manager.extraSpecialArgs =
             {
@@ -78,8 +99,8 @@
                 hosts
                 ;
             }
-            // nixpkgs.lib.optionalAttrs (!isHeadless) {
-              wttrbar = wttrbar.packages.x86_64-linux.default;
+            // lib.optionalAttrs (!isHeadless) {
+              wttrbar = wttrbar.packages.${system}.default;
             };
           home-manager.sharedModules = [
             sops-nix.homeManagerModules.sops
@@ -90,58 +111,16 @@
     };
   in {
     nixosConfigurations = self.colmenaHive.nodes;
-    formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
-    colmenaHive = colmena.lib.makeHive {
-      meta = {
-        nixpkgs = import nixpkgs {
-          system = "x86_64-linux";
-          overlays = [];
+    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+    colmenaHive = colmena.lib.makeHive (
+      {
+        meta = {
+          nixpkgs = import nixpkgs {inherit system;};
+          specialArgs = {inherit constants hosts;};
+          nodeSpecialArgs = lib.mapAttrs (_: node: {inherit (node) isLaptop isHeadless;}) nodes;
         };
-        specialArgs = {
-          inherit
-            constants
-            hosts
-            ;
-        };
-        nodeSpecialArgs = {
-          nostromo = {
-            isLaptop = false;
-            isHeadless = false;
-          };
-          corbelan = {
-            isLaptop = true;
-            isHeadless = false;
-          };
-          sulaco = {
-            isLaptop = false;
-            isHeadless = true;
-          };
-        };
-      };
-
-      nostromo = {config, ...}:
-        mkNode {
-          inherit config;
-          hostname = "nostromo";
-          targetHost = null;
-        };
-
-      corbelan = {config, ...}:
-        mkNode {
-          inherit config;
-          hostname = "corbelan";
-          targetHost = null;
-          isLaptop = true;
-        };
-
-      sulaco = {config, ...}:
-        mkNode {
-          inherit config;
-          # SSH alias (not IP) so HM ssh config supplies key/user/host
-          targetHost = "sulaco";
-          hostname = "sulaco";
-          isHeadless = true;
-        };
-    };
+      }
+      // lib.mapAttrs mkNode nodes
+    );
   };
 }
