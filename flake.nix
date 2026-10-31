@@ -25,6 +25,10 @@
       url = "github:nix-community/colmena?ref=release-0.4.x";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -34,6 +38,7 @@
     colmena,
     wttrbar,
     sops-nix,
+    nix-index-database,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -142,6 +147,7 @@
             };
             home-manager.sharedModules = [
               sops-nix.homeManagerModules.sops
+              nix-index-database.homeModules.default
             ];
           }
         ];

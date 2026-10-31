@@ -53,8 +53,15 @@
   systemd.user.services.mullvad-waybar-listener = {
     Unit = {
       Description = "Signal waybar on mullvad status changes";
+      # Hang off waybar, not sway-session.target: targets get implicit After=
+      # on units they want, which cycles with After=waybar.service.
+      After = ["waybar.service"];
+      PartOf = ["waybar.service"];
     };
     Service = {
+      # waybar is Type=simple, so After= doesn't wait for its signal handlers;
+      # an early RTMIN+11 would kill it.
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
       ExecStart = pkgs.writeShellScript "mullvad-waybar-listener" ''
         ${pkgs.mullvad}/bin/mullvad status listen | while IFS= read -r _; do
           ${pkgs.procps}/bin/pkill -RTMIN+11 waybar || true
@@ -63,14 +70,10 @@
       Restart = "on-failure";
       RestartSec = "5s";
     };
-    Install.WantedBy = ["sway-session.target"];
+    Install.WantedBy = ["waybar.service"];
   };
 
   programs.waybar.style = ''
-    #custom-mullvad {
-      padding: 0 10px;
-    }
-
     #custom-mullvad.connected {
       color: #a6e3a1;
     }

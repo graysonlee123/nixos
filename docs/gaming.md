@@ -36,18 +36,20 @@ Gamescope is a micro-compositor for scaling games. Key flags:
 
 For integer scaling, the game resolution must divide evenly into the output resolution. Common clean ratios for 1800p:
 
-| Game height | Scale factor | Notes |
-|-------------|-------------|-------|
-| 900 | 2x | Good default for most games |
-| 600 | 3x | Ideal for old 800x600 games |
-| 450 | 4x | Very low res |
+| Game height | Scale factor | Notes                       |
+| ----------- | ------------ | --------------------------- |
+| 900         | 2x           | Good default for most games |
+| 600         | 3x           | Ideal for old 800x600 games |
+| 450         | 4x           | Very low res                |
 
 General template:
+
 ```
 gamescope -w <game_w> -h <game_h> -W 2880 -H 1800 -S integer -F nearest --fullscreen -- %command%
 ```
 
 If integer scaling doesn't work (game res doesn't divide evenly), use `fit` + `fsr`:
+
 ```
 gamescope -w <game_w> -h <game_h> -W 2880 -H 1800 -S fit -F fsr --fullscreen -- %command%
 ```
@@ -82,6 +84,12 @@ Set Steam's launch option to:
 
 ```
 MANGOHUD_CONFIG=read_cfg,fps_limit=60 dp1-60hz gamemoderun mangohud %command%
+```
+
+Or if you're modding manually, e.g. by following the steps on the [Arch wiki](https://wiki.archlinux.org/title/Valheim), drop mods into the `/steamapps/common/Valheim/BepInEx/plugins/` folder (mods can be found and downloaded from https://thunderstore.io/c/valheim/). Then, set launch option to:
+
+```
+MANGOHUD_CONFIG=read_cfg,fps_limit=60 dp1-60hz gamemoderun mangohud ./start_game_bepinex.sh %command%
 ```
 
 `MANGOHUD_CONFIG` caps FPS at 60 for this game only; `read_cfg` keeps the normal config loaded (without it, only the env var options apply).

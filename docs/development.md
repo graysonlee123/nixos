@@ -2,29 +2,13 @@
 
 ## PHP (WordPress)
 
-PHP 8.2, Composer, and wp-cli are via Nix. `phpcs`/`phpcbf` and WPCS are via Composer global (`~/.config/composer/vendor/bin` is on `PATH`).
+PHP 8.2, Composer, and wp-cli are via Nix.
 
-**First-time setup:**
-```bash
-composer global require wp-coding-standards/wpcs dealerdirect/phpcodesniffer-composer-installer
-```
+### Global Composer
 
-**Usage:**
-```bash
-phpcs --standard=WordPress file.php   # check
-phpcbf --standard=WordPress file.php  # fix
-```
+`~/.config/composer/composer.json` is managed by `modules/home/dev/composer.nix` (read-only; `composer global require` won't work). Add packages there, switch, then `composer global update`. `~/.config/composer/vendor/bin` is on `PATH`.
 
-Add `phpcs.xml` to a project root to avoid repeating `--standard=WordPress` and to exclude `vendor/` etc., then run `phpcs .`:
-
-```xml
-<?xml version="1.0"?>
-<ruleset>
-    <rule ref="WordPress"/>
-    <exclude-pattern>vendor/</exclude-pattern>
-    <exclude-pattern>node_modules/</exclude-pattern>
-</ruleset>
-```
+It installs `inspry/dev-tooling` (private repo), whose `inspry-dev-sync` copies Inspry's shared `.vscode/` tasks/settings and `.githooks/` (phpcs pre-commit) into the current project. Review with `git diff` and commit.
 
 ## XDG MIME Defaults
 
@@ -35,7 +19,7 @@ However, many associations happen automatically without explicit configuration. 
 1. **`mimeapps.list`** (explicit defaults from xdg.nix)
 2. **`mimeinfo.cache`** (built from installed apps' `.desktop` files)
 
-So explicit entries in xdg.nix are only needed when you want to *override* what installed apps already claim. For example, VLC already advertises support for most media types, so it wins by default without any xdg.nix entry.
+So explicit entries in xdg.nix are only needed when you want to _override_ what installed apps already claim. For example, VLC already advertises support for most media types, so it wins by default without any xdg.nix entry.
 
 ### XDG Desktop Portals
 

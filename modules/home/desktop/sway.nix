@@ -1,9 +1,28 @@
 {
   isLaptop,
+  config,
   lib,
   pkgs,
   ...
 }: let
+  weekdayGchat = pkgs.writeShellScriptBin "weekday-gchat" ''
+    set -euo pipefail
+
+    # %u: 1 = Mon ... 7 = Sun
+    if (( $(printf '%(%u)T' -1) > 5 )); then
+        exit 0
+    fi
+
+    apps="${config.xdg.dataHome}/applications"
+    file=$(grep -lx 'Name=Google Chat' "$apps"/*.desktop 2>/dev/null | head -1 || true)
+
+    if [[ -z $file ]]; then
+        echo "Could not find Google Chat desktop file." >&2
+        exit 1
+    fi
+
+    exec ${pkgs.gtk3}/bin/gtk-launch "''${file##*/}"
+  '';
   recordScreen = pkgs.writeShellScriptBin "record-screen" ''
     if pgrep -x wf-recorder > /dev/null; then
       pkill -SIGINT wf-recorder
@@ -90,6 +109,9 @@ in {
           # Launch floating terminal
           "${modifier}+Shift+Return" = "exec ghostty --class=com.mitchellh.ghostty.float";
 
+          # Launch Thunar
+          "${modifier}+backslash" = "exec thunar";
+
           # Kill focused window
           "${modifier}+Shift+q" = "kill";
 
@@ -170,7 +192,7 @@ in {
           "${modifier}+Print" = "exec record-screen";
 
           # Audio
-          "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMute" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
           "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_SINK@ 5%-";
           "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_SINK@ 5%+";
         }
@@ -212,9 +234,9 @@ in {
           repeat_rate = "75";
           repeat_delay = "200";
         };
-        "1133:49291:Logitech_G502_HERO_Gaming_Mouse" = {
+        "type:pointer" = {
           accel_profile = "flat";
-          pointer_accel = "0.3";
+          pointer_accel = "-0.2";
         };
       };
 
@@ -291,6 +313,12 @@ in {
             command = "swaymsg workspace 1";
           }
         ])
+
+        [
+          {
+            command = "${weekdayGchat}/bin/weekday-gchat";
+          }
+        ]
       ];
 
       # Window rules
@@ -347,10 +375,17 @@ in {
           command = "move window workspace 4";
         }
         {
+          # Google Chat PWA
+          criteria = {
+            app_id = "^chrome-pommaclcbfghclhalboakcipcmmndhcj-";
+          };
+          command = "move window workspace 4";
+        }
+        {
           criteria = {
             class = "^tidal-hifi$";
           };
-          command = "move window workspace 5";
+          command = "move window workspace 8";
         }
       ];
     };
@@ -359,5 +394,6 @@ in {
   home.packages = [
     recordScreen
     chromiumTabSearch
+    weekdayGchat
   ];
 }

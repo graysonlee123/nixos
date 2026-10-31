@@ -33,7 +33,9 @@ in {
           "workbench.startupEditor" = "readme";
           "workbench.activityBar.location" = "top";
           "workbench.secondarySideBar.defaultVisibility" = "hidden";
-          "security.workspace.trust.enabled" = false;
+          # Trust gates automatic (folderOpen) tasks; trust ~/repos/inspry once.
+          "security.workspace.trust.enabled" = true;
+          "task.allowAutomaticTasks" = "on";
           "editor.renderWhitespace" = "all";
           "editor.minimap.enabled" = false;
           "editor.acceptSuggestionOnCommitCharacter" = false;

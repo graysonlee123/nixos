@@ -10,6 +10,9 @@
     last-sort-column = "THUNAR_COLUMN_NAME";
     last-sort-order = "GTK_SORT_ASCENDING";
     last-restore-tabs = true;
+    last-details-view-fixed-columns = true; # manual widths; name column fills rest
+    last-details-view-visible-columns = "THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_GROUP,THUNAR_COLUMN_NAME,THUNAR_COLUMN_OWNER,THUNAR_COLUMN_PERMISSIONS,THUNAR_COLUMN_SIZE";
+    last-details-view-column-order = "THUNAR_COLUMN_NAME,THUNAR_COLUMN_SIZE,THUNAR_COLUMN_SIZE_IN_BYTES,THUNAR_COLUMN_TYPE,THUNAR_COLUMN_DATE_MODIFIED,THUNAR_COLUMN_LOCATION,THUNAR_COLUMN_MIME_TYPE,THUNAR_COLUMN_DATE_CREATED,THUNAR_COLUMN_OWNER,THUNAR_COLUMN_GROUP,THUNAR_COLUMN_PERMISSIONS,THUNAR_COLUMN_DATE_ACCESSED,THUNAR_COLUMN_RECENCY,THUNAR_COLUMN_DATE_DELETED";
 
     # Chrome
     last-location-bar = "ThunarLocationEntry";
@@ -24,6 +27,7 @@
     misc-single-click = false;
     misc-date-style = "THUNAR_DATE_STYLE_LONG";
     misc-show-delete-action = true;
+    misc-folder-item-count = "THUNAR_FOLDER_ITEM_COUNT_ONLY_LOCAL";
   };
 
   # Custom actions; force replaces the default uca.xml Thunar writes on first run
@@ -56,6 +60,22 @@
         <directories/>
         <text-files/>
         <other-files/>
+      </action>
+      <action>
+        <icon>edit-copy</icon>
+        <name>Copy Path</name>
+        <submenu></submenu>
+        <unique-id>1790964923859740-3</unique-id>
+        <command>wl-copy %F</command>
+        <description>Copy full path to clipboard</description>
+        <range></range>
+        <patterns>*</patterns>
+        <directories/>
+        <audio-files/>
+        <image-files/>
+        <other-files/>
+        <text-files/>
+        <video-files/>
       </action>
       </actions>
     '';

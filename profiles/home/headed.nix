@@ -2,6 +2,8 @@
   imports = [
     ./base.nix
     ../../modules/home/apps/chromium.nix
+    ../../modules/home/apps/dolphin-emu.nix
+    ../../modules/home/apps/gpu-screen-recorder.nix
     ../../modules/home/apps/mangohud.nix
     ../../modules/home/apps/vesktop.nix
     ../../modules/home/cli/lftp.nix
@@ -20,7 +22,9 @@
     ../../modules/home/desktop/vicinae.nix
     ../../modules/home/desktop/waybar.nix
     ../../modules/home/desktop/weather.nix
+    ../../modules/home/dev/composer.nix
     ../../modules/home/dev/vscode.nix
+    ../../modules/home/dev/wordpress-source.nix
     ../../modules/home/pim/calendar.nix
     ../../modules/home/pim/contacts.nix
     ../../modules/home/pim/khal.nix
