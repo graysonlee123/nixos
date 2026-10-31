@@ -111,7 +111,7 @@
     };
   in {
     nixosConfigurations = self.colmenaHive.nodes;
-    formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     colmenaHive = colmena.lib.makeHive (
       {
         meta = {
