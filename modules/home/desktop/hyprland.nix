@@ -208,7 +208,7 @@
         {
           # Dropdown terminal (MOD+GRAVE)
           workspace = "special:term";
-          on_created_empty = "ghostty";
+          on_created_empty = "ghostty +new-window";
         }
       ];
 
@@ -356,7 +356,7 @@
           {
             _args = [
               (lib.generators.mkLuaInline "mod .. \" + RETURN\"")
-              (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"ghostty\")")
+              (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"ghostty +new-window\")")
             ];
           }
 
