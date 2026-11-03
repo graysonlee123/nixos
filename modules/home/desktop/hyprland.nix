@@ -10,6 +10,19 @@
     # portal (no file chooser, no dark-mode Settings).
     package = null;
     portalPackage = null;
+    # HM defaults + cursor vars, so launcher-spawned XWayland apps (Steam)
+    # get XCURSOR_SIZE instead of falling back to a huge cursor.
+    systemd.variables = [
+      "DISPLAY"
+      "HYPRLAND_INSTANCE_SIGNATURE"
+      "WAYLAND_DISPLAY"
+      "XDG_CURRENT_DESKTOP"
+      "XDG_SESSION_TYPE"
+      "XCURSOR_THEME"
+      "XCURSOR_SIZE"
+      "HYPRCURSOR_THEME"
+      "HYPRCURSOR_SIZE"
+    ];
     configType = "lua";
     settings = let
       workspaces = [1 2 3 4 5 6 7 8 9];
