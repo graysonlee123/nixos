@@ -77,6 +77,16 @@
 
         binds = {
           drag_threshold = 10;
+          workspace_back_and_forth = true;
+        };
+
+        cursor = {
+          hide_on_key_press = true;
+        };
+
+        misc = {
+          disable_splash_rendering = true;
+          focus_on_activate = true;
         };
       };
 
@@ -194,6 +204,22 @@
             class = "^com\\.mitchellh\\.ghostty\\.float$";
           };
           float = true;
+        }
+        {
+          match = {
+            title = "^Picture in picture$";
+          };
+          float = true;
+          pin = true;
+          keep_aspect_ratio = true;
+          size = [480 270];
+          move = ["monitor_w-window_w-20" "monitor_h-window_h-20"];
+        }
+        {
+          match = {
+            class = "^1[Pp]assword$";
+          };
+          no_screen_share = true;
         }
       ];
 
