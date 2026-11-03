@@ -88,8 +88,8 @@ in {
   systemd.user.services.${unit} = {
     Unit = {
       Description = "GPU Screen Recorder replay buffer";
-      PartOf = ["sway-session.target"];
-      After = ["sway-session.target"];
+      PartOf = ["hyprland-session.target"];
+      After = ["hyprland-session.target"];
     };
     Service = {
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${replayDir} ${recordingDir}";
@@ -119,7 +119,7 @@ in {
       Restart = "on-failure";
       RestartSec = 5;
     };
-    Install.WantedBy = lib.optionals (!isLaptop) ["sway-session.target"];
+    Install.WantedBy = lib.optionals (!isLaptop) ["hyprland-session.target"];
   };
 
   # Games run fullscreen on DP-1 and cover notifications there; show gsr
@@ -155,9 +155,24 @@ in {
     }
   '';
 
-  wayland.windowManager.sway.config.keybindings = {
-    "Mod4+z" = "exec ${save}";
-    "Mod4+Shift+z" = "exec ${toggle}";
-    "Mod4+x" = "exec ${record}";
-  };
+  wayland.windowManager.hyprland.settings.bind =
+    map (b: {
+      _args = [
+        (lib.generators.mkLuaInline "mod .. \" + ${b.key}\"")
+        (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"${b.cmd}\")")
+      ];
+    }) [
+      {
+        key = "Z";
+        cmd = save;
+      }
+      {
+        key = "SHIFT + Z";
+        cmd = toggle;
+      }
+      {
+        key = "X";
+        cmd = record;
+      }
+    ];
 }
