@@ -284,6 +284,32 @@
         }
       ];
 
+      # Resize mode (MOD+R), same keys as the old sway mode. Escape/Return exit.
+      define_submap = [
+        {
+          _args = [
+            "resize"
+            (lib.generators.mkLuaInline ''
+              function()
+                local function r(key, x, y)
+                  hl.bind(key, hl.dsp.window.resize({ x = x, y = y, relative = true }), { repeating = true })
+                end
+                r("left", -10, 0)
+                r("right", 10, 0)
+                r("up", 0, -10)
+                r("down", 0, 10)
+                r("h", -10, 0)
+                r("semicolon", 10, 0)
+                r("k", 0, -10)
+                r("j", 0, 10)
+                hl.bind("escape", hl.dsp.submap("reset"))
+                hl.bind("return", hl.dsp.submap("reset"))
+              end
+            '')
+          ];
+        }
+      ];
+
       # Touchpad only; no effect on hosts without one.
       gesture = [
         {
@@ -389,6 +415,13 @@
             _args = [
               (lib.generators.mkLuaInline "mod .. \" + M\"")
               (lib.generators.mkLuaInline "hl.dsp.workspace.toggle_special(\"music\")")
+            ];
+          }
+
+          {
+            _args = [
+              (lib.generators.mkLuaInline "mod .. \" + R\"")
+              (lib.generators.mkLuaInline "hl.dsp.submap(\"resize\")")
             ];
           }
 
