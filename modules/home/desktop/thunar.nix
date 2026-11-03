@@ -21,7 +21,7 @@
     shortcuts-icon-size = "THUNAR_ICON_SIZE_16";
     tree-icon-size = "THUNAR_ICON_SIZE_16";
     misc-symbolic-icons-in-sidepane = false;
-    misc-use-csd = false; # sway draws decorations
+    misc-use-csd = false; # no headerbar; tiling WM, no titlebars needed
 
     # Behavior
     misc-single-click = false;

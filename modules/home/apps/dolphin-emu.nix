@@ -29,7 +29,7 @@ in {
         ISOPath0 = "${config.home.homeDirectory}/downloads";
         ISOPaths = 1;
       };
-      # Accept input without focus, since sway/XWayland breaks Dolphin's focus check.
+      # Accept input without focus, since XWayland breaks Dolphin's focus check.
       Input.BackgroundInput = "True";
       Interface.ThemeName = "Clean";
       NetPlay.TraversalChoice = "direct";

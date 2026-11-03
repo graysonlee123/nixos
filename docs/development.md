@@ -23,7 +23,7 @@ So explicit entries in xdg.nix are only needed when you want to _override_ what 
 
 ### XDG Desktop Portals
 
-XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled access to system resources on Wayland. Configured in `modules/nixos/core/xdg.nix` using `xdg-desktop-portal-wlr` for Sway. Enables:
+XDG desktop portals provide sandboxed apps (Flatpaks, Electron apps) controlled access to system resources on Wayland. Configured in `modules/nixos/core/xdg.nix`; `xdg-desktop-portal-hyprland` (from `programs.hyprland`) plus the gtk portal. Enables:
 
 - File picker dialogs in browsers and apps
 - Screen sharing/recording in web apps

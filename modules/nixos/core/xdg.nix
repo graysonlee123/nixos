@@ -1,12 +1,6 @@
-{pkgs, ...}: {
-  xdg.portal = {
-    enable = true;
-    wlr = {
-      enable = true;
-      settings.screencast = {
-        chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-      };
-    };
-  };
+{
+  # Backends: hyprland (screencast, screenshot) from programs.hyprland, gtk
+  # (file chooser, settings) via hyprland-portals.conf. Screencopy fps cap
+  # lives in modules/home/desktop/hyprland.nix (xdph.conf).
+  xdg.portal.enable = true;
 }

@@ -83,15 +83,13 @@ SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY=1 SDL_VIDEODRIVER=wayland %command%
 Set Steam's launch option to:
 
 ```
-MANGOHUD_CONFIG=read_cfg,fps_limit=60 dp1-60hz gamemoderun mangohud %command%
+MANGOHUD_CONFIG=read_cfg,fps_limit=60 gamemoderun mangohud %command%
 ```
 
 Or if you're modding manually, e.g. by following the steps on the [Arch wiki](https://wiki.archlinux.org/title/Valheim), drop mods into the `/steamapps/common/Valheim/BepInEx/plugins/` folder (mods can be found and downloaded from https://thunderstore.io/c/valheim/). Then, set launch option to:
 
 ```
-MANGOHUD_CONFIG=read_cfg,fps_limit=60 dp1-60hz gamemoderun mangohud ./start_game_bepinex.sh %command%
+MANGOHUD_CONFIG=read_cfg,fps_limit=60 gamemoderun mangohud ./start_game_bepinex.sh %command%
 ```
 
 `MANGOHUD_CONFIG` caps FPS at 60 for this game only; `read_cfg` keeps the normal config loaded (without it, only the env var options apply).
-
-`dp1-60hz` (Nostromo only, `modules/home/desktop/dp1-60hz.nix`) drops DP-1 to 60 Hz while the game runs and restores 180 Hz on exit. With a 60 FPS cap at 180 Hz, 1% lows sat around 48 FPS because frames occasionally missed a refresh tick; at 60 Hz they hold at ~59. Enabling VRR (`adaptive_sync on`) did not help.

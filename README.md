@@ -6,10 +6,10 @@ Personal NixOS configuration using flakes for declarative system management.
 
 This repository contains my declarative NixOS system configuration, including:
 
-- **Window Manager**: Sway (Wayland compositor)
+- **Window Manager**: Hyprland (Wayland compositor)
 - **Terminal**: Ghostty with Agave Nerd Font
 - **Shell**: Zsh with Starship prompt
-- **Display Manager**: greetd with tuigreet
+- **Display Manager**: greetd with ReGreet
 - **Development**: Docker, Git, Go, Node.js, various IDEs
 
 ## Repository Structure
@@ -34,13 +34,13 @@ This repository contains my declarative NixOS system configuration, including:
 │   │   ├── network/                # networking, openssh, tailscale, mullvad
 │   │   ├── hardware/               # nvidia, bluetooth, fingerprint, audio...
 │   │   ├── security/               # 1password, clamav, keyring
-│   │   ├── desktop/                # sway, thunar, vicinae
+│   │   ├── desktop/                # hyprland, thunar, vicinae
 │   │   ├── gaming/                 # steam, gamemode
 │   │   └── services/               # headless services (jellyfin, caddy...)
 │   └── home/                       # Home Manager modules, grouped by category
 │       ├── cli/                    # terminal tools (zsh, yazi, lftp...)
 │       ├── dev/                    # git, go, editors
-│       ├── desktop/                # sway, waybar, mako, cursor...
+│       ├── desktop/                # hyprland, hyprlock, hypridle, waybar, mako...
 │       ├── apps/                   # GUI apps (chromium, vesktop)
 │       ├── pim/                    # calendars, contacts
 │       └── system/                 # env vars, sops, ssh, xdg, syncthing
@@ -160,13 +160,13 @@ See [docs/syncthing.md](docs/syncthing.md).
 - Docker daemon
 - NetworkManager
 
-### Sway Configuration
+### Hyprland Configuration
 
-- **Modifier**: Super/Windows key (Mod4)
+- **Modifier**: Super/Windows key
 - **Terminal**: Ghostty
 - **App Launcher**: Vicinae (Mod+d). Shortcuts and snippets are declared in `modules/home/desktop/vicinae.nix` and written read-only, so GUI edits fail; change them in Nix. Snippet expansion needs the setcap `vicinae-input-server` wrapper from `modules/nixos/desktop/vicinae.nix`.
 - **Status Bar**: Waybar
-- Custom keybindings for window management and workspaces
+- **Lock/Idle**: hyprlock + hypridle (`modules/home/desktop/hyprlock.nix`, `hypridle.nix`)
 
 ### Terminal Setup
 
