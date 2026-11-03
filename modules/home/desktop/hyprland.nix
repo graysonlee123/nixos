@@ -569,4 +569,12 @@
           workspaces);
     };
   };
+
+  # xdg-desktop-portal-hyprland (screen sharing). Match Discord stream fps;
+  # capturing more wastes frames (CPU encode on NVIDIA).
+  xdg.configFile."hypr/xdph.conf".text = ''
+    screencopy {
+      max_fps = 30
+    }
+  '';
 }
