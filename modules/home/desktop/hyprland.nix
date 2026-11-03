@@ -193,8 +193,14 @@
           layout = "scrolling";
         }
         {
-          workspace = "8";
+          # Music overlay (MOD+M)
+          workspace = "special:music";
           on_created_empty = "tidal-hifi";
+        }
+        {
+          # Dropdown terminal (MOD+GRAVE)
+          workspace = "special:term";
+          on_created_empty = "ghostty";
         }
       ];
 
@@ -265,6 +271,20 @@
             _args = [
               (lib.generators.mkLuaInline "mod .. \" + SHIFT + RETURN\"")
               (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"ghostty --class=com.mitchellh.ghostty.float\")")
+            ];
+          }
+
+          {
+            _args = [
+              (lib.generators.mkLuaInline "mod .. \" + GRAVE\"")
+              (lib.generators.mkLuaInline "hl.dsp.workspace.toggle_special(\"term\")")
+            ];
+          }
+
+          {
+            _args = [
+              (lib.generators.mkLuaInline "mod .. \" + M\"")
+              (lib.generators.mkLuaInline "hl.dsp.workspace.toggle_special(\"music\")")
             ];
           }
 
