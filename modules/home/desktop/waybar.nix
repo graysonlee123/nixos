@@ -294,11 +294,11 @@ in {
           # --follow: playerctl prints on every change (no polling). Empty line
           # when no player, hidden by hide-empty-text.
           exec = "${pkgs.playerctl}/bin/playerctl --follow metadata --format '  {{title}} - {{artist}}'";
-          on-click = ''
-            ${pkgs.playerctl}/bin/playerctl play-pause
-          '';
+          on-click = "${pkgs.playerctl}/bin/playerctl play-pause";
+          on-click-right = "${pkgs.playerctl}/bin/playerctl next";
+          on-click-middle = "${pkgs.playerctl}/bin/playerctl previous";
           tooltip = true;
-          tooltip-format = ""; # TODO: Show more metadata
+          tooltip-format = "{}\nClick: play/pause | Right: next | Middle: previous";
         };
       };
     };
