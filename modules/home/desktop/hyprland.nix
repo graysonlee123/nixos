@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -57,6 +58,17 @@
       };
     in {
       mod = {_var = "SUPER";};
+
+      # greetd starts Hyprland without HM session vars; set cursor env here so
+      # Hyprland, its children, and the systemd import above all see it.
+      env = let
+        cur = config.home.pointerCursor;
+      in [
+        {_args = ["XCURSOR_THEME" cur.name];}
+        {_args = ["XCURSOR_SIZE" (toString cur.size)];}
+        {_args = ["HYPRCURSOR_THEME" cur.name];}
+        {_args = ["HYPRCURSOR_SIZE" (toString cur.size)];}
+      ];
 
       config = {
         general = {
