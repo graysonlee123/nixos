@@ -25,12 +25,11 @@ in {
       # Useful commands:
       # - makoctl list (show currently displayed notifications)
       # - makoctl history (show dismissed notifications)
+      # Track changes already show in waybar. Hide, and expire at once so hidden
+      # ones don't pile up (ignore-timeout keeps default-timeout in charge).
       "app-name=\"tidal-hifi\"" = {
-        default-timeout = timeout;
-        anchor = "top-center";
-        icon-location = "top";
-        text-alignment = "left";
-        width = 256;
+        invisible = 1;
+        default-timeout = 1;
       };
       "app-name=\"satty\"" = {
         default-timeout = timeout;
