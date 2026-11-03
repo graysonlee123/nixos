@@ -5,6 +5,11 @@
 }: {
   wayland.windowManager.hyprland = {
     enable = true;
+    # NixOS programs.hyprland installs Hyprland + its portal. HM installing them
+    # too enables HM xdg.portal, whose NIX_XDG_DESKTOP_PORTAL_DIR hides the gtk
+    # portal (no file chooser, no dark-mode Settings).
+    package = null;
+    portalPackage = null;
     configType = "lua";
     settings = let
       workspaces = [1 2 3 4 5 6 7 8 9];
