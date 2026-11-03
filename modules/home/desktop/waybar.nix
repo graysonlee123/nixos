@@ -23,7 +23,7 @@ in {
     enable = true;
     systemd = {
       enable = true;
-      targets = ["sway-session.target"];
+      targets = ["hyprland-session.target"];
     };
     settings = {
       mainBar = {
@@ -33,9 +33,9 @@ in {
         fixed-center = false;
 
         modules-left = [
-          "sway/workspaces"
-          "sway/mode"
-          "sway/window"
+          "hyprland/workspaces"
+          "hyprland/submap"
+          "hyprland/window"
         ];
 
         modules-right = [
@@ -49,15 +49,8 @@ in {
           "group/clock-group"
         ];
 
-        "sway/workspaces" = {
-          disable-scroll = true;
-          all-outputs = true;
-        };
-
-        "sway/window" = {
-          max-length = 50;
-          # Suppresses a waybar warning: "'swap-icon-label' must be a bool"
-          swap-icon-label = false;
+        "hyprland/workspaces" = {
+          format = "{name}";
         };
 
         "battery" = {

@@ -5,6 +5,7 @@
     ../modules/nixos/core/polkit.nix
     ../modules/nixos/core/xdg.nix
     ../modules/nixos/desktop/sway.nix
+    ../modules/nixos/desktop/hyprland.nix
     ../modules/nixos/desktop/thunar.nix
     ../modules/nixos/desktop/vicinae.nix
     ../modules/nixos/gaming/gamemode.nix

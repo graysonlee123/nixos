@@ -1,32 +1,12 @@
 {
-  pkgs,
-  lib,
-  config,
-  ...
-}: let
-  cfg = config.greeter;
-in {
-  options.greeter.unsupportedGpu = lib.mkOption {
-    type = lib.types.bool;
-    default = false;
-    example = true;
-    description = "Whether or not to pass the '--unsupported-gpu' flag to Sway.";
+  programs.regreet = {
+    enable = true;
+    # Default cage mode (extend) spans all outputs as one window, so on
+    # multi-monitor hosts the login form straddles the seam. Use one output.
+    cageArgs = ["-s" "-d" "-m" "last"];
   };
 
-  config = {
-    services.greetd = {
-      enable = true;
-      useTextGreeter = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd \"${
-            if cfg.unsupportedGpu
-            then "sway --unsupported-gpu"
-            else "sway"
-          }\"";
-          user = "greeter";
-        };
-      };
-    };
-  };
+  # Restarting greetd on switch kills the logged-in session (Hyprland and
+  # everything under it). Pick up greeter changes on next login/boot instead.
+  systemd.services.greetd.restartIfChanged = false;
 }

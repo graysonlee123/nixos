@@ -10,7 +10,6 @@
 
   host.name = "nostromo";
   system.stateVersion = "25.11";
-  greeter.unsupportedGpu = true;
   networking.networkmanager.enable = true;
 
   fileSystems."/mnt/storage" = {
