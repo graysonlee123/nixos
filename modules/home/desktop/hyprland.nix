@@ -60,7 +60,10 @@
           rounding_power = 4.0;
           shadow = {
             offset = [0 2];
+            range = 15;
+            render_power = 3;
           };
+          inactive_opacity = 0.95;
           dim_inactive = true;
           dim_strength = 0.125;
         };
@@ -238,6 +241,8 @@
           };
           no_screen_share = true;
           animation = "slide right";
+          blur = true;
+          ignore_alpha = 0.3;
         }
         {
           match = {
@@ -250,6 +255,16 @@
             namespace = "waybar";
           };
           animation = "slide top";
+          blur = true;
+          ignore_alpha = 0.3;
+        }
+        {
+          # ignore_alpha skips the transparent margin/shadow around the panel.
+          match = {
+            namespace = "vicinae";
+          };
+          blur = true;
+          ignore_alpha = 0.3;
         }
       ];
 

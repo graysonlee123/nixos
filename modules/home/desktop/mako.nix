@@ -7,6 +7,14 @@ in {
       border-size = 2;
       width = 400;
       height = 150;
+
+      # Match Hyprland: rounding 10, border 2, gaps_out 20.
+      border-radius = 10;
+      outer-margin = 20; # from screen edge
+      margin = 6; # between notifications
+      padding = "12,14";
+      max-icon-size = 48;
+      icon-border-radius = 8;
       ignore-timeout = true;
       max-visible = 5;
 

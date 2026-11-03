@@ -3,9 +3,7 @@
     enable = true;
     enableZshIntegration = true;
     settings.shell-integration-features = "ssh-env";
-    settings = {
-      background-opacity = 0.97;
-    };
+    # background-opacity comes from stylix.opacity.terminal
   };
 
   # Default terminal for Terminal=true apps (GLib/Thunar, launchers)

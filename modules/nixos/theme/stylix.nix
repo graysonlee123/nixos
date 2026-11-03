@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   stylix = {
     enable = true;
     targets = {
@@ -22,6 +26,14 @@
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-dark.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/penumbra-dark-contrast-plus.yaml";
     polarity = "dark";
+
+    # Translucent bar (desktop), launcher/notifications (popups) and terminal;
+    # Hyprland blurs what's behind them.
+    opacity = {
+      desktop = 0.8;
+      popups = 0.85;
+      terminal = config.stylix.opacity.popups;
+    };
 
     fonts = {
       serif = {
