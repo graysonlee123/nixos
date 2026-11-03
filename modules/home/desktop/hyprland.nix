@@ -68,7 +68,7 @@
             range = 15;
             render_power = 3;
           };
-          inactive_opacity = 0.95;
+          inactive_opacity = 0.98;
           dim_inactive = true;
           dim_strength = 0.125;
         };

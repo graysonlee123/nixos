@@ -30,8 +30,8 @@
     # Translucent bar (desktop), launcher/notifications (popups) and terminal;
     # Hyprland blurs what's behind them.
     opacity = {
-      desktop = 0.9;
-      popups = 0.93;
+      desktop = 0.98;
+      popups = 0.98;
       terminal = config.stylix.opacity.popups;
     };
 
