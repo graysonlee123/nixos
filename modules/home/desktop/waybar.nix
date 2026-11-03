@@ -17,7 +17,8 @@
       click-to-reveal = true;
     };
   };
-  mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty -e ${cmd}";
+  # +new-window: open in the resident ghostty instance (instant).
+  mkGhosttyCmd = cmd: "${pkgs.ghostty}/bin/ghostty +new-window -e ${cmd}";
 in {
   programs.waybar = {
     enable = true;
@@ -29,8 +30,11 @@ in {
       mainBar = {
         layer = "top";
         position = "top";
-        height = 30;
+        height = 32;
         fixed-center = false;
+        # Attached to top edge; side margins match Hyprland gaps_out.
+        margin-left = 20;
+        margin-right = 20;
 
         modules-left = [
           "hyprland/workspaces"
@@ -43,14 +47,29 @@ in {
           "custom/music"
           "custom/gsr"
           "custom/weather"
+          "tray"
           "group/hw-group"
           "group/network-group"
           "group/audio-group"
           "group/clock-group"
         ];
 
+        # Workspace number + icons of its windows (window-rewrite).
         "hyprland/workspaces" = {
-          format = "{name}";
+          format = "{name} {windows}";
+          window-rewrite-default = "󰣆";
+          window-rewrite = {
+            "class<chromium-browser>" = "";
+            "class<com\\.mitchellh\\.ghostty.*>" = "";
+            "class<code>" = "󰨞";
+            "class<jetbrains-.*>" = "󰅩";
+            "class<md\\.obsidian\\.Obsidian>" = "󰠮";
+            "class<vesktop>" = "󰙯";
+            "class<steam.*>" = "";
+            "class<thunar>" = "󰉋";
+            "class<tidal-hifi>" = "󰝚";
+            "class<1[Pp]assword>" = "󰌆";
+          };
         };
 
         "battery" = {
@@ -83,13 +102,21 @@ in {
           };
         };
 
+        # TUIs open on click (no drawer buttons).
         "cpu" = {
           format = "󰻠 {usage}%";
           tooltip = false;
+          on-click = mkGhosttyCmd "${pkgs.btop}/bin/btop";
         };
 
         "memory" = {
           format = "  {}%";
+          on-click = mkGhosttyCmd "${pkgs.btop}/bin/btop";
+        };
+
+        "tray" = {
+          icon-size = 16;
+          spacing = 8;
         };
 
         "group/hw-group" = {
@@ -101,19 +128,12 @@ in {
           ];
         };
 
-        "group/hw-drawer" = {
-          orientation = "horizontal";
+        "group/hw-drawer" = mkDrawer {
           modules = [
             "custom/hw-btn"
             "temperature"
             "disk"
-            "custom/btop-btn"
           ];
-          drawer = {
-            transition-duration = 300;
-            transition-left-to-right = false;
-            click-to-reveal = true;
-          };
         };
 
         "custom/hw-btn" = {
@@ -131,12 +151,6 @@ in {
           tooltip-format = "{used} / {total}";
         };
 
-        "custom/btop-btn" = {
-          format = "[btop]";
-          tooltip = false;
-          on-click = mkGhosttyCmd "${pkgs.btop}/bin/btop";
-        };
-
         "group/network-group" = {
           orientation = "horizontal";
           modules = [
@@ -149,13 +163,6 @@ in {
           modules = [
             "custom/network-btn"
             "network#bandwidth"
-            "custom/bandwhich-btn"
-            "custom/nload-btn"
-            (
-              if isLaptop
-              then "custom/impala-btn"
-              else "custom/nmtui-btn"
-            )
           ];
         };
 
@@ -168,7 +175,17 @@ in {
           format-wifi = "󰖩 {essid}";
           format-ethernet = "󰈀 {ipaddr}";
           format-disconnected = "⚠ Disconnected";
-          tooltip-format = "{ifname}: {ipaddr}/{cidr}";
+          tooltip-format = "{ifname}: {ipaddr}/{cidr}\nClick: ${
+            if isLaptop
+            then "impala"
+            else "nmtui"
+          } | Right: nload | Middle: bandwhich";
+          on-click =
+            if isLaptop
+            then mkGhosttyCmd "${pkgs.impala}/bin/impala"
+            else mkGhosttyCmd "/run/current-system/sw/bin/nmtui";
+          on-click-right = mkGhosttyCmd "${pkgs.nload}/bin/nload";
+          on-click-middle = mkGhosttyCmd "${pkgs.bash}/bin/bash -c '/run/wrappers/bin/sudo ${pkgs.bandwhich}/bin/bandwhich'";
         };
 
         "network#bandwidth" = {
@@ -177,37 +194,13 @@ in {
           format-disconnected = "";
           tooltip = false;
           interval = 2;
-        };
-
-        "custom/bandwhich-btn" = {
-          format = "[bandwhich]";
-          tooltip = false;
-          on-click = mkGhosttyCmd "${pkgs.bash}/bin/bash -c '/run/wrappers/bin/sudo ${pkgs.bandwhich}/bin/bandwhich'";
-        };
-
-        "custom/nload-btn" = {
-          format = "[nload]";
-          tooltip = false;
           on-click = mkGhosttyCmd "${pkgs.nload}/bin/nload";
-        };
-
-        "custom/impala-btn" = {
-          format = "[impala]";
-          tooltip = false;
-          on-click = mkGhosttyCmd "${pkgs.impala}/bin/impala";
-        };
-
-        "custom/nmtui-btn" = {
-          format = "[nmtui]";
-          tooltip = false;
-          on-click = mkGhosttyCmd "/run/current-system/sw/bin/nmtui";
         };
 
         "group/audio-group" = {
           orientation = "horizontal";
           modules =
             [
-              "group/audio-drawer"
               "wireplumber"
               "wireplumber#source"
             ]
@@ -228,20 +221,6 @@ in {
           on-click = mkGhosttyCmd "${pkgs.alsa-utils}/bin/alsamixer";
         };
 
-        "group/audio-drawer" = mkDrawer {
-          modules = [
-            "custom/audio-btn"
-            "custom/alsamixer-btn"
-            "custom/wiremix-btn"
-            "custom/pavucontrol-btn"
-          ];
-        };
-
-        "custom/audio-btn" = {
-          format = "󰅁";
-          tooltip = false;
-        };
-
         "wireplumber" = {
           format = "{icon} {volume}%";
           format-muted = "󰝟 [m]";
@@ -253,7 +232,10 @@ in {
             ];
           };
           scroll-step = 5;
+          tooltip-format = "{node_name}\nClick: mute | Right: wiremix | Middle: pavucontrol";
           on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
+          on-click-right = mkGhosttyCmd "${pkgs.wiremix}/bin/wiremix";
+          on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
 
         "wireplumber#source" = {
@@ -261,25 +243,10 @@ in {
           format = "󰍬 {volume}%";
           format-muted = "󰍭 [m]";
           scroll-step = 5;
+          tooltip-format = "{node_name}\nClick: mute | Right: wiremix | Middle: alsamixer";
           on-click = "/run/current-system/sw/bin/wpctl set-mute @DEFAULT_SOURCE@ toggle";
-        };
-
-        "custom/alsamixer-btn" = {
-          format = "[alsamixer]";
-          tooltip = false;
-          on-click = mkGhosttyCmd "${pkgs.alsa-utils}/bin/alsamixer";
-        };
-
-        "custom/wiremix-btn" = {
-          format = "[wiremix]";
-          tooltip = false;
-          on-click = mkGhosttyCmd "${pkgs.wiremix}/bin/wiremix";
-        };
-
-        "custom/pavucontrol-btn" = {
-          format = "[pavucontrol]";
-          tooltip = false;
-          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click-right = mkGhosttyCmd "${pkgs.wiremix}/bin/wiremix";
+          on-click-middle = mkGhosttyCmd "${pkgs.alsa-utils}/bin/alsamixer";
         };
 
         "group/clock-group" = {
@@ -319,15 +286,14 @@ in {
 
         "custom/music" = {
           hide-empty-text = true;
-          interval = 2; # TODO: Use signals to update?
           max-length =
             if isLaptop
             then 32
             else 64;
           escape = true;
-          exec = ''
-            ${pkgs.playerctl}/bin/playerctl metadata --format '  {{title}} - {{artist}}'
-          '';
+          # --follow: playerctl prints on every change (no polling). Empty line
+          # when no player, hidden by hide-empty-text.
+          exec = "${pkgs.playerctl}/bin/playerctl --follow metadata --format '  {{title}} - {{artist}}'";
           on-click = ''
             ${pkgs.playerctl}/bin/playerctl play-pause
           '';
@@ -338,12 +304,43 @@ in {
     };
 
     style = ''
-      #workspaces button {
-        padding: 0 5px;
+      window#waybar {
+        border-radius: 0 0 10px 10px;
+        border: 2px solid @base03;
+        border-top-width: 0;
+      }
+
+      /* Pills instead of Stylix's underline. Extra specificity beats its
+         .modules-left #workspaces button rules. */
+      window#waybar .modules-left #workspaces button {
+        padding: 0 8px;
+        margin: 3px 2px 5px;
+        border-radius: 6px;
+        border-bottom: none;
+      }
+
+      window#waybar .modules-left #workspaces button:hover {
+        background: alpha(@base05, 0.1);
+        box-shadow: none;
+        text-shadow: none;
+      }
+
+      window#waybar .modules-left #workspaces button.active {
+        background-color: alpha(@base0D, 0.35);
+        color: @base07;
+      }
+
+      window#waybar .modules-left #workspaces button.urgent {
+        background-color: alpha(@base08, 0.6);
+        color: @base07;
+      }
+
+      window#waybar .modules-left #workspaces {
+        margin-left: 3px;
       }
 
       #window,
-      #mode {
+      #submap {
         padding: 0 10px;
       }
 
@@ -352,7 +349,8 @@ in {
       #custom-music,
       #custom-weather,
       #custom-mullvad,
-      #custom-gsr {
+      #custom-gsr,
+      #tray {
         padding: 0 8px;
         margin: 3px 2px;
         border-radius: 4px;
@@ -367,16 +365,7 @@ in {
       #wireplumber,
       #custom-hw-btn,
       #custom-network-btn,
-      #custom-audio-btn,
-      #custom-btop-btn,
-      #custom-bandwhich-btn,
-      #custom-nload-btn,
-      #custom-nmtui-btn,
-      #custom-impala-btn,
-      #custom-wiremix-btn,
       #custom-mic-gain,
-      #custom-pavucontrol-btn,
-      #custom-alsamixer-btn,
       #custom-clock-btn,
       #custom-uptime,
       #battery {
@@ -387,16 +376,14 @@ in {
          group box when the drawer is open — there is no .open class. */
       #hw-drawer,
       #network-drawer,
-      #audio-drawer,
       #clock-drawer {
         border-radius: 4px;
       }
 
       #hw-drawer:hover,
       #network-drawer:hover,
-      #audio-drawer:hover,
       #clock-drawer:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: alpha(@base05, 0.05);
       }
 
       #hw-group,
@@ -405,23 +392,24 @@ in {
       #clock-group {
         border-radius: 4px;
         padding: 4px;
-        margin: 3px 2px;
+        margin: 3px 2px 5px;
       }
 
       #hw-group {
-        background-color: rgba(180, 140, 100, 0.15);
+        background-color: alpha(@base09, 0.15);
       }
 
       #network-group {
-        background-color: rgba(100, 180, 130, 0.15);
+        background-color: alpha(@base0B, 0.15);
       }
 
       #audio-group {
-        background-color: rgba(100, 130, 180, 0.15);
+        background-color: alpha(@base0D, 0.15);
       }
 
       #clock-group {
-        background-color: rgba(160, 100, 180, 0.15);
+        background-color: alpha(@base0E, 0.15);
+        margin-right: 5px;
       }
     '';
   };
