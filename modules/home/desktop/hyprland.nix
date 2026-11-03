@@ -219,7 +219,9 @@
           pin = true;
           keep_aspect_ratio = true;
           size = [480 270];
-          move = ["monitor_w-window_w-20" "monitor_h-window_h-20"];
+          # Fixed offsets (size + 20px margin), not window_w/window_h: Chromium
+          # resizes PiP after it maps, so window_* is stale when move runs.
+          move = ["monitor_w-500" "monitor_h-290"];
         }
         {
           match = {
