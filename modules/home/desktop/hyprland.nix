@@ -365,6 +365,13 @@
 
           {
             _args = [
+              (lib.generators.mkLuaInline "mod .. \" + ESCAPE\"")
+              (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"${pkgs.systemd}/bin/loginctl lock-session\")")
+            ];
+          }
+
+          {
+            _args = [
               (lib.generators.mkLuaInline "mod .. \" + mouse_down\"")
               (lib.generators.mkLuaInline "hl.dsp.focus({ workspace = \"e+1\" })")
             ];

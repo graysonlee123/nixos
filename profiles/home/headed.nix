@@ -13,7 +13,9 @@
     ../../modules/home/desktop/dp1-60hz.nix
     ../../modules/home/desktop/ghostty.nix
     ../../modules/home/desktop/gtk.nix
+    ../../modules/home/desktop/hypridle.nix
     ../../modules/home/desktop/hyprland.nix
+    ../../modules/home/desktop/hyprlock.nix
     ../../modules/home/desktop/imv.nix
     ../../modules/home/desktop/mako.nix
     ../../modules/home/desktop/mullvad-waybar.nix
