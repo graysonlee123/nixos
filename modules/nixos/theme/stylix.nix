@@ -10,7 +10,7 @@
     };
 
     # Even on headless, requires a wallpaper
-    image = ../../../assets/images/forest-stag.jpg;
+    image = ../../../assets/images/tan-river-castle.jpg;
 
     # Gallery: https://tinted-theming.github.io/tinted-gallery/
     # Available themes: https://github.com/tinted-theming/schemes/tree/43dd14f6466a782bd57419fdfb5f398c74d6ac53/base16
