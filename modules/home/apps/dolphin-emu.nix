@@ -26,7 +26,7 @@ in {
       DSP.DSPThread = "True";
       GBA.SavesInRomPath = "False";
       General = {
-        ISOPath0 = "${config.home.homeDirectory}/downloads";
+        ISOPath0 = "${config.xdg.dataHome}/roms/gamecube";
         ISOPaths = 1;
       };
       # Accept input without focus, since XWayland breaks Dolphin's focus check.
