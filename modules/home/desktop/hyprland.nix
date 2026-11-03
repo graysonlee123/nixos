@@ -251,6 +251,77 @@
         }
       ];
 
+      # Touchpad only; no effect on hosts without one.
+      gesture = [
+        {
+          _args = [
+            {
+              fingers = 3;
+              direction = "horizontal";
+              action = "workspace";
+            }
+          ];
+        }
+        # Dropdown terminal: swipe down opens, swipe up closes. The built-in
+        # "special" action only toggles, so check state first.
+        {
+          _args = [
+            {
+              fingers = 3;
+              direction = "down";
+              action = lib.generators.mkLuaInline ''
+                function()
+                  local ws = hl.get_active_special_workspace()
+                  if not (ws and ws.name == "special:term") then
+                    hl.dispatch(hl.dsp.workspace.toggle_special("term"))
+                  end
+                end
+              '';
+            }
+          ];
+        }
+        {
+          _args = [
+            {
+              fingers = 3;
+              direction = "up";
+              action = lib.generators.mkLuaInline ''
+                function()
+                  local ws = hl.get_active_special_workspace()
+                  if ws and ws.name == "special:term" then
+                    hl.dispatch(hl.dsp.workspace.toggle_special("term"))
+                  end
+                end
+              '';
+            }
+          ];
+        }
+        # Fullscreen: pinch out sets, pinch in unsets. 3 fingers so 2-finger
+        # pinch-zoom still reaches apps.
+        {
+          _args = [
+            {
+              fingers = 3;
+              direction = "pinchout";
+              action = lib.generators.mkLuaInline ''
+                function() hl.dispatch(hl.dsp.window.fullscreen({ action = "set" })) end
+              '';
+            }
+          ];
+        }
+        {
+          _args = [
+            {
+              fingers = 3;
+              direction = "pinchin";
+              action = lib.generators.mkLuaInline ''
+                function() hl.dispatch(hl.dsp.window.fullscreen({ action = "unset" })) end
+              '';
+            }
+          ];
+        }
+      ];
+
       bind =
         [
           {
