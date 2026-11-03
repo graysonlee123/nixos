@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       general = {
-        fullscreen = true;
+        fullscreen = false; # tiles in special:screenshot instead (hyprland.nix)
         early-exit = false;
         initial-tool = "arrow";
         copy-command = "wl-copy";

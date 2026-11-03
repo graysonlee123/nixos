@@ -214,6 +214,17 @@
 
       window_rule = [
         {
+          # Screenshot editor opens as an overlay; special workspace closes
+          # itself when satty exits (misc.close_special_on_empty).
+          match = {
+            class = "^com\\.gabm\\.satty$";
+          };
+          workspace = "special:screenshot";
+          # Satty maps at image size then gets tiled; windowsMove animated that
+          # resize as a slide from the left. Keep only the special ws slide.
+          no_anim = true;
+        }
+        {
           match = {
             class = "^com\\.mitchellh\\.ghostty\\.float$";
           };
