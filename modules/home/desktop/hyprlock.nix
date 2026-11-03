@@ -1,4 +1,10 @@
-{osConfig, ...}: let
+{
+  lib,
+  osConfig,
+  ...
+}: let
+  hasFingerprint = osConfig.services.fprintd.enable;
+
   # Nostromo: widgets on main monitor only, others just show the background.
   widgetMonitor =
     if osConfig.networking.hostName == "nostromo"
@@ -14,6 +20,12 @@ in {
       general = {
         hide_cursor = true;
         grace = 5;
+      };
+
+      # Fingerprint via fprintd D-Bus, in parallel with the password field.
+      # PAM fprintAuth stays off for hyprlock (it blocks password entry).
+      auth = lib.mkIf hasFingerprint {
+        "fingerprint:enabled" = true;
       };
 
       background = {
@@ -51,7 +63,10 @@ in {
         outline_thickness = 2;
         dots_center = true;
         fade_on_empty = false;
-        placeholder_text = "Password";
+        placeholder_text =
+          if hasFingerprint
+          then "Password or fingerprint"
+          else "Password";
       };
     };
   };
