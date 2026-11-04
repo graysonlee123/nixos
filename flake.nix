@@ -81,6 +81,10 @@
         home-manager.nixosModules.default
         sops-nix.nixosModules.sops
         {
+          # Colmena skips lib.nixosSystem, which normally sets this. Points
+          # NIX_PATH + registry `nixpkgs` at the pinned input (comma needs it).
+          nixpkgs.flake.source = nixpkgs;
+
           home-manager.extraSpecialArgs =
             {
               inherit
