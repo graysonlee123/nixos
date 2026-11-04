@@ -5,11 +5,11 @@
 }: let
   hasFingerprint = osConfig.services.fprintd.enable;
 
-  # Nostromo: widgets on main monitor only, others just show the background.
-  widgetMonitor =
-    if osConfig.networking.hostName == "nostromo"
-    then "DP-1"
-    else "";
+  # Widgets on main monitor only, others just show the background.
+  widgetMonitor = lib.attrByPath [osConfig.networking.hostName] "" {
+    nostromo = "DP-1";
+    corbelan = "eDP-1";
+  };
 in {
   # Stylix themes colors and sets the wallpaper as background. Avoid
   # `path = "screenshot"`: screencopy timed out on Nostromo (NVIDIA) and the
