@@ -84,6 +84,9 @@
           repeat_delay = 200;
           sensitivity = -0.2;
           accel_profile = "flat";
+          touchpad = {
+            clickfinger_behavior = true;
+          };
         };
 
         decoration = {
