@@ -32,9 +32,6 @@ in {
         position = "top";
         height = 32;
         fixed-center = false;
-        # Attached to top edge; side margins match Hyprland gaps_out.
-        margin-left = 20;
-        margin-right = 20;
 
         modules-left = [
           "hyprland/workspaces"
@@ -304,12 +301,6 @@ in {
     };
 
     style = ''
-      window#waybar {
-        border-radius: 0 0 10px 10px;
-        border: 2px solid @base03;
-        border-top-width: 0;
-      }
-
       /* Pills instead of Stylix's underline. Extra specificity beats its
          .modules-left #workspaces button rules. */
       window#waybar .modules-left #workspaces button {
@@ -352,7 +343,7 @@ in {
       #custom-gsr,
       #tray {
         padding: 0 8px;
-        margin: 3px 2px;
+        margin: 3px 2px 5px;
         border-radius: 4px;
       }
 
@@ -409,7 +400,7 @@ in {
 
       #clock-group {
         background-color: alpha(@base0E, 0.15);
-        margin-right: 5px;
+        margin-right: 3px;
       }
     '';
   };
