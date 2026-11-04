@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  isLaptop,
   ...
 }: {
   wayland.windowManager.hyprland = {
@@ -181,49 +182,86 @@
         })
       ];
 
-      monitor = [
-        {
-          output = "HDMI-A-1";
-          position = "0x0";
-          mode = "preferred";
-          transform = 1;
-        }
+      monitor =
+        if isLaptop
+        then [
+          {
+            output = "eDP-1";
+            position = "0x720";
+            mode = "preferred";
+            scale = 2.00;
+          }
 
-        {
-          output = "DP-1";
-          position = "1080x160";
-          mode = "preferred";
-        }
-      ];
+          {
+            output = "HDMI-A-1";
+            position = "${toString (2880 / 2)}x0";
+            mode = "2560x1440@99.95Hz";
+          }
+        ]
+        else [
+          {
+            output = "HDMI-A-1";
+            position = "0x0";
+            mode = "preferred";
+            transform = 1;
+          }
+
+          {
+            output = "DP-1";
+            position = "1080x160";
+            mode = "preferred";
+          }
+        ];
 
       workspace_rule = [
         {
           workspace = "1";
-          monitor = "DP-1";
+          monitor =
+            if isLaptop
+            then "HDMI-A-1"
+            else "DP-1";
           default = true;
           persistent = true;
         }
         {
           workspace = "2";
-          monitor = "DP-1";
+          monitor =
+            if isLaptop
+            then "HDMI-A-1"
+            else "DP-1";
           layout = "master";
         }
         {
           workspace = "3";
-          monitor = "DP-1";
+          monitor =
+            if isLaptop
+            then "HDMI-A-1"
+            else "DP-1";
           layout = "master";
         }
         {
           workspace = "4";
-          monitor = "HDMI-A-1";
+          monitor =
+            if isLaptop
+            then "eDP-1"
+            else "HDMI-A-1";
           default = true;
           persistent = true;
-          layout = "scrolling";
+          layout =
+            if isLaptop
+            then "monocle"
+            else "scrolling";
         }
         {
           workspace = "5";
-          monitor = "HDMI-A-1";
-          layout = "scrolling";
+          monitor =
+            if isLaptop
+            then "eDP-1"
+            else "HDMI-A-1";
+          layout =
+            if isLaptop
+            then "monocle"
+            else "scrolling";
         }
         {
           # Music overlay (MOD+M)
