@@ -124,6 +124,18 @@
         };
       };
 
+      device = [
+        {
+          _args = [
+            {
+              # "custom <step> <points...>"
+              accel_profile = "custom 1.0 0.0 0.5 1.1 2.0 3.1 4.9";
+              name = "syna3134:00-06cb:cfe2-touchpad";
+            }
+          ];
+        }
+      ];
+
       curve = [
         (bez "outQuint" [0.23 1] [0.32 1]) # fast start, long soft landing
         (bez "outBack" [0.34 1.56] [0.64 1]) # overshoot, then settle
