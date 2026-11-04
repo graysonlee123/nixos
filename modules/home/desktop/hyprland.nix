@@ -643,6 +643,21 @@
               (lib.generators.mkLuaInline "hl.dsp.window.cycle_next({ next = false })")
             ];
           }
+
+          # Layout-native cycling (monocle/master)
+          {
+            _args = [
+              (lib.generators.mkLuaInline "mod .. \" + TAB\"")
+              (lib.generators.mkLuaInline "hl.dsp.layout(\"cyclenext\")")
+            ];
+          }
+
+          {
+            _args = [
+              (lib.generators.mkLuaInline "mod .. \" + SHIFT + TAB\"")
+              (lib.generators.mkLuaInline "hl.dsp.layout(\"cycleprev\")")
+            ];
+          }
         ]
         ++ (lib.map (d: {
             _args = [
