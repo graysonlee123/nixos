@@ -588,6 +588,22 @@
 
           {
             _args = [
+              "XF86MonBrightnessDown"
+              (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"${pkgs.brightnessctl}/bin/brightnessctl set 5%-\")")
+              (lib.generators.mkLuaInline "{ repeating = true, locked = true }")
+            ];
+          }
+
+          {
+            _args = [
+              "XF86MonBrightnessUp"
+              (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"${pkgs.brightnessctl}/bin/brightnessctl set +5%\")")
+              (lib.generators.mkLuaInline "{ repeating = true, locked = true }")
+            ];
+          }
+
+          {
+            _args = [
               "ALT + mouse:272"
               (lib.generators.mkLuaInline "hl.dsp.window.drag()")
               (lib.generators.mkLuaInline "{ mouse = true }")
