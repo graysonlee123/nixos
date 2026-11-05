@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -26,6 +27,7 @@
       "HYPRCURSOR_SIZE"
     ];
     configType = "lua";
+    plugins = ["${inputs.hyprland-scroll-overview.packages.${pkgs.stdenv.hostPlatform.system}.scrolloverview}/lib/libscrolloverview.so"];
     settings = let
       workspaces = [1 2 3 4 5 6 7 8 9];
       directions = ["up" "right" "down" "left"];
@@ -124,6 +126,12 @@
         misc = {
           disable_splash_rendering = true;
           focus_on_activate = true;
+        };
+
+        plugin = {
+          scrolloverview = {
+            layout = "auto";
+          };
         };
       };
 
@@ -672,6 +680,13 @@
             _args = [
               (lib.generators.mkLuaInline "mod .. \" + SHIFT + mouse_up\"")
               (lib.generators.mkLuaInline "hl.dsp.window.cycle_next({ next = false })")
+            ];
+          }
+
+          {
+            _args = [
+              (lib.generators.mkLuaInline "mod .. \" + g\"")
+              (lib.generators.mkLuaInline "function() hl.plugin.scrolloverview.overview('toggle all') end")
             ];
           }
 

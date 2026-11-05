@@ -24,6 +24,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.57.1";
+    hyprland-scroll-overview = {
+      url = "github:yayuuu/hyprland-scroll-overview?rev=sha1:dcdd3b502617e70fb3a9fd3b568d20440048008a";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = {
@@ -81,7 +85,7 @@
         stylix.nixosModules.stylix
         home-manager.nixosModules.default
         sops-nix.nixosModules.sops
-        {
+        ({inputs, ...}: {
           # Colmena skips lib.nixosSystem, which normally sets this. Points
           # NIX_PATH + registry `nixpkgs` at the pinned input (comma needs it).
           nixpkgs.flake.source = nixpkgs;
@@ -89,6 +93,7 @@
           home-manager.extraSpecialArgs =
             {
               inherit
+                inputs
                 pkgs-unstable
                 isLaptop
                 isHeadless
@@ -103,7 +108,7 @@
             sops-nix.homeManagerModules.sops
             nix-index-database.homeModules.default
           ];
-        }
+        })
       ];
     };
   in {
