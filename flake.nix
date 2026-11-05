@@ -23,6 +23,7 @@
       url = "github:nix-community/nix-index-database?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.57.1";
   };
 
   outputs = {
@@ -112,7 +113,10 @@
       {
         meta = {
           nixpkgs = import nixpkgs {inherit system;};
-          specialArgs = {inherit constants hosts;};
+          specialArgs = {
+            inherit constants hosts;
+            inputs = self.inputs;
+          };
           nodeSpecialArgs = lib.mapAttrs (_: node: {inherit (node) isLaptop isHeadless;}) nodes;
         };
       }
