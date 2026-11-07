@@ -18,6 +18,7 @@
     ../../modules/home/desktop/imv.nix
     ../../modules/home/desktop/mako.nix
     ../../modules/home/desktop/mullvad-waybar.nix
+    ../../modules/home/desktop/niri.nix
     ../../modules/home/desktop/screenshots.nix
     ../../modules/home/desktop/thunar.nix
     ../../modules/home/desktop/vicinae.nix

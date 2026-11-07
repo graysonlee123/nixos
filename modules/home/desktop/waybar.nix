@@ -24,7 +24,7 @@ in {
     enable = true;
     systemd = {
       enable = true;
-      targets = ["hyprland-session.target"];
+      targets = ["graphical-session.target"];
     };
     settings = {
       mainBar = {
@@ -33,10 +33,10 @@ in {
         height = 32;
         fixed-center = false;
 
+        # https://github.com/Alexays/Waybar/wiki/Module:-Niri
         modules-left = [
-          "hyprland/workspaces"
-          "hyprland/submap"
-          "hyprland/window"
+          "niri/workspaces"
+          "niri/window"
         ];
 
         modules-right = [
