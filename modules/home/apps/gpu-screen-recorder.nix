@@ -88,8 +88,8 @@ in {
   systemd.user.services.${unit} = {
     Unit = {
       Description = "GPU Screen Recorder replay buffer";
-      PartOf = ["hyprland-session.target"];
-      After = ["hyprland-session.target"];
+      PartOf = ["graphical-session.target"];
+      After = ["graphical-session.target"];
     };
     Service = {
       ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${replayDir} ${recordingDir}";
@@ -119,7 +119,7 @@ in {
       Restart = "on-failure";
       RestartSec = 5;
     };
-    Install.WantedBy = lib.optionals (!isLaptop) ["hyprland-session.target"];
+    Install.WantedBy = lib.optionals (!isLaptop) ["graphical-session.target"];
   };
 
   # Games run fullscreen on DP-1 and cover notifications there; show gsr
