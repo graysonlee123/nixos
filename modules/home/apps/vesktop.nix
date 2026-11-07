@@ -9,7 +9,7 @@
       tray = false;
     };
     vencord.settings = {
-      autoUpdate = false;
+      autoUpdate = true;
       autoUpdateNotification = false;
       disableMinSize = true;
       plugins = {
