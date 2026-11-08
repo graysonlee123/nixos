@@ -18,6 +18,12 @@ in {
   system.stateVersion = "25.11";
   virtualisation.oci-containers.backend = "docker";
 
+  # Keep 2 weeks so monthly vault prune/check logs survive; ~75MB/day. Later keys override base.
+  services.journald.extraConfig = lib.mkAfter ''
+    SystemMaxUse=2G
+    MaxRetentionSec=2week
+  '';
+
   services.gameservers = {
     minecraft.august2026 = {
       enable = true;
