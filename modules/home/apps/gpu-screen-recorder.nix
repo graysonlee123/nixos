@@ -5,8 +5,8 @@
   pkgs,
   ...
 }: let
-  replayDir = "%h/Videos/Replays";
-  recordingDir = "%h/Videos/Recordings";
+  replayDir = "${config.xdg.userDirs.videos}/replays";
+  recordingDir = "${config.xdg.userDirs.videos}/recordings";
   unit = "gpu-screen-recorder-replay";
   # App name lets mako route these to a visible output (see below).
   notify = "${pkgs.libnotify}/bin/notify-send -a gsr";

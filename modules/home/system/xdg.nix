@@ -66,6 +66,7 @@
     "file://${config.xdg.userDirs.download} Downloads"
     "file://${config.xdg.userDirs.documents} Documents"
     "file://${config.xdg.userDirs.pictures} Pictures"
+    "file://${config.xdg.userDirs.videos} Videos"
     "file://${config.home.homeDirectory}/syncthing Syncthing"
     "file://${config.home.homeDirectory}/repos Repos"
     "file:///tmp Temp"
