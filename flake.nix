@@ -28,6 +28,10 @@
       url = "github:yayuuu/hyprland-scroll-overview?rev=sha1:dcdd3b502617e70fb3a9fd3b568d20440048008a";
       inputs.hyprland.follows = "hyprland";
     };
+    wrappers = {
+      url = "github:nix-community/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = {
@@ -40,6 +44,7 @@
     wttrbar,
     sops-nix,
     nix-index-database,
+    wrappers,
     ...
   }: let
     inherit (nixpkgs) lib;
@@ -85,6 +90,7 @@
         stylix.nixosModules.stylix
         home-manager.nixosModules.default
         sops-nix.nixosModules.sops
+        wrappers.nixosModules.niri
         ({inputs, ...}: {
           # Colmena skips lib.nixosSystem, which normally sets this. Points
           # NIX_PATH + registry `nixpkgs` at the pinned input (comma needs it).
@@ -120,7 +126,9 @@
           nixpkgs = import nixpkgs {inherit system;};
           specialArgs = {
             inherit constants hosts;
+            pkgs-unstable = pkgs-unstable;
             inputs = self.inputs;
+            wlib = wrappers.lib;
           };
           nodeSpecialArgs = lib.mapAttrs (_: node: {inherit (node) isLaptop isHeadless;}) nodes;
         };

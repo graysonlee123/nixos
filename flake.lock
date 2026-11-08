@@ -783,6 +783,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
+        "wrappers": "wrappers",
         "wttrbar": "wttrbar"
       }
     },
@@ -948,6 +949,26 @@
       "original": {
         "owner": "tinted-theming",
         "repo": "base16-zed",
+        "type": "github"
+      }
+    },
+    "wrappers": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794070307,
+        "narHash": "sha256-6fOs/JGxuHJxgf5mqz9VPvWIuZ/HEJ2gPYoxmdOV/bg=",
+        "owner": "nix-community",
+        "repo": "nix-wrapper-modules",
+        "rev": "b22d6a0b083c527cb36e022f48c91e7a6bfcc1fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-wrapper-modules",
         "type": "github"
       }
     },
