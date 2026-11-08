@@ -29,7 +29,7 @@
         skip-at-startup = _: {};
       };
       prefer-no-csd = _: {};
-      screenshot-path = "${config.users.users.gray.home}/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png";
+      screenshot-path = "${homeDir}/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png";
       clipboard = {
         disable-primary = _: {};
       };
