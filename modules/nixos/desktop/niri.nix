@@ -165,23 +165,26 @@ in {
         then {
         }
         else {
+          # LG UltraGear 32GS75QX-B.AUS 32"
           "DP-1" = {
             mode = "2560x1440@180.063";
             transform = "normal";
-            position = _: {
-              props = {
-                x = 1080;
-                y = 160;
-              };
-            };
-          };
-          "HDMI-A-1" = {
-            mode = "1920x1080@60.000";
-            transform = "90";
+            focus-at-startup = _: {};
             position = _: {
               props = {
                 x = 0;
                 y = 0;
+              };
+            };
+          };
+          # ASUS ROG Strix XG129C 12.3"
+          "HDMI-A-1" = {
+            mode = "1920x720@75.000";
+            transform = "normal";
+            position = _: {
+              props = {
+                x = 600;
+                y = 1440;
               };
             };
           };
@@ -340,6 +343,24 @@ in {
             proportion = 0.33332;
           };
         }
+        # Chat applications: open on HDMI-A-1 maximized to edges.
+        {
+          matches = [
+            {
+              app-id = "^vesktop$";
+            }
+            {
+              # Google Chat PWA
+              app-id = "^chrome-pommaclcbfghclhalboakcipcmmndhcj-";
+            }
+          ];
+          open-on-output =
+            if isLaptop
+            then ""
+            else "HDMI-A-1";
+          open-maximized-to-edges = true;
+          open-focused = true;
+        }
       ];
 
       # Layer rules: same shape as window-rules, matched by namespace
@@ -425,10 +446,14 @@ in {
         "Mod+Shift+S".move-window-down = _: {};
         "Mod+Shift+D".move-column-right = _: {};
 
+        "Mod+Up".focus-monitor-up = _: {};
         "Mod+Left".focus-monitor-left = _: {};
+        "Mod+Down".focus-monitor-down = _: {};
         "Mod+Right".focus-monitor-right = _: {};
 
+        "Mod+Shift+Up".move-column-to-monitor-up = _: {};
         "Mod+Shift+Left".move-column-to-monitor-left = _: {};
+        "Mod+Shift+Down".move-column-to-monitor-down = _: {};
         "Mod+Shift+Right".move-column-to-monitor-right = _: {};
 
         "Mod+Page_Down".focus-workspace-down = _: {};
