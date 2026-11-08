@@ -1,5 +1,7 @@
 # Host-Specific Configurations
 
+Network stack per host: [networking.md](./networking.md).
+
 ## Corbelan (Laptop)
 
 - **CPU**: AMD

@@ -208,6 +208,10 @@ Chromium bookmarks are managed declaratively through `lib/bookmarks.nix` (data, 
 
 See [docs/hosts.md](docs/hosts.md).
 
+## Networking
+
+See [docs/networking.md](docs/networking.md).
+
 ## VPN
 
 See [docs/vpn.md](docs/vpn.md).
