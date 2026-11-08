@@ -193,6 +193,10 @@ in {
       # Input: keyboard repeat, power key left to logind.
       input = {
         disable-power-key-handling = _: {};
+        # Keyboard focus change warps cursor to window center; hover focuses
+        # without scrolling the view.
+        warp-mouse-to-focus = _: {props.mode = "center-xy";};
+        focus-follows-mouse = _: {props.max-scroll-amount = "0%";};
         keyboard = {
           repeat-delay = 300;
           repeat-rate = 75;
