@@ -18,17 +18,19 @@
     ];
   };
 
-  networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
+  # Standalone iwd (no NetworkManager): Impala talks to iwd directly; NM's iwd
+  # backend was forgetting iwd known networks on failed connects.
   networking.wireless.enable = false; # disable wpa_supplicant
+  networking.dhcpcd.denyInterfaces = ["wlan0" "docker*" "br-*" "veth*"]; # iwd handles wlan0
   networking.wireless.iwd = {
     enable = true;
     settings = {
-      Network = {
-        EnableIPV6 = false;
+      General = {
+        EnableNetworkConfiguration = true; # iwd built-in DHCP
       };
-      Settings = {
-        AutoConnect = true;
+      Network = {
+        EnableIPv6 = false; # case-sensitive
+        NameResolvingService = "resolvconf";
       };
     };
   };
