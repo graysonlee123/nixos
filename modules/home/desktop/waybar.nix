@@ -42,9 +42,8 @@ in {
         modules-right = [
           "custom/mullvad"
           "custom/music"
-          "custom/gsr"
           "custom/weather"
-          "tray"
+          "group/tray-group"
           "group/hw-group"
           "group/network-group"
           "group/audio-group"
@@ -96,6 +95,16 @@ in {
         "tray" = {
           icon-size = 16;
           spacing = 8;
+        };
+
+        # gsr status isn't a real tray item (no StatusNotifierItem), so group
+        # it with the tray to sit alongside the app icons.
+        "group/tray-group" = {
+          orientation = "horizontal";
+          modules = [
+            "custom/gsr"
+            "tray"
+          ];
         };
 
         "group/hw-group" = {
@@ -322,10 +331,16 @@ in {
       #custom-music,
       #custom-weather,
       #custom-mullvad,
-      #custom-gsr,
-      #tray {
+      #tray-group {
         padding: 0 8px;
         margin: 3px 2px 5px;
+        border-radius: 4px;
+      }
+
+      /* Inside tray-group: gsr spaced like a tray icon (tray spacing 8). */
+      #custom-gsr {
+        padding: 0 4px;
+        margin-right: 4px;
         border-radius: 4px;
       }
 

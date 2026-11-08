@@ -139,7 +139,8 @@ in {
       };
   };
 
-  # Listed in modules-right in waybar.nix. Empty text (service off) hides it.
+  # Grouped with the tray (group/tray-group in waybar.nix). Empty text
+  # (service off) hides it.
   programs.waybar.settings.mainBar."custom/gsr" = {
     exec = "${waybarStatus}";
     return-type = "json";
