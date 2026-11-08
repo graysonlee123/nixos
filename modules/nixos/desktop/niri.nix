@@ -305,6 +305,21 @@ in {
             fixed = 450;
           };
         }
+        # GTK portal file pickers: float at 4:3 instead of full height.
+        {
+          matches = [
+            {
+              app-id = "^xdg-desktop-portal-gtk$";
+            }
+          ];
+          open-floating = true;
+          default-column-width = {
+            fixed = 1024;
+          };
+          default-window-height = {
+            fixed = 768;
+          };
+        }
         # Ghostty: open at 1/3 width.
         {
           matches = [
@@ -478,6 +493,10 @@ in {
     enable = true;
     package = config.wrappers.niri.wrapper;
   };
+
+  # File pickers: GTK3 dialog (Thunar's toolkit, Stylix-themed) instead of
+  # GNOME's libadwaita one. Merges into the niri module's portal defaults.
+  xdg.portal.config.niri."org.freedesktop.impl.portal.FileChooser" = "gtk";
 
   # Wrapper's X-Reload-Triggers only honored for HM (sd-switch) units; NixOS
   # switch ignores user units, so trigger the wrapper's ExecReload ourselves.
