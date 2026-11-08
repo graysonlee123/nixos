@@ -23,11 +23,6 @@
       url = "github:nix-community/nix-index-database?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.57.1";
-    hyprland-scroll-overview = {
-      url = "github:yayuuu/hyprland-scroll-overview?rev=sha1:dcdd3b502617e70fb3a9fd3b568d20440048008a";
-      inputs.hyprland.follows = "hyprland";
-    };
     wrappers = {
       url = "github:nix-community/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs-unstable";

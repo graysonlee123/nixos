@@ -22,9 +22,9 @@
       # Alternate class each second for a blink; GTK CSS animations don't
       # tick in waybar.
       if (( $(date +%s) % 2 )); then cls=recording; else cls=recording-dim; fi
-      echo '{"text": "󰑊 REC", "class": "'"$cls"'", "tooltip": "Recording (Mod+x to stop)"}'
+      echo '{"text": "󰑊 REC", "class": "'"$cls"'", "tooltip": "Recording (Mod+X to stop)"}'
     elif systemctl --user is-active -q ${unit}; then
-      echo '{"text": " 󰕧 ", "class": "replay", "tooltip": "Replay buffer on (Mod+z to save)"}'
+      echo '{"text": " 󰕧 ", "class": "replay", "tooltip": "Replay buffer on (Mod+Shift+X to save)"}'
     else
       echo '{"text": ""}'
     fi
@@ -41,12 +41,12 @@
     esac
   '';
   # SIGUSR1 to main PID only: pkill -f also hit gsr-kms-server (killing capture).
-  save = pkgs.writeShellScript "gsr-save" ''
+  save = pkgs.writeShellScriptBin "gsr-save" ''
     systemctl --user kill -s SIGUSR1 --kill-whom=main ${unit} \
       || ${notify} "Replay buffer not running"
   '';
   # SIGRTMIN starts/stops a regular recording alongside the replay buffer.
-  record = pkgs.writeShellScript "gsr-record" ''
+  record = pkgs.writeShellScriptBin "gsr-record" ''
     if ! systemctl --user kill -s SIGRTMIN --kill-whom=main ${unit}; then
       ${notify} "Replay buffer not running"
     elif [ -e "${recordingFlag}" ]; then
@@ -58,7 +58,7 @@
       ${notify} "Recording started"
     fi
   '';
-  toggle = pkgs.writeShellScript "gsr-toggle" ''
+  toggle = pkgs.writeShellScriptBin "gsr-toggle" ''
     # Drop presses while a toggle is in flight; they used to queue up behind
     # a slow stop and all fire at once.
     exec 9>"$XDG_RUNTIME_DIR/gsr-toggle.lock"
@@ -82,8 +82,11 @@
     fi
   '';
 in {
-  # Replay buffer: keeps last 60s in RAM, Mod+z dumps to disk.
-  # Mod+x starts/stops a regular recording on the same capture.
+  # Replay buffer: keeps last 60s in RAM, Mod+Shift+X dumps to disk.
+  # Mod+X starts/stops a regular recording on the same capture; Mod+Ctrl+X
+  # toggles the buffer. Binds live in modules/nixos/desktop/niri.nix.
+  home.packages = [save record toggle];
+
   # Auto-starts on desktop only; laptop toggles manually to save battery.
   systemd.user.services.${unit} = {
     Unit = {
@@ -154,25 +157,4 @@ in {
       color: #cc2222;
     }
   '';
-
-  wayland.windowManager.hyprland.settings.bind =
-    map (b: {
-      _args = [
-        (lib.generators.mkLuaInline "mod .. \" + ${b.key}\"")
-        (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"${b.cmd}\")")
-      ];
-    }) [
-      {
-        key = "Z";
-        cmd = save;
-      }
-      {
-        key = "SHIFT + Z";
-        cmd = toggle;
-      }
-      {
-        key = "X";
-        cmd = record;
-      }
-    ];
 }

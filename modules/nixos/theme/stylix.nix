@@ -27,8 +27,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/penumbra-dark-contrast-plus.yaml";
     polarity = "dark";
 
-    # Translucent bar (desktop), launcher/notifications (popups) and terminal;
-    # Hyprland blurs what's behind them.
+    # Translucent bar (desktop), launcher/notifications (popups) and terminal.
     opacity = {
       desktop = 0.98;
       popups = 0.98;

@@ -13,7 +13,6 @@
     ../../modules/home/desktop/ghostty.nix
     ../../modules/home/desktop/gtk.nix
     ../../modules/home/desktop/hypridle.nix
-    ../../modules/home/desktop/hyprland.nix
     ../../modules/home/desktop/hyprlock.nix
     ../../modules/home/desktop/imv.nix
     ../../modules/home/desktop/mako.nix

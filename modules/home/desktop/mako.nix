@@ -7,8 +7,6 @@ in {
       border-size = 2;
       width = 400;
       height = 150;
-
-      # Match Hyprland: rounding 10, border 2, gaps_out 20.
       border-radius = 10;
       outer-margin = 20; # from screen edge
       margin = 6; # between notifications
