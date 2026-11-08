@@ -36,6 +36,27 @@ export RESTIC_PASSWORD_FILE=/run/secrets/restic/ggantek-archives/password
 restic -r gs:ggan-vault:/ snapshots
 ```
 
+## Troubleshooting
+
+### Stale lock
+
+Prune/check (and backup's forget) need an exclusive lock. A crashed restic process can leave a lock behind; since each container has its own hostname, restic can't tell it's dead and every exclusive op fails with `repository is already locked by PID ...`.
+
+- Forget failures don't email; the image only logs `Forget failed` and still reports backup success
+- `RESTIC_RETRY_LOCK` is a no-op (restic has no such env var); only the `--retry-lock` flag works
+
+```shell
+sudo docker exec vault-check restic list locks
+sudo docker exec vault-check restic unlock   # removes stale locks only
+```
+
+Then rerun manually if needed:
+
+```shell
+sudo docker exec vault-prune /usr/local/bin/prune
+sudo docker exec vault-check /usr/local/bin/check
+```
+
 ## Permissions
 
 `/srv/vault` is owned by `root:root` with mode `0755` (`rwxr-xr-x`), set via `systemd.tmpfiles.rules` in `vault.nix`.
