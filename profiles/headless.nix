@@ -11,6 +11,7 @@
     ../modules/nixos/services/kaneo.nix
     ../modules/nixos/services/kavita.nix
     ../modules/nixos/services/linkding.nix
+    ../modules/nixos/services/metube.nix
     ../modules/nixos/services/pgadmin.nix
     ../modules/nixos/services/pinchflat.nix
     ../modules/nixos/services/postgres.nix
