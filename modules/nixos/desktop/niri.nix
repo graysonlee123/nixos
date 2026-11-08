@@ -6,6 +6,34 @@
 }: let
   homeDir = config.users.users.gray.home;
   cursor = config.home-manager.users.gray.home.pointerCursor;
+  colors = config.lib.stylix.colors.withHashtag;
+
+  # Open: rise from slightly below while scaling up and fading in.
+  openShader = ''
+    vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+        float p = niri_clamped_progress;
+        float scale = mix(0.92, 1.0, niri_progress);
+        vec2 xy = (coords_geo.xy - vec2(0.5, 1.0)) / scale + vec2(0.5, 1.0);
+        xy.y -= (1.0 - p) * 24.0 / size_geo.y;
+        vec3 coords_tex = niri_geo_to_tex * vec3(xy, 1.0);
+        return texture2D(niri_tex, coords_tex.st) * p;
+    }
+  '';
+
+  # Close: shrink toward center with a slight random tilt, fading out.
+  closeShader = ''
+    vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+        float p = niri_clamped_progress;
+        float scale = 1.0 - 0.12 * p;
+        float dir = niri_random_seed < 0.5 ? -1.0 : 1.0;
+        float angle = dir * 0.03 * p * p;
+        vec2 coords = (coords_geo.xy - vec2(0.5)) * size_geo.xy;
+        coords = mat2(cos(angle), -sin(angle), sin(angle), cos(angle)) * coords;
+        coords = coords / scale / size_geo.xy + vec2(0.5);
+        vec3 coords_tex = niri_geo_to_tex * vec3(coords, 1.0);
+        return texture2D(niri_tex, coords_tex.st) * (1.0 - p);
+    }
+  '';
 in {
   environment.systemPackages = [
     # 0.8.2 (nixpkgs-stable) broke Steam context menus
@@ -52,6 +80,86 @@ in {
         off = _: {};
       };
 
+      # Blur: global dual-kawase settings for all background blur (window and
+      # layer rules below, plus apps requesting it via ext-background-effect,
+      # e.g. vicinae). Only visible behind semitransparent surfaces.
+      blur = {
+        passes = 3;
+        offset = 4.0;
+        noise = 0.03;
+        saturation = 1.4;
+      };
+
+      # Overview: zoomed-out workspaces with soft shadows.
+      overview = {
+        zoom = 0.5;
+        workspace-shadow = {
+          softness = 50;
+          spread = 10;
+          offset = _: {
+            props = {
+              x = 0;
+              y = 15;
+            };
+          };
+          color = "#00000070";
+        };
+      };
+
+      # Animations: snappy springs with a hint of bounce, custom open/close
+      # shaders. Springs <1.0 damping oscillate slightly at the end.
+      animations = {
+        workspace-switch.spring = _: {
+          props = {
+            damping-ratio = 0.85;
+            stiffness = 900;
+            epsilon = 0.0001;
+          };
+        };
+        horizontal-view-movement.spring = _: {
+          props = {
+            damping-ratio = 0.9;
+            stiffness = 700;
+            epsilon = 0.0001;
+          };
+        };
+        window-movement.spring = _: {
+          props = {
+            damping-ratio = 0.8;
+            stiffness = 700;
+            epsilon = 0.0001;
+          };
+        };
+        window-resize.spring = _: {
+          props = {
+            damping-ratio = 0.85;
+            stiffness = 800;
+            epsilon = 0.0001;
+          };
+        };
+        overview-open-close.spring = _: {
+          props = {
+            damping-ratio = 0.85;
+            stiffness = 700;
+            epsilon = 0.0001;
+          };
+        };
+        window-open = {
+          duration-ms = 280;
+          curve = ["cubic-bezier" 0.05 0.7 0.1 1.0];
+          custom-shader = openShader;
+        };
+        window-close = {
+          duration-ms = 200;
+          curve = "ease-out-cubic";
+          custom-shader = closeShader;
+        };
+        screenshot-ui-open = {
+          duration-ms = 250;
+          curve = "ease-out-expo";
+        };
+      };
+
       outputs =
         if isLaptop
         then {
@@ -92,7 +200,7 @@ in {
         };
       };
 
-      spawn-at-startup = [["swaybg" "-i" "${homeDir}/repos/me/nixos/assets/images/four-nature-illustrations.jpg"]];
+      spawn-at-startup = [["swaybg" "-i" "${homeDir}/repos/me/nixos/assets/images/space-scene-lofi.png" "-m" "fill"]];
 
       # Layout: column widths, gaps, focus ring, shadows.
       layout = {
@@ -105,10 +213,18 @@ in {
           {proportion = 0.5;}
           {proportion = 0.66667;}
         ];
+        # Gradient spans the whole view, so it shifts as columns scroll.
         focus-ring = {
           width = 2;
-          active-color = "#7fc8ff";
-          inactive-color = "#505050";
+          active-gradient = _: {
+            props = {
+              from = colors.base0D;
+              to = colors.base0E;
+              angle = 135;
+              relative-to = "workspace-view";
+            };
+          };
+          inactive-color = "${colors.base03}80";
         };
         shadow = {
           on = _: {};
@@ -128,12 +244,51 @@ in {
       # `matches` items -> `match key="regex"` (all props). Rules without
       # `matches` apply to every window. default-* sizes only apply on open.
       window-rules = [
-        # Global: rounded corners, never open maximized.
+        # Global: rounded corners, never open maximized. Blur behind every
+        # window (xray: blurs the wallpaper once, shared, nearly free); only
+        # shows through translucent windows. Ring drawn around, not behind.
         {
           geometry-corner-radius = 12;
           clip-to-geometry = true;
           open-maximized = false;
           open-maximized-to-edges = false;
+          draw-border-with-background = false;
+          background-effect = {
+            blur = true;
+          };
+        }
+        # Unfocused windows fade slightly back.
+        {
+          matches = [
+            {
+              is-active = false;
+            }
+          ];
+          opacity = 0.93;
+        }
+        # Floating windows sit over other windows: real (non-xray) blur, so
+        # they frost what's underneath instead of showing the wallpaper.
+        {
+          matches = [
+            {
+              is-floating = true;
+            }
+          ];
+          background-effect = {
+            xray = false;
+          };
+        }
+        # Windows being screencast and PiP video: keep fully opaque.
+        {
+          matches = [
+            {
+              is-window-cast-target = true;
+            }
+            {
+              title = "^Picture in picture$";
+            }
+          ];
+          opacity = 1.0;
         }
         # Browser PiP: float at 800x450.
         {
@@ -159,6 +314,29 @@ in {
           ];
           default-column-width = {
             proportion = 0.33332;
+          };
+        }
+      ];
+
+      # Layer rules: same shape as window-rules, matched by namespace
+      # (`niri msg layers` lists them).
+      layer-rules = [
+        # Frosted bar. No mako rule: it draws all notifications on one
+        # surface, so blur/shadow would fill the gaps between them.
+        {
+          matches = [
+            {
+              namespace = "^waybar$";
+            }
+          ];
+          background-effect = {
+            blur = true;
+          };
+          popups = {
+            geometry-corner-radius = 6;
+            background-effect = {
+              blur = true;
+            };
           };
         }
       ];
