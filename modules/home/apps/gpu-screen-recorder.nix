@@ -22,9 +22,9 @@
       # Alternate class each second for a blink; GTK CSS animations don't
       # tick in waybar.
       if (( $(date +%s) % 2 )); then cls=recording; else cls=recording-dim; fi
-      echo '{"text": "󰑊 REC", "class": "'"$cls"'", "tooltip": "Recording (Mod+X to stop)"}'
+      echo '{"text": "󰑊 REC", "class": "'"$cls"'", "tooltip": "Recording (Mod+Shift+X to stop)"}'
     elif systemctl --user is-active -q ${unit}; then
-      echo '{"text": " 󰕧 ", "class": "replay", "tooltip": "Replay buffer on (Mod+Shift+X to save)"}'
+      echo '{"text": " 󰕧 ", "class": "replay", "tooltip": "Replay buffer on (Mod+X to save)"}'
     else
       echo '{"text": ""}'
     fi
@@ -82,8 +82,8 @@
     fi
   '';
 in {
-  # Replay buffer: keeps last 60s in RAM, Mod+Shift+X dumps to disk.
-  # Mod+X starts/stops a regular recording on the same capture; Mod+Ctrl+X
+  # Replay buffer: keeps last 60s in RAM, Mod+X dumps to disk.
+  # Mod+Shift+X starts/stops a regular recording on the same capture; Mod+Ctrl+X
   # toggles the buffer. Binds live in modules/nixos/desktop/niri.nix.
   home.packages = [save record toggle];
 
