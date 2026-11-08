@@ -358,6 +358,22 @@ in {
           open-maximized-to-edges = true;
           open-focused = true;
         }
+        # Steam secondary windows
+        {
+          matches = [
+            {
+              app-id = "^steam$";
+            }
+          ];
+          excludes = [
+            {
+              title = "^Steam$";
+            }
+          ];
+          default-column-width = {
+            proportion = 0.25;
+          };
+        }
       ];
 
       # Layer rules: same shape as window-rules, matched by namespace
