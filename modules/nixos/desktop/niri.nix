@@ -216,17 +216,10 @@ in {
           {proportion = 0.5;}
           {proportion = 0.66667;}
         ];
-        # Gradient spans the whole view, so it shifts as columns scroll.
+        # Orange from the wallpaper (Nord nord12).
         focus-ring = {
-          width = 2;
-          active-gradient = _: {
-            props = {
-              from = colors.base0D;
-              to = colors.base0E;
-              angle = 135;
-              relative-to = "workspace-view";
-            };
-          };
+          width = 4;
+          active-color = "#D08770";
           inactive-color = "${colors.base03}80";
         };
         shadow = {
