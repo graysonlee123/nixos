@@ -5,6 +5,7 @@
   ...
 }: let
   homeDir = config.users.users.gray.home;
+  cursor = config.home-manager.users.gray.home.pointerCursor;
 in {
   environment.systemPackages = [
     # 0.8.2 (nixpkgs-stable) broke Steam context menus
@@ -41,6 +42,11 @@ in {
         hot-corners = {
           off = _: {};
         };
+      };
+      # Match HM pointerCursor (modules/home/desktop/cursor.nix).
+      cursor = {
+        xcursor-theme = cursor.name;
+        xcursor-size = cursor.size;
       };
       recent-windows = {
         off = _: {};
@@ -272,6 +278,11 @@ in {
         "Mod+Shift+F".switch-focus-between-floating-and-tiling = _: {};
 
         "Mod+Z".toggle-column-tabbed-display = _: {};
+
+        # gpu-screen-recorder (modules/home/apps/gpu-screen-recorder.nix).
+        "Mod+X".spawn = "gsr-record";
+        "Mod+Shift+X".spawn = "gsr-save";
+        "Mod+Ctrl+X".spawn = "gsr-toggle";
 
         "Print".screenshot = _: {};
         "Alt+Print".screenshot-window = _: {};

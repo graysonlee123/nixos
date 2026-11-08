@@ -4,5 +4,4 @@
     name = "Bibata-Modern-Ice";
     size = 24;
   };
-  home.pointerCursor.hyprcursor.enable = true;
 }

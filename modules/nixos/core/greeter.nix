@@ -6,7 +6,7 @@
     cageArgs = ["-s" "-d" "-m" "last"];
   };
 
-  # Restarting greetd on switch kills the logged-in session (Hyprland and
-  # everything under it). Pick up greeter changes on next login/boot instead.
+  # Restarting greetd on switch kills the logged-in session.
+  # Pick up greeter changes on next login/boot instead.
   systemd.services.greetd.restartIfChanged = false;
 }

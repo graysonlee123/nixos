@@ -51,24 +51,6 @@ in {
           "group/clock-group"
         ];
 
-        # Workspace number + icons of its windows (window-rewrite).
-        "hyprland/workspaces" = {
-          format = "{name} {windows}";
-          window-rewrite-default = "󰣆";
-          window-rewrite = {
-            "class<chromium-browser>" = "";
-            "class<com\\.mitchellh\\.ghostty.*>" = "";
-            "class<code>" = "󰨞";
-            "class<jetbrains-.*>" = "󰅩";
-            "class<md\\.obsidian\\.Obsidian>" = "󰠮";
-            "class<vesktop>" = "󰙯";
-            "class<steam.*>" = "";
-            "class<thunar>" = "󰉋";
-            "class<tidal-hifi>" = "󰝚";
-            "class<1[Pp]assword>" = "󰌆";
-          };
-        };
-
         "battery" = {
           format = "{icon} {capacity}%";
           format-icons = {

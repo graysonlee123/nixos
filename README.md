@@ -6,7 +6,7 @@ Personal NixOS configuration using flakes for declarative system management.
 
 This repository contains my declarative NixOS system configuration, including:
 
-- **Window Manager**: Hyprland (Wayland compositor)
+- **Window Manager**: niri (scrollable-tiling Wayland compositor)
 - **Terminal**: Ghostty with Agave Nerd Font
 - **Shell**: Zsh with Starship prompt
 - **Display Manager**: greetd with ReGreet
@@ -34,13 +34,13 @@ This repository contains my declarative NixOS system configuration, including:
 │   │   ├── network/                # networking, openssh, tailscale, mullvad
 │   │   ├── hardware/               # nvidia, bluetooth, fingerprint, audio...
 │   │   ├── security/               # 1password, clamav, keyring
-│   │   ├── desktop/                # hyprland, thunar, vicinae
+│   │   ├── desktop/                # niri, thunar, vicinae
 │   │   ├── gaming/                 # steam, gamemode
 │   │   └── services/               # headless services (jellyfin, caddy...)
 │   └── home/                       # Home Manager modules, grouped by category
 │       ├── cli/                    # terminal tools (zsh, yazi, lftp...)
 │       ├── dev/                    # git, go, editors
-│       ├── desktop/                # hyprland, hyprlock, hypridle, waybar, mako...
+│       ├── desktop/                # hyprlock, hypridle, waybar, mako...
 │       ├── apps/                   # GUI apps (chromium, vesktop)
 │       ├── pim/                    # calendars, contacts
 │       └── system/                 # env vars, sops, ssh, xdg, syncthing
@@ -160,11 +160,13 @@ See [docs/syncthing.md](docs/syncthing.md).
 - Docker daemon
 - NetworkManager
 
-### Hyprland Configuration
+### niri Configuration
+
+Configured in `modules/nixos/desktop/niri.nix` via nix-wrapper-modules. `Mod+Shift+/` shows the hotkey overlay.
 
 - **Modifier**: Super/Windows key
 - **Terminal**: Ghostty
-- **App Launcher**: Vicinae (Mod+d). Shortcuts and snippets are declared in `modules/home/desktop/vicinae.nix` and written read-only, so GUI edits fail; change them in Nix. Snippet expansion needs the setcap `vicinae-input-server` wrapper from `modules/nixos/desktop/vicinae.nix`.
+- **App Launcher**: Vicinae (Mod+Tab). Shortcuts and snippets are declared in `modules/home/desktop/vicinae.nix` and written read-only, so GUI edits fail; change them in Nix. Snippet expansion needs the setcap `vicinae-input-server` wrapper from `modules/nixos/desktop/vicinae.nix`.
 - **Status Bar**: Waybar
 - **Lock/Idle**: hyprlock + hypridle (`modules/home/desktop/hyprlock.nix`, `hypridle.nix`)
 

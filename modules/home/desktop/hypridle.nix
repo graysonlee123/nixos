@@ -6,13 +6,14 @@
   ...
 }: let
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-  hyprctl = "${osConfig.programs.hyprland.package}/bin/hyprctl";
+  niri = "${osConfig.programs.niri.package}/bin/niri";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   loginctl = "${pkgs.systemd}/bin/loginctl";
   pidof = "${pkgs.procps}/bin/pidof";
   systemctl = "${pkgs.systemd}/bin/systemctl";
 
-  dpms = action: "${hyprctl} dispatch 'hl.dsp.dpms({ action = \"${action}\" })'";
+  monitorsOff = "${niri} msg action power-off-monitors";
+  monitorsOn = "${niri} msg action power-on-monitors";
 in {
   services.hypridle = {
     enable = true;
@@ -20,7 +21,7 @@ in {
       general = {
         lock_cmd = "${pidof} hyprlock || ${hyprlock}";
         before_sleep_cmd = "${loginctl} lock-session";
-        after_sleep_cmd = dpms "enable";
+        after_sleep_cmd = monitorsOn;
       };
 
       # Laptop: short timeouts, dim first, suspend at the end.
@@ -39,8 +40,8 @@ in {
           }
           {
             timeout = 330;
-            on-timeout = dpms "disable";
-            on-resume = dpms "enable";
+            on-timeout = monitorsOff;
+            on-resume = monitorsOn;
           }
           {
             timeout = 900;
@@ -54,8 +55,8 @@ in {
           }
           {
             timeout = 2700;
-            on-timeout = dpms "disable";
-            on-resume = dpms "enable";
+            on-timeout = monitorsOff;
+            on-resume = monitorsOn;
           }
         ];
     };

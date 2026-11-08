@@ -53,8 +53,6 @@
   systemd.user.services.mullvad-waybar-listener = {
     Unit = {
       Description = "Signal waybar on mullvad status changes";
-      # Hang off waybar, not hyprland-session.target: targets get implicit After=
-      # on units they want, which cycles with After=waybar.service.
       After = ["waybar.service"];
       PartOf = ["waybar.service"];
     };
