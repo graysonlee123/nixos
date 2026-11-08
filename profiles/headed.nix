@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   imports = [
     ./base.nix
     ../modules/nixos/core/greeter.nix
@@ -20,5 +20,9 @@
     ../modules/nixos/security/clamav.nix
     ../modules/nixos/security/keyring.nix
     ../modules/nixos/theme/icons.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    swaybg
   ];
 }
