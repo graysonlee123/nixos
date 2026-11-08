@@ -67,7 +67,7 @@ in {
       ];
       networking.useDHCP = false;
       networking.defaultGateway = constants.network.gateway;
-      networking.nameservers = constants.network.dns;
+      networking.nameservers = lib.mkDefault constants.network.dns; # overridable, e.g. AGH sets 127.0.0.1
       networking.interfaces.${cfg.networkInterface} = {
         ipv4.addresses = [
           {
