@@ -482,8 +482,8 @@ in {
         "Mod+Z".toggle-column-tabbed-display = _: {};
 
         # gpu-screen-recorder (modules/home/apps/gpu-screen-recorder.nix).
-        "Mod+X".spawn = "gsr-record";
-        "Mod+Shift+X".spawn = "gsr-save";
+        "Mod+X".spawn = "gsr-save";
+        "Mod+Shift+X".spawn = "gsr-record";
         "Mod+Ctrl+X".spawn = "gsr-toggle";
 
         # Region select, then annotate in satty (modules/home/desktop/screenshots.nix).
