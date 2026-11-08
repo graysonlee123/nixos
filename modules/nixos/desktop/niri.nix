@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   pkgs-unstable,
   isLaptop,
   ...
@@ -62,7 +63,6 @@ in {
         skip-at-startup = _: {};
       };
       prefer-no-csd = _: {};
-      screenshot-path = "${homeDir}/pictures/screenshots/%Y-%m-%d-%H-%M-%S.png";
       clipboard = {
         disable-primary = _: {};
       };
@@ -320,6 +320,15 @@ in {
             fixed = 768;
           };
         }
+        # Satty: float over the workspace instead of tiling as a new column.
+        {
+          matches = [
+            {
+              app-id = "^com\\.gabm\\.satty$";
+            }
+          ];
+          open-floating = true;
+        }
         # Ghostty: open at 1/3 width.
         {
           matches = [
@@ -477,8 +486,8 @@ in {
         "Mod+Shift+X".spawn = "gsr-save";
         "Mod+Ctrl+X".spawn = "gsr-toggle";
 
-        "Print".screenshot = _: {};
-        "Alt+Print".screenshot-window = _: {};
+        # Region select, then annotate in satty (modules/home/desktop/screenshots.nix).
+        "Print".spawn-sh = "${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -b '#00000099' -c '#00ff41')\" - | ${pkgs.satty}/bin/satty --filename -";
 
         "Mod+Escape" = _: {
           props.allow-inhibiting = false;
