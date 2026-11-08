@@ -180,10 +180,13 @@ in {
           # ASUS ROG Strix XG129C 12.3"
           "HDMI-A-1" = {
             mode = "1920x720@75.000";
+            # Pinned: centering below assumes logical width 1920 / 1.25 = 1536.
+            scale = 1.25;
             transform = "normal";
+            # Centered under DP-1: (2560 - 1536) / 2 = 512, plus barely shifted left.
             position = _: {
               props = {
-                x = 600;
+                x = 496;
                 y = 1440;
               };
             };
