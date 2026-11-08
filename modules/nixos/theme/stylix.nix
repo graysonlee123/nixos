@@ -28,9 +28,10 @@
     polarity = "dark";
 
     # Translucent bar (desktop), launcher/notifications (popups) and terminal.
+    # niri blurs behind them (modules/nixos/desktop/niri.nix).
     opacity = {
-      desktop = 0.98;
-      popups = 0.98;
+      desktop = 0.75;
+      popups = 0.82;
       terminal = config.stylix.opacity.popups;
     };
 
