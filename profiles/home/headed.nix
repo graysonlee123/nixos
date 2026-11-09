@@ -82,7 +82,6 @@
     typescript-language-server
     vlc
     waylyrics
-    wf-recorder
     wiremix
     wl-clipboard
     (wp-cli.override {

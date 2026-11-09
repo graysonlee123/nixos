@@ -569,6 +569,8 @@ in {
         "Mod+X".spawn = "gsr-save";
         "Mod+Shift+X".spawn = "gsr-record";
         "Mod+Ctrl+X".spawn = "gsr-toggle";
+        # Region/window/monitor menu; press again to stop.
+        "Mod+Print".spawn = "record-screen";
 
         # Region select, then annotate in satty (modules/home/desktop/screenshots.nix).
         "Print".spawn-sh = "${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -b '#00000099' -c '#00ff41')\" - | ${pkgs.satty}/bin/satty --filename -";

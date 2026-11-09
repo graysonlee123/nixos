@@ -17,12 +17,14 @@
   # its handlers kills it. The 1s poll covers service starts and crashes.
   waybarSignal = 13;
   refreshWaybar = "${pkgs.procps}/bin/pkill -RTMIN+${toString waybarSignal} waybar || true";
+  # PID of a standalone record-screen capture (separate from the replay unit).
+  screenPidFile = "$XDG_RUNTIME_DIR/record-screen.pid";
   waybarStatus = pkgs.writeShellScript "waybar-gsr" ''
-    if [ -e "${recordingFlag}" ]; then
+    if [ -e "${recordingFlag}" ] || [ -e "${screenPidFile}" ]; then
       # Alternate class each second for a blink; GTK CSS animations don't
       # tick in waybar.
       if (( $(date +%s) % 2 )); then cls=recording; else cls=recording-dim; fi
-      echo '{"text": "󰑊 REC", "class": "'"$cls"'", "tooltip": "Recording (Mod+Shift+X to stop)"}'
+      echo '{"text": "󰑊 REC", "class": "'"$cls"'", "tooltip": "Recording (same bind to stop)"}'
     elif systemctl --user is-active -q ${unit}; then
       echo '{"text": " 󰕧 ", "class": "replay", "tooltip": "Replay buffer on (Mod+X to save)"}'
     else
@@ -81,11 +83,59 @@
       fi
     fi
   '';
+  # Standalone capture picked from a vicinae menu: region (slurp), window
+  # (portal picker) or focused monitor, with/without audio. Runs its own gsr,
+  # independent of the replay unit. Pressing again stops it.
+  recordScreen = pkgs.writeShellScriptBin "record-screen" ''
+    pidfile="${screenPidFile}"
+    if [ -e "$pidfile" ] && kill -0 "$(cat "$pidfile")" 2>/dev/null; then
+      kill -INT "$(cat "$pidfile")"
+      exit 0
+    fi
+
+    choice=$(printf '%s\n' \
+      "Region" "Region + audio" \
+      "Window" "Window + audio" \
+      "Monitor" "Monitor + audio" \
+      | vicinae dmenu -n "Screen Recording" -p "Select action...")
+
+    case "$choice" in
+      Region*)
+        geom=$(${pkgs.slurp}/bin/slurp -f '%wx%h+%x+%y') || exit 0
+        target=(-w region -region "$geom") ;;
+      Window*)
+        target=(-w portal) ;;
+      Monitor*)
+        target=(-w "$(niri msg -j focused-output | ${pkgs.jq}/bin/jq -r .name)") ;;
+      *) exit 0 ;;
+    esac
+    audio=()
+    case "$choice" in
+      *audio) audio=(-a "default_output|default_input" -ac opus) ;;
+    esac
+
+    mkdir -p "${recordingDir}"
+    file="${recordingDir}/$(date +%Y-%m-%d_%H-%M-%S).mp4"
+    ${lib.getExe pkgs.gpu-screen-recorder} "''${target[@]}" "''${audio[@]}" \
+      -f 60 -c mp4 -k auto -q very_high -o "$file" &
+    echo $! > "$pidfile"
+    ${refreshWaybar}
+    wait $!
+    rm -f "$pidfile"
+    ${refreshWaybar}
+
+    if [ -s "$file" ]; then
+      ${notify} "Recording saved" "$file"
+    else
+      rm -f "$file"
+    fi
+  '';
 in {
   # Replay buffer: keeps last 60s in RAM, Mod+X dumps to disk.
   # Mod+Shift+X starts/stops a regular recording on the same capture; Mod+Ctrl+X
-  # toggles the buffer. Binds live in modules/nixos/desktop/niri.nix.
-  home.packages = [save record toggle];
+  # toggles the buffer. Mod+Print runs record-screen. Binds live in
+  # modules/nixos/desktop/niri.nix.
+  home.packages = [save record toggle recordScreen];
 
   # Auto-starts on desktop only; laptop toggles manually to save battery.
   systemd.user.services.${unit} = {

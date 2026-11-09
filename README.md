@@ -134,7 +134,7 @@ sudo tailscale up --auth-key=KEY
 - **Docker Tools**: lazydocker
 - **Terminal Tools**: vim, fzf, ripgrep, tealdeer, zoxide
 - **Utilities**: wl-clipboard, wp-cli, rclone, restic, satty (screenshots)
-- **Media**: vlc, wf-recorder
+- **Media**: vlc
 - **Entertainment**: 2048-in-terminal, asciiquarium, crawl, nethack
 - **Other**: tree, zip/unzip, jq, nixfmt, dig, speedtest-cli, pnpm
 
@@ -263,7 +263,7 @@ nix fmt
 ## Useful Keybindings
 
 - `Print`: Screenshot with grim, satty and slurp
-- `Super + Print`: Open screen recording menu (region/fullscreen, with/without audio) via Vicinae. If a recording is already in progress, stops it immediately.
+- `Super + Print`: Open screen recording menu (region/window/monitor, with/without audio) via Vicinae, recorded with gpu-screen-recorder. If a recording is already in progress, stops it immediately.
 
 ## Gaming
 
