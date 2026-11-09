@@ -383,7 +383,6 @@ in {
           }
           // lib.optionalAttrs (! isLaptop) {
             open-maximized-to-edges = true;
-            open-focused = true;
           })
         # Steam secondary windows
         {
