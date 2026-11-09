@@ -163,6 +163,27 @@ in {
       outputs =
         if isLaptop
         then {
+          "eDP-1" = {
+            mode = "2880x1800@120.000";
+            transform = "normal";
+            position = _: {
+              props = {
+                x = 0;
+                y = 0;
+              };
+            };
+          };
+          "HDMI-A-1" = {
+            mode = "2560x1440@59.951";
+            transform = "normal";
+            focus-at-startup = _: {};
+            position = _: {
+              props = {
+                x = 1646;
+                y = -411;
+              };
+            };
+          };
         }
         else {
           # LG UltraGear 32GS75QX-B.AUS 32"
@@ -343,7 +364,7 @@ in {
             proportion = 0.33332;
           };
         }
-        # Chat applications: open on HDMI-A-1 maximized to edges.
+        # Chat applications: open on HDMI-A-1 maximized to edges (Sulaco only).
         {
           matches = [
             {
