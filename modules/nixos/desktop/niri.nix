@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgs-unstable,
+  lib,
   isLaptop,
   ...
 }: let
@@ -365,23 +366,25 @@ in {
           };
         }
         # Chat applications: open on HDMI-A-1 maximized to edges (Sulaco only).
-        {
-          matches = [
-            {
-              app-id = "^vesktop$";
-            }
-            {
-              # Google Chat PWA
-              app-id = "^chrome-pommaclcbfghclhalboakcipcmmndhcj-";
-            }
-          ];
-          open-on-output =
-            if isLaptop
-            then ""
-            else "HDMI-A-1";
-          open-maximized-to-edges = true;
-          open-focused = true;
-        }
+        ({
+            matches = [
+              {
+                app-id = "^vesktop$";
+              }
+              {
+                # Google Chat PWA
+                app-id = "^chrome-pommaclcbfghclhalboakcipcmmndhcj-";
+              }
+            ];
+            open-on-output =
+              if isLaptop
+              then "eDP-1"
+              else "HDMI-A-1";
+          }
+          // lib.optionalAttrs (! isLaptop) {
+            open-maximized-to-edges = true;
+            open-focused = true;
+          })
         # Steam secondary windows
         {
           matches = [
