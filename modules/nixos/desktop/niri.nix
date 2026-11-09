@@ -398,6 +398,28 @@ in {
             proportion = 0.25;
           };
         }
+        # Thunar
+        {
+          matches = [
+            {
+              app-id = "^thunar$";
+              is-floating = false;
+            }
+          ];
+          default-column-width = {
+            proportion = 0.5;
+          };
+        }
+        # Thunar secondary windows
+        {
+          matches = [
+            {
+              app-id = "^thunar$";
+              title = "^Rename";
+            }
+          ];
+          open-floating = true;
+        }
       ];
 
       # Layer rules: same shape as window-rules, matched by namespace
