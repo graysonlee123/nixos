@@ -11,6 +11,7 @@
 | 1224  | TCP      | Express Postmark          | 127.0.0.1               | No              |                                              |
 | 2456-2457 | UDP  | Valheim (vikings)         | 0.0.0.0                 | Yes             | Game + query; WAN (router forward)           |
 | 2458-2459 | UDP  | Valheim (nora)            | 0.0.0.0                 | Yes             | Game + query; LAN only                       |
+| 2460-2461 | UDP  | Valheim (gnorts)          | 0.0.0.0                 | Yes             | Game + query; LAN only                       |
 | 3000  | TCP      | AdGuard Home (Web)        | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3001  | TCP      | Uptime Kuma               | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3456  | TCP      | Vikunja                   | \*                      | No              | Firewall blocks                              |
@@ -23,6 +24,7 @@
 | 5432  | TCP      | PostgreSQL                | 127.0.0.1, 172.17.0.1   | docker0 only    | Peer auth (host), password auth (containers) |
 | 7359  | UDP      | Jellyfin (Discovery)      | 0.0.0.0                 | No              | DLNA/client discovery                        |
 | 7777  | TCP      | Terraria                  | 0.0.0.0                 | Yes             | Game server                                  |
+| 8081  | TCP      | MeTube                    | 127.0.0.1               | No              | Behind Caddy (container)                     |
 | 8096  | TCP      | Jellyfin                  | 127.0.0.1               | No              | Behind Caddy, bound in-app                   |
 | 8384  | TCP      | Syncthing GUI             | 127.0.0.1               | No              | Behind Caddy                                 |
 | 8945  | TCP      | Pinchflat                 | 0.0.0.0                 | No              | Firewall blocks, no bind option              |
@@ -50,6 +52,9 @@
   - Services connect through `/run/postgresql`
   - No remote access; use SSH to query
 - linkding data lives at `/var/lib/linkding`
+- MeTube downloads land in `/var/lib/metube` (`gray:users`; not backed up)
+- Valheim world zips in `/var/lib/gameservers/valheim/<name>/config/backups`; hourly, skipped after 1h with no players (`BACKUPS_IF_IDLE=false`)
+- Journald keeps 2 weeks / 2G (override of base 1 week / 512M) so monthly vault prune/check logs survive
 
 ```shell
 sudo -u postgres psql

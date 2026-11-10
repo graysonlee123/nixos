@@ -291,8 +291,9 @@ in {
                 SERVER_PORT = "2456"; # Container-internal port; host port set via `ports`
                 SERVER_PUBLIC = "0"; # Never list in public browser; join via direct IP + pass
                 BACKUPS_MAX_AGE = "7"; # Days of backups to keep
+                BACKUPS_IF_IDLE = "false"; # Skip backups after 1h (BACKUPS_IDLE_GRACE_PERIOD) w/o players
                 PUID = "1000";
-                PGID = "1000";
+                PGID = "100";
                 SERVER_ARGS =
                   "-modifier deathpenalty casual"
                   + lib.optionalString (!srv.valheimPlus) " -modifier portals casual";

@@ -42,13 +42,22 @@ ssh bigscoots
 lftp sftp://bigscoots
 ```
 
+**`spiritelectronics.com`**:
+
+SSH/SFTP into Spirit Electronics - Inspry Staging server.
+
+```shell
+ssh spiritelectronics.com
+lftp sftp://spiritelectronics.com
+```
+
 **`lacrawfish.com`**:
 
 LA Crawfish on BigScoots (user `nginx`, port 2222).
 
-**`moosetracks.com`, `staging.moosetracks.com`**:
+**`moosetracks.com`**:
 
-Moose Tracks live and staging. Reuse the `bigscoots` host, key, user, and port.
+Moose Tracks live and staging. Reuse the `bigscoots` key, user, and port.
 
 **`bitbucket.org`**:
 
