@@ -105,14 +105,7 @@ in {
         };
         "moosetracks.com" = {
           enable = !isHeadless;
-          hostName = config.home-manager.users.gray.keys.ssh.bigscoots.hostName;
-          publicKey = config.home-manager.users.gray.keys.ssh.bigscoots.publicKey;
-          user = config.home-manager.users.gray.keys.ssh.bigscoots.user;
-          port = config.home-manager.users.gray.keys.ssh.bigscoots.port;
-        };
-        "staging.moosetracks.com" = {
-          enable = !isHeadless;
-          hostName = config.home-manager.users.gray.keys.ssh.bigscoots.hostName;
+          hostName = "167.253.104.250";
           publicKey = config.home-manager.users.gray.keys.ssh.bigscoots.publicKey;
           user = config.home-manager.users.gray.keys.ssh.bigscoots.user;
           port = config.home-manager.users.gray.keys.ssh.bigscoots.port;
