@@ -422,6 +422,38 @@ in {
           ];
           open-floating = true;
         }
+        # JetBrains hover popups (full text of truncated list items) open as
+        # tiny untitled windows. Taking focus warps the cursor to them, then back
+        # to the IDE center on close. Titled windows (IDE, dialogs) excluded.
+        # Also undo global decorations: popups draw their own frame.
+        {
+          matches = [
+            {
+              app-id = "^jetbrains-";
+            }
+          ];
+          excludes = [
+            {
+              title = ".";
+            }
+          ];
+          open-focused = false;
+          geometry-corner-radius = 0;
+          clip-to-geometry = false;
+          opacity = 1.0;
+          background-effect = {
+            blur = false;
+          };
+          focus-ring = {
+            off = _: {};
+          };
+          border = {
+            off = _: {};
+          };
+          shadow = {
+            off = _: {};
+          };
+        }
       ];
 
       # Layer rules: same shape as window-rules, matched by namespace
