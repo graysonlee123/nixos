@@ -42,6 +42,15 @@ ssh bigscoots
 lftp sftp://bigscoots
 ```
 
+**`spiritelectronics.com`**:
+
+SSH/SFTP into Spirit Electronics - Inspry Staging server.
+
+```shell
+ssh spiritelectronics.com
+lftp sftp://spiritelectronics.com
+```
+
 **`lacrawfish.com`**:
 
 LA Crawfish on BigScoots (user `nginx`, port 2222).

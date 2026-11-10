@@ -110,6 +110,13 @@ in {
           user = config.home-manager.users.gray.keys.ssh.bigscoots.user;
           port = config.home-manager.users.gray.keys.ssh.bigscoots.port;
         };
+        "spiritelectronics.com" = {
+          enable = !isHeadless;
+          hostName = "35.236.219.140";
+          publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOhPbSBruCX3yqbCoTTbeSu+60D7vSPLafAw/JkT+iZC grayson@inspry.com";
+          user = "spiritelectronicscom";
+          port = 56546;
+        };
       };
     };
   };
