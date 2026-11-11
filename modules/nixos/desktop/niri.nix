@@ -354,6 +354,15 @@ in {
           ];
           open-floating = true;
         }
+        # Chromium: open at full width.
+        {
+          matches = [
+            {
+              app-id = "^chromium-browser$";
+            }
+          ];
+          open-maximized = true;
+        }
         # Ghostty: open at 1/3 width.
         {
           matches = [
