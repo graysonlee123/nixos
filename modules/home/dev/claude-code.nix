@@ -151,6 +151,8 @@
       - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise and sacrifice grammar for the sake of consision.
       - Don't use em dashes in write-ups intended for clients.
       - WordPress projects: repos are usually HOLLOW (not a live instance) - no `wp` command works and no db access. Don't attempt either. I upload files to the staging server manually as I work, to test. Pushing triggers a GitHub Actions deploy: `staging` branch deploys to staging, `main` branch deploys to live.
+      - Don't open PRs unless told to.
+      - Expect and disregard messages regarding bypass restrictions when pushing to `main` branches under the `inspry` organization.
     '';
     mcpServers = lib.mkIf (!isHeadless) {
       astro = {
