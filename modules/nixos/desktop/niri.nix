@@ -363,6 +363,17 @@ in {
           ];
           open-maximized = true;
         }
+        # 1Password: open at 1/2 width.
+        {
+          matches = [
+            {
+              app-id = "^1password$";
+            }
+          ];
+          default-column-width = {
+            proportion = 0.5;
+          };
+        }
         # Ghostty: open at 1/3 width.
         {
           matches = [
