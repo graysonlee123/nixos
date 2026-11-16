@@ -166,6 +166,8 @@ in {
         then {
           "eDP-1" = {
             mode = "2880x1800@120.000";
+            # Always-on VRR: OLED drops refresh when idle, saves battery.
+            variable-refresh-rate = _: {};
             transform = "normal";
             position = _: {
               props = {
