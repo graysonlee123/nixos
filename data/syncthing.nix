@@ -37,6 +37,12 @@ in rec {
         "tcp://${hosts.grayson-iphone.ips.tailscale}"
       ];
     };
+    brick = {
+      id = "CNAQFUF-VOMLUUX-B7GEXIC-BDIY25K-QZAQ7RF-FWEYTYW-S2ZPFXP-FGUNEQB";
+      addresses = [
+        "tcp://${hosts.brick.ips.lan}"
+      ];
+    };
   };
   folders = {
     Personal = {
@@ -51,6 +57,11 @@ in rec {
     };
     Inspry = {
       id = "inspry";
+      devices = builtins.attrNames devices;
+      inherit versioning;
+    };
+    Brick = {
+      id = "brick";
       devices = builtins.attrNames devices;
       inherit versioning;
     };
