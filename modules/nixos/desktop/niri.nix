@@ -347,6 +347,17 @@ in {
             fixed = 768;
           };
         }
+        # GNOME portal screencast picker: can't associate with parent window,
+        # so it opens unfocused (often on the other output). Force float+focus.
+        {
+          matches = [
+            {
+              app-id = "^xdg-desktop-portal-gnome$";
+            }
+          ];
+          open-floating = true;
+          open-focused = true;
+        }
         # Satty: float over the workspace instead of tiling as a new column.
         {
           matches = [
