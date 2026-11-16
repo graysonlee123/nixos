@@ -47,6 +47,13 @@ in {
     67 # DHCP
     68 # DHCP
   ];
+  # Invalid client ids (e.g. empty mac) make AdGuard fatal on start, killing LAN DNS/DHCP
+  assertions =
+    lib.mapAttrsToList (name: value: {
+      assertion = builtins.match "([0-9a-f]{2}:){5}[0-9a-f]{2}" (value.mac or "") != null;
+      message = "hosts.${name}.mac must be a lowercase colon-separated MAC, got \"${value.mac or ""}\"";
+    })
+    hosts;
   networking.nameservers = ["127.0.0.1"];
   networking.networkmanager.dns = "none";
 
