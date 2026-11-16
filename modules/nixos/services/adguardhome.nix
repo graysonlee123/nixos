@@ -54,7 +54,8 @@ in {
       message = "hosts.${name}.mac must be a lowercase colon-separated MAC, got \"${value.mac or ""}\"";
     })
     hosts;
-  networking.nameservers = ["127.0.0.1"];
+  # Fallback keeps sulaco resolving (rollbacks, rebuilds) if AdGuard dies
+  networking.nameservers = ["127.0.0.1" "9.9.9.9"];
   networking.networkmanager.dns = "none";
 
   services.adguardhome = {
