@@ -452,6 +452,10 @@ in {
               app-id = "^thunar$";
               title = "^Rename";
             }
+            {
+              app-id = "^thunar$";
+              title = "^File Operation Progress$";
+            }
           ];
           open-floating = true;
         }
