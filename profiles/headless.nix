@@ -4,7 +4,6 @@
     ../modules/nixos/core/deploy-target.nix
     ../modules/nixos/services/adguardhome.nix
     ../modules/nixos/services/caddy.nix
-    ../modules/nixos/services/deeptutor.nix
     ../modules/nixos/services/express-postmark.nix
     ../modules/nixos/services/gameservers.nix
     ../modules/nixos/services/jellyfin.nix

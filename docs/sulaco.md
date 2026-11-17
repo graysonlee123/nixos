@@ -15,7 +15,6 @@
 | 3000  | TCP      | AdGuard Home (Web)        | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3001  | TCP      | Uptime Kuma               | 127.0.0.1               | No              | Behind Caddy                                 |
 | 3456  | TCP      | Vikunja                   | \*                      | No              | Firewall blocks                              |
-| 3782  | TCP      | DeepTutor                 | 127.0.0.1               | No              | Behind Caddy (container)                     |
 | 4369  | TCP      | EPMD (Erlang)             | 0.0.0.0                 | No              | From Pinchflat runtime                       |
 | 5000  | TCP      | Kavita                    | 127.0.0.1               | No              | Behind Caddy (container)                     |
 | 5050  | TCP      | pgAdmin 4                 | \*                      | No              | Behind Caddy                                 |
