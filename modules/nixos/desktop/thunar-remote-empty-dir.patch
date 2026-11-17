@@ -1,0 +1,14 @@
+--- a/thunar/thunar-file.c	2026-11-17 09:28:44.137178446 -0500
++++ b/thunar/thunar-file.c	2026-11-17 09:28:48.016427096 -0500
+@@ -2860,6 +2860,11 @@
+   if (!thunar_file_is_readable (file))
+     return TRUE;
+ 
++  /* Enumerating is a blocking round trip for remote files (e.g. one FTP LIST
++   * per subfolder); assume non-empty so the view does not freeze */
++  if (!thunar_file_is_local (file))
++    return FALSE;
++
+   enumerator = g_file_enumerate_children (file->gfile, NULL,
+                                           G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+                                           NULL, &err);
