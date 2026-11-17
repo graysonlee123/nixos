@@ -60,15 +60,8 @@ in rec {
       devices = builtins.attrNames devices;
       inherit versioning;
     };
-    # Brick Pro emulator ROMs
-    Roms = {
-      id = "roms";
-      devices = builtins.attrNames devices;
-      inherit versioning;
-    };
-    # Brick Pro emulator save files
-    Saves = {
-      id = "saves";
+    Brick = {
+      id = "brick";
       devices = builtins.attrNames devices;
       inherit versioning;
     };
