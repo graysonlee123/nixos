@@ -491,6 +491,18 @@ in {
             off = _: {};
           };
         }
+
+        # Obsidian: open at 1/3 width.
+        {
+          matches = [
+            {
+              app-id = "^md.obsidian.Obsidian$";
+            }
+          ];
+          default-column-width = {
+            proportion = 0.33332;
+          };
+        }
       ];
 
       # Layer rules: same shape as window-rules, matched by namespace
