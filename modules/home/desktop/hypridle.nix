@@ -7,7 +7,7 @@
 }: let
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   niri = "${osConfig.programs.niri.package}/bin/niri";
-  hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
+  swaylock = "${config.programs.swaylock.package}/bin/swaylock";
   loginctl = "${pkgs.systemd}/bin/loginctl";
   pidof = "${pkgs.procps}/bin/pidof";
   systemctl = "${pkgs.systemd}/bin/systemctl";
@@ -19,7 +19,7 @@ in {
     enable = true;
     settings = {
       general = {
-        lock_cmd = "${pidof} hyprlock || ${hyprlock}";
+        lock_cmd = "${pidof} swaylock || ${swaylock}";
         before_sleep_cmd = "${loginctl} lock-session";
         after_sleep_cmd = monitorsOn;
       };

@@ -40,7 +40,7 @@ This repository contains my declarative NixOS system configuration, including:
 │   └── home/                       # Home Manager modules, grouped by category
 │       ├── cli/                    # terminal tools (zsh, yazi, lftp...)
 │       ├── dev/                    # git, go, editors
-│       ├── desktop/                # hyprlock, hypridle, waybar, mako...
+│       ├── desktop/                # swaylock, hypridle, waybar, mako...
 │       ├── apps/                   # GUI apps (chromium, vesktop)
 │       ├── pim/                    # calendars, contacts
 │       └── system/                 # env vars, sops, ssh, xdg, syncthing
@@ -168,7 +168,7 @@ Configured in `modules/nixos/desktop/niri.nix` via nix-wrapper-modules. `Mod+Shi
 - **Terminal**: Ghostty
 - **App Launcher**: Vicinae (Mod+Tab). Shortcuts and snippets are declared in `modules/home/desktop/vicinae.nix` and written read-only, so GUI edits fail; change them in Nix. Snippet expansion needs the setcap `vicinae-input-server` wrapper from `modules/nixos/desktop/vicinae.nix`.
 - **Status Bar**: Waybar
-- **Lock/Idle**: hyprlock + hypridle (`modules/home/desktop/hyprlock.nix`, `hypridle.nix`)
+- **Lock/Idle**: swaylock + hypridle (`modules/home/desktop/swaylock.nix`, `hypridle.nix`)
 
 ### Terminal Setup
 
