@@ -15,6 +15,7 @@ in {
       TZ = "America/New_York";
       PUID = "1000";
       PGID = "100";
+      DELETE_FILE_ON_TRASHCAN = "ask";
     };
   };
 
