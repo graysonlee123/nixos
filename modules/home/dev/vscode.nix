@@ -70,6 +70,7 @@ in {
           };
           "extensions.ignoreRecommendations" = true;
           "biome.lsp.bin" = "${pkgs-unstable.biome}/bin/biome";
+          "biome.requireConfiguration" = true;
           "terminal.integrated.defaultProfile.linux" = "zsh";
           "chat.disableAIFeatures" = true;
           "json.schemaDownload.trustedDomains" = lib.genAttrs [
