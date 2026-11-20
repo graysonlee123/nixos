@@ -50,7 +50,7 @@
     };
     constants = import ./data/constants.nix;
     hosts = import ./data/hosts.nix;
-    wallpaperPathRaw = ./assets/images/liftoff.jpg;
+    wallpaperPathRaw = ./assets/images/space-scene-lofi.png;
     wallpaperPath = "${wallpaperPathRaw}";
 
     # Hive nodes. targetHost = null: skipped by `colmena apply`, rebuilt locally.
