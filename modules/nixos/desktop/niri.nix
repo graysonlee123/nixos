@@ -4,6 +4,7 @@
   pkgs-unstable,
   lib,
   isLaptop,
+  wallpaperPath,
   ...
 }: let
   homeDir = config.users.users.gray.home;
@@ -234,7 +235,7 @@ in {
         };
       };
 
-      spawn-at-startup = [["swaybg" "-i" "${homeDir}/repos/me/nixos/assets/images/space-scene-lofi.png" "-m" "fill"]];
+      spawn-at-startup = [["swaybg" "-i" wallpaperPath "-m" "fill"]];
 
       # Layout: column widths, gaps, focus ring, shadows.
       layout = {
@@ -655,6 +656,8 @@ in {
 
         # Region select, then annotate in satty (modules/home/desktop/screenshots.nix).
         "Print".spawn-sh = "${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -b '#00000099' -c '#00ff41')\" - | ${pkgs.satty}/bin/satty --filename -";
+
+        "Mod+Grave".spawn = "swaylock";
 
         "Mod+Escape" = _: {
           props.allow-inhibiting = false;

@@ -50,6 +50,8 @@
     };
     constants = import ./data/constants.nix;
     hosts = import ./data/hosts.nix;
+    wallpaperPathRaw = ./assets/images/liftoff.jpg;
+    wallpaperPath = "${wallpaperPathRaw}";
 
     # Hive nodes. targetHost = null: skipped by `colmena apply`, rebuilt locally.
     nodes = lib.mapAttrs (_: node:
@@ -103,6 +105,10 @@
                 ;
             }
             // lib.optionalAttrs (!isHeadless) {
+              inherit
+                wallpaperPathRaw
+                wallpaperPath
+                ;
               wttrbar = wttrbar.packages.${system}.default;
             };
           home-manager.sharedModules = [
@@ -125,7 +131,17 @@
             inputs = self.inputs;
             wlib = wrappers.lib;
           };
-          nodeSpecialArgs = lib.mapAttrs (_: node: {inherit (node) isLaptop isHeadless;}) nodes;
+          nodeSpecialArgs = lib.mapAttrs (_: node:
+            {
+              inherit (node) isLaptop isHeadless;
+            }
+            // lib.optionalAttrs (!node.isHeadless) {
+              inherit
+                wallpaperPathRaw
+                wallpaperPath
+                ;
+            })
+          nodes;
         };
       }
       // lib.mapAttrs mkNode nodes

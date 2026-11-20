@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  wallpaperPathRaw,
   ...
 }: {
   stylix = {
@@ -10,7 +11,7 @@
     };
 
     # Even on headless, requires a wallpaper
-    image = ../../../assets/images/space-scene-lofi.png;
+    image = wallpaperPathRaw;
 
     # Gallery: https://tinted-theming.github.io/tinted-gallery/
     # Available themes: https://github.com/tinted-theming/schemes/tree/43dd14f6466a782bd57419fdfb5f398c74d6ac53/base16
