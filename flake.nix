@@ -102,13 +102,11 @@
                 isHeadless
                 constants
                 hosts
-                ;
-            }
-            // lib.optionalAttrs (!isHeadless) {
-              inherit
                 wallpaperPathRaw
                 wallpaperPath
                 ;
+            }
+            // lib.optionalAttrs (!isHeadless) {
               wttrbar = wttrbar.packages.${system}.default;
             };
           home-manager.sharedModules = [
@@ -131,17 +129,15 @@
             inputs = self.inputs;
             wlib = wrappers.lib;
           };
-          nodeSpecialArgs = lib.mapAttrs (_: node:
-            {
+          nodeSpecialArgs =
+            lib.mapAttrs (_: node: {
               inherit (node) isLaptop isHeadless;
-            }
-            // lib.optionalAttrs (!node.isHeadless) {
               inherit
                 wallpaperPathRaw
                 wallpaperPath
                 ;
             })
-          nodes;
+            nodes;
         };
       }
       // lib.mapAttrs mkNode nodes
