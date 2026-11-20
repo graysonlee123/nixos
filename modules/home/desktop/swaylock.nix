@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  wallpaperPath,
-  ...
-}: {
+{pkgs, ...}: {
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;
@@ -11,10 +6,10 @@
       fade-in = 2;
       grace = 5;
       clock = true;
-      image = lib.mkForce wallpaperPath;
+      screenshots = true;
       indicator = true;
       indicator-thickness = 4;
-      effect-blur = "10x20";
+      effect-blur = "7x5";
     };
   };
 }
