@@ -193,6 +193,9 @@ in {
           # LG UltraGear 32GS75QX-B.AUS 32"
           "DP-1" = {
             mode = "2560x1440@180.063";
+            # Always-on VRR: many games' gamescope windows have no app-id, so
+            # on-demand window rules can't match them reliably.
+            variable-refresh-rate = _: {};
             transform = "normal";
             focus-at-startup = _: {};
             position = _: {
