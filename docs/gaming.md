@@ -37,7 +37,7 @@ Gamescope is a micro-compositor for scaling games. Key flags:
 Standard template (native res, no scaling):
 
 ```
-gamescope -w 2560 -h 1440 -W 2560 -H 1440 --fullscreen --adaptive-sync --force-grab-cursor --mangoapp -- %command%
+gamescope -w 2560 -h 1440 -W 2560 -H 1440 -r 177 --fullscreen --adaptive-sync --force-grab-cursor --mangoapp -- %command%
 ```
 
 VRR on DP-1 is always on in Niri (`modules/nixos/desktop/niri.nix`). On-demand via window rule didn't work: many games' gamescope windows have no app-id.
