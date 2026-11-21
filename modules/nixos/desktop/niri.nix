@@ -434,7 +434,7 @@ in {
             }
           ];
           default-column-width = {
-            proportion = 0.25;
+            proportion = 0.33332;
           };
         }
         # Thunar
