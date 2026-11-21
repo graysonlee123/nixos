@@ -32,6 +32,18 @@ Gamescope is a micro-compositor for scaling games. Key flags:
 - `-F` / `--filter` — upscale filter: `linear`, `nearest`, `fsr`, `nis`, `pixel`
 - `--force-grab-cursor` — helps contain cursor on multi-monitor setups
 
+### Nostromo (2560x1440)
+
+Standard template (native res, no scaling):
+
+```
+gamescope -w 2560 -h 1440 -W 2560 -H 1440 --fullscreen --adaptive-sync --force-grab-cursor --mangoapp -- %command%
+```
+
+VRR on DP-1 is always on in Niri (`modules/nixos/desktop/niri.nix`). On-demand via window rule didn't work: many games' gamescope windows have no app-id.
+
+Works with: PEAK, Potato Please, Leaf It Alone, RV There Yet.
+
 ### Corbelan (2880x1800)
 
 For integer scaling, the game resolution must divide evenly into the output resolution. Common clean ratios for 1800p:
@@ -56,10 +68,10 @@ gamescope -w <game_w> -h <game_h> -W 2880 -H 1800 -S fit -F fsr --fullscreen -- 
 
 ### Peggle Deluxe (800x600)
 
-Native 800x600 → 3x integer to 1800p. Uses `PROTON_USE_WINED3D=1` to fix game speed issues caused by Proton's DXVK timing with old DirectX games.
+Peggle doesn't run on DXVK (no `DXVK_HUD`), so it already uses WineD3D (OpenGL) and `PROTON_USE_WINED3D=1` isn't needed. Gamescope frame caps (`-r`, `--framerate-limit`) and `DXVK_FRAME_RATE` don't throttle it: lower caps just drop frames and stutter. Leave it uncapped (native ~100fps) and let VRR handle it.
 
 ```
-PROTON_USE_WINED3D=1 gamescope -w 800 -h 600 -W 2880 -H 1800 --scaler integer --filter nearest --fullscreen -- %command%
+gamescope -w 800 -h 600 -W 2560 -H 1440 -f -F nis --sharpness 18 -S fit --force-grab-cursor --mangoapp -- %command%
 ```
 
 ### Noita
@@ -93,3 +105,7 @@ MANGOHUD_CONFIG=read_cfg,fps_limit=60 gamemoderun mangohud ./start_game_bepinex.
 ```
 
 `MANGOHUD_CONFIG` caps FPS at 60 for this game only; `read_cfg` keeps the normal config loaded (without it, only the env var options apply).
+
+### RV There Yet
+
+Change "Selected Launch Option" to "Play with DirectX11" (frozen rendering fix).
