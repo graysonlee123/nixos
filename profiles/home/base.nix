@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../../modules/home/cli/btop.nix
+    ../../modules/home/cli/direnv.nix
     ../../modules/home/cli/fzf.nix
     ../../modules/home/cli/lazydocker.nix
     ../../modules/home/cli/lazygit.nix
