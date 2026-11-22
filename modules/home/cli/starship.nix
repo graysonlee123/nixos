@@ -6,6 +6,7 @@
       gcloud = {
         disabled = true;
       };
+      nix_shell.symbol = "❄️ ";
     };
   };
 }
