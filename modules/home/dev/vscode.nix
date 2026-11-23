@@ -72,7 +72,6 @@ in {
           "[nix]" = {
             "editor.defaultFormatter" = "jnoortheen.nix-ide";
           };
-          "extensions.ignoreRecommendations" = true;
           "biome.lsp.bin" = "${pkgs-unstable.biome}/bin/biome";
           "biome.requireConfiguration" = true;
           "terminal.integrated.defaultProfile.linux" = "zsh";
