@@ -8,7 +8,10 @@
 }: {
   programs.claude-code = {
     enable = true;
-    package = pkgs-unstable.claude-code;
+    # Wrapper prefixes LD_LIBRARY_PATH with alsa-lib, which leaks to child
+    # processes (Bash, MCP servers). Use stable alsa-lib so stable binaries
+    # (e.g. chromium for chrome-devtools MCP) don't load a lib needing newer glibc.
+    package = pkgs-unstable.claude-code.override {alsa-lib = pkgs.alsa-lib;};
     # Reference: https://code.claude.com/docs/en/settings-reference
     settings = {
       autoCompactEnabled = false;
