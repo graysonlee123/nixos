@@ -154,30 +154,45 @@
       - Don't open PRs unless told to.
       - Expect and disregard messages regarding bypass restrictions when pushing to `main` branches under the `inspry` organization.
     '';
-    mcpServers = lib.mkIf (!isHeadless) {
-      astro = {
-        url = "https://mcp.docs.astro.build/mcp";
-        type = "http";
-      };
-      chrome-devtools = {
-        command = "npx";
-        args = [
-          "-y"
-          "chrome-devtools-mcp@latest"
-          "--executablePath"
-          "${pkgs.chromium}/bin/chromium"
-        ];
-        type = "stdio";
-      };
-      clickup = {
-        url = "https://mcp.clickup.com/mcp";
-        type = "http";
-      };
-      jetbrains = {
-        url = "http://localhost:64342/sse";
-        type = "sse";
-      };
-    };
+    mcpServers =
+      {
+        nixos = {
+          command = "nix";
+          args = [
+            "run"
+            "github:utensils/mcp-nixos"
+            "--"
+          ];
+        };
+      }
+      // (
+        if isHeadless
+        then {}
+        else {
+          astro = {
+            url = "https://mcp.docs.astro.build/mcp";
+            type = "http";
+          };
+          chrome-devtools = {
+            command = "npx";
+            args = [
+              "-y"
+              "chrome-devtools-mcp@latest"
+              "--executablePath"
+              "${pkgs.chromium}/bin/chromium"
+            ];
+            type = "stdio";
+          };
+          clickup = {
+            url = "https://mcp.clickup.com/mcp";
+            type = "http";
+          };
+          jetbrains = {
+            url = "http://localhost:64342/sse";
+            type = "sse";
+          };
+        }
+      );
     skills = lib.optionalAttrs (!isHeadless) {
       minecraft = ../../../claude/skills/minecraft;
       wordpress-source-code = ../../../claude/skills/wordpress-source-code;
