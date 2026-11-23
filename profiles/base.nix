@@ -12,6 +12,7 @@
     ../modules/nixos/network/openssh.nix
     ../modules/nixos/network/tailscale.nix
     ../modules/nixos/system/gcp.nix
+    ../modules/nixos/system/pgadmin-overlay.nix
     ../modules/nixos/system/sops.nix
     ../modules/nixos/theme/stylix.nix
   ];
