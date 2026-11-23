@@ -56,6 +56,9 @@ in {
               "formatting" = {
                 "command" = ["alejandra"];
               };
+              "nixpkgs" = {
+                "expr" = "import (builtins.getFlake \"${flakePath}\").inputs.nixpkgs {}";
+              };
               "options" = {
                 "nixos" = {
                   "expr" = "(builtins.getFlake \"${flakePath}\").nixosConfigurations.${hostName}.options";
