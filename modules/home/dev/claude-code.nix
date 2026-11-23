@@ -114,22 +114,6 @@
             "mcp__plugin_claude-code-home-manager_clickup__clickup_resolve_assignees"
             "mcp__plugin_claude-code-home-manager_clickup__clickup_search"
             "mcp__plugin_claude-code-home-manager_clickup__clickup_search_reminders"
-            # JetBrains (read-only)
-            "mcp__plugin_claude-code-home-manager_jetbrains__find_files_by_glob"
-            "mcp__plugin_claude-code-home-manager_jetbrains__find_files_by_name_keyword"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_all_open_file_paths"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_file_problems"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_file_text_by_path"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_project_dependencies"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_project_modules"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_repositories"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_run_configurations"
-            "mcp__plugin_claude-code-home-manager_jetbrains__get_symbol_info"
-            "mcp__plugin_claude-code-home-manager_jetbrains__list_directory_tree"
-            "mcp__plugin_claude-code-home-manager_jetbrains__search_in_files_by_regex"
-            "mcp__plugin_claude-code-home-manager_jetbrains__reformat_file"
-            "mcp__plugin_claude-code-home-manager_jetbrains__rename_refactoring"
-            "mcp__plugin_claude-code-home-manager_jetbrains__search_in_files_by_text"
           ];
         ask = [
           "Bash(git commit:*)"
@@ -189,10 +173,6 @@
           clickup = {
             url = "https://mcp.clickup.com/mcp";
             type = "http";
-          };
-          jetbrains = {
-            url = "http://localhost:64342/sse";
-            type = "sse";
           };
         }
       );
