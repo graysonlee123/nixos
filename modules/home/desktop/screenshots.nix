@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   programs.satty = {
     enable = true;
     settings = {
@@ -17,7 +17,7 @@
         actions-on-escape = ["exit"];
       };
       font = {
-        family = "JetBrainsMono Nerd Font";
+        family = config.stylix.fonts.sansSerif.name;
         style = "Regular";
       };
     };

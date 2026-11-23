@@ -50,7 +50,6 @@
     mullvad
     mullvad-browser
     mycli
-    nerd-fonts.jetbrains-mono
     nethack
     nodejs_24
     obsidian
