@@ -27,6 +27,7 @@ in {
           vscode-extensions.biomejs.biome
           vscode-extensions.bradlc.vscode-tailwindcss
           vscode-extensions.ms-vscode.cpptools
+          vscode-extensions.mkhl.direnv
         ];
         userSettings = {
           "update.mode" = "none";
