@@ -38,14 +38,17 @@
   };
 in {
   # openFirewall only opens web UI port, not DNS/DHCP
-  networking.firewall.interfaces."enp2s0".allowedTCPPorts = [
-    dnsPort # DNS
-  ];
-  networking.firewall.interfaces."enp2s0".allowedUDPPorts = [
-    dnsPort # DNS
-    67 # DHCP
-    68 # DHCP
-  ];
+  networking.firewall.interfaces.${config.host.networkInterface} = {
+    allowedTCPPorts = [
+      dnsPort # DNS
+    ];
+    allowedUDPPorts = [
+      dnsPort # DNS
+      67 # DHCP
+      68 # DHCP
+    ];
+  };
+
   # Fallback keeps sulaco resolving (rollbacks, rebuilds) if AdGuard dies
   networking.nameservers = ["127.0.0.1" "9.9.9.9"];
   networking.networkmanager.dns = "none";
