@@ -33,7 +33,7 @@ MangoHud enforces the cap itself, so it works for games without a built-in limit
 
 ## Displayed stats
 
-Current FPS, session average with 1% and 0.1% lows, active FPS limit, resolution, frame time graph, GPU load/temp/power/VRAM, CPU load/temp, RAM, GameMode status, Wine/Proton version. Battery is shown on Corbelan only (`battery = osConfig.host.formFactor.isLaptop`).
+Current FPS, session average with 1% and 0.1% lows, active FPS limit, resolution, frame time graph, GPU load/temp/power/VRAM, CPU load/temp, RAM, GameMode status, Wine/Proton version. Battery is shown on Corbelan only (`battery = osConfig.host.formFactor.type == "laptop"`).
 
 ## Logging
 

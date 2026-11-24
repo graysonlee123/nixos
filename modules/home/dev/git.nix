@@ -5,7 +5,7 @@
 }: {
   programs.git = {
     enable = true;
-    includes = lib.optionals (!osConfig.host.formFactor.isHeadless) [
+    includes = lib.optionals (osConfig.host.formFactor.type != "server") [
       {
         condition = "gitdir:~/repos/inspry/";
         contents = {

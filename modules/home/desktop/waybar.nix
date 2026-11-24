@@ -162,12 +162,12 @@ in {
           format-ethernet = "󰈀 {ipaddr}";
           format-disconnected = "⚠ Disconnected";
           tooltip-format = "{ifname}: {ipaddr}/{cidr}\nClick: ${
-            if osConfig.host.formFactor.isLaptop
+            if (osConfig.host.formFactor.type == "laptop")
             then "impala"
             else "nmtui"
           } | Right: nload | Middle: bandwhich";
           on-click =
-            if osConfig.host.formFactor.isLaptop
+            if (osConfig.host.formFactor.type == "laptop")
             then mkGhosttyCmd "${pkgs.impala}/bin/impala"
             else mkGhosttyCmd "/run/current-system/sw/bin/nmtui";
           on-click-right = mkGhosttyCmd "${pkgs.nload}/bin/nload";
@@ -190,7 +190,7 @@ in {
               "wireplumber"
               "wireplumber#source"
             ]
-            ++ lib.optional (!osConfig.host.formFactor.isLaptop) "custom/mic-gain";
+            ++ lib.optional (osConfig.host.formFactor.type != "laptop") "custom/mic-gain";
         };
 
         # Samson Q9U hardware "Mic Gain" (ALSA), distinct from PipeWire input
@@ -237,7 +237,7 @@ in {
 
         "group/clock-group" = {
           orientation = "horizontal";
-          modules = ["group/clock-drawer"] ++ lib.optional osConfig.host.formFactor.isLaptop "battery" ++ ["clock"];
+          modules = ["group/clock-drawer"] ++ lib.optional (osConfig.host.formFactor.type == "laptop") "battery" ++ ["clock"];
         };
 
         "group/clock-drawer" = mkDrawer {
@@ -273,7 +273,7 @@ in {
         "custom/music" = {
           hide-empty-text = true;
           max-length =
-            if osConfig.host.formFactor.isLaptop
+            if (osConfig.host.formFactor.type == "laptop")
             then 32
             else 64;
           escape = true;

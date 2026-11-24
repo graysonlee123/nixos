@@ -160,7 +160,7 @@ in {
       };
 
       outputs =
-        if config.host.formFactor.isLaptop
+        if (config.host.formFactor.type == "laptop")
         then {
           "eDP-1" = {
             mode = "2880x1800@120.000";
@@ -411,11 +411,11 @@ in {
               }
             ];
             open-on-output =
-              if config.host.formFactor.isLaptop
+              if (config.host.formFactor.type == "laptop")
               then "eDP-1"
               else "HDMI-A-1";
           }
-          // lib.optionalAttrs (! config.host.formFactor.isLaptop) {
+          // lib.optionalAttrs (config.host.formFactor.type != "laptop") {
             open-maximized-to-edges = true;
           })
         # Steam secondary windows

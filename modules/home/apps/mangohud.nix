@@ -18,7 +18,7 @@
       ram = true;
       gamemode = true;
       wine = true;
-      battery = osConfig.host.formFactor.isLaptop;
+      battery = osConfig.host.formFactor.type == "laptop";
       fps_limit = [0 60 120 180];
       show_fps_limit = true;
       resolution = true;

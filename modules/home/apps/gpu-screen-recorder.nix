@@ -101,7 +101,7 @@ in {
       ExecStart = lib.concatStringsSep " " [
         "${lib.getExe pkgs.gpu-screen-recorder}"
         "-w ${
-          if osConfig.host.formFactor.isLaptop
+          if (osConfig.host.formFactor.type == "laptop")
           then "screen"
           else "DP-1"
         }"
@@ -122,7 +122,7 @@ in {
       Restart = "on-failure";
       RestartSec = 5;
     };
-    Install.WantedBy = lib.optionals (!osConfig.host.formFactor.isLaptop) ["graphical-session.target"];
+    Install.WantedBy = lib.optionals (osConfig.host.formFactor.type != "laptop") ["graphical-session.target"];
   };
 
   # Games run fullscreen on DP-1 and cover notifications there; show gsr
@@ -134,7 +134,7 @@ in {
         border-size = 4;
         border-color = config.lib.stylix.colors.withHashtag.base08;
       }
-      // lib.optionalAttrs (!osConfig.host.formFactor.isLaptop) {
+      // lib.optionalAttrs (osConfig.host.formFactor.type != "laptop") {
         output = "HDMI-A-1";
       };
   };

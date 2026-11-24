@@ -26,7 +26,7 @@ in {
       # Laptop: short timeouts, dim first, suspend at the end.
       # Desktop: much longer timeouts, no dim (no backlight), never suspend.
       listener =
-        if osConfig.host.formFactor.isLaptop
+        if (osConfig.host.formFactor.type == "laptop")
         then [
           {
             timeout = 150;

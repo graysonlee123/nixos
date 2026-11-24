@@ -8,7 +8,7 @@
   ];
 
   host.name = "corbelan";
-  host.formFactor.isLaptop = true;
+  host.formFactor.type = "laptop";
   system.stateVersion = "25.11";
   hardware.graphics.enable = true;
 

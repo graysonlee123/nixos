@@ -28,7 +28,7 @@
   ];
 
   home.stateVersion = "25.11";
-  fonts.fontconfig.enable = !osConfig.host.formFactor.isHeadless;
+  fonts.fontconfig.enable = osConfig.host.formFactor.type != "server";
 
   home.packages = with pkgs; [
     alejandra

@@ -13,6 +13,7 @@ in {
   ];
 
   host.name = "sulaco";
+  host.formFactor.type = "server";
   host.staticIP = config.lan.hosts.sulaco.ips.lan;
   host.networkInterface = "enp2s0";
   system.stateVersion = "25.11";

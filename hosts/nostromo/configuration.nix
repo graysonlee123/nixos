@@ -9,6 +9,7 @@
   ];
 
   host.name = "nostromo";
+  host.formFactor.type = "desktop";
   system.stateVersion = "25.11";
   networking.networkmanager.enable = true;
 

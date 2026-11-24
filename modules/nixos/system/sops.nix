@@ -13,12 +13,12 @@
         "restic/ggantek-archives/password" = {
           sopsFile = ../../../secrets/shared.yaml;
           owner =
-            if config.host.formFactor.isHeadless
+            if config.host.formFactor.type == "server"
             then null
             else "gray";
         };
       }
-      // lib.optionalAttrs config.host.formFactor.isHeadless {
+      // lib.optionalAttrs (config.host.formFactor.type == "server") {
         "external/postmark/api_token" = {};
         "external/postmark/streams/outbound/smtp/username" = {};
         "external/postmark/streams/outbound/smtp/password" = {};
@@ -30,7 +30,7 @@
         "services/postgres/linkding/superuser_password" = {};
       };
 
-    templates = lib.mkIf config.host.formFactor.isHeadless {
+    templates = lib.mkIf (config.host.formFactor.type == "server") {
       "postgres/linkding.env".content = ''
         LD_SUPERUSER_NAME=${config.sops.placeholder."services/postgres/linkding/superuser_username"}
         LD_SUPERUSER_PASSWORD=${config.sops.placeholder."services/postgres/linkding/superuser_password"}

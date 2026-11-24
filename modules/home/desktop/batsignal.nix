@@ -1,6 +1,6 @@
 {osConfig, ...}: {
   services.batsignal = {
-    enable = osConfig.host.formFactor.isLaptop;
+    enable = osConfig.host.formFactor.type == "laptop";
     extraArgs = [];
   };
 }

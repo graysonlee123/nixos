@@ -95,7 +95,7 @@
         phpIniFile = writeText "php.ini" (builtins.readFile "${php82}/etc/php.ini");
       })
     ]
-    ++ lib.optionals osConfig.host.formFactor.isLaptop [
+    ++ lib.optionals (osConfig.host.formFactor.type == "laptop") [
       brightnessctl
       impala
     ];

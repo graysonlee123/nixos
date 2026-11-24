@@ -5,7 +5,7 @@
 }: {
   sops = {
     defaultSopsFile =
-      if osConfig.host.formFactor.isHeadless
+      if (osConfig.host.formFactor.type == "server")
       then ../../../secrets/headless.yaml
       else ../../../secrets/headed.yaml;
     defaultSopsFormat = "yaml";

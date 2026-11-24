@@ -4,6 +4,7 @@
   ...
 }: let
   cfg = config.host;
+  ff = cfg.formFactor.type;
 in {
   options.host = {
     name = lib.mkOption {
@@ -32,13 +33,13 @@ in {
       networking.hostName = cfg.name;
       networking.enableIPv6 = false;
       networking.firewall.allowedTCPPorts =
-        lib.optional (!config.host.formFactor.isHeadless) 9003 # Xdebug
-        ++ lib.optionals config.host.formFactor.isHeadless [
+        lib.optional (ff != "server") 9003 # Xdebug
+        ++ lib.optionals (ff == "server") [
           80 # HTTP
           443 # HTTPS
           7777 # Terraria
         ]
-        ++ lib.optionals config.host.formFactor.isHeadless (
+        ++ lib.optionals (ff == "server") (
           lib.mapAttrsToList (_: srv: srv.port) (
             lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.minecraft
           )
@@ -48,7 +49,7 @@ in {
         ];
       networking.firewall.allowedUDPPorts =
         [21027] # Syncthing discovery
-        ++ lib.optionals config.host.formFactor.isHeadless (
+        ++ lib.optionals (ff == "server") (
           lib.concatMap (srv: [srv.port (srv.port + 1)]) (
             lib.attrValues (
               lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.valheim

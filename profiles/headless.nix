@@ -21,6 +21,4 @@
     ../modules/nixos/services/vault.nix
     ../modules/nixos/services/vikunja.nix
   ];
-
-  host.formFactor.isHeadless = true;
 }
