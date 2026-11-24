@@ -1,4 +1,4 @@
-let
+{config, ...}: let
   port = 5000;
 in {
   virtualisation.oci-containers.containers.kavita = {
@@ -9,9 +9,7 @@ in {
       "/var/lib/kavita:/kavita/config"
       "/srv/vault/data/media/books:/books:ro"
     ];
-    environment = {
-      TZ = "America/New_York";
-    };
+    environment.TZ = config.time.timeZone;
   };
 
   services.caddy.virtualHosts."kavita.lab.ggantek.net" = {

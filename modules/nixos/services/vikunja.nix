@@ -12,9 +12,7 @@
     };
     environmentFiles = [config.sops.templates."vikunja.env".path];
     settings = {
-      service = {
-        timezone = "America/New_York";
-      };
+      service.timezone = config.time.timeZone;
       mailer = {
         enabled = true;
         host = "smtp.postmarkapp.com";

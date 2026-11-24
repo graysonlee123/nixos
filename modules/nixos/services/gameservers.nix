@@ -206,7 +206,7 @@ in {
             ];
             environment =
               {
-                TZ = "America/New_York";
+                TZ = config.time.timeZone;
                 MEMORY = srv.memory;
                 EULA = "true";
                 VERSION = srv.version;
@@ -251,7 +251,7 @@ in {
               "${rconPassword.hostPath}:${rconPassword.containerPath}:ro"
             ];
             environment = {
-              TZ = "America/New_York";
+              TZ = config.time.timeZone;
               BACKUP_INTERVAL = "2h";
               PAUSE_IF_NO_PLAYERS = "true";
               RCON_HOST = gameServerSlug;
@@ -282,7 +282,7 @@ in {
             ];
             environment =
               {
-                TZ = "America/New_York";
+                TZ = config.time.timeZone;
                 SERVER_NAME = srv.serverName;
                 WORLD_NAME =
                   if srv.world == null

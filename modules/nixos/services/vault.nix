@@ -14,7 +14,7 @@
     RESTIC_PASSWORD_FILE = "/config/password";
     GOOGLE_PROJECT_ID = "ggantek-archives";
     GOOGLE_APPLICATION_CREDENTIALS = "/config/key.json";
-    TZ = "America/New_York";
+    TZ = config.time.timeZone;
   };
 in {
   systemd.tmpfiles.rules = [

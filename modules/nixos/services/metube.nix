@@ -1,4 +1,4 @@
-let
+{config, ...}: let
   port = 8081;
   dataDir = "/var/lib/metube";
 in {
@@ -12,7 +12,7 @@ in {
     ports = ["127.0.0.1:${toString port}:8081"];
     volumes = ["${dataDir}:/downloads"];
     environment = {
-      TZ = "America/New_York";
+      TZ = config.time.timeZone;
       PUID = "1000";
       PGID = "100";
       DELETE_FILE_ON_TRASHCAN = "ask";
