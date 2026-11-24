@@ -21,7 +21,7 @@ in {
       folders =
         lib.mapAttrs (
           _: value:
-            value
+            removeAttrs value ["homePath"]
             // {
               path = "~/${value.id}";
               ignorePatterns = lib.splitString "\n" syncthingData.ignorePatterns;

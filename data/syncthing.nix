@@ -54,6 +54,14 @@ in rec {
       devices = builtins.attrNames devices;
       inherit versioning;
     };
+    # Claude Code sessions + auto memory. Headed hosts sync it in place;
+    # headless hosts just hold a hub copy. No versioning: session .jsonl
+    # files are appended constantly and would bloat staggered versions.
+    ClaudeProjects = {
+      id = "claude-projects";
+      devices = ["nostromo" "corbelan" "sulaco"];
+      homePath = ".claude/projects";
+    };
   };
   ignorePatterns = ''
     .git

@@ -4,29 +4,33 @@
   ...
 }: let
   syncthingData = import ../../../data/syncthing.nix;
+  home = config.home.homeDirectory;
+
+  # `homePath` (relative to $HOME) overrides the default ~/syncthing/<id>.
+  folders =
+    lib.mapAttrs (
+      _: value:
+        removeAttrs value ["homePath"]
+        // {
+          path = "${home}/${value.homePath or "syncthing/${value.id}"}";
+        }
+    )
+    syncthingData.folders;
 in {
   services.syncthing = {
     enable = true;
     guiAddress = "127.0.0.1:8384";
     settings = {
+      inherit folders;
       devices = syncthingData.devices;
-      folders =
-        lib.mapAttrs (
-          _: value:
-            value
-            // {
-              path = "${config.home.homeDirectory}/syncthing/${value.id}";
-            }
-        )
-        syncthingData.folders;
     };
   };
 
   systemd.user.tmpfiles.rules =
     lib.mapAttrsToList (
-      name: value: "d %h/syncthing/${value.id}/.stfolder 0755"
+      _: value: "d ${value.path}/.stfolder 0755"
     )
-    syncthingData.folders;
+    folders;
 
   # Syncthing refuses to follow a symlinked .stignore (rooted FS reports
   # ELOOP), so write real files instead of home.file symlinks.
@@ -36,9 +40,9 @@ in {
     in
       lib.concatStringsSep "\n" (
         lib.mapAttrsToList (
-          name: value: ''run install -Dm644 ${stignore} "${config.home.homeDirectory}/syncthing/${value.id}/.stignore"''
+          _: value: ''run install -Dm644 ${stignore} "${value.path}/.stignore"''
         )
-        syncthingData.folders
+        folders
       )
   );
 }
