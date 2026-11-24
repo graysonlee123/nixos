@@ -16,6 +16,7 @@
 
     # https://github.com/graysonlee123/wttrbar
     wttrbar.url = "github:graysonlee123/wttrbar?ref=main";
+    wttrbar.inputs.nixpkgs.follows = "nixpkgs";
 
     # https://github.com/Mic92/sops-nix
     sops-nix.url = "github:Mic92/sops-nix?ref=master";
