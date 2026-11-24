@@ -1,32 +1,37 @@
 {
-  description = "NixOS configuration";
+  description = "Grayson's NixOS configuration";
 
   inputs = {
+    # https://github.com/NixOS/nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
+    # https://github.com/nix-community/home-manager
     home-manager.url = "github:nix-community/home-manager?ref=release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    stylix = {
-      url = "github:nix-community/stylix?ref=release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
+    # https://github.com/nix-community/stylix
+    stylix.url = "github:nix-community/stylix?ref=release-26.05";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # https://github.com/graysonlee123/wttrbar
     wttrbar.url = "github:graysonlee123/wttrbar?ref=main";
-    sops-nix = {
-      url = "github:Mic92/sops-nix?ref=master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    colmena = {
-      url = "github:nix-community/colmena?ref=release-0.4.x";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database?ref=main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    wrappers = {
-      url = "github:nix-community/nix-wrapper-modules";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+
+    # https://github.com/Mic92/sops-nix
+    sops-nix.url = "github:Mic92/sops-nix?ref=master";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # https://github.com/nix-community/colmena
+    colmena.url = "github:nix-community/colmena?ref=release-0.4.x";
+    colmena.inputs.nixpkgs.follows = "nixpkgs";
+
+    # https://github.com/nix-community/nix-index-database
+    nix-index-database.url = "github:nix-community/nix-index-database?ref=main";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    # https://github.com/nix-community/nix-wrapper-modules
+    wrappers.url = "github:nix-community/nix-wrapper-modules";
+    wrappers.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = {
@@ -48,6 +53,8 @@
       inherit system;
       config.allowUnfree = true;
     };
+
+    # Static modules/files.
     constants = import ./data/constants.nix;
     hosts = import ./data/hosts.nix;
     wallpaperPathRaw = ./assets/images/space-scene-lofi.png;
@@ -124,8 +131,7 @@
         meta = {
           nixpkgs = import nixpkgs {inherit system;};
           specialArgs = {
-            inherit constants hosts;
-            pkgs-unstable = pkgs-unstable;
+            inherit constants hosts pkgs-unstable;
             inputs = self.inputs;
             wlib = wrappers.lib;
           };
