@@ -22,8 +22,9 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # https://github.com/nix-community/colmena
-    colmena.url = "github:nix-community/colmena?ref=release-0.4.x";
-    colmena.inputs.nixpkgs.follows = "nixpkgs";
+    colmena.url = "github:nix-community/colmena?ref=v0.5.0";
+    colmena.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    colmena.inputs.stable.follows = "nixpkgs";
 
     # https://github.com/nix-community/nix-index-database
     nix-index-database.url = "github:nix-community/nix-index-database?ref=main";

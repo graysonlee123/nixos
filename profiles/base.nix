@@ -45,7 +45,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    colmena
+    inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena
     curl
     file
     gdb
