@@ -1,7 +1,7 @@
 {
-  lib,
+  osConfig,
   config,
-  constants,
+  lib,
   ...
 }: let
   radicaleCollections = import ../../../data/radicale-collections.nix;
@@ -26,7 +26,7 @@ in {
             khard.enable = true;
             khal = {
               enable = true;
-              addresses = [constants.emails.personal];
+              addresses = [osConfig.emails.personal];
               color = "#${value.color}ff";
               priority = value.priority;
             };

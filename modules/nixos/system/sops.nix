@@ -1,5 +1,4 @@
 {
-  isHeadless,
   lib,
   config,
   ...
@@ -14,12 +13,12 @@
         "restic/ggantek-archives/password" = {
           sopsFile = ../../../secrets/shared.yaml;
           owner =
-            if isHeadless
+            if config.host.formFactor.isHeadless
             then null
             else "gray";
         };
       }
-      // lib.optionalAttrs isHeadless {
+      // lib.optionalAttrs config.host.formFactor.isHeadless {
         "external/postmark/api_token" = {};
         "external/postmark/streams/outbound/smtp/username" = {};
         "external/postmark/streams/outbound/smtp/password" = {};
@@ -31,7 +30,7 @@
         "services/postgres/linkding/superuser_password" = {};
       };
 
-    templates = lib.mkIf isHeadless {
+    templates = lib.mkIf config.host.formFactor.isHeadless {
       "postgres/linkding.env".content = ''
         LD_SUPERUSER_NAME=${config.sops.placeholder."services/postgres/linkding/superuser_username"}
         LD_SUPERUSER_PASSWORD=${config.sops.placeholder."services/postgres/linkding/superuser_password"}

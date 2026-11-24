@@ -1,11 +1,11 @@
 {
+  osConfig,
   config,
-  isHeadless,
   ...
 }: {
   sops = {
     defaultSopsFile =
-      if isHeadless
+      if osConfig.host.formFactor.isHeadless
       then ../../../secrets/headless.yaml
       else ../../../secrets/headed.yaml;
     defaultSopsFormat = "yaml";

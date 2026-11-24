@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  osConfig,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./base.nix
     ../../modules/home/apps/chromium.nix
@@ -35,58 +40,63 @@
     ../../modules/home/system/xdg.nix
   ];
 
-  home.packages = with pkgs; [
-    _2048-in-terminal
-    alsa-utils
-    asciiquarium
-    bibata-cursors
-    crawl
-    gimp
-    filezilla
-    grim
-    jdk25
-    jetbrains.phpstorm
-    libnotify
-    mullvad
-    mullvad-browser
-    mycli
-    nethack
-    nodejs_24
-    obsidian
-    pavucontrol
-    pgadmin4-desktopmode
-    (php82.withExtensions ({
-      enabled,
-      all,
-    }:
-      enabled ++ [all.xdebug]))
-    php82Packages.composer
-    playerctl
-    pnpm
-    prismlauncher
-    python3
-    qalculate-gtk
-    r2modman
-    scc
-    serie
-    slurp
-    teamspeak6-client
-    (tidal-hifi.overrideAttrs (old: {
-      postFixup =
-        (old.postFixup or "")
-        + ''
-          wrapProgram $out/bin/tidal-hifi --add-flags "--no-sandbox"
-        '';
-    }))
-    typescript-language-server
-    vlc
-    waylyrics
-    wf-recorder
-    wiremix
-    wl-clipboard
-    (wp-cli.override {
-      php = php82;
-      phpIniFile = writeText "php.ini" (builtins.readFile "${php82}/etc/php.ini");
-    })
-  ];
+  home.packages = with pkgs;
+    [
+      _2048-in-terminal
+      alsa-utils
+      asciiquarium
+      bibata-cursors
+      crawl
+      gimp
+      filezilla
+      grim
+      jdk25
+      jetbrains.phpstorm
+      libnotify
+      mullvad
+      mullvad-browser
+      mycli
+      nethack
+      nodejs_24
+      obsidian
+      pavucontrol
+      pgadmin4-desktopmode
+      (php82.withExtensions ({
+        enabled,
+        all,
+      }:
+        enabled ++ [all.xdebug]))
+      php82Packages.composer
+      playerctl
+      pnpm
+      prismlauncher
+      python3
+      qalculate-gtk
+      r2modman
+      scc
+      serie
+      slurp
+      teamspeak6-client
+      (tidal-hifi.overrideAttrs (old: {
+        postFixup =
+          (old.postFixup or "")
+          + ''
+            wrapProgram $out/bin/tidal-hifi --add-flags "--no-sandbox"
+          '';
+      }))
+      typescript-language-server
+      vlc
+      waylyrics
+      wf-recorder
+      wiremix
+      wl-clipboard
+      (wp-cli.override {
+        php = php82;
+        phpIniFile = writeText "php.ini" (builtins.readFile "${php82}/etc/php.ini");
+      })
+    ]
+    ++ lib.optionals osConfig.host.formFactor.isLaptop [
+      brightnessctl
+      impala
+    ];
 }

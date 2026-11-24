@@ -1,6 +1,6 @@
 {
+  osConfig,
   pkgs,
-  isHeadless,
   ...
 }: {
   imports = [
@@ -28,7 +28,7 @@
   ];
 
   home.stateVersion = "25.11";
-  fonts.fontconfig.enable = !isHeadless;
+  fonts.fontconfig.enable = !osConfig.host.formFactor.isHeadless;
 
   home.packages = with pkgs; [
     alejandra

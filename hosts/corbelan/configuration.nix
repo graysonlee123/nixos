@@ -8,15 +8,9 @@
   ];
 
   host.name = "corbelan";
+  host.formFactor.isLaptop = true;
   system.stateVersion = "25.11";
   hardware.graphics.enable = true;
-
-  gray = {
-    additionalPackages = with pkgs; [
-      brightnessctl
-      impala
-    ];
-  };
 
   # Standalone iwd (no NetworkManager): Impala talks to iwd directly; NM's iwd
   # backend was forgetting iwd known networks on failed connects.

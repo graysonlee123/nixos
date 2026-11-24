@@ -14,7 +14,7 @@ Network stack per host. Shared pieces come from `profiles/base.nix` (all hosts) 
 | Mullvad   | `modules/nixos/network/mullvad.nix`    | Headed only. Blocks LAN by default; see [vpn.md](./vpn.md)           |
 | Resolver  | NixOS default                          | `resolvconf` writes `/etc/resolv.conf`; `systemd-resolved` is off    |
 
-Static device data (MACs, LAN/Tailscale IPs) lives in `data/hosts.nix`; gateway and default DNS in `data/constants.nix`.
+Static device data (MACs, LAN/Tailscale IPs), gateway and default DNS live in `data/lan.nix` (exposed as `config.lan`).
 
 ## LAN topology
 
@@ -43,7 +43,7 @@ Details: [adguardhome.md](./adguardhome.md).
 
 Saved networks: `/var/lib/iwd/*.psk` (root-only). Per-network options like `AutoConnect` go in those files, not `main.conf`.
 
-MAC randomization is off (iwd default `AddressRandomization = disabled`). Keep it that way: AdGuard Home identifies Corbelan by its permanent MAC (`data/hosts.nix`).
+MAC randomization is off (iwd default `AddressRandomization = disabled`). Keep it that way: AdGuard Home identifies Corbelan by its permanent MAC (`data/lan.nix`).
 
 WiFi chip: MediaTek MT7925 (`mt7925e`). iwd access needs root or `wheel`.
 

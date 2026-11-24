@@ -1,5 +1,5 @@
 {
-  isLaptop,
+  osConfig,
   lib,
   ...
 }: {
@@ -18,7 +18,7 @@
       ram = true;
       gamemode = true;
       wine = true;
-      battery = isLaptop;
+      battery = osConfig.host.formFactor.isLaptop;
       fps_limit = [0 60 120 180];
       show_fps_limit = true;
       resolution = true;

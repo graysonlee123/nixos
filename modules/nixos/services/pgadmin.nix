@@ -1,12 +1,8 @@
-{
-  config,
-  constants,
-  ...
-}: {
+{config, ...}: {
   services.pgadmin = {
     enable = true;
     port = 5050;
-    initialEmail = constants.emails.personal;
+    initialEmail = config.emails.personal;
     initialPasswordFile = config.sops.secrets."services/pgadmin/password".path;
     settings = {
       LOGIN_BANNER = "";

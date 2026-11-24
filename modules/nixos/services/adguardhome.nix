@@ -1,7 +1,6 @@
 {
+  config,
   lib,
-  constants,
-  hosts,
   ...
 }: let
   dnsPort = 53;
@@ -47,13 +46,6 @@ in {
     67 # DHCP
     68 # DHCP
   ];
-  # Invalid client ids (e.g. empty mac) make AdGuard fatal on start, killing LAN DNS/DHCP
-  assertions =
-    lib.mapAttrsToList (name: value: {
-      assertion = builtins.match "([0-9a-f]{2}:){5}[0-9a-f]{2}" (value.mac or "") != null;
-      message = "hosts.${name}.mac must be a lowercase colon-separated MAC, got \"${value.mac or ""}\"";
-    })
-    hosts;
   # Fallback keeps sulaco resolving (rollbacks, rebuilds) if AdGuard dies
   networking.nameservers = ["127.0.0.1" "9.9.9.9"];
   networking.networkmanager.dns = "none";
@@ -80,7 +72,7 @@ in {
       block_auth_min = 15;
       dns = {
         bind_hosts = [
-          hosts.sulaco.ips.lan
+          config.lan.hosts.sulaco.ips.lan
           "127.0.0.1"
         ];
         port = dnsPort;
@@ -144,7 +136,7 @@ in {
         enabled = true;
         interface_name = "enp2s0";
         dhcpv4 = {
-          gateway_ip = constants.network.gateway;
+          gateway_ip = config.lan.gateway;
           subnet_mask = "255.255.255.0";
           range_start = "192.168.86.20";
           range_end = "192.168.86.254";
@@ -161,7 +153,7 @@ in {
             uuid = value.uuid;
           })
         )
-        hosts
+        config.lan.hosts
       );
       tls.enabled = false;
     };

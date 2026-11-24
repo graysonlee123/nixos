@@ -1,6 +1,10 @@
-{pkgs, ...}: let
+{
+  osConfig,
+  pkgs,
+  ...
+}: let
   bookmark-utils = import ../../../lib/mkChromiumBookmarks.nix;
-  bookmarks = import ../../../lib/bookmarks.nix;
+  bookmarks = import ../../../lib/bookmarks.nix {hosts = osConfig.lan.hosts;};
 in {
   programs.chromium = {
     enable = true;

@@ -1,17 +1,16 @@
 {
+  osConfig,
   lib,
-  isHeadless,
-  constants,
   ...
 }: {
   programs.git = {
     enable = true;
-    includes = lib.optionals (!isHeadless) [
+    includes = lib.optionals (!osConfig.host.formFactor.isHeadless) [
       {
         condition = "gitdir:~/repos/inspry/";
         contents = {
           user = {
-            email = constants.emails.work;
+            email = osConfig.emails.work;
           };
           url."git@inspry.github.com:".insteadOf = "git@github.com:";
         };

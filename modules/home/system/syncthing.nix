@@ -1,9 +1,10 @@
 {
-  lib,
+  osConfig,
   config,
+  lib,
   ...
 }: let
-  syncthingData = import ../../../data/syncthing.nix;
+  syncthingData = import ../../../data/syncthing.nix {hosts = osConfig.lan.hosts;};
   home = config.home.homeDirectory;
 
   # `homePath` (relative to $HOME) overrides the default ~/syncthing/<id>.

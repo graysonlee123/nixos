@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  syncthingData = import ../../../data/syncthing.nix;
+  syncthingData = import ../../../data/syncthing.nix {hosts = config.lan.hosts;};
 in {
   sops.secrets = {
     "services/syncthing/password" = {

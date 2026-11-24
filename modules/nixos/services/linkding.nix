@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  constants,
   ...
 }: let
   cfg = config.services.linkdingContainer;
@@ -28,7 +27,7 @@ in {
         LD_DB_ENGINE = "postgres";
         LD_DB_DATABASE = database;
         LD_DB_USER = user;
-        LD_DB_HOST = constants.network.dockerBridge;
+        LD_DB_HOST = config.lan.dockerBridge;
       };
     };
   };

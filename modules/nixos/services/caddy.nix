@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  constants,
   ...
 }: let
   fileserverPath = "/srv/caddy/fileserver";
@@ -16,7 +15,7 @@ in {
     globalConfig = ''
       acme_dns cloudflare {$CLOUDFLARE_ACCESS_TOKEN}
     '';
-    email = constants.emails.gmail;
+    email = config.emails.gmail;
     virtualHosts = {
       "adguardhome.lab.ggantek.net" = {
         extraConfig = ''

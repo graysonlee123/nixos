@@ -1,17 +1,17 @@
 {
-  lib,
+  config,
   pkgs,
-  constants,
+  lib,
   ...
 }: {
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
     settings = {
-      listen_addresses = lib.mkForce "localhost,${constants.network.dockerBridge}";
+      listen_addresses = lib.mkForce "localhost,${config.lan.dockerBridge}";
     };
     authentication = lib.mkAfter ''
-      host all all ${constants.network.dockerSubnet} md5
+      host all all ${config.lan.dockerSubnet} md5
     '';
     ensureDatabases = [
       "vikunja"

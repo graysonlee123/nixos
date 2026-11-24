@@ -1,5 +1,4 @@
-let
-  hosts = import ./hosts.nix;
+{hosts}: let
   versioning = {
     type = "staggered";
     params = {

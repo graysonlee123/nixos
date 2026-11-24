@@ -1,8 +1,8 @@
-{isHeadless, ...}: {
+{config, ...}: {
   services.tailscale = {
     enable = true;
     authKeyFile =
-      if isHeadless
+      if config.host.formFactor.isHeadless
       then "/etc/secrets/tailscale_key"
       else null;
   };

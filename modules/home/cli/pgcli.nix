@@ -1,11 +1,11 @@
 {
-  isHeadless,
+  osConfig,
   lib,
   ...
 }: {
   programs.pgcli = {
     enable = true;
-    settings.main = lib.mkIf isHeadless {
+    settings.main = lib.mkIf osConfig.host.formFactor.isHeadless {
       keyring = false;
     };
   };

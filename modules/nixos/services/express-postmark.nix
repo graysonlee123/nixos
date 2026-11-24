@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  constants,
   ...
 }: let
   secret = "external/postmark/api_token";
@@ -10,8 +9,8 @@ in {
   sops.secrets.${secret} = {};
   sops.templates."express-postmark/.env".content = ''
     POSTMARK_API_TOKEN=${config.sops.placeholder.${secret}}
-    EMAIL_FROM=${constants.emails.postmark}
-    EMAIL_TO=${constants.emails.personal}
+    EMAIL_FROM=${config.emails.postmark}
+    EMAIL_TO=${config.emails.personal}
   '';
 
   system.activationScripts.mkExpressPostmarkNetwork = ''

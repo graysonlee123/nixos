@@ -2,8 +2,6 @@
   config,
   pkgs,
   lib,
-  isHeadless,
-  isLaptop,
   ...
 }: {
   users.users.gray = {
@@ -14,8 +12,8 @@
         "wheel"
         "docker"
       ]
-      ++ lib.optionals isLaptop ["video"]
-      ++ lib.optionals (!isHeadless) [
+      ++ lib.optionals config.host.formFactor.isLaptop ["video"]
+      ++ lib.optionals (!config.host.formFactor.isHeadless) [
         "gamemode"
       ]
       ++ lib.optional config.networking.networkmanager.enable "networkmanager";

@@ -1,6 +1,10 @@
-{wttrbar, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   programs.waybar.settings.mainBar."custom/weather" = {
-    exec = "LOCATION=Atlanta ${wttrbar}/bin/wttrbar";
+    exec = "LOCATION=Atlanta ${inputs.wttrbar.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/wttrbar";
     return-type = "json";
     tooltip = true;
     interval = 60 * 30;

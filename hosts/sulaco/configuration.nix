@@ -1,6 +1,6 @@
 {
+  config,
   lib,
-  hosts,
   ...
 }: let
   radicaleCollections = import ../../data/radicale-collections.nix;
@@ -13,7 +13,7 @@ in {
   ];
 
   host.name = "sulaco";
-  host.staticIP = hosts.sulaco.ips.lan;
+  host.staticIP = config.lan.hosts.sulaco.ips.lan;
   host.networkInterface = "enp2s0";
   system.stateVersion = "25.11";
   virtualisation.oci-containers.backend = "docker";

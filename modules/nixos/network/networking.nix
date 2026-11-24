@@ -1,8 +1,6 @@
 {
   lib,
   config,
-  isHeadless,
-  constants,
   ...
 }: let
   cfg = config.host;
@@ -34,13 +32,13 @@ in {
       networking.hostName = cfg.name;
       networking.enableIPv6 = false;
       networking.firewall.allowedTCPPorts =
-        lib.optional (!isHeadless) 9003 # Xdebug
-        ++ lib.optionals isHeadless [
+        lib.optional (!config.host.formFactor.isHeadless) 9003 # Xdebug
+        ++ lib.optionals config.host.formFactor.isHeadless [
           80 # HTTP
           443 # HTTPS
           7777 # Terraria
         ]
-        ++ lib.optionals isHeadless (
+        ++ lib.optionals config.host.formFactor.isHeadless (
           lib.mapAttrsToList (_: srv: srv.port) (
             lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.minecraft
           )
@@ -50,7 +48,7 @@ in {
         ];
       networking.firewall.allowedUDPPorts =
         [21027] # Syncthing discovery
-        ++ lib.optionals isHeadless (
+        ++ lib.optionals config.host.formFactor.isHeadless (
           lib.concatMap (srv: [srv.port (srv.port + 1)]) (
             lib.attrValues (
               lib.filterAttrs (_: srv: srv.enable) config.services.gameservers.valheim
@@ -66,8 +64,8 @@ in {
         5432 # PostgreSQL
       ];
       networking.useDHCP = false;
-      networking.defaultGateway = constants.network.gateway;
-      networking.nameservers = lib.mkDefault constants.network.dns; # overridable, e.g. AGH sets 127.0.0.1
+      networking.defaultGateway = config.lan.gateway;
+      networking.nameservers = lib.mkDefault config.lan.dns; # overridable, e.g. AGH sets 127.0.0.1
       networking.interfaces.${cfg.networkInterface} = {
         ipv4.addresses = [
           {

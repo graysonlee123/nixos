@@ -43,7 +43,7 @@ AGH runs the DHCP server on `enp2s0`. Router DHCP is disabled (relay mode).
 
 ### Persistent clients
 
-Device inventory lives in `data/hosts.nix` (git-crypt encrypted). Contains MACs, IPs, UUIDs. All known devices are registered as persistent clients using MAC identifiers.
+Device inventory lives in `data/lan.nix` (git-crypt encrypted). Contains MACs, IPs, UUIDs. All known devices are registered as persistent clients using MAC identifiers.
 
 Known issue: MAC-based client identifiers don't aggregate in AGH's per-client statistics. Query log resolves clients correctly, but the client settings page shows 0 requests. See [AdguardTeam/AdGuardHome#4649](https://github.com/AdguardTeam/AdGuardHome/issues/4649).
 

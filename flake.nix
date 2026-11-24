@@ -34,119 +34,50 @@
     wrappers.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    home-manager,
-    stylix,
-    colmena,
-    wttrbar,
-    sops-nix,
-    nix-index-database,
-    wrappers,
-    ...
-  }: let
-    inherit (nixpkgs) lib;
+  outputs = inputs: let
     system = "x86_64-linux";
-    pkgs-unstable = import nixpkgs-unstable {
+    pkgs-unstable = import inputs.nixpkgs-unstable {
       inherit system;
       config.allowUnfree = true;
     };
 
-    # Static modules/files.
-    constants = import ./data/constants.nix;
-    hosts = import ./data/hosts.nix;
-    wallpaperPathRaw = ./assets/images/space-scene-lofi.png;
-    wallpaperPath = "${wallpaperPathRaw}";
-
-    # Hive nodes. targetHost = null: skipped by `colmena apply`, rebuilt locally.
-    nodes = lib.mapAttrs (_: node:
-      {
-        isLaptop = false;
-        isHeadless = false;
-      }
-      // node) {
-      nostromo.targetHost = null;
-      corbelan = {
-        targetHost = null;
-        isLaptop = true;
-      };
-      sulaco = {
-        # SSH alias (not IP) so HM ssh config supplies key/user/host
-        targetHost = "sulaco";
-        isHeadless = true;
-      };
+    # NixOS hosts. Values turn into target host for colmena.
+    mainHosts = {
+      nostromo = null;
+      corbelan = null;
+      sulaco = "sulaco";
     };
 
-    mkNode = name: {
-      targetHost,
-      isLaptop,
-      isHeadless,
-    }: {config, ...}: {
+    # Make a node module, given a name and target host.
+    mkNode = name: targetHost: {config, ...}: {
       deployment = {
         inherit targetHost;
         targetUser = config.users.users.gray.name;
         allowLocalDeployment = true;
       };
-      imports = [
-        ./hosts/${name}/configuration.nix
-        stylix.nixosModules.stylix
-        home-manager.nixosModules.default
-        sops-nix.nixosModules.sops
-        wrappers.nixosModules.niri
-        ({inputs, ...}: {
-          # Colmena skips lib.nixosSystem, which normally sets this. Points
-          # NIX_PATH + registry `nixpkgs` at the pinned input (comma needs it).
-          nixpkgs.flake.source = nixpkgs;
-
-          home-manager.extraSpecialArgs =
-            {
-              inherit
-                inputs
-                pkgs-unstable
-                isLaptop
-                isHeadless
-                constants
-                hosts
-                wallpaperPathRaw
-                wallpaperPath
-                ;
-            }
-            // lib.optionalAttrs (!isHeadless) {
-              wttrbar = wttrbar.packages.${system}.default;
-            };
-          home-manager.sharedModules = [
-            sops-nix.homeManagerModules.sops
-            nix-index-database.homeModules.default
-          ];
-        })
-      ];
+      imports = [./hosts/${name}/configuration.nix];
     };
   in {
-    nixosConfigurations = self.colmenaHive.nodes;
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
-    colmenaHive = colmena.lib.makeHive (
+    nixosConfigurations = inputs.self.colmenaHive.nodes;
+    formatter.${system} = inputs.nixpkgs.legacyPackages.${system}.alejandra;
+    colmenaHive = inputs.colmena.lib.makeHive (
       {
         meta = {
-          nixpkgs = import nixpkgs {inherit system;};
+          nixpkgs = import inputs.nixpkgs {inherit system;};
           specialArgs = {
-            inherit constants hosts pkgs-unstable;
-            inputs = self.inputs;
-            wlib = wrappers.lib;
+            inherit inputs pkgs-unstable;
           };
-          nodeSpecialArgs =
-            lib.mapAttrs (_: node: {
-              inherit (node) isLaptop isHeadless;
-              inherit
-                wallpaperPathRaw
-                wallpaperPath
-                ;
-            })
-            nodes;
+        };
+        defaults = _: {
+          imports = [
+            inputs.stylix.nixosModules.stylix
+            inputs.home-manager.nixosModules.default
+            inputs.sops-nix.nixosModules.sops
+            inputs.wrappers.nixosModules.niri
+          ];
         };
       }
-      // lib.mapAttrs mkNode nodes
+      // inputs.nixpkgs.lib.mapAttrs mkNode mainHosts
     );
   };
 }

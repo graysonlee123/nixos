@@ -1,13 +1,10 @@
 {
   config,
   pkgs,
-  pkgs-unstable,
   lib,
-  isLaptop,
-  wallpaperPath,
+  pkgs-unstable,
   ...
 }: let
-  homeDir = config.users.users.gray.home;
   cursor = config.home-manager.users.gray.home.pointerCursor;
   colors = config.lib.stylix.colors.withHashtag;
 
@@ -163,7 +160,7 @@ in {
       };
 
       outputs =
-        if isLaptop
+        if config.host.formFactor.isLaptop
         then {
           "eDP-1" = {
             mode = "2880x1800@120.000";
@@ -238,7 +235,7 @@ in {
         };
       };
 
-      spawn-at-startup = [["swaybg" "-i" wallpaperPath "-m" "fill"]];
+      spawn-at-startup = [["swaybg" "-i" "${config.stylix.image}" "-m" "fill"]];
 
       # Layout: column widths, gaps, focus ring, shadows.
       layout = {
@@ -414,11 +411,11 @@ in {
               }
             ];
             open-on-output =
-              if isLaptop
+              if config.host.formFactor.isLaptop
               then "eDP-1"
               else "HDMI-A-1";
           }
-          // lib.optionalAttrs (! isLaptop) {
+          // lib.optionalAttrs (! config.host.formFactor.isLaptop) {
             open-maximized-to-edges = true;
           })
         # Steam secondary windows

@@ -1,8 +1,8 @@
 {
+  osConfig,
   config,
   pkgs,
   lib,
-  isHeadless,
   ...
 }: {
   programs.yazi = {
@@ -23,19 +23,19 @@
               block = true;
             }
           ]
-          ++ lib.optional (!isHeadless) {
+          ++ lib.optional (!osConfig.host.formFactor.isHeadless) {
             run = "code \"$@\"";
             desc = "VS Code";
             for = "unix";
             block = false;
             orphan = true;
           };
-        play = lib.optional (!isHeadless) {
+        play = lib.optional (!osConfig.host.formFactor.isHeadless) {
           run = "vlc \"$@\"";
           orphan = true;
           for = "unix";
         };
-        open = lib.optional (!isHeadless) {
+        open = lib.optional (!osConfig.host.formFactor.isHeadless) {
           run = "xdg-open \"$@\"";
           desc = "XDG Open";
         };
@@ -91,7 +91,7 @@
           # Images
           {
             mime = "image/svg+xml";
-            use = lib.optional (!isHeadless) "open" ++ ["edit"];
+            use = lib.optional (!osConfig.host.formFactor.isHeadless) "open" ++ ["edit"];
           }
 
           # Archives
@@ -112,7 +112,7 @@
             use = "extract";
           }
         ]
-        ++ lib.optionals (!isHeadless) [
+        ++ lib.optionals (!osConfig.host.formFactor.isHeadless) [
           # Media
           {
             mime = "image/*";
@@ -171,7 +171,7 @@
             desc = "Restore last deleted files/folders";
           }
         ]
-        ++ lib.optionals (!isHeadless) [
+        ++ lib.optionals (!osConfig.host.formFactor.isHeadless) [
           {
             on = [
               "g"

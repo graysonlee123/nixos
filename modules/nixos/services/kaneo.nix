@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  constants,
   ...
 }: let
   port = 5173;
@@ -37,7 +36,7 @@
           x: x.name == "kaneo"
         ) (throw "missing kaneo database user")
         config.services.postgresql.ensureUsers).name;
-    host = constants.network.dockerBridge;
+    host = config.lan.dockerBridge;
   };
 in {
   # SMTP secrets: declared in modules/nixos/system/sops.nix
@@ -69,7 +68,7 @@ in {
       POSTGRES_DB = postgres.database;
       POSTGRES_USER = postgres.user;
       POSTGRES_HOST = postgres.host;
-      SMTP_FROM = constants.emails.postmark;
+      SMTP_FROM = config.emails.postmark;
       SMTP_SECURE = "false";
     };
   };

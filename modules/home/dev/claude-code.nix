@@ -1,9 +1,9 @@
 {
   config,
+  osConfig,
   pkgs,
   pkgs-unstable,
   lib,
-  isHeadless,
   ...
 }: {
   programs.claude-code = {
@@ -32,7 +32,7 @@
           # Format: plugin@marketplace
           "caveman@caveman" = true;
         }
-        // lib.optionalAttrs (!isHeadless) {
+        // lib.optionalAttrs (!osConfig.host.formFactor.isHeadless) {
           "gopls-lsp@claude-plugins-official" = true;
           "inspry-wp@inspry" = true;
           "inspry-skills@inspry" = true;
@@ -89,7 +89,7 @@
             "Bash(php -l:*)"
             "Bash(php -v:*)"
           ]
-          ++ lib.optionals (!isHeadless) [
+          ++ lib.optionals (!osConfig.host.formFactor.isHeadless) [
             # ClickUp (read-only)
             "mcp__plugin_claude-code-home-manager_clickup__clickup_filter_tasks"
             "mcp__plugin_claude-code-home-manager_clickup__clickup_find_member_by_name"
@@ -153,7 +153,7 @@
         };
       }
       // (
-        if isHeadless
+        if osConfig.host.formFactor.isHeadless
         then {}
         else {
           astro = {
@@ -176,7 +176,7 @@
           };
         }
       );
-    skills = lib.optionalAttrs (!isHeadless) {
+    skills = lib.optionalAttrs (!osConfig.host.formFactor.isHeadless) {
       minecraft = ../../../claude/skills/minecraft;
       wordpress-source-code = ../../../claude/skills/wordpress-source-code;
       woocommerce-source-code = ../../../claude/skills/woocommerce-source-code;
