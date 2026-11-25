@@ -19,7 +19,7 @@ in {
     };
   };
 
-  services.caddy.virtualHosts."metube.lab.ggantek.net" = {
+  services.caddy.virtualHosts."metube.${config.domains.lab}" = {
     extraConfig = ''
       reverse_proxy localhost:${toString port}
     '';

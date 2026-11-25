@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   options = {
     emails = lib.mkOption {
       description = "Email addresses, keyed by purpose.";
@@ -9,8 +13,8 @@
   config = {
     emails = {
       gmail = "graysonleegantek@gmail.com";
-      postmark = "postmark@graysn.com";
-      personal = "hello@graysn.com";
+      postmark = "postmark@${config.domains.personal}";
+      personal = "hello@${config.domains.personal}";
       work = "grayson@inspry.com";
     };
   };

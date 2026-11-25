@@ -64,7 +64,7 @@ in {
     ports = ["127.0.0.1:${toString port}:5173"];
     environmentFiles = [config.sops.templates.${sops.kaneo.envFile}.path];
     environment = {
-      KANEO_CLIENT_URL = "https://kaneo.lab.ggantek.net";
+      KANEO_CLIENT_URL = "https://kaneo.${config.domains.lab}";
       POSTGRES_DB = postgres.database;
       POSTGRES_USER = postgres.user;
       POSTGRES_HOST = postgres.host;
@@ -73,7 +73,7 @@ in {
     };
   };
 
-  services.caddy.virtualHosts."kaneo.lab.ggantek.net" = {
+  services.caddy.virtualHosts."kaneo.${config.domains.lab}" = {
     extraConfig = ''
       reverse_proxy localhost:${toString port}
     '';

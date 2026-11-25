@@ -18,7 +18,7 @@
     ];
     settings = {
       user.name = "Grayson Gantek";
-      user.email = "github@graysn.com";
+      user.email = "github@${osConfig.domains.personal}";
       pull.rebase = false;
       init.defaultBranch = "main";
     };

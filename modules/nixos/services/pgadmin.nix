@@ -10,7 +10,7 @@
     };
   };
 
-  services.caddy.virtualHosts."pgadmin.lab.ggantek.net" = {
+  services.caddy.virtualHosts."pgadmin.${config.domains.lab}" = {
     extraConfig = ''
       reverse_proxy localhost:${toString config.services.pgadmin.port}
     '';

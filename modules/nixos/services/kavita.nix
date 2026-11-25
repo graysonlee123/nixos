@@ -12,7 +12,7 @@ in {
     environment.TZ = config.time.timeZone;
   };
 
-  services.caddy.virtualHosts."kavita.lab.ggantek.net" = {
+  services.caddy.virtualHosts."kavita.${config.domains.lab}" = {
     extraConfig = ''
       reverse_proxy localhost:${toString port}
     '';

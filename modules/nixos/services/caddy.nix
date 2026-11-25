@@ -17,40 +17,40 @@ in {
     '';
     email = config.emails.gmail;
     virtualHosts = {
-      "adguardhome.lab.ggantek.net" = {
+      "adguardhome.${config.domains.lab}" = {
         extraConfig = ''
           reverse_proxy localhost:${toString config.services.adguardhome.port}
         '';
       };
-      "files.ggantek.net" = {
+      "files.${config.domains.root}" = {
         extraConfig = ''
           file_server browse {
             root ${fileserverPath}
           }
         '';
       };
-      "ggantek.net" = {
+      "${config.domains.root}" = {
         extraConfig = ''
-          redir https://graysn.com
+          redir https://${config.domains.personal}
         '';
       };
-      "jellyfin.lab.ggantek.net" = {
+      "jellyfin.${config.domains.lab}" = {
         # Port should match in-app administration configured port
         extraConfig = ''
           reverse_proxy localhost:8096
         '';
       };
-      "links.lab.ggantek.net" = {
+      "links.${config.domains.lab}" = {
         extraConfig = ''
           reverse_proxy localhost:${toString config.services.linkdingContainer.port}
         '';
       };
-      "pinchflat.lab.ggantek.net" = {
+      "pinchflat.${config.domains.lab}" = {
         extraConfig = ''
           reverse_proxy localhost:${toString config.services.pinchflat.port}
         '';
       };
-      "syncthing.lab.ggantek.net" = {
+      "syncthing.${config.domains.lab}" = {
         # Port should match home manager Syncthing guiAddress
         extraConfig = ''
           reverse_proxy localhost:8384 {
@@ -58,12 +58,12 @@ in {
           }
         '';
       };
-      "uptime.lab.ggantek.net" = {
+      "uptime.${config.domains.lab}" = {
         extraConfig = ''
           reverse_proxy localhost:${config.services.uptime-kuma.settings.PORT}
         '';
       };
-      "vikunja.lab.ggantek.net" = {
+      "vikunja.${config.domains.lab}" = {
         extraConfig = ''
           reverse_proxy localhost:${toString config.services.vikunja.port}
         '';

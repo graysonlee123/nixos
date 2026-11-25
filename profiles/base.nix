@@ -7,6 +7,7 @@
     ../modules/nixos/core/boot.nix
     ../modules/nixos/core/form-factor.nix
     ../modules/nixos/core/docker.nix
+    ../modules/nixos/core/domains.nix
     ../modules/nixos/core/emails.nix
     ../modules/nixos/core/home-manager.nix
     ../modules/nixos/core/journald.nix

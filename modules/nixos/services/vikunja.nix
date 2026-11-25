@@ -3,7 +3,7 @@
     enable = true;
     port = 3456;
     frontendScheme = "https";
-    frontendHostname = "vikunja.lab.ggantek.net";
+    frontendHostname = "vikunja.${config.domains.lab}";
     database = {
       database = "vikunja";
       host = "/run/postgresql";
@@ -17,7 +17,7 @@
         enabled = true;
         host = "smtp.postmarkapp.com";
         port = 25;
-        fromemail = "postmark@graysn.com";
+        fromemail = "postmark@${config.domains.personal}";
       };
     };
   };

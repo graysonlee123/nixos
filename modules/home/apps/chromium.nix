@@ -4,7 +4,10 @@
   ...
 }: let
   bookmark-utils = import ../../../lib/mkChromiumBookmarks.nix;
-  bookmarks = import ../../../lib/bookmarks.nix {hosts = osConfig.lan.hosts;};
+  bookmarks = import ../../../lib/bookmarks.nix {
+    hosts = osConfig.lan.hosts;
+    domains = osConfig.domains;
+  };
 in {
   programs.chromium = {
     enable = true;

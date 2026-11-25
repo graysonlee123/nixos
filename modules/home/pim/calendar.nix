@@ -16,7 +16,7 @@ in {
             primary = name == "Personal";
             remote = {
               type = "caldav";
-              url = "https://radicale.lab.ggantek.net/gray/calendar-${lib.strings.toLower name}/";
+              url = "https://radicale.${osConfig.domains.lab}/gray/calendar-${lib.strings.toLower name}/";
               userName = "gray";
               passwordCommand = [
                 "/run/current-system/sw/bin/cat"

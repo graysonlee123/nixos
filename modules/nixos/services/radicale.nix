@@ -108,7 +108,7 @@ in {
     };
 
     services.caddy.virtualHosts = {
-      "radicale.lab.ggantek.net" = {
+      "radicale.${config.domains.lab}" = {
         extraConfig = ''
           reverse_proxy localhost:${toString port}
         '';
