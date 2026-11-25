@@ -140,9 +140,9 @@ in {
         interface_name = "enp2s0";
         dhcpv4 = {
           gateway_ip = config.lan.gateway;
-          subnet_mask = "255.255.255.0";
-          range_start = "192.168.86.20";
-          range_end = "192.168.86.254";
+          subnet_mask = config.lan.subnetMask;
+          range_start = config.lan.rangeStart;
+          range_end = config.lan.rangeEnd;
           lease_duration = 0; # 24-hour default
           local_domain_name = "lan";
         };

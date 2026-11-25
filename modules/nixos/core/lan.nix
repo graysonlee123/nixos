@@ -9,6 +9,18 @@
             description = "Default gateway of home network.";
             type = lib.types.str;
           };
+          subnetMask = lib.mkOption {
+            description = "Subnet mask.";
+            type = lib.types.str;
+          };
+          rangeStart = lib.mkOption {
+            description = "DHCP server range start (AdGuard Home).";
+            type = lib.types.str;
+          };
+          rangeEnd = lib.mkOption {
+            description = "DHCP server range end (AdGuard Home).";
+            type = lib.types.str;
+          };
           dockerBridge = lib.mkOption {
             description = "Docker bridge gateway IP. Containers reach host services (Postgres) here.";
             type = lib.types.str;
