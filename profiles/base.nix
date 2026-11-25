@@ -55,5 +55,6 @@
     openvpn
     age
     sops
+    nvd
   ];
 }
