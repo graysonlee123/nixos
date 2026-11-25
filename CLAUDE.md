@@ -27,7 +27,7 @@ Leaf modules are grouped by category; **profiles** are aggregators that select w
 - `profiles/{base,headed,headless}.nix` - System profiles; `headed`/`headless` import `base`. Hosts import one.
 - `profiles/home/{base,headed,headless}.nix` - Matching HM profiles + package lists; wired via `users/gray.nix`.
 - `lib/` - Shared utility functions
-- `data/` - Shared data consumed by modules (hosts, constants, collections)
+- `data/` - Shared data consumed by modules (LAN, syncthing, collections)
 - `users/gray.nix` - NixOS module: defines `gray` options, HM wiring, SSH keys
 
 When adding a module: drop the leaf file in the right `<category>/`, then add its import to the appropriate profile (not the host).

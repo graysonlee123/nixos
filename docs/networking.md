@@ -80,8 +80,8 @@ journalctl -u NetworkManager -b
 | ------------ | -------------------------------------------------------------------------- |
 | Link manager | NixOS scripted networking (no NM, no networkd)                             |
 | Addressing   | Static `192.168.86.2/24` on `enp2s0` (`host.staticIP`, `host.networkInterface`); `useDHCP = false` |
-| Gateway      | `192.168.86.1` (`constants.network.gateway`)                               |
-| DNS          | Nameservers: `192.168.86.1` (from `networking.nix`) + `127.0.0.1` (from `adguardhome.nix`), merged in that order |
+| Gateway      | `192.168.86.1` (`config.lan.gateway`)                                      |
+| DNS          | Nameservers: `127.0.0.1` + `9.9.9.9` fallback (`adguardhome.nix`), overriding the `mkDefault` `config.lan.dns` from `networking.nix` |
 | LAN services | AdGuard Home: DNS (53) and DHCP (67/68) on `enp2s0`                        |
 | Ingress      | Caddy on 80/443, TLS via Cloudflare DNS-01, `*.lab.ggantek.net`            |
 | Firewall     | PostgreSQL only on `docker0`; DNS/DHCP only on `enp2s0`; game/service ports per [sulaco.md](./sulaco.md) |

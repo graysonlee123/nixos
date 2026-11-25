@@ -51,19 +51,7 @@ colmena apply boot              # activate on next boot
 
 Colmena builds on the deploying machine by default, then copies the closure to the target.
 
-### Dirty git tree
-
-With uncommitted changes, Colmena fails with:
-
-```
-error: cannot update unlocked flake input 'hive' in pure mode
-```
-
-Colmena evaluates through a generated wrapper flake that points at this repo's locked URL. A dirty tree has no `rev`, so that URL is unlocked, and pure evaluation refuses it. Either commit or stash first, or pass `--impure` while iterating:
-
-```sh
-colmena apply --on sulaco --impure
-```
+### New files
 
 As with any flake, new files must be `git add`ed before Nix can see them.
 
@@ -73,4 +61,3 @@ As with any flake, new files must be `git add`ed before Nix can see them.
 | -------------------------------------------------------- | ------------------------------------------------------------ |
 | `Permission denied (publickey,...)`                      | `targetHost` is an IP, so the SSH config alias isn't matched |
 | `lacks a signature by a trusted key`                     | `gray` isn't in `trusted-users` on the target                |
-| `cannot update unlocked flake input 'hive' in pure mode` | Dirty git tree; commit or pass `--impure`                    |

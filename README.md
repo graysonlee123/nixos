@@ -19,7 +19,7 @@ This repository contains my declarative NixOS system configuration, including:
 ├── flake.nix                       # Flake configuration
 ├── flake.lock                      # Flake lock file
 ├── assets/images/                  # Wallpapers and images
-├── data/                           # Shared data (hosts, constants, collections)
+├── data/                           # Shared data (LAN, syncthing, collections)
 ├── docs/                           # Extended documentation
 ├── hosts/                          # Per-host configs (configuration + hardware)
 │   ├── corbelan/                   # Laptop (headed)
