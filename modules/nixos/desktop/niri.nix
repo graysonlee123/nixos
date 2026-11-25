@@ -159,64 +159,21 @@ in {
         };
       };
 
-      outputs =
-        if (config.host.formFactor.type == "laptop")
-        then {
-          "eDP-1" = {
-            mode = "2880x1800@120.000";
-            # Always-on VRR: OLED drops refresh when idle, saves battery.
-            variable-refresh-rate = _: {};
+      outputs = lib.mapAttrs' (_: value:
+        lib.nameValuePair value.id ({
+            mode = "${toString value.resolution.x}x${toString value.resolution.y}@${toString value.refreshRate}";
             transform = "normal";
             position = _: {
               props = {
-                x = 0;
-                y = 0;
+                x = value.position.x;
+                y = value.position.y;
               };
             };
-          };
-          "HDMI-A-1" = {
-            mode = "2560x1440@59.951";
-            transform = "normal";
-            focus-at-startup = _: {};
-            position = _: {
-              props = {
-                x = 1646;
-                y = -411;
-              };
-            };
-          };
-        }
-        else {
-          # LG UltraGear 32GS75QX-B.AUS 32"
-          "DP-1" = {
-            mode = "2560x1440@180.063";
-            # Always-on VRR: many games' gamescope windows have no app-id, so
-            # on-demand window rules can't match them reliably.
-            variable-refresh-rate = _: {};
-            transform = "normal";
-            focus-at-startup = _: {};
-            position = _: {
-              props = {
-                x = 0;
-                y = 0;
-              };
-            };
-          };
-          # ASUS ROG Strix XG129C 12.3"
-          "HDMI-A-1" = {
-            mode = "1920x720@75.000";
-            # Pinned: centering below assumes logical width 1920 / 1.25 = 1536.
-            scale = 1.25;
-            transform = "normal";
-            # Centered under DP-1: (2560 - 1536) / 2 = 512, plus barely shifted left.
-            position = _: {
-              props = {
-                x = 496;
-                y = 1440;
-              };
-            };
-          };
-        };
+          }
+          // lib.optionalAttrs value.variableRefreshRate {variable-refresh-rate = _: {};}
+          // lib.optionalAttrs (value.scale != null) {scale = value.scale;}
+          // lib.optionalAttrs value.focusAtStartup {focus-at-startup = _: {};}))
+      config.displays;
 
       # Input: keyboard repeat, power key left to logind.
       input = {
@@ -399,7 +356,7 @@ in {
             proportion = 0.33332;
           };
         }
-        # Chat applications: open on HDMI-A-1 maximized to edges (Sulaco only).
+        # Chat applications: open on secondary display. Maximize to edges on desktops.
         ({
             matches = [
               {
@@ -410,10 +367,7 @@ in {
                 app-id = "^chrome-pommaclcbfghclhalboakcipcmmndhcj-";
               }
             ];
-            open-on-output =
-              if (config.host.formFactor.type == "laptop")
-              then "eDP-1"
-              else "HDMI-A-1";
+            open-on-output = config.displays.secondary.id;
           }
           // lib.optionalAttrs (config.host.formFactor.type != "laptop") {
             open-maximized-to-edges = true;

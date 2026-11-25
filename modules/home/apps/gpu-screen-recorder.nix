@@ -103,7 +103,7 @@ in {
         "-w ${
           if (osConfig.host.formFactor.type == "laptop")
           then "screen"
-          else "DP-1"
+          else osConfig.displays.primary.id
         }"
         "-f 60"
         "-r 60"
@@ -125,8 +125,8 @@ in {
     Install.WantedBy = lib.optionals (osConfig.host.formFactor.type != "laptop") ["graphical-session.target"];
   };
 
-  # Games run fullscreen on DP-1 and cover notifications there; show gsr
-  # events on the side monitor instead, styled to stand out.
+  # Games run fullscreen on primary display and cover notifications there;
+  # show gsr events on the secondary monitor instead, styled to stand out.
   services.mako.settings = {
     "app-name=\"gsr\"" =
       {
@@ -135,7 +135,7 @@ in {
         border-color = config.lib.stylix.colors.withHashtag.base08;
       }
       // lib.optionalAttrs (osConfig.host.formFactor.type != "laptop") {
-        output = "HDMI-A-1";
+        output = osConfig.displays.secondary.id;
       };
   };
 

@@ -4,6 +4,7 @@
     ../modules/nixos/core/greeter.nix
     ../modules/nixos/core/polkit.nix
     ../modules/nixos/core/xdg.nix
+    ../modules/nixos/desktop/displays.nix
     ../modules/nixos/desktop/niri.nix
     ../modules/nixos/desktop/thunar.nix
     ../modules/nixos/desktop/vicinae.nix
