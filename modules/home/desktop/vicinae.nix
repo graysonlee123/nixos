@@ -16,6 +16,13 @@
       icon = "icon://favicon/google.com?fallback=icon://omnicast/image?fill%3Dprimary-text";
     }
     {
+      id = "noogle";
+      name = "Noogle";
+      url = "https://noogle.dev/q/?term={argument}";
+      app = "chromium-browser.desktop";
+      icon = "icon://favicon/google.com?fallback=icon://omnicast/image?fill%3Dprimary-text";
+    }
+    {
       id = "duckduckgo";
       name = "DuckDuckGo";
       url = "https://duckduckgo.com/?q={argument}";
