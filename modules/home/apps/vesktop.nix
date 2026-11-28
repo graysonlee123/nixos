@@ -1,6 +1,10 @@
-{
+{pkgs-unstable, ...}: {
   programs.vesktop = {
     enable = true;
+    # Unstable: Vencord auto-updates at runtime; stable Vesktop's screenshare
+    # picker uses components newer Vencord removed (HeadingTertiary), crashing
+    # on Go Live. Keep Vesktop current to match.
+    package = pkgs-unstable.vesktop;
     settings = {
       autoStartMinimized = false;
       checkUpdates = false;
