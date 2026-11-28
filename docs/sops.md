@@ -10,7 +10,9 @@ Encrypts secrets with age public keys, commits encrypted files to git, decrypts 
 
 ## Operations
 
-Secret files: `secrets/headed.yaml` (Corbelan/Nostromo), `secrets/headless.yaml` (Sulaco), `secrets/shared.yaml` (all hosts).
+Secret files: `secrets/headed.yaml` (Corbelan/Nostromo), `secrets/headless.yaml` (Sulaco), `secrets/shared.yaml` (all hosts), `secrets/hosts/<host>.yaml` (that host only).
+
+Per-host files are encrypted to one age key, so only that host can decrypt or edit them (`sops secrets/hosts/<host>.yaml` fails elsewhere). Use them for secrets that must not leave a host, such as the Harmonia signing key.
 
 | Task                       | Command                                                                  |
 | -------------------------- | ------------------------------------------------------------------------ |

@@ -36,7 +36,7 @@ This repository contains my declarative NixOS system configuration, including:
 │   │   ├── security/               # 1password, clamav, keyring
 │   │   ├── desktop/                # niri, thunar, vicinae
 │   │   ├── gaming/                 # steam, gamemode
-│   │   └── services/               # headless services (jellyfin, caddy...)
+│   │   └── services/               # services (harmonia, jellyfin, caddy...)
 │   └── home/                       # Home Manager modules, grouped by category
 │       ├── cli/                    # terminal tools (zsh, yazi, lftp...)
 │       ├── dev/                    # git, go, editors
@@ -158,6 +158,7 @@ See [docs/syncthing.md](docs/syncthing.md).
 
 - OpenSSH daemon
 - Docker daemon
+- Harmonia binary cache (all hosts serve their store to each other over Tailscale); see [docs/harmonia.md](docs/harmonia.md)
 - NetworkManager
 
 ### niri Configuration
@@ -221,6 +222,10 @@ See [docs/vpn.md](docs/vpn.md).
 ## Garbage Collection
 
 See [docs/garbage-collection.md](docs/garbage-collection.md).
+
+## Binary Cache (Harmonia)
+
+See [docs/harmonia.md](docs/harmonia.md).
 
 ## Remote Deployment (Colmena)
 

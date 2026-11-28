@@ -21,6 +21,7 @@
 | 5173  | TCP      | Kaneo                     | 127.0.0.1               | No              | Behind Caddy (container)                     |
 | 5232  | TCP      | Radicale (CalDAV/CardDAV) | 0.0.0.0                 | No              | Behind Caddy                                 |
 | 5432  | TCP      | PostgreSQL                | 127.0.0.1, 172.17.0.1   | docker0 only    | Peer auth (host), password auth (containers) |
+| 5839  | TCP      | Harmonia (binary cache)   | \*                      | tailscale0 only | Peers pull over Tailscale                    |
 | 7359  | UDP      | Jellyfin (Discovery)      | 0.0.0.0                 | No              | DLNA/client discovery                        |
 | 7777  | TCP      | Terraria                  | 0.0.0.0                 | Yes             | Game server                                  |
 | 8081  | TCP      | MeTube                    | 127.0.0.1               | No              | Behind Caddy (container)                     |

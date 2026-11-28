@@ -42,6 +42,16 @@
                   description = "Display name. Used as AdGuard Home client name.";
                   type = lib.types.str;
                 };
+                isNixOS = lib.mkOption {
+                  description = "If host runs NixOS.";
+                  type = lib.types.bool;
+                  default = false;
+                };
+                harmoniaPubKey = lib.mkOption {
+                  description = "Host's Harmonia binary cache signing public key. Peers trust it.";
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                };
                 ips = lib.mkOption {
                   description = "Host's static IPs. Omit for DHCP-only devices.";
                   default = {};

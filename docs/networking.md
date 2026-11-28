@@ -8,13 +8,13 @@ Network stack per host. Shared pieces come from `profiles/base.nix` (all hosts) 
 | --------- | -------------------------------------- | -------------------------------------------------------------------- |
 | Hostname  | `modules/nixos/network/networking.nix` | From `host.name`                                                     |
 | IPv6      | `modules/nixos/network/networking.nix` | Disabled (`networking.enableIPv6 = false`)                           |
-| Firewall  | `modules/nixos/network/networking.nix` | NixOS firewall (iptables). Opens Syncthing (22000/TCP, 21027/UDP) on all hosts; Xdebug (9003/TCP) on headed hosts |
+| Firewall  | `modules/nixos/network/networking.nix` | NixOS firewall (iptables). Opens Syncthing (22000/TCP, 21027/UDP) on all hosts; Harmonia (5839/TCP) on `tailscale0` on all hosts; Xdebug (9003/TCP) on headed hosts |
 | SSH       | `modules/nixos/network/openssh.nix`    | `services.openssh`; see [ssh.md](./ssh.md)                           |
 | Tailscale | `modules/nixos/network/tailscale.nix`  | Mesh overlay (`tailscale0`). Headless auto-auths via `/etc/secrets/tailscale_key`; headed hosts auth manually (`sudo tailscale up`) |
 | Mullvad   | `modules/nixos/network/mullvad.nix`    | Headed only. Blocks LAN by default; see [vpn.md](./vpn.md)           |
 | Resolver  | NixOS default                          | `resolvconf` writes `/etc/resolv.conf`; `systemd-resolved` is off    |
 
-Static device data (MACs, LAN/Tailscale IPs), gateway and default DNS live in `data/lan.nix` (exposed as `config.lan`).
+Static device data (MACs, LAN/Tailscale IPs, `isNixOS`, Harmonia public keys), gateway and default DNS live in `data/lan.nix` (exposed as `config.lan`).
 
 ## LAN topology
 

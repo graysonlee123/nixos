@@ -20,3 +20,16 @@ creation_rules:
       - age:
           - *nostromo
           - *corbelan
+  # Per-host secrets: only that host can decrypt
+  - path_regex: secrets/hosts/nostromo\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *nostromo
+  - path_regex: secrets/hosts/sulaco\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sulaco
+  - path_regex: secrets/hosts/corbelan\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *corbelan
