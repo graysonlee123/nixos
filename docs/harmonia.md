@@ -9,7 +9,7 @@ Module: `modules/nixos/services/harmonia.nix` (imported by `profiles/base.nix`).
 - **Port**: `5839/TCP`, opened on `tailscale0` only. Nothing is exposed on the LAN or WAN.
 - **Peers**: every host in `data/lan.nix` with `isNixOS = true` and a `harmoniaPubKey`, except the current host. Peers are reached by their Tailscale IP.
 - **Signing**: each host signs the paths it serves with its own key (`<host>-harmonia-1`). Peers trust only the public keys in `data/lan.nix`. The private key lives in `secrets/hosts/<host>.yaml`, and only that host can decrypt it (see [sops.md](./sops.md)).
-- **Priority** (lower wins): Sulaco `10`, Nostromo `20`, Corbelan `30`, `cache.nixos.org` `40`. Set in the `priorities` map in the module. Hosts not in the map get `35`.
+- **Priority** (lower wins): Sulaco `10`, Nostromo `20`, `cache.nixos.org` `40`, Corbelan `50`. Corbelan is below `cache.nixos.org`, so it only supplies paths that are missing there (e.g. local builds). Set in the `priorities` map in the module. Hosts not in the map get `35`.
 - **Offline peers**: `connect-timeout = 3` and `fallback = true`. An offline peer (e.g. a sleeping laptop) costs about 3s per rebuild, and then Nix moves on to the next substituter.
 
 ## Add a host

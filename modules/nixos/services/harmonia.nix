@@ -10,7 +10,7 @@
   priorities = {
     sulaco = 10;
     nostromo = 20;
-    corbelan = 30;
+    corbelan = 50;
   };
 in {
   services.harmonia.cache = {
